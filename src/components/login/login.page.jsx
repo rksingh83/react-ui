@@ -6,12 +6,13 @@ import Input from '../boostrapinput/input.component';
 import {Post ,Get} from '../../service/service.setup' ;
 import {connect} from 'react-redux';
 import  {setCurrentUser} from '../../redux/user/user.actions' ;
+import  {setCurrentFile} from '../../redux/file/file.actions' ;
 import Cookies from 'js-cookie'
 import './lon.style.scss';
 //import { useHistory } from "react-router-dom";
 const createHistory = require("history").createBrowserHistory;
 
-const LoginPage = ({history ,setCurrentUser})=>{
+const LoginPage = ({history ,setCurrentUser ,setCurrentFile})=>{
  // console.log(props)
   const [email ,setEmail] = useState('') ;
   const [password ,setPassword] = useState('') ;
@@ -38,8 +39,17 @@ const LoginPage = ({history ,setCurrentUser})=>{
             console.log("console.log") ;
            // let  history = useHistory();
             Cookies.set('token', res.data.data.authentication.token);
-            setCurrentUser(res.data.data)
-             history.push("/folder");
+            const requestFile = { filefolderRequest:[]}
+            setCurrentUser(res.data.data) ;
+            Post('mydiginotes/getAllFiles',requestFile)
+            .then((res)=>{
+              if(res.data.filefolderRequest){
+            let data =  (res.data.filefolderRequest).map(item=>item.fileName)
+            setCurrentFile(data) ;
+            history.push("/folder");
+              }
+           })
+           
              
 
             
@@ -81,6 +91,9 @@ const LoginPage = ({history ,setCurrentUser})=>{
 }
 
 
-const mapDispatchToProps = dispatch =>({setCurrentUser:user=>dispatch(setCurrentUser(user))})
+const mapDispatchToProps = dispatch =>({
+  setCurrentUser:user=>dispatch(setCurrentUser(user)) ,
+  setCurrentFile:currentFile=>dispatch(setCurrentFile(currentFile))
+})
 
 export default connect(null,mapDispatchToProps)(LoginPage);
