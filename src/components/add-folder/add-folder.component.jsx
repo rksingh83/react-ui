@@ -20,7 +20,6 @@ const AddFolder = ()=>{
         addName = {addFolderHandler}
         disc = {disc} 
         addDisc = {addDescHandler}
-
         ></ModalPop>
     )
 

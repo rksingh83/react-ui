@@ -1,6 +1,8 @@
+import {Post} from '../../service/service.setup' ;
 const INITIAL_STATE ={
   currentFile:[]
 }
+
 
 
 const fileReducer = (state = INITIAL_STATE,action)=>{

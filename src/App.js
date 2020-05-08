@@ -6,8 +6,10 @@ import {Switch,Route,Redirect} from 'react-router-dom';
 import   './homepage.style.scss';
 import Header from './components/header/header.component';
 import LoginPage from './components/login/login.page';
-import  OTP from './components/login/otp';
+import  OTP from './components/login/otp'; 
+import UploadFile from  './components/login/uploadfile' ;
 import LouOut from './components/login/logout'
+import  {setCurrentFile} from './redux/file/file.actions' ;
 
 //import LouOut from './components/login/otp';
 
@@ -17,11 +19,11 @@ import SingnUp from './components/signup/singnup.component';
 import {Post ,Get} from './service/service.setup' ;
 class App extends React.Component{
  //#endregio
- constructor(){
-   super();
+ constructor(props){
+   super(props);
    this.state={
      currentUser:'',
-     file :[]
+   setCurrentFile:this.props.setCurrentFile
      
    }
  }
@@ -29,12 +31,13 @@ class App extends React.Component{
  unsubscribeAuth = null;
 
  componentDidMount(){
+   console.log(this.props)
+   console.log(this.p)
   const requestFile = { filefolderRequest:[]}
   Post('mydiginotes/getAllFiles',requestFile)
   .then((res)=>{
     if(res.data.filefolderRequest){
-  let data =  (res.data.filefolderRequest).map(item=>item.fileName)
-   this.setState({file:data}) ;
+  this.state.setCurrentFile(res.data.filefolderRequest) ;
     }
  })
  }
@@ -45,10 +48,12 @@ class App extends React.Component{
     <Header/>
     <Switch>
     <Route  exact path ='/login' component ={LoginPage}/>
-    <Route exact path ='/folder' component={() => <ModalPop openModel= {false} file={this.state.file} />}/>
+    <Route exact path ='/folder' component={ModalPop}/>
     <Route exact path ='/' component={Home}/>
     <Route exact path ='/signup' component={SingnUp}/>
-    <Route exact path ='/otp' component={OTP}/>
+    <Route exact path ='/otp' component={OTP}/> 
+    <Route exact path ='/uploadFile' component={UploadFile}/> 
+    
     <Route exact path ='/logout' component={LouOut}/>
   
    
@@ -59,7 +64,10 @@ class App extends React.Component{
   }
 }
 
-const mapStateToProps = ({user})=>({
-   currentUser :user.currentUser
+
+
+const mapDispatchToProps = dispatch =>({
+  setCurrentFile:currentFile=>dispatch(setCurrentFile(currentFile))
 })
-export default  connect(mapStateToProps)(App);
+
+export default  connect(null ,mapDispatchToProps)(App);

@@ -2,7 +2,7 @@
 
 import React from 'react';
 const createHistory = require("history").createBrowserHistory;
-const CreateFolder = ({text ,fileId, des ,openModel ,imageSrc})=>{
+const CreateFolder = ({history ,text ,fileId, des ,openModel ,imageSrc})=>{
 const style = {
     display : "flex" ,
     alignItems:"center" ,
@@ -11,7 +11,7 @@ const style = {
     cursor:"pointer"
 
 }
- 
+ console.log(history)
 const imageStyle = {
     
     width:"30%"
@@ -20,7 +20,7 @@ const imageStyle = {
 //console.log("ID" ,fileId)
     return (
         <div style ={style}>
-         <img    style={imageStyle} src = {require(`${imageSrc}`)}></img>  
+         <img  onClick ={()=>history.push('/uploadFile')}  style={imageStyle} src = {require(`${imageSrc}`)}></img>  
     <p onClick = {()=>openModel(text ,des ,fileId)}>{text}</p> 
         </div>
     )

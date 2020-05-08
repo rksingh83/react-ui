@@ -8,7 +8,8 @@ import {  persistReducer } from 'redux-persist'
 const persistConfig = {
   key: 'root',
   storage,
-  whiteList:['user','currentFile']
+  whiteList:['user'],
+  blackList:['currentFile']
 }
  
 

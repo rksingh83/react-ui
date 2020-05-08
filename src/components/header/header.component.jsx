@@ -15,8 +15,7 @@ const Header =({currentUser,hidden})=>{
     const imgStyle ={width:"20%",position :"relative",
     top:'-30px'}
   const isToken = Cookies.get('token');
-  console.log(isToken)
- console.log('Current_user' ,currentUser)
+ 
 return(
   <nav class="navbar navbar-expand-lg navbar-light bg-dark">
 <div className ='header'>

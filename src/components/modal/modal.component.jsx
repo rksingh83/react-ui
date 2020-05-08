@@ -128,7 +128,8 @@ const updated =     nameFolder.map(item=>{
             des={item.fileDescription} 
             fileId ={item.id}
             imageSrc="./download.png"
-            key ={index}
+            key ={index} 
+            history ={history}
           ></CreateFolder>
         ))}
       </div>
