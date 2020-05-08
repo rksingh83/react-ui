@@ -6,25 +6,29 @@ import CreateFolder from "../create-folder/create-folder.component";
 import ModalHeader from "react-bootstrap/ModalHeader";
 import { Post, Get } from "../../service/service.setup";
 import {connect} from 'react-redux';
-import  {setCurrentUser} from '../../redux/user/user.actions' ;
-import  {setCurrentFile} from '../../redux/file/file.actions' ;
-const ModalPop = ({ currentFile, openModel }) => {
+const ModalPop = ({ history, currentFile, openModel }) => {
   const [show, setShow] = useState(openModel);
-  console.log('CURRENT_FILE' ,currentFile) ;
+  console.log('CURRENT_FILE' ,history) ;
   const [nameFolder, setName] = useState(currentFile);
+  const [id, setId] = useState('');
   useEffect(() => {});
   const handRK = () => {
-    pushName(fileName);
+    //pushName(fileName);
     setShow(false);
+    const dateCreated = "123";
+    const requestFile = {
+      filefolderRequest: [{ fileName, fileDescription, dateCreated ,id}],
+    };
+    
     addName("");
     addDisc("");
-    const dateCreated = "123";
-
-    const requestFile = {
-      filefolderRequest: [{ fileName, fileDescription, dateCreated }],
-    };
-
-    Post("mydiginotes/createFileFolder", requestFile).then((res) => res);
+   
+    if(id){
+      Post("mydiginotes/updateFileFolder", requestFile).then((res) =>updateName(res.data.filefolderRequest[0]));
+    }else{
+    Post("mydiginotes/createFileFolder", requestFile).then((res) =>pushName(res.data.filefolderRequest[0]));
+    }
+    setId(null)
   };
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -36,14 +40,28 @@ const ModalPop = ({ currentFile, openModel }) => {
   const pushName = (name) => {
     setName([...nameFolder, name]);
   };
+  const updateName =(file)=>{
+
+const updated =     nameFolder.map(item=>{
+      if(file.id==item.id){
+        item.fileDescription=file.fileDescription;
+        item.fileName=file.fileName;
+      }
+      return item ;
+    })
+    
+   setName(updated)
+  }
   //const handleClose = () => setShow(false);
   const addDescHandler = (e) => {
     addDisc(e.target.value);
   };
 
-  const handleEditShow = (text) => {
+  const handleEditShow = (text,des ,fileId) => {
     setShow(true);
     addName(text);
+    addDisc(des);
+    setId(fileId)
   };
   const btnStyle = {
     display: "flex",
@@ -77,6 +95,13 @@ const ModalPop = ({ currentFile, openModel }) => {
             name="dis"
             type="input"
           ></Input>
+           <Input
+           
+            value={id}
+            handleChange={()=>setId(id)}
+            name="id"
+            type="hidden"
+          ></Input>
         </Modal.Body>
         <Modal.Footer>
           <button
@@ -99,7 +124,9 @@ const ModalPop = ({ currentFile, openModel }) => {
         {nameFolder.map((item) => (
           <CreateFolder
             openModel={handleEditShow}
-            text={item}
+            text={item.fileName}
+            des={item.fileDescription} 
+            fileId ={item.id}
             imageSrc="./download.png"
           ></CreateFolder>
         ))}

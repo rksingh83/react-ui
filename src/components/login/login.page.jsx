@@ -44,8 +44,8 @@ const LoginPage = ({history ,setCurrentUser ,setCurrentFile})=>{
             Post('mydiginotes/getAllFiles',requestFile)
             .then((res)=>{
               if(res.data.filefolderRequest){
-            let data =  (res.data.filefolderRequest).map(item=>item.fileName)
-            setCurrentFile(data) ;
+          //  let data =  (res.data.filefolderRequest).map(item=>item.fileName)
+            setCurrentFile(res.data.filefolderRequest) ;
             history.push("/folder");
               }
            })
