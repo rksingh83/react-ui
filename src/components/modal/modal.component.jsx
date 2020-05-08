@@ -121,13 +121,14 @@ const updated =     nameFolder.map(item=>{
         </Modal.Footer>
       </Modal>
       <div style={{ display: "flex" }}>
-        {nameFolder.map((item) => (
+        {nameFolder.map((item ,index) => (
           <CreateFolder
             openModel={handleEditShow}
             text={item.fileName}
             des={item.fileDescription} 
             fileId ={item.id}
             imageSrc="./download.png"
+            key ={index}
           ></CreateFolder>
         ))}
       </div>
