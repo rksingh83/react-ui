@@ -17,7 +17,7 @@ const Header =({currentUser,hidden})=>{
   const isToken = Cookies.get('token');
  
 return(
-  <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+  <nav className="navbar navbar-expand-lg navbar-light bg-dark">
 <div className ='header'>
 
 <Link className='logo-container' to='/'>

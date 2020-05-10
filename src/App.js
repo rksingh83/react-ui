@@ -10,7 +10,7 @@ import  OTP from './components/login/otp';
 import UploadFile from  './components/login/uploadfile' ;
 import LouOut from './components/login/logout'
 import  {setCurrentFile} from './redux/file/file.actions' ;
-
+import SideBar from './components/sidebar/sidebar.component'
 //import LouOut from './components/login/otp';
 
 import ModalPop from './components/modal/modal.component'
@@ -33,13 +33,7 @@ class App extends React.Component{
  componentDidMount(){
    console.log(this.props)
    console.log(this.p)
-  const requestFile = { filefolderRequest:[]}
-  Post('mydiginotes/getAllFiles',requestFile)
-  .then((res)=>{
-    if(res.data.filefolderRequest){
-  this.state.setCurrentFile(res.data.filefolderRequest) ;
-    }
- })
+
  }
 
   render(){
@@ -48,7 +42,7 @@ class App extends React.Component{
     <Header/>
     <Switch>
     <Route  exact path ='/login' component ={LoginPage}/>
-    <Route exact path ='/folder' component={ModalPop}/>
+    <Route exact path ='/folder' component={SideBar}/>
     <Route exact path ='/' component={Home}/>
     <Route exact path ='/signup' component={SingnUp}/>
     <Route exact path ='/otp' component={OTP}/> 
