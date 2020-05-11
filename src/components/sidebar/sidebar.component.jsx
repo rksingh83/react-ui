@@ -56,7 +56,8 @@ const SideBar = ()=>{
         let updated = [] ;
       
         if(isDeleted){
-             console.log(file)
+              let deletedIds = (file.filefolderRequest.map((item=>item.id))) 
+               updated = totalFolder.filter((item)=>!deletedIds.includes(item.id))
         }else{
            updated = totalFolder.map(item=>{
               if(file.id==item.id){
@@ -76,7 +77,7 @@ const SideBar = ()=>{
     }
     const deleteHandler = (folderList,resArr) =>{
         Post("mydiginotes/updateFileFolder", folderList)
-        .then((res) =>updateName(resArr, true));
+        .then((res) =>updateName(folderList, true));
     }
    
     return(
