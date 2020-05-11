@@ -68,6 +68,8 @@ const TopHeader = ({saveFolder , selectedItems , totalFolders ,deleteHandler})=>
             <div className ="col-md-1"onClick={()=>reNameFolder(false)}>Rename</div>
             <div className ="col-md-1" onClick={()=>setShow(true)}>Create Folder</div>
     <div className = {`col-md-1 ${(totalItem==0)?"hideCount":""}`}>{totalItem} Selected</div>
+    <div className ="col-md-1" onClick={()=>window.location.reload()}>Refresh</div>
+    
             
             </div>
         </div>
