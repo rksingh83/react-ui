@@ -31,8 +31,7 @@ class App extends React.Component{
  unsubscribeAuth = null;
 
  componentDidMount(){
-   console.log(this.props)
-   console.log(this.p)
+   
 
  }
 

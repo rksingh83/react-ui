@@ -43,8 +43,8 @@ const TopHeader = ({saveFolder , selectedItems , totalFolders ,deleteHandler})=>
         console.log(totalFolders);
         console.log(isDelete) ;
         setId(deletedArr[0].id);
-        addDisc(deletedArr[0].id);
-        addName(deletedArr[0].id);
+        addDisc(deletedArr[0].fileDescription);
+        addName(deletedArr[0].fileName);
         if(!isDelete)
            setShow(true) ;
         const requestFile = {
@@ -65,7 +65,6 @@ const TopHeader = ({saveFolder , selectedItems , totalFolders ,deleteHandler})=>
             <div className ="col-md-1">Share</div>
             <div className ="col-md-1"  onClick={()=>reNameFolder(true)}>Delete</div>
             <div className ="col-md-1">Move</div>
-            <div className ="col-md-1">Copy</div>
             <div className ="col-md-1"onClick={()=>reNameFolder(false)}>Rename</div>
             <div className ="col-md-1" onClick={()=>setShow(true)}>Create Folder</div>
     <div className = {`col-md-1 ${(totalItem==0)?"hideCount":""}`}>{totalItem} Selected</div>
