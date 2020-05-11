@@ -14,6 +14,7 @@ class SingnUp extends React.Component{
        email:'',
        password:'',
        cnfpass:'',
+       phoneNumber:'' ,
        history :props.history
      }
    }
@@ -25,8 +26,8 @@ class SingnUp extends React.Component{
    }
    handleSubmit = (e)=>{
      e.preventDefault();
-     const {name ,email ,password} = this.state ;
-     const  user = {name,email,password}
+     const {name ,email , password ,phoneNumber} = this.state ;
+     const  user = {name,email,password ,phoneNumber}
 
    Post('mydiginotes/registration',user)    
      .then((res)=>{
@@ -45,7 +46,7 @@ class SingnUp extends React.Component{
    render(){
     
 
-    const {name,email,password,cnfpass} =this.state;
+    const {name,email,password,cnfpass ,phoneNumber} =this.state;
    return (
      <div className ="row mt-4">
      <div className ="container">
@@ -59,6 +60,10 @@ class SingnUp extends React.Component{
         </Input>
         <Input  placeholder ="Enter your Email" label ='Email'
          value ={email} handleChange={this.handleChange} name='email'
+         type='input'>
+        </Input>
+        <Input  placeholder ="Enter your phone number" label ='Phone'
+         value ={phoneNumber} handleChange={this.handleChange} name='phoneNumber'
          type='input'>
         </Input>
         <Input  placeholder ="Enter password Name" label ='Password'
