@@ -9,7 +9,6 @@ import LoginPage from './components/login/login.page';
 import  OTP  ,{ForgotPassword ,VerifyOTP} from './components/login/otp'; 
 import UploadFile from  './components/login/uploadfile' ;
 import LouOut from './components/login/logout'
-import  {setCurrentFile} from './redux/file/file.actions' ;
 import SideBar from './components/sidebar/sidebar.component'
 //import LouOut from './components/login/otp';
 
@@ -23,7 +22,6 @@ class App extends React.Component{
    super(props);
    this.state={
      currentUser:'',
-   setCurrentFile:this.props.setCurrentFile
      
    }
  }
@@ -41,7 +39,7 @@ class App extends React.Component{
     <Header/>
     <Switch>
     <Route  exact path ='/login' component ={LoginPage}/>>
-    <Route exact path ='/' component={LoginPage}/>
+    <Route exact path ='/' component={this.props.currentUser?SideBar:LoginPage}/>
     <Route exact path ='/signup' component={SingnUp}/>
     <Route exact path ='/otp' component={OTP}/> 
     <Route exact path ='/verify' component={VerifyOTP}/> 
@@ -62,8 +60,6 @@ class App extends React.Component{
 
 
 
-const mapDispatchToProps = dispatch =>({
-  setCurrentFile:currentFile=>dispatch(setCurrentFile(currentFile))
-})
+const mapStateToPros = ({user:{currentUser}})=>({currentUser})
 
-export default  connect(null ,mapDispatchToProps)(App);
+export default  connect(mapStateToPros)(App);

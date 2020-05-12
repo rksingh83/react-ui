@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import  {setCurrentUser} from '../../redux/user/user.actions' ;
 import  {setCurrentFile} from '../../redux/file/file.actions' ;
 import Cookies from 'js-cookie'
+import {Link} from 'react-router-dom';
 import './lon.style.scss';
 //import { useHistory } from "react-router-dom";
 const createHistory = require("history").createBrowserHistory;
@@ -82,6 +83,7 @@ const LoginPage = ({history ,setCurrentUser ,setCurrentFile})=>{
         value = "LogIn"  className= "btn btn-success" onClick={loginHandler} name='cnfpass'
         type='button'>
        </Input>
+       <Link to ='/forgot'>Forgot Password ?</Link>
     </form>
     </div>
     </div></div>
