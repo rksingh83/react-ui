@@ -42,7 +42,7 @@ class App extends React.Component{
     <Switch>
     <Route  exact path ='/login' component ={LoginPage}/>
     <Route exact path ='/folder' component={SideBar}/>
-    <Route exact path ='/' component={Home}/>
+    <Route exact path ='/' component={LoginPage}/>
     <Route exact path ='/signup' component={SingnUp}/>
     <Route exact path ='/otp' component={OTP}/> 
     <Route exact path ='/uploadFile' component={UploadFile}/> 

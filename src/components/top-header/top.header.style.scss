@@ -1,6 +1,7 @@
 svg{
     width: 30%;
     cursor: pointer;
+    height: 45%;
 }
 .custom-input{
 display: block;
@@ -16,4 +17,8 @@ display: block;
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.col-text-style{
+    font-size: 1rem;
+    font-weight: 500;
 }
