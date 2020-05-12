@@ -64,7 +64,7 @@ const LoginPage = ({history ,setCurrentUser ,setCurrentFile})=>{
     } )
   }
   return(
-    <div className ="row mt-4p">
+    <div className ="row mt-4">
     <div className ="container">
       <div className ="col col-md-6 col-lg-4 col-xs-10">
      <div className = "card card-body">

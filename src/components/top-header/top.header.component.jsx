@@ -60,8 +60,8 @@ const TopHeader = ({saveFolder ,fillAllDataHandler , selectedItems , totalFolder
              deleteHandler(requestFile ,restArr) ;
     }
     return(
-        <div className ="row" style ={topRowStyle}>
-        <div className ="col-md-12 ">
+        <div className ="row secondary-header" style ={topRowStyle}>
+        <div className ="col-md-12">
             <div className ="row">
             <div className ="col-md-2">
             <input

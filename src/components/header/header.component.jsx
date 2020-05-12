@@ -17,7 +17,7 @@ const Header =({currentUser,hidden})=>{
   const isToken = Cookies.get('token');
  
 return(
-  <nav className="navbar navbar-expand-lg navbar-light bg-dark">
+  <nav className="navbar navbar-expand-lg navbar-light bg-light">
 <div className ='header'>
 
 <Link className='logo-container' to='/'>
@@ -26,7 +26,7 @@ return(
 <div className='options'>
 <Link className ='option' to ='/'>Home</Link>
 
-{currentUser?<Link className ='option' to ='/folder'>Create Folder</Link>:""}
+{currentUser?"":<Link className ='option' to ='/folder'>Forgot Password</Link>}
 {currentUser?"":<Link className ='option' to ='/login'>Login</Link>}
 {currentUser?"":<Link className ='option' to ='/signup'>Signup</Link>}
 {currentUser?<Link className ='option' to ='/logout'>Logout</Link>:""}
