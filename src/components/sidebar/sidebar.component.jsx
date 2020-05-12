@@ -10,7 +10,7 @@ const SideBar = ()=>{
     const [totalFolder ,setTotalFolder]= useState([])
     const [selectedFolder ,setSelectedFolder]= useState({})
     const [finalCount ,setFinalCount]= useState({})
-    
+    const [isLoading ,setIsLoading ] = useState(false)
     const [LiElement ,setLiEl]= useState(totalEle)
     const [activeIndex ,setActiveIndex] = useState(0)
     const [selectedItemsCount ,setSelectedItemsCount] = useState(null)
@@ -19,6 +19,7 @@ const SideBar = ()=>{
         height: "90vh"
     }
     const saveFolder = (fileName ,fileDescription ,id) => {
+           setIsLoading(true)
         const dateCreated = "123";
         const requestFile = {
           filefolderRequest: [{ fileName, fileDescription ,dateCreated ,id}],
@@ -47,7 +48,10 @@ const SideBar = ()=>{
      },[]);
      const pushName = (name) => {
         setTotalFolder([...totalFolder, name]);
-        console.log(totalFolder)
+  
+        setIsLoading(false) ;
+        setSelectedFolder({})
+
       };
       const reNameFolderHandler = (name,des,id)=>{
              console.log(name)
@@ -68,6 +72,8 @@ const SideBar = ()=>{
             })
         }     
             setTotalFolder(updated)
+            setIsLoading(false);
+            setSelectedFolder({})
           }
     const selectedFolderCountHandler = (id , value)=>{
           let tempObj = {}
@@ -99,7 +105,7 @@ const SideBar = ()=>{
             </ul>
             </div>
             <div className ="col-md-9">
-            <FolderDisplay selectedFolderCount ={selectedFolderCountHandler}  reNameFolder ={reNameFolderHandler} folders ={totalFolder}/>
+            <FolderDisplay  isLoading ={isLoading} selectedFolderCount ={selectedFolderCountHandler}  reNameFolder ={reNameFolderHandler} folders ={totalFolder}/>
             </div>
         </div>
         </React.Fragment>

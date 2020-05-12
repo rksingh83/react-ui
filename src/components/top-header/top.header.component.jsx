@@ -3,7 +3,9 @@
 import React ,{useState} from 'react'
 import Modal from "react-bootstrap/Modal";
 import Input from "../boostrapinput/input.component";
-
+import {ReactComponent as Delete} from '../../assets/delete.svg';
+import {ReactComponent as Pencil} from '../../assets/edit.svg';
+import './top.header.style.scss'
 const TopHeader = ({saveFolder , selectedItems , totalFolders ,deleteHandler})=>{
   
     const [show, setShow] = useState(false);
@@ -39,9 +41,7 @@ const TopHeader = ({saveFolder , selectedItems , totalFolders ,deleteHandler})=>
             }
             
         }
-        console.log(deletedArr);
-        console.log(totalFolders);
-        console.log(isDelete) ;
+
         setId(deletedArr[0].id);
         addDisc(deletedArr[0].fileDescription);
         addName(deletedArr[0].fileName);
@@ -61,11 +61,21 @@ const TopHeader = ({saveFolder , selectedItems , totalFolders ,deleteHandler})=>
         <div className ="row" style ={topRowStyle}>
         <div className ="col-md-12 ">
             <div className ="row">
-            <div className ="col-md-2">Search Anything</div>
+            <div className ="col-md-2">
+            <input
+            placeholder="Search anything.."
+            value={""}
+            handleChange={""}
+            name="search"
+            type="input"
+            className ="custom-input"
+          ></input>
+              </div>
             <div className ="col-md-1">Share</div>
-            <div className ="col-md-1"  onClick={()=>reNameFolder(true)}>Delete</div>
+            <div className =  {`col-md-1 ${(totalItem==0)?"hideCount":""}`}  onClick={()=>reNameFolder(true)}><Delete/> Delete</div>
             <div className ="col-md-1">Move</div>
-            <div className = {`col-md-1 ${(totalItem>1)?"hideCount":""}`} onClick={()=>reNameFolder(false)}>Edit</div>
+            <div className = {`col-md-1 ${(totalItem>1||totalItem==0)?"hideCount":""}`} onClick={()=>reNameFolder(false)}>
+              <Pencil/>  Edit</div>
             <div className ="col-md-1" onClick={()=>setShow(true)}>Create Folder</div>
     <div className = {`col-md-1 ${(totalItem==0)?"hideCount":""}`}>{totalItem} Selected</div>
     <div className ="col-md-1" onClick={()=>window.location.reload()}>Refresh</div>
