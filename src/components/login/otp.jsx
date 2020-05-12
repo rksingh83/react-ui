@@ -87,6 +87,12 @@ const OTP = ({history})=>{
   }
 export const ForgotPassword = ({history})=>{
   const [email ,setEmail] = useState('') ;
+  const [emailOtp ,setOtp] = useState('') ;
+  const [password ,setPassword] = useState('') ;
+  const [isDisplayOtp ,setIsDisplayOtpInput] = useState(false) ;
+  const [isDisplayVerify,setIsDisplayOtpSend] = useState(true) ;
+  const [isDisplaySavePass ,setIsDisplaySavePass] = useState(false) ;
+  
  const  sendOtpHandler =()=>{
    if(email=='')
      alert('Enter Email')
@@ -97,13 +103,42 @@ export const ForgotPassword = ({history})=>{
      if(res.data.error){
          alert(res.data.error) 
          if(res.data.code==200){
-           history.push('/verify');
+          setIsDisplayOtpInput(true);
+          setIsDisplayOtpSend(false)
            
          }
      }
   }) 
   }
+  const otpHandler = ()=>{
+    Post('mydiginotes/forgotOtpVerification',{emailOtp ,email})
+    .then(res=>{
+      console.log(res)
+       if(res.data.error){
+           alert(res.data.error) 
 
+       }
+       if(res.data.code==200){
+         console.log("IN 200")
+         setIsDisplayOtpInput(false);
+         setIsDisplaySavePass(true)
+      }
+    }) 
+  }
+  const savePassHandler = ()=>{
+    Post('mydiginotes/newPassword',{password ,email})
+    .then(res=>{
+      console.log(res)
+       if(res.data.error){
+           alert(res.data.error) 
+
+       }
+       if(res.data.code==200){
+         console.log("IN 200")
+        history.push('/login')
+      }
+    })
+  }
   return (
     <div className ="row mt-4">
     <div className ="container">
@@ -115,10 +150,40 @@ export const ForgotPassword = ({history})=>{
    value ={email} handleChange={(e)=>setEmail(e.target.value)} name='otp' required
    type='input'>
   </Input>
+  <div className ={`${(isDisplayOtp)?"":"hideInput"}`}>
+  <Input  placeholder ="Enter OTP" label ='OTP'   
+       value ={emailOtp} handleChange={(e)=>setOtp(e.target.value)} name='otp' required
+       type='input'>
+      </Input>
+  </div>
+  <div className ={`${(isDisplayVerify)?"":"hideInput"}`}>
   <Input label =''
+
    value = "Send Otp"  className= "btn btn-success" onClick={sendOtpHandler} name='cnfpass'
    type='button'>
   </Input>
+</div>
+
+
+  <div className ={`${(isDisplayOtp)?"":"hideInput"}`}>
+  <Input label =''
+       value = "Verify"  className= "btn btn-success" onClick={otpHandler} name='cnfpass'
+       type='button'>
+      </Input>
+      </div>
+      <div className ={`${(isDisplaySavePass)?"":"hideInput"}`}>
+  <Input  placeholder ="Enter New Password" label ='Password'   
+       value ={password} handleChange={(e)=>setPassword(e.target.value)} name='otp' required
+       type='input'>
+      </Input>
+  </div>
+      <div className ={`${(isDisplaySavePass)?"":"hideInput"}`}>
+     <Input label =''
+       value = "Save Password"  className= "btn btn-success" onClick={savePassHandler} name='cnfpass'
+       type='button'>
+      </Input>
+      </div>
+      
 </form>
 </div>
 </div></div>
@@ -126,4 +191,5 @@ export const ForgotPassword = ({history})=>{
 </div>
 )
 }
+
   export default OTP ;
