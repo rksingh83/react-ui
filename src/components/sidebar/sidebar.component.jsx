@@ -13,11 +13,18 @@ const SideBar = ()=>{
     const [isLoading ,setIsLoading ] = useState(false)
     const [LiElement ,setLiEl]= useState(totalEle)
     const [activeIndex ,setActiveIndex] = useState(0)
-    const [selectedItemsCount ,setSelectedItemsCount] = useState(null)
+    const [selectedItemsCount ,setSelectedItemsCount] = useState(null);
+    const [searchItem ,setSearchHandler]  = useState('')
+    const [filteredFolder ,setFilteredFolder]  = useState('')
     const sideBarStyle = {
         border: "1px solid rgba(0, 0, 0, 0.125)",
         height: "90vh"
     }
+    const searchHandler = (e)=>{
+      setSearchHandler(e.target.value)
+      setFilteredFolder(totalFolder.filter(item=>item.fileName.toLowerCase().startsWith(e.target.value.toLowerCase())))
+    }
+
     const saveFolder = (fileName ,fileDescription ,id) => {
            setIsLoading(true)
         const dateCreated = "123";
@@ -28,7 +35,7 @@ const SideBar = ()=>{
         if(id){
           Post("mydiginotes/updateFileFolder", requestFile).then((res) =>updateName(res.data.filefolderRequest[0]));
         }else{
-            pushName(requestFile.filefolderRequest[0])
+          
        Post("mydiginotes/createFileFolder", requestFile).then((res) =>pushName(res.data.filefolderRequest[0]));
         }
       };
@@ -91,6 +98,8 @@ const SideBar = ()=>{
         
        <TopHeader totalFolders = {totalFolder} 
        selectedItems = {selectedFolder} 
+       searchItem ={searchItem} 
+       searchHandler = {searchHandler}
        deleteHandler ={deleteHandler}
        saveFolder ={saveFolder}/>
         <div className ="row">
@@ -105,7 +114,13 @@ const SideBar = ()=>{
             </ul>
             </div>
             <div className ="col-md-9">
-            <FolderDisplay  isLoading ={isLoading} selectedFolderCount ={selectedFolderCountHandler}  reNameFolder ={reNameFolderHandler} folders ={totalFolder}/>
+            <FolderDisplay  isLoading ={isLoading}
+             selectedFolderCount ={selectedFolderCountHandler}
+               reNameFolder ={reNameFolderHandler}
+               displayValue = {false}
+                folders ={totalFolder}
+                searchItem ={searchItem}
+                filteredFolder ={filteredFolder}/>
             </div>
         </div>
         </React.Fragment>

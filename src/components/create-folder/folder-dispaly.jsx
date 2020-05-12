@@ -3,15 +3,17 @@
 import React from  'react' ;
 import CreateFolder from "../create-folder/create-folder.component";
 import TestButton from '../create-folder/create.btn.component' ;
-import GetLoader from '../../ui/loder'
-const FolderDisplay = ({ isLoading ,folders ,reNameFolder ,handleEditShow ,history ,selectedFolderCount})=>{
-   console.log(isLoading)
+import GetLoader from '../../ui/loder' ;
+import './create-folder.style.scss'
+const FolderDisplay = ({ filteredFolder ,searchItem,isLoading ,folders ,reNameFolder ,handleEditShow ,history ,selectedFolderCount})=>{
+  let   localRender =  (searchItem=="")?folders:filteredFolder;
    if(isLoading){
-     return (<GetLoader/>)
+     return (<div className ="loader-display"><GetLoader/></div>)
    }else{
     return(
+    
       <div style={{ display: "flex" }}>
-      {folders.map((item ,index) => (
+      {localRender.map((item ,index) => (
         <CreateFolder
           text={item.fileName}
           des={item.fileDescription} 

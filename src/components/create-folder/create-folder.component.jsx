@@ -5,7 +5,7 @@ import React  ,{useState} from 'react';
 import {ReactComponent as Select} from './interface.svg';
 import './create-folder.style.scss'
 const createHistory = require("history").createBrowserHistory;
-const CreateFolder = ({history ,text ,fileId, des ,imageSrc ,editFolder ,selectedFolderCount})=>{
+const CreateFolder = ({history ,text ,fileId, des ,imageSrc ,editFolder ,selectedFolderCount ,displayValue})=>{
 const style = {
     display : "flex" ,
     alignItems:"center" ,
@@ -17,7 +17,7 @@ const style = {
     margin: "10px"
 
 }
-const [displayClass  ,setDisplayClass] = useState(false)
+const [displayClass  ,setDisplayClass] = useState(displayValue)
  console.log(editFolder)
 const imageStyle = {
     
@@ -38,11 +38,11 @@ const toggleEl = (id)=>{
 
     setDisplayClass(toggleValue) ;
     selectedFolderCount(id ,toggleValue);
-    console.log('TOGGLING VALUE')
-    console.log( id ,toggleValue)
+   
+    
 }
-
-//console.log("ID" ,fileId)
+console.log('TOGGLING VALUE')
+console.log(displayValue)
     return (
         
         <div className= {`mainDiv `} onClick ={()=>toggleEl(fileId)} style ={style}>

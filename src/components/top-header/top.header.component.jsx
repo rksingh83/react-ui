@@ -6,14 +6,14 @@ import Input from "../boostrapinput/input.component";
 import {ReactComponent as Delete} from '../../assets/delete.svg';
 import {ReactComponent as Pencil} from '../../assets/edit.svg';
 import './top.header.style.scss'
-const TopHeader = ({saveFolder , selectedItems , totalFolders ,deleteHandler})=>{
+const TopHeader = ({saveFolder ,fillAllDataHandler , selectedItems , totalFolders ,deleteHandler,searchItem ,searchHandler})=>{
   
     const [show, setShow] = useState(false);
     const [fileName, addName] = useState("");
     const [fileDescription, addDisc] = useState("");
     const [id, setId] = useState('');
     const  saveHandler = ()=>{
-    saveFolder(fileName,fileDescription ,id) ;
+    saveFolder(fileName,fileDescription ,id ) ;
     addName("") ;
     addDisc('') ;
     setId('') ;
@@ -64,8 +64,9 @@ const TopHeader = ({saveFolder , selectedItems , totalFolders ,deleteHandler})=>
             <div className ="col-md-2">
             <input
             placeholder="Search anything.."
-            value={""}
-            handleChange={""}
+            value={searchItem}
+            onChange={searchHandler}
+            onBlur = {fillAllDataHandler}
             name="search"
             type="input"
             className ="custom-input"
