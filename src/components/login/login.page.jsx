@@ -28,7 +28,7 @@ const LoginPage = ({history ,setCurrentUser ,setCurrentFile})=>{
           const code = res.data.code ;
           console.log(code)
           if(code=="411"){
-            console.log("234");
+          
          //  let  history = useHistory();
             Cookies.set('token', res.data.data.authentication.token);
             history.push("/otp");

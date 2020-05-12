@@ -26,7 +26,7 @@ return(
 <div className='options'>
 <Link className ='option' to ='/'>Home</Link>
 
-{currentUser?"":<Link className ='option' to ='/folder'>Forgot Password</Link>}
+{currentUser?"":<Link className ='option' to ='/forgot'>Forgot Password</Link>}
 {currentUser?"":<Link className ='option' to ='/login'>Login</Link>}
 {currentUser?"":<Link className ='option' to ='/signup'>Signup</Link>}
 {currentUser?<Link className ='option' to ='/logout'>Logout</Link>:""}

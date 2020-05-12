@@ -6,7 +6,7 @@ import {Switch,Route,Redirect} from 'react-router-dom';
 import   './homepage.style.scss';
 import Header from './components/header/header.component';
 import LoginPage from './components/login/login.page';
-import  OTP from './components/login/otp'; 
+import  OTP  ,{ForgotPassword ,VerifyOTP} from './components/login/otp'; 
 import UploadFile from  './components/login/uploadfile' ;
 import LouOut from './components/login/logout'
 import  {setCurrentFile} from './redux/file/file.actions' ;
@@ -40,11 +40,14 @@ class App extends React.Component{
     <div className="App">
     <Header/>
     <Switch>
-    <Route  exact path ='/login' component ={LoginPage}/>
-    <Route exact path ='/folder' component={SideBar}/>
+    <Route  exact path ='/login' component ={LoginPage}/>>
     <Route exact path ='/' component={LoginPage}/>
     <Route exact path ='/signup' component={SingnUp}/>
     <Route exact path ='/otp' component={OTP}/> 
+    <Route exact path ='/verify' component={VerifyOTP}/> 
+    <Route exact path ='/forgot' component={ForgotPassword}/> 
+    <Route exact path ='/folder' component={SideBar}/>
+    
     <Route exact path ='/uploadFile' component={UploadFile}/> 
     
     <Route exact path ='/logout' component={LouOut}/>
