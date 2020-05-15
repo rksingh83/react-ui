@@ -4,6 +4,8 @@ import {Post ,Get} from '../../service/service.setup' ;
 import {connect} from 'react-redux';
 import  {setCurrentUser} from '../../redux/user/user.actions' ;
 import Cookies from 'js-cookie' ;
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const createHistory = require("history").createBrowserHistory;
 
 const OTP = ({history})=>{
@@ -95,13 +97,13 @@ export const ForgotPassword = ({history})=>{
   
  const  sendOtpHandler =()=>{
    if(email=='')
-     alert('Enter Email')
+   toast('Enter Email')
  
       Post('mydiginotes/forgotpassword',{email})
   .then(res=>{
      console.log(res)
      if(res.data.error){
-         alert(res.data.error) 
+      toast.error(res.data.error) 
          if(res.data.code==200){
           setIsDisplayOtpInput(true);
           setIsDisplayOtpSend(false)
@@ -115,11 +117,10 @@ export const ForgotPassword = ({history})=>{
     .then(res=>{
       console.log(res)
        if(res.data.error){
-           alert(res.data.error) 
+        toast.error(res.data.error) 
 
        }
        if(res.data.code==200){
-         console.log("IN 200")
          setIsDisplayOtpInput(false);
          setIsDisplaySavePass(true)
       }
@@ -130,17 +131,18 @@ export const ForgotPassword = ({history})=>{
     .then(res=>{
       console.log(res)
        if(res.data.error){
-           alert(res.data.error) 
+        toast.error(res.data.error) 
 
        }
        if(res.data.code==200){
-         console.log("IN 200")
+    
         history.push('/login')
       }
     })
   }
   return (
     <div className ="row mt-4">
+    <ToastContainer></ToastContainer>
     <div className ="container">
       <div className ="col col-md-6 col-lg-4 col-xs-10">
      <div className = "card card-body">

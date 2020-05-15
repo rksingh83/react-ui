@@ -9,6 +9,7 @@ import  {setCurrentUser} from '../../redux/user/user.actions' ;
 import  {setCurrentFile} from '../../redux/file/file.actions' ;
 import Cookies from 'js-cookie'
 import {Link} from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import './lon.style.scss';
 //import { useHistory } from "react-router-dom";
 const createHistory = require("history").createBrowserHistory;
@@ -23,7 +24,7 @@ const LoginPage = ({history ,setCurrentUser ,setCurrentFile})=>{
     .then((res)=>{
     
         if(res.data.error){
-           alert(res.data.error)
+          toast.error(res.data.error)
         }else{
          
           const code = res.data.code ;
@@ -66,6 +67,7 @@ const LoginPage = ({history ,setCurrentUser ,setCurrentFile})=>{
   }
   return(
     <div className ="row mt-4">
+     < ToastContainer/>
     <div className ="container">
       <div className ="col col-md-6 col-lg-4 col-xs-10">
      <div className = "card card-body">
