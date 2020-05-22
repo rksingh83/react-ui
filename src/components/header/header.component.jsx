@@ -27,6 +27,7 @@ return(
 <Link className ='option' to ='/'>Home</Link>
 
 
+
 {currentUser?"":<Link className ='option' to ='/login'>Login</Link>}
 {currentUser?"":<Link className ='option' to ='/signup'>Signup</Link>}
 {currentUser?<Link className ='option' to ='/logout'>Logout</Link>:""}

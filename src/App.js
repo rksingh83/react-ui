@@ -46,7 +46,7 @@ class App extends React.Component{
     <Route exact path ='/forgot' component={ForgotPassword}/> 
     <Route exact path ='/folder' component={SideBar}/>
     
-    <Route exact path ='/uploadFile' component={UploadFile}/> 
+    <Route  path ='/uploadFile/:id' component={UploadFile}/> 
     
     <Route exact path ='/logout' component={LouOut}/>
   

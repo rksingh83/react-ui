@@ -5,14 +5,14 @@ import CreateFolder from "../create-folder/create-folder.component";
 import TestButton from '../create-folder/create.btn.component' ;
 import GetLoader from '../../ui/loder' ;
 import './create-folder.style.scss'
-const FolderDisplay = ({ filteredFolder ,searchItem,isLoading ,folders ,reNameFolder ,handleEditShow ,history ,selectedFolderCount})=>{
+const FolderDisplay = ({ history,filteredFolder ,searchItem,isLoading ,folders ,reNameFolder ,handleEditShow  ,selectedFolderCount})=>{
   let   localRender =  (searchItem=="")?folders:filteredFolder;
    if(isLoading){
      return (<div className ="loader-display"><GetLoader/></div>)
    }else{
     return(
     
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex" ,flexWrap:"wrap" }}>
       {localRender.map((item ,index) => (
         <CreateFolder
           text={item.fileName}
@@ -20,7 +20,8 @@ const FolderDisplay = ({ filteredFolder ,searchItem,isLoading ,folders ,reNameFo
           fileId ={item.id}
           imageSrc="./download.png"
           key ={index} 
-          editFolder = {reNameFolder} 
+          editFolder = {reNameFolder}
+          history = {history} 
           selectedFolderCount = {selectedFolderCount}
        
         ></CreateFolder>

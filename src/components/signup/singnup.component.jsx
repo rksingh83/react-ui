@@ -39,7 +39,7 @@ class SingnUp extends React.Component{
      } )
        
    }
-    ValidateInput = (e)=>{
+    ValidateInput = (user)=>{
     
     }
 

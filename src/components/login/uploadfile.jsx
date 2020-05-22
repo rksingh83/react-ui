@@ -1,34 +1,35 @@
-import React , {useState} from 'react' ;
+import React , {useState , useEffect} from 'react' ;
 import Input from '../boostrapinput/input.component';
 import {Post ,Get} from '../../service/service.setup' ;
 import {connect} from 'react-redux';
 import  {setCurrentUser} from '../../redux/user/user.actions' ;
 import Cookies from 'js-cookie' ;
+import DisplayImages from '../display-uploaded-images.component/display-uploded-images'
 const createHistory = require("history").createBrowserHistory;
 
-const UploadFile = ({history})=>{
+const UploadFile = ({match})=>{
     const [file ,setOtp] = useState('') ;
+    const [isLoading, setIsLoading] = useState(false);
+    const [images ,setImages] = useState([]) ;
     const otpHandler = ()=>{
         
     } ;
+    console.log("MATCH")
+    console.log(match)
+    useEffect(() => {
+      const requestFile = { id:match.params.id}
+      setIsLoading(true)
+      Post('mydiginotes/getAllFileImages',requestFile)
+      .then((res)=>{
+       console.log(setImages(res.data.imageInput))
+       setIsLoading(false)
+     })
+   },[]);
     return (
         <div className ="row mt-4">
-        <div className ="container">
-          <div className ="col col-md-6 col-lg-4 col-xs-10">
-         <div className = "card card-body">
-        <div className='sign-up'>
-      <form >
-      <Input  placeholder ="UploadFile" label ='UploadFile'
-       value ={file} handleChange={(e)=>setOtp(e.target.value)} name='otp' required
-       type='file'>
-      </Input>
-      <Input label =''
-       value = "Save"  className= "btn btn-success" onClick={otpHandler} name='cnfpass'
-       type='button'>
-      </Input>
-   </form>
-   </div>
-   </div></div>
+
+   <div className ="container">
+     <DisplayImages images ={images} isLoading ={isLoading}></DisplayImages>
    </div>
    </div>
     )

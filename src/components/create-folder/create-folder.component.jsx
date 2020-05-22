@@ -1,12 +1,14 @@
 
 
 
-import React  ,{useState} from 'react';
+import React  ,{useState ,useEffect} from 'react';
 import {ReactComponent as Select} from './interface.svg';
 import './create-folder.style.scss'
 const createHistory = require("history").createBrowserHistory;
 const CreateFolder = ({history ,text ,fileId, des ,imageSrc ,editFolder ,selectedFolderCount ,displayValue})=>{
-const style = {
+    console.log("HISTORY")
+    console.log(history)
+    const style = {
     display : "flex" ,
     alignItems:"center" ,
     flexDirection :"column" ,
@@ -21,7 +23,9 @@ const [displayClass  ,setDisplayClass] = useState(displayValue)
  console.log(editFolder)
 const imageStyle = {
     
-    width:"30%"
+    width:"30%",
+    zIndex:2
+
 
 }
 ;
@@ -41,6 +45,11 @@ const toggleEl = (id)=>{
    
     
 }
+const nevigateFolder =(fileId)=>{
+    history.push(`/uploadFile/${fileId}`);
+    console.log("NVIGATE")
+}
+
 console.log('TOGGLING VALUE')
 console.log(displayValue)
     return (
@@ -50,7 +59,7 @@ console.log(displayValue)
         <div  className  = {`hoverDiv ${displayClass?"active":""}`} >
             <Select style ={{width:"30%",height:"30%"}} onClick = {()=>editFolder(text ,des ,fileId)}></Select>
         </div>
-         <img  onClick ={()=>history.push('/uploadFile')}  style={imageStyle} src = {require(`${imageSrc}`)}></img>  
+         <img  onClick ={()=>nevigateFolder(fileId)}  style={imageStyle} src = {require(`${imageSrc}`)}></img>  
     <p onClick = {()=>editFolder(text ,des ,fileId)}>{text}</p> 
         </div>
     )

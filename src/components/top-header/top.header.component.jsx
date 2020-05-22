@@ -7,6 +7,7 @@ import {ReactComponent as Delete} from '../../assets/delete.svg';
 import {ReactComponent as Pencil} from '../../assets/edit.svg';
 import {ReactComponent as FolderCreate} from '../../assets/folder.svg';
 import {ReactComponent as Refresh} from '../../assets/referesh.svg';
+import {ReactComponent as Cross} from '../../assets/cross.svg';
 import './top.header.style.scss'
 const TopHeader = ({saveFolder ,fillAllDataHandler , selectedItems , totalFolders ,deleteHandler,searchItem ,searchHandler})=>{
   
@@ -79,7 +80,7 @@ const TopHeader = ({saveFolder ,fillAllDataHandler , selectedItems , totalFolder
               <Pencil onClick={()=>reNameFolder(false)}/>  Edit</div>
             <div className ="col-md-2 col-text-style"><Refresh  onClick={()=>setShow(true)}/> Create Folder</div>
     <div className ="col-md-2 col-text-style"><FolderCreate onClick={()=>window.location.reload()}/> Refresh</div> 
-    <div className = {`col-md-1 col-text-style ${(totalItem==0)?"hideCount":""}`}>{totalItem} Selected</div>
+    <div className = {`col-md-2 col-text-style ${(totalItem==0)?"hideCount":""}`}><span className ="count">{totalItem}</span> Selected <Cross onClick={()=>window.location.reload()}></Cross></div>
             
             </div>
         </div>
