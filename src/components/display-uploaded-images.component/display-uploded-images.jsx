@@ -6,8 +6,9 @@ import React from  'react' ;
 import CreateFolder from "../create-folder/create-folder.component";
 import TestButton from '../create-folder/create.btn.component' ;
 import GetLoader from '../../ui/loder' ;
-import './create-image.style.scss'
-const DisplayImages = ({images , isLoading})=>{
+import './create-image.style.scss' ;
+
+const DisplayImages = ({images , isLoading , onHove})=>{
 
    if(isLoading){
      return (<div className ="loader-display"><GetLoader/></div>)
@@ -20,6 +21,7 @@ const DisplayImages = ({images , isLoading})=>{
        <img
          src ={item.align_image_thumb}
          key = {index}
+         onMouseEnter ={()=>onHove(item.id,item.description)}
         ></img>
         </div>
       ))}
