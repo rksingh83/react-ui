@@ -8,7 +8,7 @@ import TestButton from '../create-folder/create.btn.component' ;
 import GetLoader from '../../ui/loder' ;
 import './create-image.style.scss' ;
 
-const DisplayImages = ({images , folderId ,isLoading , onHove , history})=>{
+const DisplayImages = ({images , folderId ,isLoading , onLeave , onHove , history})=>{
 
    if(isLoading){
      return (<div className ="loader-display"><GetLoader/></div>)
@@ -23,7 +23,8 @@ const DisplayImages = ({images , folderId ,isLoading , onHove , history})=>{
          src ={item.align_image_thumb}
          key = {index}
          onClick = {()=>history.push(`/original/${item.id}/${folderId}`)}
-         onMouseEnter ={()=>onHove(item.id,item.description)}
+         onMouseEnter ={()=>onHove(item.pageNumber,item.description ,true)}
+         onMouseLeave = {()=>onLeave(false)}
         ></img>
         </div>
       ))}

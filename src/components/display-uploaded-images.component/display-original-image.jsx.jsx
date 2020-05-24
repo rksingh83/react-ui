@@ -11,6 +11,7 @@ import './create-image.style.scss' ;
 import {ReactComponent as Cross} from '../../assets/cross.svg';
 import ImageSlider from  './image.slider' ;
 import { ToastContainer, toast } from 'react-toastify';
+import TopHeaderWithBack from '../top-header/simple-top.back';
 const DisplayOriginalImage = ({match ,history})=>{
    const [imageUrl , setImageUrl] = useState('');
    const [allImages , setAllImages] = useState([]);
@@ -49,16 +50,17 @@ const DisplayOriginalImage = ({match ,history})=>{
    right:"3rem"
  }
     return(
-    
-      <div style={{ display: "flex" ,flexWrap:"wrap"}}>
+       <>
+       <TopHeaderWithBack history={history}/>
+      <div  style={{ display: "flex" ,flexWrap:"wrap"}}>
 
 
    <ImageSlider current ={match.params.id}
    history ={history}
     images ={allImages}></ImageSlider>
     </div>
+    </>
     )
-   
 
 }
 export default DisplayOriginalImage ;

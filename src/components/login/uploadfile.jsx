@@ -6,7 +6,8 @@ import  {setCurrentUser} from '../../redux/user/user.actions' ;
 import Cookies from 'js-cookie' ;
 import LeftSideBar from '../sidebar/left.sidebar.compoent' ;
 import DisplayImages from '../display-uploaded-images.component/display-uploded-images';
-import DisplayImageDescription from  '../display-discription/display-discription'
+import DisplayImageDescription from  '../display-discription/display-discription' ;
+import TopHeaderWithBack from '../top-header/simple-top.back';
 
 const UploadFile = ({match , history})=>{
     const [file ,setOtp] = useState('') ;
@@ -14,6 +15,7 @@ const UploadFile = ({match , history})=>{
     const [images ,setImages] = useState([]) ;
     const [imageDescription ,setImagesDescription] = useState('Hi') ;
     const [pageNumber ,setPageNumber] = useState('') ;
+    const [iSDisplayDiv ,setIsDisplayDiv] = useState(false) ;
     const [activeIndex ,setActiveIndex] = useState(0) ;
     const [folderId , setFolderId] = useState(match.params.id)
 
@@ -30,10 +32,13 @@ const UploadFile = ({match , history})=>{
     const otpHandler = ()=>{
         
     } ;
-    const showContentHandler = (pageNo ,des)=>{
-     
+    const showContentHandler = (pageNo ,des ,flag)=>{
+      setIsDisplayDiv(flag)
       setImagesDescription(des);
       setPageNumber(pageNo)
+    }
+    const hideContentHandler = (flag)=>{
+    setIsDisplayDiv(flag)
     }
     useEffect(() => {
       const requestFile = { id:match.params.id}
@@ -46,7 +51,9 @@ const UploadFile = ({match , history})=>{
    },[]);
   
     return (
-        <div className ="row mt-4">
+        <> 
+        <TopHeaderWithBack history={history}/>
+        <div className ="row">
 <div className ="col-md-2">
             <ul className="list-group" style ={sideBarStyle}>
             {totalEle.map((item ,index)=><LeftSideBar 
@@ -57,6 +64,7 @@ const UploadFile = ({match , history})=>{
             />)}
             <DisplayImageDescription 
               pageNumber = {pageNumber}
+              iSDisplayDiv ={iSDisplayDiv}
              imageDescription={imageDescription}/>
             </ul>
             
@@ -64,12 +72,14 @@ const UploadFile = ({match , history})=>{
    <div className ="col-md-9">
      <DisplayImages history = {history}
        onHove ={showContentHandler}
+       onLeave ={hideContentHandler}
        images ={images} 
        folderId ={folderId}
        isLoading ={isLoading}/>
 
    </div>
    </div>
+   </>
     )
   }
 

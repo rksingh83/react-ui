@@ -18,6 +18,7 @@ const SideBar = ({history})=>{
     const [searchItem ,setSearchHandler]  = useState('');
     const [filteredFolder ,setFilteredFolder]  = useState('');
     const [description , setDescription] =  useState('');
+    const [iSDisplayDiv ,setIsDisplayDiv] = useState(false) ;
     const sideBarStyle = {
         border: "1px solid rgba(0, 0, 0, 0.125)",
         height: "90vh"
@@ -95,8 +96,12 @@ const SideBar = ({history})=>{
         .then((res) =>updateName(folderList, true));
     }
    const ToggleDescription = (description)=>{
+    setIsDisplayDiv(true)
     setDescription(description)
    }
+  const  hideDescriptionHandler = (flag)=>{
+    setIsDisplayDiv(flag)
+  }
     return(
         <React.Fragment>
         
@@ -115,7 +120,7 @@ const SideBar = ({history})=>{
             isActive = {(activeIndex==index)?true:false}
             changeActive = {handleActive}
             />)}
-            <DisplayImageDescription imageDescription ={description}/>
+            <DisplayImageDescription iSDisplayDiv = {iSDisplayDiv} imageDescription ={description}/>
             </ul>
             </div>
             <div className ="col-md-9">
@@ -127,6 +132,7 @@ const SideBar = ({history})=>{
                 searchItem ={searchItem}
                 history ={history}
                 ToggleDescription ={ToggleDescription}
+                onLeave = {hideDescriptionHandler}
                 filteredFolder ={filteredFolder}/>
             </div>
         </div>
