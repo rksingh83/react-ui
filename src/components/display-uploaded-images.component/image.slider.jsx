@@ -3,6 +3,7 @@ import React , {useEffect ,useState} from  'react' ;
 import './create-image.style.scss' ;
 import {ReactComponent as Next} from '../../assets/next.svg';
 import {ReactComponent as Back} from '../../assets/back.svg';
+import { ToastContainer, toast } from 'react-toastify';
 const ImageSlider = ({images ,current ,history})=>{
   const styles = {
       position:"absolute"
@@ -27,7 +28,7 @@ const nextImage = ()=>{
     const allImages = document.querySelectorAll('.show-image');
   let currentIndex = getCurrentIndex();
 if(currentIndex == images.length-1){
-    alert("Last Image");
+    toast.error("You've reached last image in the file ");
     return
 }
 if(currentIndex<images.length){
@@ -47,7 +48,7 @@ const prevImage = ()=>{
     const allImages = document.querySelectorAll('.show-image');
   let currentIndex = getCurrentIndex();
 if(currentIndex == 0){
-    alert("Last Image");
+    toast.error("You've reached first image in the file ");
      return
  }
 if(currentIndex<images.length){
@@ -66,6 +67,7 @@ let selectedIndex = images[currentIndex].id;
     return(
          
         <div style ={ParentStyles}>
+            <ToastContainer/>
             {images.map((image,index)=>(
                 <div  className ="show-image" currentindex ={image.id} style = {{display:(current==image.id)?"block":"none"}} key ={index}>
                     <img className ="image" onClick = {()=>history.push(`/last/${image.id}`)} className = "display-image" src ={image.align_image_small} ></img>

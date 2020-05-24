@@ -10,7 +10,7 @@ import {Post ,Get} from '../../service/service.setup' ;
 import './create-image.style.scss' ;
 import {ReactComponent as Cross} from '../../assets/cross.svg';
 import ImageSlider from  './image.slider' ;
-
+import { ToastContainer, toast } from 'react-toastify';
 const DisplayOriginalImage = ({match ,history})=>{
    const [imageUrl , setImageUrl] = useState('');
    const [allImages , setAllImages] = useState([]);
@@ -52,7 +52,7 @@ const DisplayOriginalImage = ({match ,history})=>{
     
       <div style={{ display: "flex" ,flexWrap:"wrap" ,justifyContent:"center",alignItems:"center" }}>
 
-    
+
    <ImageSlider current ={match.params.id}
    history ={history}
     images ={allImages}></ImageSlider>
