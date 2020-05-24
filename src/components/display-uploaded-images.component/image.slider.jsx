@@ -7,6 +7,7 @@ const ImageSlider = ({images ,current ,history})=>{
   const styles = {
       position:"absolute"
   }
+  console.log(images);
   const ParentStyles = {
     position:"relative"
 }
@@ -68,6 +69,9 @@ let selectedIndex = images[currentIndex].id;
             {images.map((image,index)=>(
                 <div  className ="show-image" currentindex ={image.id} style = {{display:(current==image.id)?"block":"none"}} key ={index}>
                     <img className ="image" onClick = {()=>history.push(`/last/${image.id}`)} className = "display-image" src ={image.align_image_small} ></img>
+            <span className ="image-description">Page Number: {image.pageNumber}</span>
+            <span className ="image-description">Date : {image.ff_local_datetime}</span>
+            
                 </div>
             ))}
             <Next className ="next-btn common-btn" onClick ={nextImage} ></Next>
