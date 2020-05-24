@@ -50,7 +50,7 @@ const DisplayOriginalImage = ({match ,history})=>{
  }
     return(
     
-      <div style={{ display: "flex" ,flexWrap:"wrap" ,justifyContent:"center",alignItems:"center" }}>
+      <div style={{ display: "flex" ,flexWrap:"wrap"}}>
 
 
    <ImageSlider current ={match.params.id}

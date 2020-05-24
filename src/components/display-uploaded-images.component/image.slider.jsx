@@ -4,13 +4,27 @@ import './create-image.style.scss' ;
 import {ReactComponent as Next} from '../../assets/next.svg';
 import {ReactComponent as Back} from '../../assets/back.svg';
 import { ToastContainer, toast } from 'react-toastify';
+import LeftSideBar from '../sidebar/left.sidebar.compoent' ;
 const ImageSlider = ({images ,current ,history})=>{
+    const totalEle = ['My Files' ,'Recent' ,'Photos'  ,'Recycle Bin'] ;
+    const [LiElement ,setLiEl]= useState(totalEle);
+    const [activeIndex ,setActiveIndex] = useState(0) ;
+   const handleActive = (e)=>{
+     setActiveIndex(LiElement.indexOf(e));
+     setLiEl(totalEle)
+  }
+  const sideBarStyle = {
+    border: "1px solid rgba(0, 0, 0, 0.125)",
+    height: "90vh"
+}
   const styles = {
       position:"absolute"
   }
   console.log(images);
   const ParentStyles = {
-    position:"relative"
+    position:"relative",
+    display:"flex",
+    justifyContent:"center",
 }
 
 const getCurrentIndex = ()=>{
@@ -65,8 +79,21 @@ let selectedIndex = images[currentIndex].id;
      })
 }
     return(
-         
-        <div style ={ParentStyles}>
+         <>
+         <div className ="col-md-2 p-0">
+
+         <ul className="list-group" style ={sideBarStyle}>
+            {totalEle.map((item ,index)=><LeftSideBar 
+            item={item}
+            key = {index}
+            isActive = {(activeIndex==index)?true:false}
+            changeActive = {handleActive}
+            />)}
+
+            </ul>
+            
+         </div>
+        <div class="col-md-9"style ={ParentStyles}>
             <ToastContainer/>
             {images.map((image,index)=>(
                 <div  className ="show-image" currentindex ={image.id} style = {{display:(current==image.id)?"block":"none"}} key ={index}>
@@ -79,6 +106,7 @@ let selectedIndex = images[currentIndex].id;
             <Next className ="next-btn common-btn" onClick ={nextImage} ></Next>
             <Back className ="prev-btn common-btn" onClick ={prevImage}></Back>
         </div>
+        </>
     )
 }
 
