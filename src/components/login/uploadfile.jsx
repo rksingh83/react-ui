@@ -8,7 +8,7 @@ import LeftSideBar from '../sidebar/left.sidebar.compoent' ;
 import DisplayImages from '../display-uploaded-images.component/display-uploded-images';
 import DisplayImageDescription from  '../display-discription/display-discription'
 
-const UploadFile = ({match})=>{
+const UploadFile = ({match , history})=>{
     const [file ,setOtp] = useState('') ;
     const [isLoading, setIsLoading] = useState(false);
     const [images ,setImages] = useState([]) ;
@@ -60,7 +60,10 @@ const UploadFile = ({match})=>{
             
             </div>
    <div className ="col-md-9">
-     <DisplayImages onHove ={showContentHandler} images ={images} isLoading ={isLoading}></DisplayImages>
+     <DisplayImages history = {history}
+       onHove ={showContentHandler}
+       images ={images} 
+       isLoading ={isLoading}/>
    </div>
    </div>
     )

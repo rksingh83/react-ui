@@ -5,7 +5,7 @@ import CreateFolder from "../create-folder/create-folder.component";
 import TestButton from '../create-folder/create.btn.component' ;
 import GetLoader from '../../ui/loder' ;
 import './create-folder.style.scss'
-const FolderDisplay = ({ history,filteredFolder ,searchItem,isLoading ,folders ,reNameFolder ,handleEditShow  ,selectedFolderCount})=>{
+const FolderDisplay = ({ ToggleDescription , history,filteredFolder ,searchItem,isLoading ,folders ,reNameFolder ,handleEditShow  ,selectedFolderCount})=>{
   let   localRender =  (searchItem=="")?folders:filteredFolder;
    if(isLoading){
      return (<div className ="loader-display"><GetLoader/></div>)
@@ -22,6 +22,7 @@ const FolderDisplay = ({ history,filteredFolder ,searchItem,isLoading ,folders ,
           key ={index} 
           editFolder = {reNameFolder}
           history = {history} 
+          ToggleDescription = {ToggleDescription}
           selectedFolderCount = {selectedFolderCount}
        
         ></CreateFolder>

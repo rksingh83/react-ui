@@ -8,7 +8,7 @@ import TestButton from '../create-folder/create.btn.component' ;
 import GetLoader from '../../ui/loder' ;
 import './create-image.style.scss' ;
 
-const DisplayImages = ({images , isLoading , onHove})=>{
+const DisplayImages = ({images , isLoading , onHove , history})=>{
 
    if(isLoading){
      return (<div className ="loader-display"><GetLoader/></div>)
@@ -21,6 +21,7 @@ const DisplayImages = ({images , isLoading , onHove})=>{
        <img
          src ={item.align_image_thumb}
          key = {index}
+         onClick = {()=>history.push(`/original/${item.id}`)}
          onMouseEnter ={()=>onHove(item.id,item.description)}
         ></img>
         </div>

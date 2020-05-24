@@ -5,7 +5,7 @@ import React  ,{useState ,useEffect} from 'react';
 import {ReactComponent as Select} from './interface.svg';
 import './create-folder.style.scss'
 const createHistory = require("history").createBrowserHistory;
-const CreateFolder = ({history ,text ,fileId, des ,imageSrc ,editFolder ,selectedFolderCount ,displayValue})=>{
+const CreateFolder = ({history ,ToggleDescription ,text ,fileId, des ,imageSrc ,editFolder ,selectedFolderCount ,displayValue})=>{
     console.log("HISTORY")
     console.log(history)
     const style = {
@@ -54,7 +54,7 @@ console.log('TOGGLING VALUE')
 console.log(displayValue)
     return (
         
-        <div className= {`mainDiv `} onClick ={()=>toggleEl(fileId)} style ={style}>
+        <div  onMouseEnter ={()=>ToggleDescription(des)} className= {`mainDiv `} onClick ={()=>toggleEl(fileId)} style ={style}>
     
         <div  className  = {`hoverDiv ${displayClass?"active":""}`} >
             <Select style ={{width:"30%",height:"30%"}} onClick = {()=>editFolder(text ,des ,fileId)}></Select>

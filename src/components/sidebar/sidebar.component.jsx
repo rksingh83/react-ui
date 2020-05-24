@@ -4,7 +4,8 @@ import ModalPop from '../modal/modal.component' ;
 import { Post, Get } from "../../service/service.setup";
 import LeftSideBar from './left.sidebar.compoent' ;
 import FolderDisplay from '../create-folder/folder-dispaly';
-import TopHeader from '../top-header/top.header.component'
+import TopHeader from '../top-header/top.header.component';
+import DisplayImageDescription from  '../display-discription/display-discription';
 const SideBar = ({history})=>{
     const totalEle = ['My Files' ,'Recent' ,'Photos'  ,'Recycle Bin'] ;
     const [totalFolder ,setTotalFolder]= useState([])
@@ -14,8 +15,9 @@ const SideBar = ({history})=>{
     const [LiElement ,setLiEl]= useState(totalEle)
     const [activeIndex ,setActiveIndex] = useState(0)
     const [selectedItemsCount ,setSelectedItemsCount] = useState(null);
-    const [searchItem ,setSearchHandler]  = useState('')
-    const [filteredFolder ,setFilteredFolder]  = useState('')
+    const [searchItem ,setSearchHandler]  = useState('');
+    const [filteredFolder ,setFilteredFolder]  = useState('');
+    const [description , setDescription] =  useState('');
     const sideBarStyle = {
         border: "1px solid rgba(0, 0, 0, 0.125)",
         height: "90vh"
@@ -92,7 +94,9 @@ const SideBar = ({history})=>{
         Post("mydiginotes/updateFileFolder", folderList)
         .then((res) =>updateName(folderList, true));
     }
-   
+   const ToggleDescription = (description)=>{
+    setDescription(description)
+   }
     return(
         <React.Fragment>
         
@@ -111,6 +115,7 @@ const SideBar = ({history})=>{
             isActive = {(activeIndex==index)?true:false}
             changeActive = {handleActive}
             />)}
+            <DisplayImageDescription imageDescription ={description}/>
             </ul>
             </div>
             <div className ="col-md-9">
@@ -121,6 +126,7 @@ const SideBar = ({history})=>{
                 folders ={totalFolder}
                 searchItem ={searchItem}
                 history ={history}
+                ToggleDescription ={ToggleDescription}
                 filteredFolder ={filteredFolder}/>
             </div>
         </div>
