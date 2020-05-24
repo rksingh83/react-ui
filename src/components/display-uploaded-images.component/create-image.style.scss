@@ -2,3 +2,23 @@
     margin: 2rem;
     min-width: 5rem;
 }
+.small-image-div{
+    position:absolute;
+}
+.next-btn{
+    right: -10%;
+}
+.common-btn{
+    position: absolute;
+    top: 10%;
+    width: 50px;
+}
+.prev-btn{
+    left: -10%;
+
+}
+.display-image{
+    width: 80vh;
+    height: 80vh;
+    
+}

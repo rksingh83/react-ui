@@ -8,7 +8,7 @@ import  {setCurrentFile} from '../../redux/file/file.actions' ;
 const createHistory = require("history").createBrowserHistory;
 
   const LouOut = ({ history,setCurrentUser ,setCurrentFile})=>{
-        console.log(setCurrentUser)
+        
         Cookies.set('token','');
        
        setCurrentUser(null)

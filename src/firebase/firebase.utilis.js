@@ -25,7 +25,6 @@ export const firestore = firebase.firestore();
    
    if(!snapShot.exists){
      const {displayName,email} = userAuth;
-     console.log(displayName)
      const createDate = new Date();
      try{
          await userRef.set({displayName,email,createDate})

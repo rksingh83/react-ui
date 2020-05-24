@@ -8,11 +8,12 @@ import TestButton from '../create-folder/create.btn.component' ;
 import GetLoader from '../../ui/loder' ;
 import './create-image.style.scss' ;
 
-const DisplayImages = ({images , isLoading , onHove , history})=>{
+const DisplayImages = ({images , folderId ,isLoading , onHove , history})=>{
 
    if(isLoading){
      return (<div className ="loader-display"><GetLoader/></div>)
    }else{
+   
     return(
     
       <div style={{ display: "flex" ,flexWrap:"wrap" }}>
@@ -21,7 +22,7 @@ const DisplayImages = ({images , isLoading , onHove , history})=>{
        <img
          src ={item.align_image_thumb}
          key = {index}
-         onClick = {()=>history.push(`/original/${item.id}`)}
+         onClick = {()=>history.push(`/original/${item.id}/${folderId}`)}
          onMouseEnter ={()=>onHove(item.id,item.description)}
         ></img>
         </div>

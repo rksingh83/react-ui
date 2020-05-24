@@ -6,8 +6,7 @@ import {ReactComponent as Select} from './interface.svg';
 import './create-folder.style.scss'
 const createHistory = require("history").createBrowserHistory;
 const CreateFolder = ({history ,ToggleDescription ,text ,fileId, des ,imageSrc ,editFolder ,selectedFolderCount ,displayValue})=>{
-    console.log("HISTORY")
-    console.log(history)
+   
     const style = {
     display : "flex" ,
     alignItems:"center" ,
@@ -20,7 +19,7 @@ const CreateFolder = ({history ,ToggleDescription ,text ,fileId, des ,imageSrc ,
 
 }
 const [displayClass  ,setDisplayClass] = useState(displayValue)
- console.log(editFolder)
+ 
 const imageStyle = {
     
     width:"30%",
@@ -37,7 +36,7 @@ const hover = {
     background:"rgba(0, 0, 0, 0.125)"
 }
 const toggleEl = (id)=>{
-    console.log(id) ;
+    
     const toggleValue = !displayClass;
 
     setDisplayClass(toggleValue) ;
@@ -47,11 +46,10 @@ const toggleEl = (id)=>{
 }
 const nevigateFolder =(fileId)=>{
     history.push(`/uploadFile/${fileId}`);
-    console.log("NVIGATE")
+    
 }
 
-console.log('TOGGLING VALUE')
-console.log(displayValue)
+
     return (
         
         <div  onMouseEnter ={()=>ToggleDescription(des)} className= {`mainDiv `} onClick ={()=>toggleEl(fileId)} style ={style}>

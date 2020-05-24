@@ -9,33 +9,18 @@ import GetLoader from '../../ui/loder' ;
 import {Post ,Get} from '../../service/service.setup' ;
 import './create-image.style.scss' ;
 import {ReactComponent as Cross} from '../../assets/cross.svg';
-import ImageSlider from  './image.slider' ;
 
-const DisplayOriginalImage = ({match ,history})=>{
-   const [imageUrl , setImageUrl] = useState('');
-   const [allImages , setAllImages] = useState([]);
- 
+const DisplayLastImage = ({match ,history})=>{
+   const [imageUrl , setImageUrl] = useState('')
   useEffect(() => {
     const requestFile = { ids:[match.params.id],imagetype:"original",}
   
     Post('mydiginotes/getAnyCloudImages',requestFile)
     .then((res)=>{
-   //  console.log((res.data.imageInput[0].align_image_org))
+     
      setImageUrl(res.data.imageInput[0].align_image_org)
      
-   }) ;
-   const requestImages = { id:match.params.folderId}
- 
-   Post('mydiginotes/getAllFileImages',requestImages)
-   .then((res)=>{
-   const   allCloud = [] ;
-     res.data.imageInput.forEach((image=>allCloud.push(image.id)))
-     Post('mydiginotes/getAnyCloudImages',{ids:allCloud ,imagetype:"small"})
-     .then((res)=>{
-      setAllImages((res.data.imageInput))
-    }) ;
    })
-
  },[]);
  const styleImage = {
    width:"80vh",
@@ -51,14 +36,16 @@ const DisplayOriginalImage = ({match ,history})=>{
     return(
     
       <div style={{ display: "flex" ,flexWrap:"wrap" ,justifyContent:"center",alignItems:"center" }}>
+        <Cross onClick = {()=>history.goBack()} style  ={crossStyle}></Cross>
+       <img
+       style ={styleImage}
+         src ={`${imageUrl}`}
 
-    
-   <ImageSlider current ={match.params.id}
-   history ={history}
-    images ={allImages}></ImageSlider>
+        ></img>
+
     </div>
     )
    
 
 }
-export default DisplayOriginalImage ;
+export default DisplayLastImage ;

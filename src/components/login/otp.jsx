@@ -50,13 +50,13 @@ const OTP = ({history})=>{
     const otpHandler = ()=>{
         Post('mydiginotes/forgotOtpVerification',{emailOtp ,email})
         .then(res=>{
-          console.log(res)
+         
            if(res.data.error){
                alert(res.data.error) 
 
            }
            if(res.data.code==200){
-             console.log("IN 200")
+         
             history.push('/folder')
           }
         }) 
@@ -101,7 +101,7 @@ export const ForgotPassword = ({history})=>{
  
       Post('mydiginotes/forgotpassword',{email})
   .then(res=>{
-     console.log(res)
+  
      if(res.data.error){
       toast.error(res.data.error) 
          if(res.data.code==200){
@@ -115,7 +115,7 @@ export const ForgotPassword = ({history})=>{
   const otpHandler = ()=>{
     Post('mydiginotes/forgotOtpVerification',{emailOtp ,email})
     .then(res=>{
-      console.log(res)
+    
        if(res.data.error){
         toast.error(res.data.error) 
 
@@ -129,7 +129,7 @@ export const ForgotPassword = ({history})=>{
   const savePassHandler = ()=>{
     Post('mydiginotes/newPassword',{password ,email})
     .then(res=>{
-      console.log(res)
+   
        if(res.data.error){
         toast.error(res.data.error) 
 

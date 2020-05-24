@@ -63,7 +63,7 @@ const SideBar = ({history})=>{
 
       };
       const reNameFolderHandler = (name,des,id)=>{
-             console.log(name)
+          
       }
       const updateName =(file ,isDeleted=false)=>{
         let updated = [] ;

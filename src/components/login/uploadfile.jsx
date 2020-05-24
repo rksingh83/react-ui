@@ -15,6 +15,8 @@ const UploadFile = ({match , history})=>{
     const [imageDescription ,setImagesDescription] = useState('Hi') ;
     const [pageNumber ,setPageNumber] = useState('') ;
     const [activeIndex ,setActiveIndex] = useState(0) ;
+    const [folderId , setFolderId] = useState(match.params.id)
+
     const sideBarStyle = {
       border: "1px solid rgba(0, 0, 0, 0.125)",
       height: "90vh"
@@ -29,7 +31,7 @@ const UploadFile = ({match , history})=>{
         
     } ;
     const showContentHandler = (pageNo ,des)=>{
-      console.log(pageNo)
+     
       setImagesDescription(des);
       setPageNumber(pageNo)
     }
@@ -38,7 +40,7 @@ const UploadFile = ({match , history})=>{
       setIsLoading(true)
       Post('mydiginotes/getAllFileImages',requestFile)
       .then((res)=>{
-       console.log(setImages(res.data.imageInput))
+       (setImages(res.data.imageInput))
        setIsLoading(false)
      })
    },[]);
@@ -63,7 +65,9 @@ const UploadFile = ({match , history})=>{
      <DisplayImages history = {history}
        onHove ={showContentHandler}
        images ={images} 
+       folderId ={folderId}
        isLoading ={isLoading}/>
+
    </div>
    </div>
     )

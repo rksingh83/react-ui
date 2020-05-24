@@ -10,7 +10,8 @@ import  OTP  ,{ForgotPassword ,VerifyOTP} from './components/login/otp';
 import UploadFile from  './components/login/uploadfile' ;
 import LouOut from './components/login/logout';
 import SideBar from './components/sidebar/sidebar.component' ;
-import DisplayOriginalImage  from './components/display-uploaded-images.component/display-original-image.jsx'
+import DisplayOriginalImage  from './components/display-uploaded-images.component/display-original-image.jsx';
+import DisplayLastImage  from './components/display-uploaded-images.component/display-last.jsx'
 //import LouOut from './components/login/otp';
 
 import ModalPop from './components/modal/modal.component'
@@ -48,7 +49,9 @@ class App extends React.Component{
     <Route exact path ='/folder' component={SideBar}/>
     
     <Route  path ='/uploadFile/:id' component={UploadFile}/>
-    <Route  path ='/original/:id' component={DisplayOriginalImage}/> 
+    <Route  path ='/original/:id/:folderId' component={DisplayOriginalImage}/> 
+    <Route  path ='/last/:id' component={DisplayLastImage}/> 
+   
     
     <Route exact path ='/logout' component={LouOut}/>
   

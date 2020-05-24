@@ -57,7 +57,7 @@ const TopHeader = ({saveFolder ,fillAllDataHandler , selectedItems , totalFolder
           deleteFolders(requestFile ,restArr) ;
     }
     const deleteFolders = (requestFile ,restArr)=>{
-             console.log(requestFile)
+            
              deleteHandler(requestFile ,restArr) ;
     }
     return(

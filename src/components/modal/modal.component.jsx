@@ -8,7 +8,6 @@ import { Post, Get } from "../../service/service.setup";
 import {connect} from 'react-redux';
 const ModalPop = ({ history, currentFile, openModel }) => {
   const [show, setShow] = useState(openModel);
-  console.log('CURRENT_FILE' ,history) ;
   const [nameFolder, setName] = useState(currentFile);
   const [id, setId] = useState('');
   useEffect(() => {});

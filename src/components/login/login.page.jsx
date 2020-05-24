@@ -28,7 +28,7 @@ const LoginPage = ({history ,setCurrentUser ,setCurrentFile})=>{
         }else{
          
           const code = res.data.code ;
-          console.log(code)
+          
           if(code=="411"){
           
          //  let  history = useHistory();
@@ -38,7 +38,7 @@ const LoginPage = ({history ,setCurrentUser ,setCurrentFile})=>{
              
           }
           if(code == "200"){
-            console.log("console.log") ;
+          
            // let  history = useHistory();
             Cookies.set('token', res.data.data.authentication.token);
             const requestFile = { filefolderRequest:[]}
