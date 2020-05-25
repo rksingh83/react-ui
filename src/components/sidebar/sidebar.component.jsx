@@ -19,6 +19,7 @@ const SideBar = ({history})=>{
     const [filteredFolder ,setFilteredFolder]  = useState('');
     const [description , setDescription] =  useState('');
     const [iSDisplayDiv ,setIsDisplayDiv] = useState(false) ;
+    const [date ,setDate] = useState('') ;
     const sideBarStyle = {
         border: "1px solid rgba(0, 0, 0, 0.125)",
         height: "90vh"
@@ -95,9 +96,10 @@ const SideBar = ({history})=>{
         Post("mydiginotes/updateFileFolder", folderList)
         .then((res) =>updateName(folderList, true));
     }
-   const ToggleDescription = (description)=>{
+   const ToggleDescription = (description , date )=>{
     setIsDisplayDiv(true)
     setDescription(description)
+    setDate(date)
    }
   const  hideDescriptionHandler = (flag)=>{
     setIsDisplayDiv(flag)
@@ -120,7 +122,7 @@ const SideBar = ({history})=>{
             isActive = {(activeIndex==index)?true:false}
             changeActive = {handleActive}
             />)}
-            <DisplayImageDescription iSDisplayDiv = {iSDisplayDiv} imageDescription ={description}/>
+            <DisplayImageDescription isShowNumber ={false} date ={date} iSDisplayDiv = {iSDisplayDiv} imageDescription ={description}/>
             </ul>
             </div>
             <div className ="col-md-9">
@@ -133,6 +135,7 @@ const SideBar = ({history})=>{
                 history ={history}
                 ToggleDescription ={ToggleDescription}
                 onLeave = {hideDescriptionHandler}
+        
                 filteredFolder ={filteredFolder}/>
             </div>
         </div>

@@ -30,3 +30,33 @@
 .image-container>img{
     display: block;
 }
+.tick{
+    position: absolute;
+    height: 25px;
+    width: 25px;
+    top: 2px;
+    right: 2px;
+    height: 25px ;
+    width: 25px;
+    display: none;
+    z-index: 9999;
+    opacity: .5;
+}
+.mainDiv:hover .tick{
+    display:block;
+    
+}
+.ticked{
+    opacity: 1;
+    display: block;
+}
+.folder-link{
+z-index: 3;
+}
+.folder-link:hover{
+    text-decoration: underline;
+    font-size: 18px;
+    color: green;
+    transition: ease;
+
+}

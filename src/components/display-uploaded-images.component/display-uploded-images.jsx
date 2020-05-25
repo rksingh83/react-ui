@@ -23,7 +23,7 @@ const DisplayImages = ({images , folderId ,isLoading , onLeave , onHove , histor
          src ={item.align_image_thumb}
          key = {index}
          onClick = {()=>history.push(`/original/${item.id}/${folderId}`)}
-         onMouseEnter ={()=>onHove(item.pageNumber,item.description ,true)}
+         onMouseEnter ={()=>onHove(item.pageNumber,item.description ,item.ff_local_datetime)}
          onMouseLeave = {()=>onLeave(false)}
         ></img>
         </div>

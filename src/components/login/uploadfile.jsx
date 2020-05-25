@@ -15,6 +15,7 @@ const UploadFile = ({match , history})=>{
     const [images ,setImages] = useState([]) ;
     const [imageDescription ,setImagesDescription] = useState('Hi') ;
     const [pageNumber ,setPageNumber] = useState('') ;
+    const [date ,setDate] = useState('') ;
     const [iSDisplayDiv ,setIsDisplayDiv] = useState(false) ;
     const [activeIndex ,setActiveIndex] = useState(0) ;
     const [folderId , setFolderId] = useState(match.params.id)
@@ -32,10 +33,11 @@ const UploadFile = ({match , history})=>{
     const otpHandler = ()=>{
         
     } ;
-    const showContentHandler = (pageNo ,des ,flag)=>{
-      setIsDisplayDiv(flag)
+    const showContentHandler = (pageNo ,des ,date)=>{
+      setIsDisplayDiv(true)
       setImagesDescription(des);
-      setPageNumber(pageNo)
+      setPageNumber(pageNo);
+      setDate(date)
     }
     const hideContentHandler = (flag)=>{
     setIsDisplayDiv(flag)
@@ -65,6 +67,8 @@ const UploadFile = ({match , history})=>{
             <DisplayImageDescription 
               pageNumber = {pageNumber}
               iSDisplayDiv ={iSDisplayDiv}
+              isShowNumber ={true}
+              date ={date}
              imageDescription={imageDescription}/>
             </ul>
             
