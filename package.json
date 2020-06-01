@@ -10,16 +10,18 @@
     "bootstrap": "^4.5.0",
     "firebase": "^6.6.2",
     "js-cookie": "^2.2.1",
+    "material-ui": "^0.20.2",
     "npm-sass": "^2.3.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
+    "react-dropzone": "^11.0.1",
     "react-loader-spinner": "^3.1.14",
     "react-modal": "^3.11.2",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.0.1",
-    "react-toastify": "^6.0.4",
+    "react-toastify": "^6.0.5",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
@@ -31,7 +33,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "http://3.7.41.59:9082/mydiginotes",
   "eslintConfig": {
     "extends": "react-app"
   },

@@ -19,7 +19,7 @@ const DisplayOriginalImage = ({match ,history})=>{
   useEffect(() => {
     const requestFile = { ids:[match.params.id],imagetype:"original",}
   
-    Post('mydiginotes/getAnyCloudImages',requestFile)
+    Post('/getAnyCloudImages',requestFile)
     .then((res)=>{
    //  console.log((res.data.imageInput[0].align_image_org))
      setImageUrl(res.data.imageInput[0].align_image_org)
@@ -27,11 +27,11 @@ const DisplayOriginalImage = ({match ,history})=>{
    }) ;
    const requestImages = { id:match.params.folderId}
  
-   Post('mydiginotes/getAllFileImages',requestImages)
+   Post('/getAllFileImages',requestImages)
    .then((res)=>{
    const   allCloud = [] ;
      res.data.imageInput.forEach((image=>allCloud.push(image.id)))
-     Post('mydiginotes/getAnyCloudImages',{ids:allCloud ,imagetype:"small"})
+     Post('/getAnyCloudImages',{ids:allCloud ,imagetype:"small"})
      .then((res)=>{
       setAllImages((res.data.imageInput))
     }) ;

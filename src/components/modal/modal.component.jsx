@@ -23,9 +23,9 @@ const ModalPop = ({ history, currentFile, openModel }) => {
     addDisc("");
    
     if(id){
-      Post("mydiginotes/updateFileFolder", requestFile).then((res) =>updateName(res.data.filefolderRequest[0]));
+      Post("/updateFileFolder", requestFile).then((res) =>updateName(res.data.filefolderRequest[0]));
     }else{
-    Post("mydiginotes/createFileFolder", requestFile).then((res) =>pushName(res.data.filefolderRequest[0]));
+    Post("/createFileFolder", requestFile).then((res) =>pushName(res.data.filefolderRequest[0]));
     }
     setId(null)
   };

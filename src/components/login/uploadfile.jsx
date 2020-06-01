@@ -4,13 +4,14 @@ import {Post ,Get} from '../../service/service.setup' ;
 import {connect} from 'react-redux';
 import  {setCurrentUser} from '../../redux/user/user.actions' ;
 import Cookies from 'js-cookie' ;
+import axios from 'axios' ;
 import LeftSideBar from '../sidebar/left.sidebar.compoent' ;
 import DisplayImages from '../display-uploaded-images.component/display-uploded-images';
 import DisplayImageDescription from  '../display-discription/display-discription' ;
 import TopHeaderWithBack from '../top-header/simple-top.back';
-
+import Dropzone from 'react-dropzone';
 const UploadFile = ({match , history})=>{
-    const [file ,setOtp] = useState('') ;
+    const [file ,setFile] = useState('') ;
     const [isLoading, setIsLoading] = useState(false);
     const [images ,setImages] = useState([]) ;
     const [imageDescription ,setImagesDescription] = useState('Hi') ;
@@ -20,6 +21,8 @@ const UploadFile = ({match , history})=>{
     const [activeIndex ,setActiveIndex] = useState(0) ;
     const [folderId , setFolderId] = useState(match.params.id)
 
+   
+   
     const sideBarStyle = {
       border: "1px solid rgba(0, 0, 0, 0.125)",
       height: "90vh"
@@ -45,7 +48,7 @@ const UploadFile = ({match , history})=>{
     useEffect(() => {
       const requestFile = { id:match.params.id}
       setIsLoading(true)
-      Post('mydiginotes/getAllFileImages',requestFile)
+      Post('/getAllFileImages',requestFile)
       .then((res)=>{
        (setImages(res.data.imageInput))
        setIsLoading(false)
@@ -80,8 +83,9 @@ const UploadFile = ({match , history})=>{
        images ={images} 
        folderId ={folderId}
        isLoading ={isLoading}/>
-
+  
    </div>
+  
    </div>
    </>
     )

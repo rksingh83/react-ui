@@ -15,7 +15,7 @@ const DisplayLastImage = ({match ,history})=>{
   useEffect(() => {
     const requestFile = { ids:[match.params.id],imagetype:"original",}
   
-    Post('mydiginotes/getAnyCloudImages',requestFile)
+    Post('/getAnyCloudImages',requestFile)
     .then((res)=>{
      
      setImageUrl(res.data.imageInput[0].align_image_org)

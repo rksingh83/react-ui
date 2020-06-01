@@ -11,7 +11,7 @@ const createHistory = require("history").createBrowserHistory;
 const OTP = ({history})=>{
     const [emailOtp ,setOtp] = useState('') ;
     const otpHandler = ()=>{
-        Post('mydiginotes/otpVerification',{emailOtp})
+        Post('/otpVerification',{emailOtp})
         .then(res=>{
            if(res.data.error){
                alert(res.data.error) 
@@ -48,7 +48,7 @@ const OTP = ({history})=>{
     const [emailOtp ,setOtp] = useState('') ;
     const [email ,setEmail] = useState('') ;
     const otpHandler = ()=>{
-        Post('mydiginotes/forgotOtpVerification',{emailOtp ,email})
+        Post('/forgotOtpVerification',{emailOtp ,email})
         .then(res=>{
          
            if(res.data.error){
@@ -99,7 +99,7 @@ export const ForgotPassword = ({history})=>{
    if(email=='')
    toast('Enter Email')
  
-      Post('mydiginotes/forgotpassword',{email})
+      Post('/forgotpassword',{email})
   .then(res=>{
   
      if(res.data.error){
@@ -113,7 +113,7 @@ export const ForgotPassword = ({history})=>{
   }) 
   }
   const otpHandler = ()=>{
-    Post('mydiginotes/forgotOtpVerification',{emailOtp ,email})
+    Post('/forgotOtpVerification',{emailOtp ,email})
     .then(res=>{
     
        if(res.data.error){
@@ -127,7 +127,7 @@ export const ForgotPassword = ({history})=>{
     }) 
   }
   const savePassHandler = ()=>{
-    Post('mydiginotes/newPassword',{password ,email})
+    Post('/newPassword',{password ,email})
     .then(res=>{
    
        if(res.data.error){

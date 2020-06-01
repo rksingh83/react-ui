@@ -20,7 +20,7 @@ const LoginPage = ({history ,setCurrentUser ,setCurrentFile})=>{
   const [password ,setPassword] = useState('') ;
   const loginHandler = ()=>{
     
-    Post('mydiginotes/signin',{email,password})    
+    Post('/signin',{email,password})    
     .then((res)=>{
     
         if(res.data.error){
@@ -43,7 +43,7 @@ const LoginPage = ({history ,setCurrentUser ,setCurrentFile})=>{
             Cookies.set('token', res.data.data.authentication.token);
             const requestFile = { filefolderRequest:[]}
             setCurrentUser(res.data.data) ;
-            Post('mydiginotes/getAllFiles',requestFile)
+            Post('/getAllFiles',requestFile)
             .then((res)=>{
               if(res.data.filefolderRequest){
           //  let data =  (res.data.filefolderRequest).map(item=>item.fileName)

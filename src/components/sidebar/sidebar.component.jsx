@@ -37,10 +37,10 @@ const SideBar = ({history})=>{
         };
         
         if(id){
-          Post("mydiginotes/updateFileFolder", requestFile).then((res) =>updateName(res.data.filefolderRequest[0]));
+          Post("/updateFileFolder", requestFile).then((res) =>updateName(res.data.filefolderRequest[0]));
         }else{
           
-       Post("mydiginotes/createFileFolder", requestFile).then((res) =>pushName(res.data.filefolderRequest[0]));
+       Post("/createFileFolder", requestFile).then((res) =>pushName(res.data.filefolderRequest[0]));
         }
       };
      const handleActive = (e)=>{
@@ -50,7 +50,7 @@ const SideBar = ({history})=>{
    
      useEffect(() => {
         const requestFile = { filefolderRequest:[]}
-        Post('mydiginotes/getAllFiles',requestFile)
+        Post('/getAllFiles',requestFile)
         .then((res)=>{
           if(res.data.filefolderRequest){
             setTotalFolder(res.data.filefolderRequest) ;
@@ -93,7 +93,7 @@ const SideBar = ({history})=>{
     
     }
     const deleteHandler = (folderList,resArr) =>{
-        Post("mydiginotes/updateFileFolder", folderList)
+        Post("/updateFileFolder", folderList)
         .then((res) =>updateName(folderList, true));
     }
    const ToggleDescription = (description , date )=>{

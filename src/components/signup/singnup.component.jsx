@@ -29,7 +29,7 @@ class SingnUp extends React.Component{
      const {name ,email , password ,phoneNumber} = this.state ;
      const  user = {name,email,password ,phoneNumber}
 
-   Post('mydiginotes/registration',user)    
+   Post('/registration',user)    
      .then((res)=>{
          if(res.data.error){
             alert(res.data.error)
