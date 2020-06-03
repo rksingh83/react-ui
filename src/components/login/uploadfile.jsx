@@ -57,7 +57,7 @@ const UploadFile = ({match , history})=>{
   
     return (
         <> 
-        <TopHeaderWithBack history={history}/>
+        <TopHeaderWithBack id ={match.params.id} history={history}/>
         <div className ="row">
 <div className ="col-md-2">
             <ul className="list-group" style ={sideBarStyle}>
