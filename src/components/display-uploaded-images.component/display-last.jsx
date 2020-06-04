@@ -9,6 +9,7 @@ import GetLoader from '../../ui/loder' ;
 import {Post ,Get} from '../../service/service.setup' ;
 import './create-image.style.scss' ;
 import {ReactComponent as Cross} from '../../assets/cross.svg';
+import {ReactComponent as Pencil} from '../../assets/edit.svg';
 
 const DisplayLastImage = ({match ,history})=>{
    const [imageUrl , setImageUrl] = useState('')
@@ -33,10 +34,18 @@ const DisplayLastImage = ({match ,history})=>{
    top:"5rem",
    right:"3rem"
  }
+ const pencilStyle = {
+  position:"absolute" ,
+  width:"4rem" ,
+  height:"2rem",
+  top:"5rem",
+  right:"5rem"
+}
     return(
     
       <div style={{ display: "flex" ,flexWrap:"wrap" ,justifyContent:"center",alignItems:"center" }}>
         <Cross onClick = {()=>history.goBack()} style  ={crossStyle}></Cross>
+        <Pencil onClick = {()=>history.push(`/edit/${imageUrl}`)} style  ={pencilStyle}></Pencil>
        <img
        style ={styleImage}
          src ={`${imageUrl}`}

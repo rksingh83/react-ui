@@ -18,6 +18,7 @@ import ModalPop from './components/modal/modal.component'
 import {connect} from 'react-redux'
 import SingnUp from './components/signup/singnup.component';
 import {Post ,Get} from './service/service.setup' ;
+import SelectPoints from './components/select.points.component/select.points'
 class App extends React.Component{
  //#endregio
  constructor(props){
@@ -49,6 +50,7 @@ class App extends React.Component{
     <Route exact path ='/folder' component={SideBar}/>
     
     <Route  path ='/uploadFile/:id' component={UploadFile}/>
+    <Route  path ='/edit/:url' component={SelectPoints}/>
     <Route  path ='/original/:id/:folderId' component={DisplayOriginalImage}/> 
     <Route  path ='/last/:id' component={DisplayLastImage}/> 
    
