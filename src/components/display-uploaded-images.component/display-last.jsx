@@ -45,7 +45,7 @@ const DisplayLastImage = ({match ,history})=>{
     
       <div style={{ display: "flex" ,flexWrap:"wrap" ,justifyContent:"center",alignItems:"center" }}>
         <Cross onClick = {()=>history.goBack()} style  ={crossStyle}></Cross>
-        <Pencil onClick = {()=>history.push(`/edit/${imageUrl}`)} style  ={pencilStyle}></Pencil>
+        <Pencil onClick = {()=>history.push(`/edit/${match.params.id}`)} style  ={pencilStyle}></Pencil>
        <img
        style ={styleImage}
          src ={`${imageUrl}`}
