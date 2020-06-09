@@ -1,10 +1,11 @@
-svg{
+svg {
     width: 30%;
     cursor: pointer;
     height: 45%;
 }
-.custom-input{
-display: block;
+
+.custom-input {
+    display: block;
     width: 100%;
     height: calc(1.5em + 0.75rem + 2px);
     padding: 0.375rem 0.75rem;
@@ -18,19 +19,22 @@ display: block;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-.col-text-style{
+
+.col-text-style {
     font-size: 1rem;
     font-weight: 500;
 }
 
-.secondary-header{
-  height:4rem ;
+.secondary-header {
+    height: 4rem;
 }
-.count{
+
+.count {
     font-size: 1.1rem;
     font-weight: 500;
 }
-.input-file{
+
+.input-file {
     opacity: 0;
     position: absolute;
     top: 0;
@@ -38,10 +42,12 @@ display: block;
     width: 40px;
     cursor: pointer;
 }
-.input-lable{
- position: relative;
+
+.input-lable {
+    position: relative;
 }
-input-img{
-    width:30px;
+
+input-img {
+    width: 30px;
     cursor: pointer;
 }
