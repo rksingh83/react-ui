@@ -9,7 +9,7 @@ const Input =({handleChange,label,...restProps })=>{
        <div className ='form-group'>
          {
          label?
-         (<label className={`${restProps.value.length?'shrink':''} form-input-label`}>
+         (<label>
          {label}
          </label>):null
       }

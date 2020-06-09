@@ -1,4 +1,4 @@
-import React from "react";
+import React  ,{useState} from "react";
 import CreateFolder from "../create-folder/create-folder.component";
 import TestButton from "../create-folder/create.btn.component";
 import GetLoader from "../../ui/loder";
@@ -12,6 +12,7 @@ const DisplayImages = ({
   onHove,
   history,
 }) => {
+  const [isEditShow ,setIsEditShow] = useState(false)
   if (isLoading) {
     return (
       <div className="loader-display">
@@ -20,9 +21,18 @@ const DisplayImages = ({
     );
   } else {
     return (
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
+      <div
+        onMouseEnter={() =>
+          setIsEditShow()
+        }
+        onMouseLeave={() => setIsEditShow(false)}
+        style={{ display: "flex", flexWrap: "wrap" }}
+      >
         {images.map((item, index) => (
           <div className="image-container" key={index}>
+            <div style  ={{display:isEditShow?'block':'none'}} className="editIcon">
+              <button>Edit</button>
+            </div>
             <img
               src={item.align_image_thumb}
               onClick={() => history.push(`/original/${item.id}/${folderId}`)}
