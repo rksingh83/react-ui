@@ -6,6 +6,10 @@ import { Post, Get } from "../../service/service.setup";
 import { ReactComponent as Cross } from "../../assets/edit.svg";
 
 const SelectPoints = ({ match, history }) => {
+  var Markers = new Array();
+  var [points, setPoints] = useState(0);
+  var [reset, setReset] = useState();
+
   useEffect(() => {
     var mapSprite = new Image();
     Post("/getAnyCloudImages", {
@@ -32,11 +36,9 @@ const SelectPoints = ({ match, history }) => {
     };
 
     // Array of markers
-    var Markers = new Array();
 
     // When the user clicks their mouse on our canvas run this code
     var mouseClicked = function (mouse) {
-   
       // Get corrent mouse coords
       var rect = canvas.getBoundingClientRect();
       var mouseXPos = mouse.x - rect.left;
@@ -59,12 +61,14 @@ const SelectPoints = ({ match, history }) => {
           isExist = true;
         }
       });
-      if(Markers.length>=4){
+      if (Markers.length >= 4) {
         alert("Max Four Point Allowed on a image");
-        return ;
-    }
-      console.log("markers", Markers);
+        return;
+      }
+      //console.log("markers", Markers);
+
       if (!isExist) Markers.push(marker);
+      setPoints(Markers.length);
     };
 
     // Add mouse click event listener to canvas
@@ -95,6 +99,7 @@ const SelectPoints = ({ match, history }) => {
       context.drawImage(mapSprite, 0, 0, 700, 700);
 
       // Draw markers
+
       for (var i = 0; i < Markers.length; i++) {
         var tempMarker = Markers[i];
         // Draw marker
@@ -145,16 +150,33 @@ const SelectPoints = ({ match, history }) => {
     top: "5rem",
     right: "3rem",
   };
+  const updatePoints = () => {
+    console.log(Markers);
+  };
   return (
     <div
       style={{
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "center",
-        alignItems: "center",
       }}
     >
       <canvas id="Canvas" width="700" height="700"></canvas>
+      <div>
+        <button
+          onClick={updatePoints}
+          disabled={points == 4 ? false : true}
+          className="save-points btn btn-success ml-4 mt-2"
+        >
+          Save Points
+        </button>
+        <button
+          onClick={() => setReset(true)}
+          className="save-points btn btn-info ml-2 mt-2"
+        >
+          Clear All Points
+        </button>
+      </div>
     </div>
   );
 };
