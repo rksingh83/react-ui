@@ -8,7 +8,7 @@ import { ReactComponent as Cross } from "../../assets/edit.svg";
 const SelectPoints = ({ match, history }) => {
   var Markers = new Array();
   var [points, setPoints] = useState(0);
-  var [reset, setReset] = useState();
+  var [reset, setReset] = useState([]);
 
   useEffect(() => {
     var mapSprite = new Image();
@@ -68,7 +68,10 @@ const SelectPoints = ({ match, history }) => {
       //console.log("markers", Markers);
 
       if (!isExist) Markers.push(marker);
+
       setPoints(Markers.length);
+      if (Markers.length == 4);
+      setReset([Markers]);
     };
 
     // Add mouse click event listener to canvas
@@ -150,8 +153,36 @@ const SelectPoints = ({ match, history }) => {
     top: "5rem",
     right: "3rem",
   };
-  const updatePoints = () => {
-    console.log(Markers);
+  const updatePoints = async() => {
+    console.log(reset[0]);
+    const data = {};
+    reset[0].forEach((reset ,i) => {
+      console.log(reset, i);
+      data[`XPos_${i}`] = reset.XPos;
+      data[`YPos_${i}`] = reset.YPos;
+    });
+    const requestPayLoad = {}
+    requestPayLoad['id']  = match.params.url
+    requestPayLoad['bottomleftx']  = data.XPos_0; 
+    requestPayLoad['bottomlefty']  = data.YPos_0; 
+    requestPayLoad['bottomrightx']  = data.XPos_1; 
+    requestPayLoad['bottomrighty']  = data.YPos_1; 
+    requestPayLoad['topleftx']  = data.XPos_2; 
+    requestPayLoad['toplefty']  = data.YPos_2; 
+    requestPayLoad['toprightx']  = data.XPos_3; 
+    requestPayLoad['toprighty']  = data.YPos_3; 
+    
+
+    try {
+      let res = await Post("/uploadSingleImagePoints", requestPayLoad);
+      
+         alert(res.data.message);
+          history.goBack();
+
+    } catch (err) {
+      console.log(err);
+    }
+    console.log(data);
   };
   return (
     <div
