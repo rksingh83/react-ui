@@ -34,7 +34,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://3.7.41.59:9082/mydiginotes",
+  "proxy": "",
   "eslintConfig": {
     "extends": "react-app"
   },
