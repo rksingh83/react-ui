@@ -24,8 +24,8 @@ const DisplayLastImage = ({match ,history})=>{
    })
  },[]);
  const styleImage = {
-   width:"80vh",
-   height:"80vh"
+   width:"100%",
+   height:"100%"
  }
  const crossStyle = {
    position:"absolute" ,
@@ -39,7 +39,7 @@ const DisplayLastImage = ({match ,history})=>{
   width:"4rem" ,
   height:"2rem",
   top:"5rem",
-  right:"5rem"
+  right:"7rem"
 }
     return(
     

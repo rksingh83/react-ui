@@ -16,12 +16,13 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
   const [images, setImages] = useState({});
   const [pageNo, setPageNo] = useState("");
   const [desc, setDesc] = useState("");
+
   const submitHandler = async (e) => {
-    e.preventDefault();
-    console.log(file);
+    //  e.preventDefault();
+
     const formData = new FormData();
 
-    formData.append("files", file);
+    formData.append("files", e);
     console.log(formData);
     try {
       let res = await Post("/uploadImage", formData, {
@@ -30,7 +31,12 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
           "Content-Type": "multipart/form-data",
         },
       });
-      if (res.status == 200) toast.success(res.data.message);
+      if (res.status == 200) {
+        toast.success(res.data.message);
+        window.location.reload();
+      } else {
+        toast.error("Something went wrong try later");
+      }
     } catch (err) {
       console.log(err);
     }
@@ -73,23 +79,27 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
   return (
     <div className="row secondary-header" style={topRowStyle}>
       <ToastContainer />
-      <div className="col-md-4">
-        <form style={{ display: "inline" }} onSubmit={submitHandler}>
+      <div className="col-md-4 ml-2" style={{ display: id ? "" : "none" }}>
+        <form
+          className="mr-4"
+          style={{ display: "inline" }}
+          onSubmit={submitHandler}
+        >
           <label className="input-label">
             <Photo style={{ width: "30px" }} />
             <input
               className="input-file"
-              onChange={(e) => setFile(e.target.files[0])}
+              onChange={(e) => submitHandler(e.target.files[0])}
               type="file"
               name="uploadFile"
             ></input>
           </label>
 
-          <input
+          {/* <input
             className="btn btn-primary ml-4"
             type="submit"
             value="Upload"
-          />
+          /> */}
         </form>
         <button
           className="btn-success ml-4 btn"

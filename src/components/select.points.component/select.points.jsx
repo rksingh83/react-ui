@@ -9,7 +9,7 @@ const SelectPoints = ({ match, history }) => {
   var Markers = new Array();
   var [points, setPoints] = useState(0);
   var [reset, setReset] = useState([]);
-  var [src, setSrc] = useState('');
+  var [src, setSrc] = useState("");
 
   useEffect(() => {
     var mapSprite = new Image();
@@ -19,9 +19,9 @@ const SelectPoints = ({ match, history }) => {
     }).then((res) => {
       mapSprite.src = res.data.imageInput[0].align_image_org;
       var img = new Image();
-      img.src =  mapSprite.src ;
-      setSrc(res.data.imageInput[0].align_image_org)
-      console.log(mapSprite.height,mapSprite)
+      img.src = mapSprite.src;
+      setSrc(res.data.imageInput[0].align_image_org);
+      console.log(mapSprite.height, mapSprite);
     });
 
     // mapSprite.src ='https://mydiginotes.s3.ap-south-1.amazonaws.com/data/518/751/align_img_jpg_1590134938540_jpg.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20200604T090034Z&X-Amz-SignedHeaders=host&X-Amz-Expires=160&X-Amz-Credential=AKIAQ2W5L2TKVNFH6CZY%2F20200604%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Signature=03f41d0450c01589fb55cffa6d4163eb185b1524950905454eba62f4261323a6';
@@ -141,9 +141,9 @@ const SelectPoints = ({ match, history }) => {
 
         // Draw position above
         context.fillStyle = "#000";
-        const IMG  = document.getElementById('img');
-        //console.log(IMG.width)
-        //console.log(IMG.height)
+        const IMG = document.getElementById("img");
+        // console.log(Math.ceil(IMG.width / 700));
+        //  console.log(Math.ceil(IMG.height / 700));
 
         context.fillText(markerText, tempMarker.XPos, tempMarker.YPos);
       }
@@ -161,32 +161,47 @@ const SelectPoints = ({ match, history }) => {
     top: "5rem",
     right: "3rem",
   };
-  const updatePoints = async() => {
+  const updatePoints = async () => {
     console.log(reset[0]);
     const data = {};
-    reset[0].forEach((reset ,i) => {
+    const allPoints = new Array();
+    reset[0].forEach((reset, i) => {
       console.log(reset, i);
-      data[`XPos_${i}`] = reset.XPos;
-      data[`YPos_${i}`] = reset.YPos;
+      allPoints.push({ X: reset.XPos, Y: reset.YPos });
     });
-    const requestPayLoad = {}
-    requestPayLoad['id']  = match.params.url
-    requestPayLoad['bottomleftx']  = data.XPos_0; 
-    requestPayLoad['bottomlefty']  = data.YPos_0; 
-    requestPayLoad['bottomrightx']  = data.XPos_1; 
-    requestPayLoad['bottomrighty']  = data.YPos_1; 
-    requestPayLoad['topleftx']  = data.XPos_2; 
-    requestPayLoad['toplefty']  = data.YPos_2; 
-    requestPayLoad['toprightx']  = data.XPos_3; 
-    requestPayLoad['toprighty']  = data.YPos_3; 
-    
+    let small = allPoints[0];
+    let topRight = allPoints[0];
+    let bottomRight = allPoints[0];
+    let bottomLeft = allPoints[0];
+    allPoints.forEach((item) => {
+      if (item.X < small.X && item.Y < small.Y) small = item;
+
+      if (item.X > small.X && item.Y < small.Y) topRight = item;
+      if (item.X > small.X && item.Y > small.Y) bottomRight = item;
+      if (item.Y > small.Y && item.X < small.X) bottomLeft = item;
+    });
+    //   console.log("BOT  TOMLEFT", bottomLeft, "BOTTOMR", bottomRight);
+    // console.log("TOPLEFT", small, "TOPRIGHT", topRight);
+    const IMG = document.getElementById("img");
+    const width = Math.ceil(IMG.width / 700);
+    const height = Math.ceil(IMG.height / 700);
+    // console.log("WIDTH", width ,height)
+    const requestPayLoad = {};
+    requestPayLoad["id"] = match.params.url;
+    requestPayLoad["bottomleftx"] = (bottomLeft.X * width) / 100;
+    requestPayLoad["bottomlefty"] = (bottomLeft.Y * height) / 100;
+    requestPayLoad["bottomrightx"] = (bottomRight.X * width) / 100;
+    requestPayLoad["bottomrighty"] = (bottomRight.Y * height) / 100;
+    requestPayLoad["topleftx"] = (small.X * width) / 100;
+    requestPayLoad["toplefty"] = (small.Y * height) / 100;
+    requestPayLoad["toprightx"] = (topRight.X * width) / 100;
+    requestPayLoad["toprighty"] = (topRight.Y * height) / 100;
 
     try {
       let res = await Post("/uploadSingleImagePoints", requestPayLoad);
-      
-         alert(res.data.message);
-          history.goBack();
 
+      alert(res.data.message);
+      history.goBack();
     } catch (err) {
       console.log(err);
     }
@@ -210,13 +225,15 @@ const SelectPoints = ({ match, history }) => {
           Save Points
         </button>
         <button
-          onClick={() =>window.location.reload()}
+          onClick={() => window.location.reload()}
           className="save-points btn btn-info ml-2 mt-2"
         >
           Clear All Points
         </button>
       </div>
-      <div style ={{display:'none'}}><img  id ='img' src ={src}></img></div>
+      <div style={{ display: "none" }}>
+        <img id="img" src={src}></img>
+      </div>
     </div>
   );
 };

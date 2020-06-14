@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { setCurrentUser } from "../../redux/user/user.actions";
 import Cookies from "js-cookie";
 import axios from "axios";
+import './lon.style.scss'
 import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import DisplayImages from "../display-uploaded-images.component/display-uploded-images";
 import DisplayImageDescription from "../display-discription/display-discription";
@@ -26,6 +27,7 @@ const UploadFile = ({ match, history }) => {
     border: "1px solid rgba(0, 0, 0, 0.125)",
     height: "90vh",
   };
+  
   const totalEle = ["My Files", "Recent", "Photos", "Recycle Bin"];
   const [LiElement, setLiEl] = useState(totalEle);
   const handleActive = (e) => {
@@ -58,9 +60,9 @@ const UploadFile = ({ match, history }) => {
       <TopHeaderWithBack
         id={match.params.id}
         updateImages={imagesUpdate}
-        history={history} 
-        images ={images}
-        setImages ={setImages}
+        history={history}
+        images={images}
+        setImages={setImages}
       />
       <div className="row">
         <div className="col-md-2">
@@ -83,6 +85,12 @@ const UploadFile = ({ match, history }) => {
           </ul>
         </div>
         <div className="col-md-9">
+          <div
+            class="empty-folder"
+            style={{ display: images.length == 0 ? "" : "none" }}
+          >
+            <h4>Folder is Empty</h4>
+          </div>
           <DisplayImages
             history={history}
             onHove={showContentHandler}
@@ -91,7 +99,6 @@ const UploadFile = ({ match, history }) => {
             folderId={folderId}
             updateHandler={updateHandler}
             isLoading={isLoading}
-
           />
         </div>
       </div>
