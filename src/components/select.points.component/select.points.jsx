@@ -15,12 +15,12 @@ const SelectPoints = ({ match, history }) => {
     var mapSprite = new Image();
     Post("/getAnyCloudImages", {
       ids: [match.params.url],
-      imagetype: "original",
+      imagetype: "raw_small",
     }).then((res) => {
-      mapSprite.src = res.data.imageInput[0].align_image_org;
+      mapSprite.src = res.data.imageInput[0].raw_image_small;
       var img = new Image();
       img.src = mapSprite.src;
-      setSrc(res.data.imageInput[0].align_image_org);
+      setSrc(res.data.imageInput[0].raw_image_small);
       console.log(mapSprite.height, mapSprite);
     });
 
@@ -183,19 +183,25 @@ const SelectPoints = ({ match, history }) => {
     //   console.log("BOT  TOMLEFT", bottomLeft, "BOTTOMR", bottomRight);
     // console.log("TOPLEFT", small, "TOPRIGHT", topRight);
     const IMG = document.getElementById("img");
-    const width = Math.ceil(IMG.width / 700);
-    const height = Math.ceil(IMG.height / 700);
-    // console.log("WIDTH", width ,height)
+    const width = IMG.width / 700;
+    const height = IMG.height / 700;
+    console.log("WIDTH", width, height);
+
     const requestPayLoad = {};
     requestPayLoad["id"] = match.params.url;
-    requestPayLoad["bottomleftx"] = (bottomLeft.X * width) / 100;
-    requestPayLoad["bottomlefty"] = (bottomLeft.Y * height) / 100;
-    requestPayLoad["bottomrightx"] = (bottomRight.X * width) / 100;
-    requestPayLoad["bottomrighty"] = (bottomRight.Y * height) / 100;
-    requestPayLoad["topleftx"] = (small.X * width) / 100;
-    requestPayLoad["toplefty"] = (small.Y * height) / 100;
-    requestPayLoad["toprightx"] = (topRight.X * width) / 100;
-    requestPayLoad["toprighty"] = (topRight.Y * height) / 100;
+    requestPayLoad["bottomleftx"] = ((bottomLeft.X * width) / IMG.width) * 100;
+    requestPayLoad["bottomlefty"] =
+      ((bottomLeft.Y * height) / IMG.height) * 100;
+    requestPayLoad["bottomrightx"] =
+      ((bottomRight.X * width) / IMG.width) * 100;
+    requestPayLoad["bottomrighty"] =
+      ((bottomRight.Y * height) / IMG.height) * 100;
+    requestPayLoad["topleftx"] = ((small.X * width) / IMG.width) * 100;
+    requestPayLoad["toplefty"] = ((small.Y * height) / IMG.height) * 100;
+    requestPayLoad["toprightx"] = ((topRight.X * width) / IMG.width) * 100;
+    requestPayLoad["toprighty"] = ((topRight.Y * height) / IMG.height) * 100;
+    console.log("Points are right here in next line");
+    console.log(requestPayLoad);
 
     try {
       let res = await Post("/uploadSingleImagePoints", requestPayLoad);

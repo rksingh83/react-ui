@@ -21,9 +21,13 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
     //  e.preventDefault();
 
     const formData = new FormData();
+    var d = new Date();
+    let imageName = d.getTime();
+    imageName = `jpg_${imageName}.jpg`;
+    //e.name = imageName;
 
-    formData.append("files", e);
-    console.log(formData);
+    formData.append("files", e,imageName);
+    //console.log(e.name);
     try {
       let res = await Post("/uploadImage", formData, {
         headers: {
@@ -33,7 +37,7 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
       });
       if (res.status == 200) {
         toast.success(res.data.message);
-        window.location.reload();
+         window.location.reload();
       } else {
         toast.error("Something went wrong try later");
       }
