@@ -150,21 +150,24 @@ const SelectPoints = ({ match, history }) => {
     });
     //   console.log("BOT  TOMLEFT", bottomLeft, "BOTTOMR", bottomRight);
     // console.log("TOPLEFT", small, "TOPRIGHT", topRight);
-    // const IMG = document.getElementById("img");
-    // const width = IMG.width / 700;
-    // const height = IMG.height / 700;
-    // console.log("WIDTH", width, height);
+    const IMG = document.getElementById("img");
+    const width = IMG.width / 700;
+    const height = IMG.height / 700;
+    console.log("WIDTH", width, height);
 
     const requestPayLoad = {};
     requestPayLoad["id"] = match.params.url;
-    requestPayLoad["bottomleftx"] = bottomLeft.X;
-    requestPayLoad["bottomlefty"] = bottomLeft.Y;
-    requestPayLoad["bottomrightx"] = bottomRight.X;
-    requestPayLoad["bottomrighty"] = bottomRight.Y;
-    requestPayLoad["topleftx"] = small.X;
-    requestPayLoad["toplefty"] = small.Y;
-    requestPayLoad["toprightx"] = topRight.X;
-    requestPayLoad["toprighty"] = topRight.Y;
+    requestPayLoad["bottomleftx"] = ((bottomLeft.X * width) / IMG.width) * 100;
+    requestPayLoad["bottomlefty"] =
+      ((bottomLeft.Y * height) / IMG.height) * 100;
+    requestPayLoad["bottomrightx"] =
+      ((bottomRight.X * width) / IMG.width) * 100;
+    requestPayLoad["bottomrighty"] =
+      ((bottomRight.Y * height) / IMG.height) * 100;
+    requestPayLoad["topleftx"] = ((small.X * width) / IMG.width) * 100;
+    requestPayLoad["toplefty"] = ((small.Y * height) / IMG.height) * 100;
+    requestPayLoad["toprightx"] = ((topRight.X * width) / IMG.width) * 100;
+    requestPayLoad["toprighty"] = ((topRight.Y * height) / IMG.height) * 100;
     console.log("Points are right here in next line");
     console.log(requestPayLoad);
 
@@ -191,7 +194,14 @@ const SelectPoints = ({ match, history }) => {
   };
   return (
     <>
-      <div id="outerContainer" className="mt-4">
+     <button className=" mt-4 ml-4 btn btn-success" onClick={save}>
+        Save
+      </button>
+      <div
+        style={{ width: 700, height: 700, margin: "auto" }}
+        id="outerContainer"
+        className="mt-4"
+      >
         <div id="container" style={{ backgroundImage: `url(${src})` }}>
           <div id="one" className="item one">
             1
@@ -207,9 +217,10 @@ const SelectPoints = ({ match, history }) => {
           </div>
         </div>
       </div>
-      <button className=" mt-4 ml-4 btn btn-success" onClick={save}>
-        Save
-      </button>
+     
+      <div style={{ display: "none" }}>
+        <img id="img" src={src}></img>
+      </div>
     </>
   );
 };
