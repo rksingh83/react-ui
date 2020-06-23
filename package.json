@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "firebase": "^6.6.2",
+    "jquery": "^3.5.1",
     "js-cookie": "^2.2.1",
     "material-ui": "^0.20.2",
     "npm-sass": "^2.3.0",
@@ -37,6 +38,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "proxy": "http://3.7.41.59:9082/mydiginotes",
   "browserslist": {
     "production": [
       ">0.2%",

@@ -5,12 +5,14 @@ import "./points.style.scss";
 import { Post, Get } from "../../service/service.setup";
 //import './create-image.style.scss' ;
 import { ReactComponent as Cross } from "../../assets/edit.svg";
+import $ from "jquery";
 
 const SelectPoints = ({ match, history }) => {
   var Markers = new Array();
   var [points, setPoints] = useState(0);
   var [reset, setReset] = useState([]);
   var [src, setSrc] = useState("");
+  const [data, setData] = useState({});
 
   var active = false;
   useEffect(() => {
@@ -20,6 +22,7 @@ const SelectPoints = ({ match, history }) => {
       imagetype: "raw_small",
     }).then((res) => {
       mapSprite.src = res.data.imageInput[0].raw_image_small;
+      setSrc(res.data.imageInput[0].raw_image_smal);
       var img = new Image();
       img.src = mapSprite.src;
       setSrc(res.data.imageInput[0].raw_image_small);
@@ -99,16 +102,41 @@ const SelectPoints = ({ match, history }) => {
       // console.log(xPos , yPos)
       el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
     }
+    $("#outerContainer").click(function (e) {
+      var offset = $(this).offset();
+      var relativeX = e.pageX - offset.left;
+      var relativeY = e.pageY - offset.top;
+
+      //alert("X: " + relativeX + "  Y: " + relativeY);
+      data[e.target.id] = { X: relativeX, Y: relativeY };
+      setData(data);
+    });
   }, []);
 
   const updatePoints = async () => {
-    console.log(reset[0]);
-    const data = {};
+    // console.log(reset[0]);
+    // const data = {};
     const allPoints = new Array();
-    reset[0].forEach((reset, i) => {
-      console.log(reset, i);
-      allPoints.push({ X: reset.XPos, Y: reset.YPos });
-    });
+    // reset[0].forEach((reset, i) => {
+    //   console.log(reset, i);
+    //   allPoints.push({ X: reset.XPos, Y: reset.YPos });
+    // });
+
+    if (
+      !(
+        isPointChanged(data.one, 1) &&
+        isPointChanged(data.two, 2) &&
+        isPointChanged(data.three, 3) &&
+        isPointChanged(data.four, 4)
+      )
+    ) {
+      return;
+    }
+    allPoints.push(data.one);
+    allPoints.push(data.two);
+    allPoints.push(data.three);
+    allPoints.push(data.four);
+
     let small = allPoints[0];
     let topRight = allPoints[0];
     let bottomRight = allPoints[0];
@@ -122,24 +150,21 @@ const SelectPoints = ({ match, history }) => {
     });
     //   console.log("BOT  TOMLEFT", bottomLeft, "BOTTOMR", bottomRight);
     // console.log("TOPLEFT", small, "TOPRIGHT", topRight);
-    const IMG = document.getElementById("img");
-    const width = IMG.width / 700;
-    const height = IMG.height / 700;
-    console.log("WIDTH", width, height);
+    // const IMG = document.getElementById("img");
+    // const width = IMG.width / 700;
+    // const height = IMG.height / 700;
+    // console.log("WIDTH", width, height);
 
     const requestPayLoad = {};
     requestPayLoad["id"] = match.params.url;
-    requestPayLoad["bottomleftx"] = ((bottomLeft.X * width) / IMG.width) * 100;
-    requestPayLoad["bottomlefty"] =
-      ((bottomLeft.Y * height) / IMG.height) * 100;
-    requestPayLoad["bottomrightx"] =
-      ((bottomRight.X * width) / IMG.width) * 100;
-    requestPayLoad["bottomrighty"] =
-      ((bottomRight.Y * height) / IMG.height) * 100;
-    requestPayLoad["topleftx"] = ((small.X * width) / IMG.width) * 100;
-    requestPayLoad["toplefty"] = ((small.Y * height) / IMG.height) * 100;
-    requestPayLoad["toprightx"] = ((topRight.X * width) / IMG.width) * 100;
-    requestPayLoad["toprighty"] = ((topRight.Y * height) / IMG.height) * 100;
+    requestPayLoad["bottomleftx"] = bottomLeft.X;
+    requestPayLoad["bottomlefty"] = bottomLeft.Y;
+    requestPayLoad["bottomrightx"] = bottomRight.X;
+    requestPayLoad["bottomrighty"] = bottomRight.Y;
+    requestPayLoad["topleftx"] = small.X;
+    requestPayLoad["toplefty"] = small.Y;
+    requestPayLoad["toprightx"] = topRight.X;
+    requestPayLoad["toprighty"] = topRight.Y;
     console.log("Points are right here in next line");
     console.log(requestPayLoad);
 
@@ -153,15 +178,39 @@ const SelectPoints = ({ match, history }) => {
     }
     console.log(data);
   };
+  const save = () => {
+    console.log(data);
+    updatePoints();
+  };
+  const isPointChanged = (key, number) => {
+    if (!key) {
+      alert(`Please update position of ${number} point`);
+      return false;
+    }
+    return true;
+  };
   return (
-    <div id="outerContainer">
-      <div id="container">
-        <div className="item one"></div>
-        <div className="item two"></div>
-        <div className="item three"></div>
-        <div className="item four"></div>
+    <>
+      <div id="outerContainer" className="mt-4">
+        <div id="container" style={{ backgroundImage: `url(${src})` }}>
+          <div id="one" className="item one">
+            1
+          </div>
+          <div id="two" className="item two">
+            2
+          </div>
+          <div id="three" className="item three">
+            3
+          </div>
+          <div id="four" className="item four">
+            4
+          </div>
+        </div>
       </div>
-    </div>
+      <button className=" mt-4 ml-4 btn btn-success" onClick={save}>
+        Save
+      </button>
+    </>
   );
 };
 
