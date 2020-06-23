@@ -18,7 +18,7 @@ import ModalPop from './components/modal/modal.component'
 import {connect} from 'react-redux'
 import SingnUp from './components/signup/singnup.component';
 import {Post ,Get} from './service/service.setup' ;
-import SelectPoints from './components/select.points.component/select.points'
+import SelectPoints from './components/select.points.component/select.points-new'
 class App extends React.Component{
  //#endregio
  constructor(props){
