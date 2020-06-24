@@ -157,17 +157,17 @@ const SelectPoints = ({ match, history }) => {
 
     const requestPayLoad = {};
     requestPayLoad["id"] = match.params.url;
-    requestPayLoad["bottomleftx"] = ((bottomLeft.X * width) / IMG.width) * 100;
+    requestPayLoad["bottomleftx"] = ((data.one.X * width) / IMG.width) * 100;
     requestPayLoad["bottomlefty"] =
-      ((bottomLeft.Y * height) / IMG.height) * 100;
+      ((data.one.Y * height) / IMG.height) * 100;
     requestPayLoad["bottomrightx"] =
-      ((bottomRight.X * width) / IMG.width) * 100;
+      ((data.two.X * width) / IMG.width) * 100;
     requestPayLoad["bottomrighty"] =
-      ((bottomRight.Y * height) / IMG.height) * 100;
-    requestPayLoad["topleftx"] = ((small.X * width) / IMG.width) * 100;
-    requestPayLoad["toplefty"] = ((small.Y * height) / IMG.height) * 100;
-    requestPayLoad["toprightx"] = ((topRight.X * width) / IMG.width) * 100;
-    requestPayLoad["toprighty"] = ((topRight.Y * height) / IMG.height) * 100;
+      ((data.two.Y * height) / IMG.height) * 100;
+    requestPayLoad["topleftx"] = ((data.three.X * width) / IMG.width) * 100;
+    requestPayLoad["toplefty"] = ((data.three.Y * height) / IMG.height) * 100;
+    requestPayLoad["toprightx"] = ((data.four.X * width) / IMG.width) * 100;
+    requestPayLoad["toprighty"] = ((data.four.Y * height) / IMG.height) * 100;
     console.log("Points are right here in next line");
     console.log(requestPayLoad);
 
@@ -175,7 +175,7 @@ const SelectPoints = ({ match, history }) => {
       let res = await Post("/uploadSingleImagePoints", requestPayLoad);
 
       alert(res.data.message);
-      history.goBack();
+      // history.goBack();
     } catch (err) {
       console.log(err);
     }
@@ -194,7 +194,7 @@ const SelectPoints = ({ match, history }) => {
   };
   return (
     <>
-     <button className=" mt-4 ml-4 btn btn-success" onClick={save}>
+      <button className=" mt-4 ml-4 btn btn-success" onClick={save}>
         Save
       </button>
       <div
@@ -204,20 +204,20 @@ const SelectPoints = ({ match, history }) => {
       >
         <div id="container" style={{ backgroundImage: `url(${src})` }}>
           <div id="one" className="item one">
-            1
+            BL
           </div>
           <div id="two" className="item two">
-            2
+            BR
           </div>
           <div id="three" className="item three">
-            3
+            TL
           </div>
           <div id="four" className="item four">
-            4
+            TR
           </div>
         </div>
       </div>
-     
+
       <div style={{ display: "none" }}>
         <img id="img" src={src}></img>
       </div>
