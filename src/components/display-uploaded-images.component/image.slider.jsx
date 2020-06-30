@@ -7,7 +7,7 @@ import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import { Post} from "../../service/service.setup";
 import OpenPop from "../modal/open.model.component";
 const ImageSlider = ({ images, current, history }) => {
-  const totalEle = ["My Files", "Recent", "Photos", "Recycle Bin"];
+  const totalEle = ['Home'] ;
   const [LiElement, setLiEl] = useState(totalEle);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isShowPop, setIsShowPop] = useState(false);

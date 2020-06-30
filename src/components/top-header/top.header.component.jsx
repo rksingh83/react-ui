@@ -82,20 +82,24 @@ const TopHeader = ({
               totalItem == 0 ? "hideCount" : ""
             }`}
           >
-            <Delete onClick={() => reNameFolder(true)} /> Delete
+            <Delete onClick={() => reNameFolder(true)} />{" "}
+            <span onClick={() => reNameFolder(true)}>Delete</span>
           </div>
           <div
             className={`col-md-2 col-text-style ${
               totalItem > 1 || totalItem == 0 ? "hideCount" : ""
             }`}
           >
-            <Pencil onClick={() => reNameFolder(false)} /> Edit
+            <Pencil onClick={() => reNameFolder(false)} />{" "}
+            <span onClick={() => reNameFolder(false)}>Edit</span>
           </div>
           <div className="col-md-2 col-text-style">
-            <Refresh onClick={() => setShow(true)} /> Create Folder
+            <Refresh onClick={() => setShow(true)} />{" "}
+            <span onClick={() => setShow(true)}>Create Folder</span>
           </div>
           <div className="col-md-2 col-text-style">
-            <FolderCreate onClick={() => window.location.reload()} /> Refresh
+            <FolderCreate onClick={() => window.location.reload()} />{" "}
+            <span onClick={() => window.location.reload()}>Refresh</span>
           </div>
           <div
             className={`col-md-2 col-text-style ${

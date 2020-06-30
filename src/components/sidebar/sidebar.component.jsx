@@ -7,7 +7,7 @@ import FolderDisplay from '../create-folder/folder-dispaly';
 import TopHeader from '../top-header/top.header.component';
 import DisplayImageDescription from  '../display-discription/display-discription';
 const SideBar = ({history})=>{
-    const totalEle = ['My Files' ,'Recent' ,'Photos'  ,'Recycle Bin'] ;
+    const totalEle = ['Home'] ;
     const [totalFolder ,setTotalFolder]= useState([])
     const [selectedFolder ,setSelectedFolder]= useState({})
     const [finalCount ,setFinalCount]= useState({})

@@ -28,7 +28,7 @@ const UploadFile = ({ match, history }) => {
     height: "90vh",
   };
   
-  const totalEle = ["My Files", "Recent", "Photos", "Recycle Bin"];
+  const totalEle =  ['Home'] ;
   const [LiElement, setLiEl] = useState(totalEle);
   const handleActive = (e) => {
     setActiveIndex(LiElement.indexOf(e));
