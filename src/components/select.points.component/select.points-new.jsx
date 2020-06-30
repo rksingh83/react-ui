@@ -158,12 +158,9 @@ const SelectPoints = ({ match, history }) => {
     const requestPayLoad = {};
     requestPayLoad["id"] = match.params.url;
     requestPayLoad["bottomleftx"] = ((data.one.X * width) / IMG.width) * 100;
-    requestPayLoad["bottomlefty"] =
-      ((data.one.Y * height) / IMG.height) * 100;
-    requestPayLoad["bottomrightx"] =
-      ((data.two.X * width) / IMG.width) * 100;
-    requestPayLoad["bottomrighty"] =
-      ((data.two.Y * height) / IMG.height) * 100;
+    requestPayLoad["bottomlefty"] = ((data.one.Y * height) / IMG.height) * 100;
+    requestPayLoad["bottomrightx"] = ((data.two.X * width) / IMG.width) * 100;
+    requestPayLoad["bottomrighty"] = ((data.two.Y * height) / IMG.height) * 100;
     requestPayLoad["topleftx"] = ((data.three.X * width) / IMG.width) * 100;
     requestPayLoad["toplefty"] = ((data.three.Y * height) / IMG.height) * 100;
     requestPayLoad["toprightx"] = ((data.four.X * width) / IMG.width) * 100;
@@ -196,6 +193,12 @@ const SelectPoints = ({ match, history }) => {
     <>
       <button className=" mt-4 ml-4 btn btn-success" onClick={save}>
         Save
+      </button>
+      <button
+        className=" mt-4 ml-4 btn btn-success"
+        onClick={() => history.goBack()}
+      >
+        Back
       </button>
       <div
         style={{ width: 700, height: 700, margin: "auto" }}
