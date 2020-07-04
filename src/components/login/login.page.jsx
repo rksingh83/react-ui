@@ -55,7 +55,8 @@ const LoginPage = ({ history, setCurrentUser, setCurrentFile }) => {
       <ToastContainer />
       <div className="container">
         <div className="col col-md-6 col-lg-4 col-xs-10">
-          <div className="card card-body">
+          <div>
+          <div className="card card-body bg-custom">
             <div className="sign-up">
               <form>
                 <Input
@@ -77,14 +78,15 @@ const LoginPage = ({ history, setCurrentUser, setCurrentFile }) => {
                 ></Input>
                 <Input
                   label=""
-                  value="LogIn"
-                  className="btn btn-success"
+                  value="LOGIN"
+                  className="btn btn-success btn-block"
                   onClick={loginHandler}
                   name="cnfpass"
                   type="button"
                 ></Input>
                 <Link to="/forgot">Forgot Password ?</Link>
               </form>
+            </div>
             </div>
           </div>
         </div>

@@ -51,7 +51,7 @@ class SingnUp extends React.Component{
      <div className ="row mt-4">
      <div className ="container">
        <div className ="col col-md-6 col-lg-4 col-xs-10">
-      <div className = "card card-body">
+      <div className = "card card-body bg-custom">
      <div className='sign-up'>
      <form onSubmit ={this.handleSubmit}>
         <Input  placeholder ="Enter your Name" label ='Name'
@@ -75,7 +75,7 @@ class SingnUp extends React.Component{
          type='input'>
         </Input>
         <Input label =''
-         value = "SignUp"  className= "btn btn-success" onClick={this.handleSubmit} name='cnfpass'
+         value = "SIGN UP"  className= "btn btn-success btn-block" onClick={this.handleSubmit} name='cnfpass'
          type='button'>
         </Input>
      </form>

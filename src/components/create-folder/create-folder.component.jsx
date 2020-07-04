@@ -30,7 +30,7 @@ const CreateFolder = ({
   const [displayClass, setDisplayClass] = useState(displayValue);
 
   const imageStyle = {
-    width: "30%",
+    width: "5rem",
     zIndex: 2,
   };
   const hover = {

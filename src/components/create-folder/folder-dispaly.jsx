@@ -12,7 +12,7 @@ const FolderDisplay = ({ ToggleDescription ,onLeave, history,filteredFolder ,sea
    }else{
     return(
     
-      <div style={{ display: "flex" ,flexWrap:"wrap" }}>
+      <div className ="" style={{ display: "flex" ,flexWrap:"wrap",width:"100%" }}>
       {localRender.map((item ,index) => (
         <CreateFolder
           text={item.fileName}

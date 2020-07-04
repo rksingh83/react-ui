@@ -136,6 +136,7 @@ const SideBar = ({ history }) => {
           </ul>
         </div>
         <div className="col-md-10">
+          <div className ="row">
           <FolderDisplay
             isLoading={isLoading}
             selectedFolderCount={selectedFolderCountHandler}
@@ -148,6 +149,7 @@ const SideBar = ({ history }) => {
             onLeave={hideDescriptionHandler}
             filteredFolder={filteredFolder}
           />
+        </div>
         </div>
       </div>
     </React.Fragment>

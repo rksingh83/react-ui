@@ -19,3 +19,20 @@ a{
 *{
   box-sizing: border-box;
 }
+#root{
+  background-image: url('./assets//background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  color :#fff;
+}
+.bg-custom{
+  background: #f16136 !important;
+  border-radius: 5px !important;
+  border: 3px solid #00a859 !important;
+  color :#fff !important;
+}
+.list-group{
+  color:black !important;
+}
