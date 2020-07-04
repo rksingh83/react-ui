@@ -36,3 +36,6 @@ a{
 .list-group{
   color:black !important;
 }
+.on-hover:hover{
+  cursor: pointer;
+}

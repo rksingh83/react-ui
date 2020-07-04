@@ -11,6 +11,7 @@ import DisplayImages from "../display-uploaded-images.component/display-uploded-
 import DisplayImageDescription from "../display-discription/display-discription";
 import TopHeaderWithBack from "../top-header/simple-top.back";
 import Dropzone from "react-dropzone";
+import {Link} from 'react-router-dom';
 const UploadFile = ({ match, history }) => {
   const [file, setFile] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -66,7 +67,9 @@ const UploadFile = ({ match, history }) => {
       />
       <div className="row">
         <div className="col-md-2">
+          <Link className='logo-container' to='/'>
           <ul className="list-group" style={sideBarStyle}>
+
             {totalEle.map((item, index) => (
               <LeftSideBar
                 item={item}
@@ -83,6 +86,7 @@ const UploadFile = ({ match, history }) => {
               imageDescription={imageDescription}
             />
           </ul>
+          </Link>
         </div>
         <div className="col-md-9">
           <div

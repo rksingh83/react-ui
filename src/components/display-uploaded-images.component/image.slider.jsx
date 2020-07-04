@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import { Post} from "../../service/service.setup";
 import OpenPop from "../modal/open.model.component";
+import {Link} from 'react-router-dom'
 const ImageSlider = ({ images, current, history }) => {
   const totalEle = ['Home'] ;
   const [LiElement, setLiEl] = useState(totalEle);
@@ -115,6 +116,7 @@ const ImageSlider = ({ images, current, history }) => {
   return (
     <>
       <div className="col-md-2 p-0">
+      <Link className='logo-container' to='/'>
         <ul className="list-group" style={sideBarStyle}>
           {totalEle.map((item, index) => (
             <LeftSideBar
@@ -125,6 +127,7 @@ const ImageSlider = ({ images, current, history }) => {
             />
           ))}
         </ul>
+        </Link>
       </div>
       <div class="col-md-9" style={ParentStyles}>
         <ToastContainer />
