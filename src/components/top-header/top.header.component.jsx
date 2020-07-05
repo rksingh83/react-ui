@@ -83,7 +83,9 @@ const TopHeader = ({
             }`}
           >
             <Delete onClick={() => reNameFolder(true)} />{" "}
-            <span  className ="on-hover" onClick={() => reNameFolder(true)}>Delete</span>
+            <span className="on-hover" onClick={() => reNameFolder(true)}>
+              Delete
+            </span>
           </div>
           <div
             className={`col-md-2 col-text-style ${
@@ -91,15 +93,21 @@ const TopHeader = ({
             }`}
           >
             <Pencil onClick={() => reNameFolder(false)} />{" "}
-            <span  className ="on-hover" onClick={() => reNameFolder(false)}>Edit</span>
+            <span className="on-hover" onClick={() => reNameFolder(false)}>
+              Edit
+            </span>
           </div>
           <div className="col-md-2 col-text-style">
             <Refresh onClick={() => setShow(true)} />{" "}
-            <span className ="on-hover" onClick={() => setShow(true)}>Create Folder</span>
+            <span className="on-hover" onClick={() => setShow(true)}>
+              Create Folder
+            </span>
           </div>
           <div className="col-md-2 col-text-style">
             <FolderCreate onClick={() => window.location.reload()} />{" "}
-            <span className ="on-hover" onClick={() => window.location.reload()}>Refresh</span>
+            <span className="on-hover" onClick={() => window.location.reload()}>
+              Refresh
+            </span>
           </div>
           <div
             className={`col-md-2 col-text-style ${

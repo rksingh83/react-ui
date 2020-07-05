@@ -129,7 +129,7 @@ const ImageSlider = ({ images, current, history }) => {
         </ul>
         </Link>
       </div>
-      <div class="col-md-9" style={ParentStyles}>
+      <div className="col-md-9" style={ParentStyles}>
         <ToastContainer />
         {images.map((image, index) => (
           <div

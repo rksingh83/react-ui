@@ -1,8 +1,16 @@
 .image-container {
-    margin: 2rem;
-    min-width: 5rem;
+    margin: 10px;
 }
-
+@media screen and (max-width: 600px) {
+    .image-container {
+      width: 44%;
+    }
+  }
+  @media screen and (max-width: 1080px) and (min-width: 601px) {
+    .image-container {
+      width: 20%;
+    }
+  }
 .small-image-div {
     position: absolute;
 }

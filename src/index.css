@@ -26,7 +26,7 @@ a{
     background-size:100% 100%;
   background-repeat: no-repeat;
   background-position: center;
-  height: 100vh;
+  height: 100%;
   color :black;
 }
 .bg-custom{
@@ -40,4 +40,14 @@ a{
 }
 .on-hover:hover{
   cursor: pointer;
+}
+@media screen and (max-width: 600px) {
+  .mainDiv {
+    width: 44%;
+  }
+}
+@media screen and (max-width: 1080px) and (min-width: 601px) {
+  .mainDiv {
+    width: 20%;
+  }
 }

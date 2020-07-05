@@ -73,7 +73,7 @@ const UploadFile = ({ match, history }) => {
         setImages={setImages}
       />
       <div className="row">
-        <div className="col-md-2">
+        <div className="col-md-2  d-none d-sm-block">
           <Link className="logo-container" to="/">
             <ul className="list-group" style={sideBarStyle}>
               {totalEle.map((item, index) => (
@@ -96,7 +96,7 @@ const UploadFile = ({ match, history }) => {
         </div>
         <div className="col-md-9">
           <div
-            class="empty-folder"
+            className="empty-folder"
             style={{ display: images.length == 0 ? "" : "none" }}
           >
             <h4>Folder is Empty</h4>

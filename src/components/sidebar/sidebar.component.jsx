@@ -121,7 +121,7 @@ const SideBar = ({ history }) => {
         saveFolder={saveFolder}
       />
       <div className="row">
-        <div className="col-md-2">
+        <div className="col-md-2 d-none d-sm-block">
           <ul className="list-group" style={sideBarStyle}>
             {LiElement.map((item, index) => (
               <LeftSideBar

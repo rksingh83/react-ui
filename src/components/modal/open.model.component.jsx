@@ -45,7 +45,7 @@ const OpenPop = ({
       </Modal.Body>
       <Modal.Footer>
         <button
-          class="btn-danger btn"
+          className="btn-danger btn"
           variant="secondary"
           onClick={handleClose}
         >
