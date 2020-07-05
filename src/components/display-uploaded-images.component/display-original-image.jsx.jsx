@@ -21,6 +21,10 @@ const DisplayOriginalImage = ({match ,history})=>{
   
     Post('/getAnyCloudImages',requestFile)
     .then((res)=>{
+      if(res.data.code==201){
+        alert(res.data.error);
+         history.push('/logout');
+    }
    //  console.log((res.data.imageInput[0].align_image_org))
      setImageUrl(res.data.imageInput[0].align_image_org)
      
@@ -29,10 +33,18 @@ const DisplayOriginalImage = ({match ,history})=>{
  
    Post('/getAllFileImages',requestImages)
    .then((res)=>{
+    if(res.data.code==201){
+      alert(res.data.error);
+      history.push('/logout');
+  }
    const   allCloud = [] ;
      res.data.imageInput.forEach((image=>allCloud.push(image.id)))
      Post('/getAnyCloudImages',{ids:allCloud ,imagetype:"small"})
      .then((res)=>{
+      if(res.data.code==201){
+        alert(res.data.error);
+         history.push('/logout');
+    }
       setAllImages((res.data.imageInput))
     }) ;
    })

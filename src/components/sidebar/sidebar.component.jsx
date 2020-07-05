@@ -57,6 +57,10 @@ const SideBar = ({ history }) => {
   useEffect(() => {
     const requestFile = { filefolderRequest: [] };
     Post("/getAllFiles", requestFile).then((res) => {
+      if(res.data.code==201){
+        alert(res.data.error);
+         history.push('/logout');
+    }
       if (res.data.filefolderRequest) {
         setTotalFolder(res.data.filefolderRequest);
       }

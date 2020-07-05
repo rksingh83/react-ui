@@ -5,13 +5,13 @@ import { connect } from "react-redux";
 import { setCurrentUser } from "../../redux/user/user.actions";
 import Cookies from "js-cookie";
 import axios from "axios";
-import './lon.style.scss'
+import "./lon.style.scss";
 import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import DisplayImages from "../display-uploaded-images.component/display-uploded-images";
 import DisplayImageDescription from "../display-discription/display-discription";
 import TopHeaderWithBack from "../top-header/simple-top.back";
 import Dropzone from "react-dropzone";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 const UploadFile = ({ match, history }) => {
   const [file, setFile] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -28,8 +28,8 @@ const UploadFile = ({ match, history }) => {
     border: "1px solid rgba(0, 0, 0, 0.125)",
     height: "90vh",
   };
-  
-  const totalEle =  ['Home'] ;
+
+  const totalEle = ["Home"];
   const [LiElement, setLiEl] = useState(totalEle);
   const handleActive = (e) => {
     setActiveIndex(LiElement.indexOf(e));
@@ -49,6 +49,13 @@ const UploadFile = ({ match, history }) => {
     const requestFile = { id: match.params.id };
     setIsLoading(true);
     Post("/getAllFileImages", requestFile).then((res) => {
+      if (res.data.code == 201) {
+        alert(res.data.error);
+        history.push("/logout");
+      }
+      if (res.data.code == 201) {
+        // history.push('/logout');
+      }
       setImages(res.data.imageInput);
       setIsLoading(false);
     });
@@ -67,25 +74,24 @@ const UploadFile = ({ match, history }) => {
       />
       <div className="row">
         <div className="col-md-2">
-          <Link className='logo-container' to='/'>
-          <ul className="list-group" style={sideBarStyle}>
-
-            {totalEle.map((item, index) => (
-              <LeftSideBar
-                item={item}
-                key={index}
-                isActive={activeIndex == index ? true : false}
-                changeActive={handleActive}
+          <Link className="logo-container" to="/">
+            <ul className="list-group" style={sideBarStyle}>
+              {totalEle.map((item, index) => (
+                <LeftSideBar
+                  item={item}
+                  key={index}
+                  isActive={activeIndex == index ? true : false}
+                  changeActive={handleActive}
+                />
+              ))}
+              <DisplayImageDescription
+                pageNumber={pageNumber}
+                iSDisplayDiv={iSDisplayDiv}
+                isShowNumber={true}
+                date={date}
+                imageDescription={imageDescription}
               />
-            ))}
-            <DisplayImageDescription
-              pageNumber={pageNumber}
-              iSDisplayDiv={iSDisplayDiv}
-              isShowNumber={true}
-              date={date}
-              imageDescription={imageDescription}
-            />
-          </ul>
+            </ul>
           </Link>
         </div>
         <div className="col-md-9">

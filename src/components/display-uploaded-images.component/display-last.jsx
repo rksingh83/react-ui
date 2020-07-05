@@ -18,7 +18,10 @@ const DisplayLastImage = ({match ,history})=>{
   
     Post('/getAnyCloudImages',requestFile)
     .then((res)=>{
-     
+      if(res.data.code==201){
+          alert(res.data.error);
+         history.push('/logout');
+    }
      setImageUrl(res.data.imageInput[0].align_image_org)
      
    })

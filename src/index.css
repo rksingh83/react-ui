@@ -21,11 +21,13 @@ a{
 }
 #root{
   background-image: url('./assets//background.png');
-  background-size: cover;
+  -moz-background-size:100% 100%;
+    -webkit-background-size:100% 100%;
+    background-size:100% 100%;
   background-repeat: no-repeat;
   background-position: center;
   height: 100vh;
-  color :#fff;
+  color :black;
 }
 .bg-custom{
   background: #f16136 !important;

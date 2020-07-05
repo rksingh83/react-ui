@@ -17,6 +17,10 @@ const SelectPoints = ({ match, history }) => {
       ids: [match.params.url],
       imagetype: "raw_small",
     }).then((res) => {
+      if(res.data.code==201){
+        alert(res.data.error);
+         history.push('/logout');
+    }
       mapSprite.src = res.data.imageInput[0].raw_image_small;
       var img = new Image();
       img.src = mapSprite.src;

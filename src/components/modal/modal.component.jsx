@@ -5,29 +5,41 @@ import Input from "../boostrapinput/input.component";
 import CreateFolder from "../create-folder/create-folder.component";
 import ModalHeader from "react-bootstrap/ModalHeader";
 import { Post, Get } from "../../service/service.setup";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 const ModalPop = ({ history, currentFile, openModel }) => {
   const [show, setShow] = useState(openModel);
   const [nameFolder, setName] = useState(currentFile);
-  const [id, setId] = useState('');
+  const [id, setId] = useState("");
   useEffect(() => {});
   const handRK = () => {
     //pushName(fileName);
     setShow(false);
     const dateCreated = "123";
     const requestFile = {
-      filefolderRequest: [{ fileName, fileDescription, dateCreated ,id}],
+      filefolderRequest: [{ fileName, fileDescription, dateCreated, id }],
     };
-    
+
     addName("");
     addDisc("");
-   
-    if(id){
-      Post("/updateFileFolder", requestFile).then((res) =>updateName(res.data.filefolderRequest[0]));
-    }else{
-    Post("/createFileFolder", requestFile).then((res) =>pushName(res.data.filefolderRequest[0]));
+
+    if (id) {
+      Post("/updateFileFolder", requestFile).then((res) => {
+        if (res.data.code == 201) {
+          alert(res.data.error);
+          history.push("/logout");
+        }
+        updateName(res.data.filefolderRequest[0]);
+      });
+    } else {
+      Post("/createFileFolder", requestFile).then((res) => {
+        if (res.data.code == 201) {
+          alert(res.data.error);
+          history.push("/logout");
+        }
+        pushName(res.data.filefolderRequest[0]);
+      });
     }
-    setId(null)
+    setId(null);
   };
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -39,28 +51,27 @@ const ModalPop = ({ history, currentFile, openModel }) => {
   const pushName = (name) => {
     setName([...nameFolder, name]);
   };
-  const updateName =(file)=>{
-
-const updated =     nameFolder.map(item=>{
-      if(file.id==item.id){
-        item.fileDescription=file.fileDescription;
-        item.fileName=file.fileName;
+  const updateName = (file) => {
+    const updated = nameFolder.map((item) => {
+      if (file.id == item.id) {
+        item.fileDescription = file.fileDescription;
+        item.fileName = file.fileName;
       }
-      return item ;
-    })
-    
-   setName(updated)
-  }
+      return item;
+    });
+
+    setName(updated);
+  };
   //const handleClose = () => setShow(false);
   const addDescHandler = (e) => {
     addDisc(e.target.value);
   };
 
-  const handleEditShow = (text,des ,fileId) => {
+  const handleEditShow = (text, des, fileId) => {
     setShow(true);
     addName(text);
     addDisc(des);
-    setId(fileId)
+    setId(fileId);
   };
   const btnStyle = {
     display: "flex",
@@ -94,10 +105,9 @@ const updated =     nameFolder.map(item=>{
             name="dis"
             type="input"
           ></Input>
-           <Input
-           
+          <Input
             value={id}
-            handleChange={()=>setId(id)}
+            handleChange={() => setId(id)}
             name="id"
             type="hidden"
           ></Input>
@@ -120,15 +130,15 @@ const updated =     nameFolder.map(item=>{
         </Modal.Footer>
       </Modal>
       <div style={{ display: "flex" }}>
-        {nameFolder.map((item ,index) => (
+        {nameFolder.map((item, index) => (
           <CreateFolder
             openModel={handleEditShow}
             text={item.fileName}
-            des={item.fileDescription} 
-            fileId ={item.id}
+            des={item.fileDescription}
+            fileId={item.id}
             imageSrc="./download.png"
-            key ={index} 
-            history ={history}
+            key={index}
+            history={history}
           ></CreateFolder>
         ))}
       </div>
@@ -136,6 +146,6 @@ const updated =     nameFolder.map(item=>{
   );
 };
 
-const mapStateToPros = ({currentFile:{currentFile}})=>({currentFile})
+const mapStateToPros = ({ currentFile: { currentFile } }) => ({ currentFile });
 export default connect(mapStateToPros)(ModalPop);
 //export default ModalPop;
