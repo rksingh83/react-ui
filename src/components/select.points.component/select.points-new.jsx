@@ -209,7 +209,7 @@ const SelectPoints = ({ match, history }) => {
         id="outerContainer"
         className="mt-4"
       >
-        <div id="container" style={{ backgroundImage: `url(${src})` }}>
+        <div id="container" style={{ backgroundImage: `url(${src})`, backgroundSize :"100% 100%" }}>
           <div id="one" className="item one">
             BL
           </div>

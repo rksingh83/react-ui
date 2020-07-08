@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 import { auth } from "../../firebase/firebase.utilis";
 import Cookies from "js-cookie";
+import { ReactComponent as Logout } from "../../assets/exit.svg";
 import "./header.style.scss";
 import "bootstrap/js/src/collapse.js";
 import { connect } from "react-redux";
@@ -60,7 +61,7 @@ const Header = ({ currentUser, hidden }) => {
           {currentUser ? (
             <li className="nav-item">
               <Link className="option nav-link text-white" to="/logout">
-                Logout
+              <  Logout style ={{height:"50%"}} />
               </Link>
             </li>
           ) : (

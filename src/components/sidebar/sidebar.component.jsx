@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ModalPop from "../modal/modal.component";
-import { Post, Get } from "../../service/service.setup";
+import { Post} from "../../service/service.setup";
 import LeftSideBar from "./left.sidebar.compoent";
 import FolderDisplay from "../create-folder/folder-dispaly";
 import TopHeader from "../top-header/top.header.component";

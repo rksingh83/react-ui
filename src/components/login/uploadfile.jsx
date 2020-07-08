@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Input from "../boostrapinput/input.component";
-import { Post, Get } from "../../service/service.setup";
+import { Post} from "../../service/service.setup";
 import { connect } from "react-redux";
 import { setCurrentUser } from "../../redux/user/user.actions";
-import Cookies from "js-cookie";
-import axios from "axios";
 import "./lon.style.scss";
 import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import DisplayImages from "../display-uploaded-images.component/display-uploded-images";
 import DisplayImageDescription from "../display-discription/display-discription";
 import TopHeaderWithBack from "../top-header/simple-top.back";
-import Dropzone from "react-dropzone";
 import { Link } from "react-router-dom";
 const UploadFile = ({ match, history }) => {
   const [file, setFile] = useState("");
