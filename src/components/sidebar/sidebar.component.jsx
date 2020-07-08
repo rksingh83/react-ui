@@ -27,7 +27,7 @@ const SideBar = ({ history }) => {
     setSearchHandler(e.target.value);
     setFilteredFolder(
       totalFolder.filter((item) =>
-        item.fileName.toLowerCase().startsWith(e.target.value.toLowerCase())
+        item.fileName.toLowerCase().includes(e.target.value.toLowerCase())
       )
     );
   };
