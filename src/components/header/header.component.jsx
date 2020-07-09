@@ -9,11 +9,11 @@ import "bootstrap/js/src/collapse.js";
 import { connect } from "react-redux";
 
 const Header = ({ currentUser, hidden }) => {
-  const imgStyle = { width: "50px"};
+  const imgStyle = { width: "27px"};
   const isToken = Cookies.get("token");
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-light custom-bg">
       <Link className="logo-container navbar-brand" to="/">
               <img
                 style={imgStyle}
@@ -61,7 +61,7 @@ const Header = ({ currentUser, hidden }) => {
           {currentUser ? (
             <li className="nav-item">
               <Link className="option nav-link text-white" to="/logout">
-              <  Logout style ={{height:"50%"}} />
+              <  Logout style ={{height:"28px"}} />
               </Link>
             </li>
           ) : (

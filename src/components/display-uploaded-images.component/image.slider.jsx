@@ -115,9 +115,9 @@ const ImageSlider = ({ images, current, history }) => {
   };
   return (
     <>
-      <div className="col-md-2 p-0">
+      <div className=" custom-pad-li d-none d-sm-block col-md-2 p-0">
       <Link className='logo-container' to='/'>
-        <ul className="list-group" style={sideBarStyle}>
+        <ul className=" ul-pad list-group" style={sideBarStyle}>
           {totalEle.map((item, index) => (
             <LeftSideBar
               item={item}
@@ -144,40 +144,6 @@ const ImageSlider = ({ images, current, history }) => {
               className="display-image"
               src={image.align_image_small}
             ></img>
-            <div className="card-body custom-card">
-              <button
-                onClick={() =>
-                  openPop(
-                    image.pageNumber,
-                    image.ff_local_datetime,
-                    image.description,
-                    image.id
-                  )
-                }
-              >
-                Edit
-              </button>
-
-              <span className="image-description">
-                Page Number:{" "}
-                <span className="content" id={`pageNo_${image.id}`}>
-                  {" "}
-                  {image.pageNumber}
-                </span>
-              </span>
-              <span className="image-description">
-                Date:{" "}
-                <span className="content" id={`date_${image.id}`}>
-                  {image.ff_local_datetime}
-                </span>
-              </span>
-              <span className="image-description">
-                Description :{" "}
-                <span className="content" id={`desc_${image.id}`}>
-                  {image.description}
-                </span>{" "}
-              </span>
-            </div>
           </div>
         ))}
         <Next className="next-btn common-btn" onClick={nextImage}></Next>

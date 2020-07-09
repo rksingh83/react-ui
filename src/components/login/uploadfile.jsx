@@ -69,9 +69,9 @@ const UploadFile = ({ match, history }) => {
         setImages={setImages}
       />
       <div className="row">
-        <div className="col-md-2  d-none d-sm-block">
+        <div className="col-md-2 custom-pad-li  d-none d-sm-block">
           <Link className="logo-container" to="/">
-            <ul className="list-group" style={sideBarStyle}>
+            <ul className="list-group ul-pad" style={sideBarStyle}>
               {totalEle.map((item, index) => (
                 <LeftSideBar
                   item={item}

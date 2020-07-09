@@ -121,8 +121,8 @@ const SideBar = ({ history }) => {
         saveFolder={saveFolder}
       />
       <div className="row">
-        <div className="col-md-2 d-none d-sm-block">
-          <ul className="list-group" style={sideBarStyle}>
+        <div className="col-md-2 custom-pad-li d-none d-sm-block">
+          <ul className="list-group ul-pad" style={sideBarStyle}>
             {LiElement.map((item, index) => (
               <LeftSideBar
                 item={item}

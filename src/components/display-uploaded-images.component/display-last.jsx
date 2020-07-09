@@ -59,7 +59,6 @@ const DisplayLastImage = ({ match, history }) => {
         onClick={() => history.push(`/edit/${match.params.id}`)}
         style={pencilStyle}
       ></Pencil>
-      <button onClick = {()=>download(imageUrl)}>Download</button>>
       <img style={styleImage} src={`${imageUrl}`}></img>
     </div>
   );

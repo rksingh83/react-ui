@@ -1,5 +1,5 @@
 svg {
-    width: 50px;
+    width: 40px;
     cursor: pointer;
     height: 45%;
 }
@@ -53,4 +53,11 @@ input-img {
 .header-icon{
     width: 30px ;
     height: 30px;
+}
+.sec-header-item{
+    display: flex;
+    align-items: center;
+}
+.min-height{
+min-height: 3.36rem;
 }

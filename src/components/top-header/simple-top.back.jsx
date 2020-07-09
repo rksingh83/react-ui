@@ -143,7 +143,7 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
         </div>
       </div>
 
-      <div className="col-md-2">
+      <div className=" ml-auto col-md-2">
         <button
           onClick={() => history.goBack()}
           className="btn btn-success float-right"

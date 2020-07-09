@@ -28,7 +28,6 @@ const TopHeader = ({
     setShow(false);
   };
   const topRowStyle = {
-    padding: "10px 10px",
     background: "rgba(0, 0, 0, 0.125)",
   };
   let totalItem = 0;
@@ -65,8 +64,8 @@ const TopHeader = ({
   return (
     <div className="row secondary-header" style={topRowStyle}>
       <div className="col-md-12">
-        <div className="row">
-          <div className="col-md-2">
+        <div className="row min-height">
+          <div className="col-md-2  sec-header-item">
             <input
               placeholder="Search anything.."
               value={searchItem}
@@ -78,8 +77,8 @@ const TopHeader = ({
             ></input>
           </div>
           <div
-            className={`col-md-2 col-text-style ${
-              totalItem == 0 ? "hideCount" : ""
+            className={`  col-md-2  col-text-style ${
+              totalItem == 0 ? "hideCount" : "sec-header-item"
             }`}
           >
             <Delete onClick={() => reNameFolder(true)} />{" "}
@@ -88,8 +87,8 @@ const TopHeader = ({
             </span>
           </div>
           <div
-            className={`col-md-2 col-text-style ${
-              totalItem > 1 || totalItem == 0 ? "hideCount" : ""
+            className={`  col-md-2 col-text-style ${
+              totalItem > 1 || totalItem == 0 ? "hideCount" : "sec-header-item"
             }`}
           >
             <Pencil onClick={() => reNameFolder(false)} />{" "}
@@ -97,21 +96,21 @@ const TopHeader = ({
               Edit
             </span>
           </div>
-          <div className="col-md-2 col-text-style">
+          <div className="col-md-2 sec-header-item col-text-style">
             <Refresh onClick={() => setShow(true)} />{" "}
             <span className="on-hover" onClick={() => setShow(true)}>
               Create Folder
             </span>
           </div>
-          <div className="col-md-2 col-text-style">
+          <div className="col-md-2 col-text-style sec-header-item">
             <FolderCreate onClick={() => window.location.reload()} />{" "}
             <span className="on-hover" onClick={() => window.location.reload()}>
               Refresh
             </span>
           </div>
           <div
-            className={`col-md-2 col-text-style ${
-              totalItem == 0 ? "hideCount" : ""
+            className={`col-md-2   col-text-style ${
+              totalItem == 0 ? "hideCount" : "sec-header-item"
             }`}
           >
             <span className="count">{totalItem}</span> Selected{" "}
