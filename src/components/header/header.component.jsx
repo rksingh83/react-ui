@@ -20,6 +20,7 @@ const Header = ({ currentUser, hidden }) => {
                 src={require("../../assets/logo.png")}
               ></img>
             </Link>
+            <span className ="home">My Digi Network</span>
       <button
         className="navbar-toggler"
         type="button"
