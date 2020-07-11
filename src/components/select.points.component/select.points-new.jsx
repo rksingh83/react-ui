@@ -9,10 +9,11 @@ import $ from "jquery";
 
 const SelectPoints = ({ match, history }) => {
   var Markers = new Array();
-  var [points, setPoints] = useState(0);
-  var [reset, setReset] = useState([]);
-  var [src, setSrc] = useState("");
+  const [points, setPoints] = useState(0);
+  const [reset, setReset] = useState([]);
+  const [src, setSrc] = useState("");
   const [data, setData] = useState({});
+  const [isEdit ,setIsEdit] = useState(false)
 
   var active = false;
   useEffect(() => {
@@ -34,7 +35,7 @@ const SelectPoints = ({ match, history }) => {
     });
     var container = document.querySelector("#container");
     var activeItem = null;
-    console.log(container);
+   // console.log(container);
     container.addEventListener("touchstart", dragStart, false);
     container.addEventListener("touchend", dragEnd, false);
     container.addEventListener("touchmove", drag, false);
@@ -43,7 +44,7 @@ const SelectPoints = ({ match, history }) => {
     container.addEventListener("mouseup", dragEnd, false);
     container.addEventListener("mousemove", drag, false);
     function dragStart(e) {
-      console.log(e);
+     // console.log(e);
       if (e.target !== e.currentTarget) {
         active = true;
 
@@ -75,8 +76,9 @@ const SelectPoints = ({ match, history }) => {
       if (activeItem !== null) {
         activeItem.initialX = activeItem.currentX;
         activeItem.initialY = activeItem.currentY;
-        console.log("current", e.pageX - activeItem.xOffset);
-        console.log("current", activeItem.clientX, e);
+       // console.log("current", e.pageX - activeItem.xOffset);
+        //console.log("current", activeItem.clientX, e);
+        
       }
 
       active = false;
@@ -125,6 +127,9 @@ const SelectPoints = ({ match, history }) => {
     //   console.log(reset, i);
     //   allPoints.push({ X: reset.XPos, Y: reset.YPos });
     // });
+    const IMG = document.getElementById("img");
+    const width = IMG.width / 700;
+    const height = IMG.height / 700;
 
     if (
       !(
@@ -154,10 +159,8 @@ const SelectPoints = ({ match, history }) => {
     });
     //   console.log("BOT  TOMLEFT", bottomLeft, "BOTTOMR", bottomRight);
     // console.log("TOPLEFT", small, "TOPRIGHT", topRight);
-    const IMG = document.getElementById("img");
-    const width = IMG.width / 700;
-    const height = IMG.height / 700;
-    console.log("WIDTH", width, height);
+  
+  //  console.log("WIDTH", width, height);
 
     const requestPayLoad = {};
     requestPayLoad["id"] = match.params.url;
@@ -170,7 +173,7 @@ const SelectPoints = ({ match, history }) => {
     requestPayLoad["toprightx"] = ((data.four.X * width) / IMG.width) * 100;
     requestPayLoad["toprighty"] = ((data.four.Y * height) / IMG.height) * 100;
     console.log("Points are right here in next line");
-    console.log(requestPayLoad);
+   // console.log(requestPayLoad);
 
     try {
       let res = await Post("/uploadSingleImagePoints", requestPayLoad);
@@ -178,12 +181,12 @@ const SelectPoints = ({ match, history }) => {
       alert(res.data.message);
       // history.goBack();
     } catch (err) {
-      console.log(err);
+     // console.log(err);
     }
     console.log(data);
   };
   const save = () => {
-    console.log(data);
+    //console.log(data);
     updatePoints();
   };
   const isPointChanged = (key, number) => {
@@ -198,6 +201,9 @@ const SelectPoints = ({ match, history }) => {
       <button className=" mt-4 ml-4 btn btn-success" onClick={save}>
         Save
       </button>
+      <button className=" mt-4 ml-4 btn btn-success"  onClick ={()=>setIsEdit(true)}>
+       Edit Points
+      </button>
       <button
         className=" mt-4 ml-4 btn btn-success"
         onClick={() => history.goBack()}
@@ -210,16 +216,16 @@ const SelectPoints = ({ match, history }) => {
         className="mt-4"
       >
         <div id="container" style={{ backgroundImage: `url(${src})`, backgroundSize :"100% 100%" }}>
-          <div id="one" className="item one">
+          <div id="one" className={`item one ${isEdit ? "" :"hide-point"}`}>
             BL
           </div>
-          <div id="two" className="item two">
+          <div id="two" className={`item two ${isEdit ? "" : "hide-point"}`}>
             BR
           </div>
-          <div id="three" className="item three">
+          <div id="three" className={`item three ${isEdit ? "" : "hide-point"}`}>
             TL
           </div>
-          <div id="four" className="item four">
+          <div id="four"  className={`item four ${isEdit ? "" : "hide-point"}`}>
             TR
           </div>
         </div>
