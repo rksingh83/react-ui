@@ -83,7 +83,7 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
   return (
     <div className="row secondary-header" style={topRowStyle}>
       <ToastContainer />
-      <div className="col-md-4 ml-2" style={{ display: id ? "" : "none" }}>
+      <div className="col-md-4 ml-2 sec-header-item" style={{ display: id ? "" : "none" }}>
         <form
           className="mr-4"
           style={{ display: "inline" }}
@@ -113,7 +113,7 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
         </button>
         <WebCamModel id={id} hide={setShowModel} show={showModel} />
       </div>
-      <div className="col-md-2">
+      <div className="col-md-2 sec-header-item">
         <div
           style={{
             display: updateImages && updateImages.length > 0 ? "" : "none",
@@ -122,7 +122,7 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
           <Delete onClick={deleteHandler} className="header-icon" />
         </div>
       </div>
-      <div className="col-md-2">
+      <div className="col-md-2 sec-header-item">
         <div
           style={{
             display: updateImages && updateImages.length == 1 ? "" : "none",
