@@ -4,11 +4,11 @@ import { ReactComponent as Next } from "../../assets/next.svg";
 import { ReactComponent as Back } from "../../assets/back.svg";
 import { ToastContainer, toast } from "react-toastify";
 import LeftSideBar from "../sidebar/left.sidebar.compoent";
-import { Post} from "../../service/service.setup";
+import { Post } from "../../service/service.setup";
 import OpenPop from "../modal/open.model.component";
-import {Link} from 'react-router-dom'
-const ImageSlider = ({ images, current, history }) => {
-  const totalEle = ['Home'] ;
+import { Link } from "react-router-dom";
+const ImageSlider = ({ images, current, history ,setImageId}) => {
+  const totalEle = ["Home"];
   const [LiElement, setLiEl] = useState(totalEle);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isShowPop, setIsShowPop] = useState(false);
@@ -16,6 +16,8 @@ const ImageSlider = ({ images, current, history }) => {
   const [desc, setDesc] = useState(null);
   const [date, setDate] = useState(null);
   const [id, setId] = useState(null);
+  const [data, setData] = useState(current);
+
   const handleActive = (e) => {
     setActiveIndex(LiElement.indexOf(e));
     setLiEl(totalEle);
@@ -43,9 +45,7 @@ const ImageSlider = ({ images, current, history }) => {
   const updateToServer = async (data) => {
     try {
       let res = await Post("/updateImage", data);
-      if(res.data.code==200)
-         alert(res.data.message)
-
+      if (res.data.code == 200) alert(res.data.message);
     } catch (err) {
       console.log(err);
     }
@@ -89,6 +89,7 @@ const ImageSlider = ({ images, current, history }) => {
     allImages.forEach((item) => {
       if (item.getAttribute("currentindex") == selectedIndex) {
         item.style.display = "block";
+        setImageId(item.getAttribute("currentindex"));
       } else {
         item.style.display = "none";
       }
@@ -108,6 +109,7 @@ const ImageSlider = ({ images, current, history }) => {
     allImages.forEach((item) => {
       if (item.getAttribute("currentindex") == selectedIndex) {
         item.style.display = "block";
+        setImageId(item.getAttribute("currentindex"));
       } else {
         item.style.display = "none";
       }
@@ -116,17 +118,17 @@ const ImageSlider = ({ images, current, history }) => {
   return (
     <>
       <div className=" custom-pad-li d-none d-sm-block col-md-2 p-0">
-      <Link className='logo-container' to='/'>
-        <ul className=" ul-pad list-group" style={sideBarStyle}>
-          {totalEle.map((item, index) => (
-            <LeftSideBar
-              item={item}
-              key={index}
-              isActive={activeIndex == index ? true : false}
-              changeActive={handleActive}
-            />
-          ))}
-        </ul>
+        <Link className="logo-container" to="/">
+          <ul className=" ul-pad list-group" style={sideBarStyle}>
+            {totalEle.map((item, index) => (
+              <LeftSideBar
+                item={item}
+                key={index}
+                isActive={activeIndex == index ? true : false}
+                changeActive={handleActive}
+              />
+            ))}
+          </ul>
         </Link>
       </div>
       <div className="col-md-9" style={ParentStyles}>

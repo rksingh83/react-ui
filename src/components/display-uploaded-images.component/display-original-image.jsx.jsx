@@ -11,9 +11,10 @@ import './create-image.style.scss' ;
 import {ReactComponent as Cross} from '../../assets/cross.svg';
 import ImageSlider from  './image.slider' ;
 import { ToastContainer, toast } from 'react-toastify';
-import TopHeaderWithBack from '../top-header/simple-top.back';
+import TopSingleHeader from '../top-header/new.header';
 const DisplayOriginalImage = ({match ,history})=>{
    const [imageUrl , setImageUrl] = useState('');
+   const [imageId , setImageId] = useState(match.params.id);
    const [allImages , setAllImages] = useState([]);
  
   useEffect(() => {
@@ -61,14 +62,16 @@ const DisplayOriginalImage = ({match ,history})=>{
    top:"5rem",
    right:"3rem"
  }
+ 
     return(
        <>
-       <TopHeaderWithBack history={history}/>
+       <TopSingleHeader  imageId ={imageId} images ={allImages} history={history}/>
       <div  style={{ display: "flex" ,flexWrap:"wrap"}}>
 
 
    <ImageSlider current ={match.params.id}
    history ={history}
+   setImageId = {setImageId}
     images ={allImages}></ImageSlider>
     </div>
     </>

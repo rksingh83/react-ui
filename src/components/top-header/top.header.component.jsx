@@ -62,7 +62,7 @@ const TopHeader = ({
     deleteHandler(requestFile, restArr);
   };
   return (
-    <div className="row secondary-header" style={topRowStyle}>
+    <div className="row secondary-header single-header" style={topRowStyle}>
       <div className="col-md-12">
         <div className="row min-height">
           <div className="col-md-2  sec-header-item">

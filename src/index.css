@@ -49,3 +49,13 @@ a{
 .hide-point{
   display: none !important;
 }
+.single-header{
+  max-height: 3.1rem !important;
+}
+.single-header-svg{
+   height: 30px !important;
+}
+.single-header-li{
+  display: flex;
+  align-items: center !important;
+}

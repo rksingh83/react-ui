@@ -9,7 +9,7 @@ import { ReactComponent as Delete } from "../../assets/delete.svg";
 import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import OpenEditPop from "../modal/edit.modal";
 
-const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
+const singleImageHeader = ({ history, id, updateImages, ...props }) => {
   const [file, setFile] = useState("");
   const [showModel, setShowModel] = useState(false);
   const [isShow, setIsShow] = useState(false);
@@ -81,7 +81,7 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
     setIsShow(false);
   };
   return (
-    <div className="row secondary-header single-header" style={topRowStyle}>
+    <div className="row secondary-header" style={topRowStyle}>
       <ToastContainer />
       <div className="col-md-4 ml-2 sec-header-item" style={{ display: id ? "" : "none" }}>
         <form
@@ -154,4 +154,4 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
     </div>
   );
 };
-export default TopHeaderWithBack;
+export default singleImageHeader;
