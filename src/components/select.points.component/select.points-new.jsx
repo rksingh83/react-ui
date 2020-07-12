@@ -5,6 +5,7 @@ import "./points.style.scss";
 import { Post, Get } from "../../service/service.setup";
 //import './create-image.style.scss' ;
 import { ReactComponent as Cross } from "../../assets/edit.svg";
+import { Link } from "react-router-dom";
 import $ from "jquery";
 
 const SelectPoints = ({ match, history }) => {
@@ -14,6 +15,8 @@ const SelectPoints = ({ match, history }) => {
   const [src, setSrc] = useState("");
   const [data, setData] = useState({});
   const [isEdit, setIsEdit] = useState(false);
+  const totalEle = ["Home"];
+  const [LiElement, setLiEl] = useState(totalEle);
 
   var active = false;
   useEffect(() => {
@@ -110,7 +113,7 @@ const SelectPoints = ({ match, history }) => {
     $("#outerContainer").click(function (e) {
       var offset = $(this).offset();
       var relativeX = e.pageX - offset.left;
-      var relativeY = 2.2+e.pageY - offset.top;
+      var relativeY = 2.2 + e.pageY - offset.top;
       // if (e.target.id == "one" || e.target.id == "two") {
       //   var relativeY = e.pageY + offset.top+12;
       // } else {
@@ -209,54 +212,104 @@ const SelectPoints = ({ match, history }) => {
   };
   return (
     <>
-      <button className=" mt-4 ml-4 btn btn-success" onClick={save}>
-        Save
-      </button>
-      <button
-        className=" mt-4 ml-4 btn btn-success"
-        onClick={() => setIsEdit(true)}
-      >
-        Edit Points
-      </button>
-      <button
-        className=" mt-4 ml-4 btn btn-success"
-        onClick={() => history.goBack()}
-      >
-        Back
-      </button>
-      <div
-        style={{ width: 700, height: 700, margin: "auto" }}
-        id="outerContainer"
-        className="mt-4"
-      >
-        <div
-          id="container"
-          style={{
-            backgroundImage: `url(${src})`,
-            backgroundSize: "100% 100%",
-            border:"2px solid green"
-          }}
-        >
-          <div id="one" className={`item one ${isEdit ? "" : "hide-point"}`}>
-            BL
-          </div>
-          <div id="two" className={`item two ${isEdit ? "" : "hide-point"}`}>
-            BR
-          </div>
-          <div
-            id="three"
-            className={`item three ${isEdit ? "" : "hide-point"}`}
-          >
-            TL
-          </div>
-          <div id="four" className={`item four ${isEdit ? "" : "hide-point"}`}>
-            TR
-          </div>
+      <div className="row">
+        <div className="col-md-12">
+          <nav className="navbar navbar-expand-lg navbar-light sec-header-bg">
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div
+              className="collapse navbar-collapse"
+              id="navbarSupportedContent"
+            >
+              <ul className="navbar-nav ml-auto text-white">
+                <li className="nav-item">
+                  <button
+                    className=" mr-2 btn btn-success"
+                    onClick={() => setIsEdit(true)}
+                  >
+                    Edit Points
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button className=" mr-2 btn btn-success" onClick={save}>
+                    Save
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className="btn btn-success"
+                    onClick={() => history.goBack()}
+                  >
+                    Back
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </nav>
         </div>
       </div>
+      <div className="row">
+        <div className=" custom-pad-li d-none d-sm-block col-md-2 p-0">
+          <Link className="logo-container" to="/">
+            <ul className=" ul-pad list-group left-side-bar">
+              <li className="custom-pad-li list-group-item active">Home</li>
+            </ul>
+          </Link>
+        </div>
+        <div className="col-md-9 col-xs-12 col-sm-12">
+          <div
+            style={{ width: 700, height: 700, margin: "auto" }}
+            id="outerContainer"
+            className="mt-4"
+          >
+            <div
+              id="container"
+              style={{
+                backgroundImage: `url(${src})`,
+                backgroundSize: "100% 100%",
+                border: "2px solid green",
+              }}
+            >
+              <div
+                id="one"
+                className={`item one ${isEdit ? "" : "hide-point"}`}
+              >
+                BL
+              </div>
+              <div
+                id="two"
+                className={`item two ${isEdit ? "" : "hide-point"}`}
+              >
+                BR
+              </div>
+              <div
+                id="three"
+                className={`item three ${isEdit ? "" : "hide-point"}`}
+              >
+                TL
+              </div>
+              <div
+                id="four"
+                className={`item four ${isEdit ? "" : "hide-point"}`}
+              >
+                TR
+              </div>
+            </div>
+          </div>
 
-      <div style={{ display: "none" }}>
-        <img id="img" src={src}></img>
+          <div style={{ display: "none" }}>
+            <img id="img" src={src}></img>
+          </div>
+        </div>
       </div>
     </>
   );

@@ -19,8 +19,9 @@ const Header = ({ currentUser, hidden }) => {
                 style={imgStyle}
                 src={require("../../assets/logo.png")}
               ></img>
-            </Link>
+          
             <span className ="home">My Digi Network</span>
+            </Link>
       <button
         className="navbar-toggler"
         type="button"
