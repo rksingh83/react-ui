@@ -10,13 +10,14 @@
   touch-action: none;
   background-repeat: no-repeat;
   background-size: cover;
+  position: relative;
 }
 
 .item {
   border-radius: 50%;
   touch-action: none;
   user-select: none;
-  position: relative;
+  position: absolute;
   display: flex;
     justify-content: center;
     align-items: center;
@@ -36,8 +37,8 @@
   height: 40px;
   background-color: rgba(196, 241, 190, 1);
   border: 10px solid rgba(136, 136, 136, 0.5);
-  top: 30%;
-  left: 10%;
+  bottom: 0px;
+  right: 0px
 }
 
 .three {
@@ -45,8 +46,8 @@
   height: 40px;
   background-color: rgb(0, 255, 231);
   border: 10px solid rgba(136, 136, 136, 0.5);
-  top: -40%;
-  left: -10%;
+  bottom: 0px;
+  left: 0px;
 }
 
 .four {
@@ -54,8 +55,8 @@
   height: 40px;
   background-color: rgb(233, 210, 244);
   border: 10px solid rgba(136, 136, 136, 0.5);
-  top: -10%;
-  left: 5%;
+  top: 0px;
+  right:0px
 }
 
 .item:active {
