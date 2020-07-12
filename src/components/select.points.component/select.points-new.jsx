@@ -15,10 +15,15 @@ const SelectPoints = ({ match, history }) => {
   const [src, setSrc] = useState("");
   const [data, setData] = useState({});
   const [isEdit, setIsEdit] = useState(false);
+  const [imagePoints, setImagePoints] = useState({});
   const totalEle = ["Home"];
   const [LiElement, setLiEl] = useState(totalEle);
-
+  const [oneStyle, setOneStyle] = useState({});
+  const [twoStyle, setTwoStyle] = useState({});
+  const [threeStyle, setThreeStyle] = useState({});
+  const [fourStyle, setFourStyle] = useState({});
   var active = false;
+  //const oneStyle = {}
   useEffect(() => {
     var mapSprite = new Image();
     Post("/getAnyCloudImages", {
@@ -34,6 +39,8 @@ const SelectPoints = ({ match, history }) => {
       var img = new Image();
       img.src = mapSprite.src;
       setSrc(res.data.imageInput[0].raw_image_small);
+      setImagePoints(res.data.imageInput[0]);
+
       console.log(mapSprite.height, mapSprite);
     });
     var container = document.querySelector("#container");
@@ -128,7 +135,39 @@ const SelectPoints = ({ match, history }) => {
       setData(data);
     });
   }, []);
+  const displayPoint = () => {
+    const IMG = document.getElementById("img");
+    const width = IMG.width / 700;
+    const height = IMG.height / 400;
 
+    console.log(imagePoints);
+    const bottomleftx =
+      (imagePoints["bottomleftx"] * IMG.width) / (width * 100) - 20;
+    const bottomlefty =
+      (imagePoints["bottomlefty"] * IMG.height) / (height * 100) - 20;
+    setOneStyle({ top: bottomlefty, left: bottomleftx });
+
+    const bottomrightx =
+      (imagePoints["bottomrightx"] * IMG.width) / (width * 100) - 20;
+    const bottomrighty =
+      (imagePoints["bottomrighty"] * IMG.height) / (height * 100) - 20;
+
+    setTwoStyle({ top: bottomrighty, left: bottomrightx });
+    //TR
+    const toprightx =
+      (imagePoints["toprightx"] * IMG.width) / (width * 100) - 20;
+    const toprighty =
+      (imagePoints["toprighty"] * IMG.height) / (height * 100) - 20;
+    console.log(toprightx);
+    console.log(toprighty);
+    setFourStyle({ top: toprighty, left: toprightx });
+    //TL
+    const topleftx = (imagePoints["topleftx"] * IMG.width) / (width * 100) - 20;
+    const toplefty =
+      (imagePoints["toplefty"] * IMG.height) / (height * 100) - 20;
+    setThreeStyle({ top: toplefty, left: topleftx });
+    setIsEdit(true);
+  };
   const updatePoints = async () => {
     // console.log(reset[0]);
     // const data = {};
@@ -142,14 +181,16 @@ const SelectPoints = ({ match, history }) => {
     const height = IMG.height / 400;
     console.log("HEIGHT", IMG.height);
     console.log("HEIGHT", height);
+    console.log("width", IMG.width);
+    console.log("width", width);
     console.log(data);
 
     if (
       !(
-        isPointChanged(data.one, 1) &&
-        isPointChanged(data.two, 2) &&
-        isPointChanged(data.three, 3) &&
-        isPointChanged(data.four, 4)
+        isPointChanged(data.one, "BL") &&
+        isPointChanged(data.two, "BR") &&
+        isPointChanged(data.three, "TL") &&
+        isPointChanged(data.four, "TR")
       )
     ) {
       return;
@@ -193,7 +234,7 @@ const SelectPoints = ({ match, history }) => {
       let res = await Post("/uploadSingleImagePoints", requestPayLoad);
 
       alert(res.data.message);
-      history.goBack();
+        history.goBack();
     } catch (err) {
       // console.log(err);
     }
@@ -234,7 +275,7 @@ const SelectPoints = ({ match, history }) => {
                 <li className="nav-item">
                   <button
                     className=" mr-2 btn btn-success"
-                    onClick={() => setIsEdit(true)}
+                    onClick={() => displayPoint(true)}
                   >
                     Edit Points
                   </button>
@@ -282,24 +323,28 @@ const SelectPoints = ({ match, history }) => {
               <div
                 id="one"
                 className={`item one ${isEdit ? "" : "hide-point"}`}
+                style={oneStyle}
               >
                 BL
               </div>
               <div
                 id="two"
                 className={`item two ${isEdit ? "" : "hide-point"}`}
+                style={twoStyle}
               >
                 BR
               </div>
               <div
                 id="three"
                 className={`item three ${isEdit ? "" : "hide-point"}`}
+                style={threeStyle}
               >
                 TL
               </div>
               <div
                 id="four"
                 className={`item four ${isEdit ? "" : "hide-point"}`}
+                style={fourStyle}
               >
                 TR
               </div>
