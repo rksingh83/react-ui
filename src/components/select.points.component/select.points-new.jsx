@@ -13,7 +13,7 @@ const SelectPoints = ({ match, history }) => {
   const [reset, setReset] = useState([]);
   const [src, setSrc] = useState("");
   const [data, setData] = useState({});
-  const [isEdit ,setIsEdit] = useState(false)
+  const [isEdit, setIsEdit] = useState(false);
 
   var active = false;
   useEffect(() => {
@@ -22,10 +22,10 @@ const SelectPoints = ({ match, history }) => {
       ids: [match.params.url],
       imagetype: "raw_small",
     }).then((res) => {
-      if(res.data.code==201){
+      if (res.data.code == 201) {
         alert(res.data.error);
-         history.push('/logout');
-    }
+        history.push("/logout");
+      }
       mapSprite.src = res.data.imageInput[0].raw_image_small;
       setSrc(res.data.imageInput[0].raw_image_smal);
       var img = new Image();
@@ -35,7 +35,7 @@ const SelectPoints = ({ match, history }) => {
     });
     var container = document.querySelector("#container");
     var activeItem = null;
-   // console.log(container);
+    // console.log(container);
     container.addEventListener("touchstart", dragStart, false);
     container.addEventListener("touchend", dragEnd, false);
     container.addEventListener("touchmove", drag, false);
@@ -44,7 +44,7 @@ const SelectPoints = ({ match, history }) => {
     container.addEventListener("mouseup", dragEnd, false);
     container.addEventListener("mousemove", drag, false);
     function dragStart(e) {
-     // console.log(e);
+      // console.log(e);
       if (e.target !== e.currentTarget) {
         active = true;
 
@@ -76,9 +76,8 @@ const SelectPoints = ({ match, history }) => {
       if (activeItem !== null) {
         activeItem.initialX = activeItem.currentX;
         activeItem.initialY = activeItem.currentY;
-       // console.log("current", e.pageX - activeItem.xOffset);
+        // console.log("current", e.pageX - activeItem.xOffset);
         //console.log("current", activeItem.clientX, e);
-        
       }
 
       active = false;
@@ -111,7 +110,15 @@ const SelectPoints = ({ match, history }) => {
     $("#outerContainer").click(function (e) {
       var offset = $(this).offset();
       var relativeX = e.pageX - offset.left;
-      var relativeY = e.pageY - offset.top;
+      var relativeY = 2.2+e.pageY - offset.top;
+      // if (e.target.id == "one" || e.target.id == "two") {
+      //   var relativeY = e.pageY + offset.top+12;
+      // } else {
+      //
+      // }
+      console.log(e);
+      console.log(offset);
+      console.log(data);
 
       //alert("X: " + relativeX + "  Y: " + relativeY);
       data[e.target.id] = { X: relativeX, Y: relativeY };
@@ -129,7 +136,10 @@ const SelectPoints = ({ match, history }) => {
     // });
     const IMG = document.getElementById("img");
     const width = IMG.width / 700;
-    const height = IMG.height / 700;
+    const height = IMG.height / 400;
+    console.log("HEIGHT", IMG.height);
+    console.log("HEIGHT", height);
+    console.log(data);
 
     if (
       !(
@@ -159,10 +169,11 @@ const SelectPoints = ({ match, history }) => {
     });
     //   console.log("BOT  TOMLEFT", bottomLeft, "BOTTOMR", bottomRight);
     // console.log("TOPLEFT", small, "TOPRIGHT", topRight);
-  
-  //  console.log("WIDTH", width, height);
+
+    //  console.log("WIDTH", width, height);
 
     const requestPayLoad = {};
+    console.log(data);
     requestPayLoad["id"] = match.params.url;
     requestPayLoad["bottomleftx"] = ((data.one.X * width) / IMG.width) * 100;
     requestPayLoad["bottomlefty"] = ((data.one.Y * height) / IMG.height) * 100;
@@ -173,7 +184,7 @@ const SelectPoints = ({ match, history }) => {
     requestPayLoad["toprightx"] = ((data.four.X * width) / IMG.width) * 100;
     requestPayLoad["toprighty"] = ((data.four.Y * height) / IMG.height) * 100;
     console.log("Points are right here in next line");
-   // console.log(requestPayLoad);
+    // console.log(requestPayLoad);
 
     try {
       let res = await Post("/uploadSingleImagePoints", requestPayLoad);
@@ -181,7 +192,7 @@ const SelectPoints = ({ match, history }) => {
       alert(res.data.message);
       // history.goBack();
     } catch (err) {
-     // console.log(err);
+      // console.log(err);
     }
     console.log(data);
   };
@@ -201,8 +212,11 @@ const SelectPoints = ({ match, history }) => {
       <button className=" mt-4 ml-4 btn btn-success" onClick={save}>
         Save
       </button>
-      <button className=" mt-4 ml-4 btn btn-success"  onClick ={()=>setIsEdit(true)}>
-       Edit Points
+      <button
+        className=" mt-4 ml-4 btn btn-success"
+        onClick={() => setIsEdit(true)}
+      >
+        Edit Points
       </button>
       <button
         className=" mt-4 ml-4 btn btn-success"
@@ -215,17 +229,27 @@ const SelectPoints = ({ match, history }) => {
         id="outerContainer"
         className="mt-4"
       >
-        <div id="container" style={{ backgroundImage: `url(${src})`, backgroundSize :"100% 100%" }}>
-          <div id="one" className={`item one ${isEdit ? "" :"hide-point"}`}>
+        <div
+          id="container"
+          style={{
+            backgroundImage: `url(${src})`,
+            backgroundSize: "100% 100%",
+            border:"2px solid green"
+          }}
+        >
+          <div id="one" className={`item one ${isEdit ? "" : "hide-point"}`}>
             BL
           </div>
           <div id="two" className={`item two ${isEdit ? "" : "hide-point"}`}>
             BR
           </div>
-          <div id="three" className={`item three ${isEdit ? "" : "hide-point"}`}>
+          <div
+            id="three"
+            className={`item three ${isEdit ? "" : "hide-point"}`}
+          >
             TL
           </div>
-          <div id="four"  className={`item four ${isEdit ? "" : "hide-point"}`}>
+          <div id="four" className={`item four ${isEdit ? "" : "hide-point"}`}>
             TR
           </div>
         </div>
