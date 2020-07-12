@@ -34,7 +34,6 @@ const TopSingleHeader = ({ images, imageId, history }) => {
     try {
       let res = await Post("/updateImage", data);
       if (res.data.code == 200) alert(res.data.message);
-      if (isGoBack)
       history.goBack();
     } catch (err) {
       console.log(err);
