@@ -16,7 +16,8 @@ const LoginPage = ({ history, setCurrentUser, setCurrentFile }) => {
   // console.log(props)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const loginHandler = () => {
+  const loginHandler = (e) => {
+    e.preventDefault();
     Post("/signin", { email, password }).then((res) => {
       if (res.data.error) {
         toast.error(res.data.error);
@@ -70,7 +71,7 @@ const LoginPage = ({ history, setCurrentUser, setCurrentFile }) => {
           <div>
             <div className="card card-body bg-custom">
               <div className="sign-up">
-                <form>
+                <form onSubmit={loginHandler}>
                   <Input
                     placeholder="Enter your Email"
                     label="Email"
@@ -94,7 +95,7 @@ const LoginPage = ({ history, setCurrentUser, setCurrentFile }) => {
                     className="btn btn-success btn-block"
                     onClick={loginHandler}
                     name="cnfpass"
-                    type="button"
+                    type="submit"
                   ></Input>
 
                   <Link to="/signup">
