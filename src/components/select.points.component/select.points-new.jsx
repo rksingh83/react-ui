@@ -190,7 +190,7 @@ const SelectPoints = ({ match, history }) => {
       let res = await Post("/uploadSingleImagePoints", requestPayLoad);
 
       alert(res.data.message);
-      // history.goBack();
+      history.goBack();
     } catch (err) {
       // console.log(err);
     }
