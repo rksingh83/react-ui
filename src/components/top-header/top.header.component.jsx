@@ -130,8 +130,8 @@ const TopHeader = ({
             type="input"
           ></Input>
           <Input
-            placeholder="Enter your Name"
-            label="Discreption"
+            placeholder="Enter your description"
+            label="Description"
             value={fileDescription}
             handleChange={(e) => addDisc(e.target.value)}
             name="dis"
