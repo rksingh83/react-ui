@@ -2,6 +2,8 @@ import React, { useState ,useEffect} from "react";
 import Select from "../boostrapinput/select.component";
 import Input from "../boostrapinput/input.component";
 import { Post, Get } from "../../service/service.setup";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const UserProfileFormData = ({ profile }) => {
   const [userData, setProfile] = useState({});
@@ -36,6 +38,10 @@ const saveDataHandler =  async()=>{
     const {name,value} =(e.target) ;
     setProfile({...userData  ,[name]:value })
   }
+  const setDobHandler = (e)=>{
+    //const {value} =(e.target) ;
+    setProfile({...userData  ,'dob':e })
+  }
   return (
     <div className=" mt-4">
       <div className="row" style={{justifyContent:"center"}}>
@@ -58,14 +64,11 @@ const saveDataHandler =  async()=>{
               name="fullname"
               value ={userData.fullname}
             ></Input>
-            <Input
-              onChange={setProfileHandler}
-              type="text"
-              label="DOB"
-              placeholder="Enter Section name"
-              name="dob"
-              value ={userData.dob}
-            ></Input>
+            <DatePicker
+        selected={userData.dob}
+        name ='dob'
+        onChange={setDobHandler}
+      />
             <Select
               onChange={setProfileHandler}
               label="Gender"

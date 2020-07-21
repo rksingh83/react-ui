@@ -6,6 +6,8 @@ import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { ReactComponent as FolderCreate } from "../../assets/folder.svg";
 import { ReactComponent as Refresh } from "../../assets/referesh.svg";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
+import { ReactComponent as AddFriend } from "../../assets/add.svg";
+import {Link} from 'react-router-dom'
 import "./top.header.style.scss";
 const TopHeader = ({
   saveFolder,
@@ -108,13 +110,18 @@ const TopHeader = ({
               Refresh
             </span>
           </div>
-          <div
-            className={`col-md-2   col-text-style ${
-              totalItem == 0 ? "hideCount" : "sec-header-item"
-            }`}
-          >
+          <div className="col-md-2  sec-header-item ">
+          <Link className="logo-container" to="/add-friend">
+            <AddFriend />
+            </Link>
+            <div
+              className={` col-text-style ${
+                totalItem == 0 ? "hideCount" : "sec-header-item"
+              }`}
+            >
             <span className="count">{totalItem}</span> Selected{" "}
             <Cross onClick={() => window.location.reload()}></Cross>
+            </div>
           </div>
         </div>
       </div>

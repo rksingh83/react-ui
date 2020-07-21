@@ -20,6 +20,7 @@ import SingnUp from './components/signup/singnup.component';
 import {Post ,Get} from './service/service.setup' ;
 import SelectPoints from './components/select.points.component/select.points-new'
 import Profile from './components/profile/profile.component';
+import AddFriend from './components/add-friend/add-friend';
 class App extends React.Component{
  //#endregio
  constructor(props){
@@ -55,6 +56,7 @@ class App extends React.Component{
     <Route  path ='/profile' component={Profile}/>
     <Route  path ='/original/:id/:folderId' component={DisplayOriginalImage}/> 
     <Route  path ='/last/:id' component={DisplayLastImage}/> 
+    <Route  path ='/add-friend' component={AddFriend}/> 
    
     
     <Route exact path ='/logout' component={LouOut}/>

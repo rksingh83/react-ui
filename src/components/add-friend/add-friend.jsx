@@ -1,24 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-import { Post } from "../../service/service.setup";
-import "./create-image.style.scss";
+import { Get , Post } from "../../service/service.setup";
+import "./add-friend.style.scss";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
 import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { Link } from "react-router-dom";
-
-const DisplayLastImage = ({ match, history }) => {
-  const [imageUrl, setImageUrl] = useState("");
-  useEffect(() => {
-    const requestFile = { ids: [match.params.id], imagetype: "original" };
-
-    Post("/getAnyCloudImages", requestFile).then((res) => {
-      if (res.data.code == 201) {
-        alert(res.data.error);
-        history.push("/logout");
-      }
-      setImageUrl(res.data.imageInput[0].align_image_org);
-    });
-  }, []);
+import Input from "../boostrapinput/input.component";
+import UserData from "../profile/display.user.data";
+const AddFriend = ({ history }) => {
+  
+ const [user ,setUser] = useState(null);
+ const [userProfile ,setUserProfile] = useState({});
   const styleImage = {
     width: "100%",
     height: "100%",
@@ -32,13 +24,43 @@ const DisplayLastImage = ({ match, history }) => {
     width: "4rem",
     height: "2rem",
   };
-  const download = (src) => {
-    var element = document.createElement("a");
-    var file = new Blob([src], { type: "image/*" });
-    element.href = URL.createObjectURL(file);
-    element.download = "image.jpg";
-    element.click();
-  };
+  const searchUserHandler = async()=>{
+      try{
+      if(!user){
+        alert("Please enter Email or User Id");
+        return ;
+      }
+     const userFind =  await Post('/searchUser',{unique_user_id:user});
+     console.log(userFind.data)
+     if(userFind.data.code =='203'){
+      setUser('');
+       alert(userFind.data.message);
+      
+       return ;
+     }
+     setUserProfile(userFind.data.data.profile)
+      }catch(e){
+        alert("Something went wrong try latter")
+        history.goBack()
+      }
+  }
+
+  const addUserHandler = async()=>{
+    try{
+   const userFind =  await Post('/addUser',{id:userProfile.id});
+   console.log(userFind)
+   if(userFind.data.code =='200'){
+     alert(userFind.data.message);
+     window.location.reload();
+     return ;
+   }
+   setUserProfile(userFind.data.data.profile)
+    }catch(e){
+      alert("Something went wrong try latter")
+      history.goBack()
+     
+    }
+}
   return (
     <>
       <div className="row">
@@ -60,12 +82,7 @@ const DisplayLastImage = ({ match, history }) => {
               id="navbarSupportedContent"
             >
               <ul className="navbar-nav ml-auto text-white">
-                <li className="nav-item">
-                  <Pencil
-                    onClick={() => history.push(`/edit/${match.params.id}`)}
-                    style={pencilStyle}
-                  ></Pencil>
-                </li>
+               
                 <li className="nav-item">
                   <Cross
                     onClick={() => history.goBack()}
@@ -94,10 +111,21 @@ const DisplayLastImage = ({ match, history }) => {
           </Link>
         </div>
         <div className="col-md-9 col-xs-12 col-sm-12">
-          <img style={styleImage} src={`${imageUrl}`}></img>
+          <div className ='row'>
+            <div className ='col-md-8'>
+        <Input type ='text' onChange = {(e)=>setUser(e.target.value)} label ='Search' placeholder ='Search by email or user id'></Input>
+        </div>
+        <div className ='col-md-4 serach-user-div'>
+        <button  onClick  ={searchUserHandler} type ='button' className ='btn btn-success mt-3'>Search</button>
+        </div>
+        </div>
+        <div className ='' style = {{display :(Object.keys(userProfile).length==0)?'none':''}}>
+          <button onClick = {addUserHandler} className ='btn btn-success mb-2'>Add Friend</button>
+        <UserData profile={userProfile}></UserData>
+        </div>
         </div>
       </div>
     </>
   );
 };
-export default DisplayLastImage;
+export default AddFriend;
