@@ -17,6 +17,7 @@ const UserProfileFormData = ({ profile }) => {
     try {
       
       const user = await Get("getProfile");
+      //date = date.replace(/\//g, '_');
       setProfile(user.data.data.profile);
       console.log(user.data);
     } catch (error) {}
@@ -40,6 +41,7 @@ const saveDataHandler =  async()=>{
   }
   const setDobHandler = (e)=>{
     //const {value} =(e.target) ;
+    console.log(e)
     setProfile({...userData  ,'dob':e })
   }
   return (
@@ -65,7 +67,7 @@ const saveDataHandler =  async()=>{
               value ={userData.fullname}
             ></Input>
             <DatePicker
-        selected={userData.dob}
+        selected={Date.now()}
         name ='dob'
         onChange={setDobHandler}
       />

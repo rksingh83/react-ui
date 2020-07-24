@@ -9,10 +9,12 @@ import { ReactComponent as Close } from "../../assets/close.svg";
 import { Link } from "react-router-dom";
 import Input from "../boostrapinput/input.component";
 import UserData from "../profile/display.user.data";
+import ContactList from '../contactlist/display.contactlist'
 const AddFriend = ({ history }) => {
   const [user, setUser] = useState(null);
   const [userProfile, setUserProfile] = useState({});
   const [friendList, setFriendList] = useState([]);
+  const [contactList, setContactList] = useState([]);
   const styleImage = {
     width: "100%",
     height: "100%",
@@ -69,6 +71,12 @@ const AddFriend = ({ history }) => {
       setFriendList(list.data.data.profileList);
     } catch (error) {}
   }
+  async function  getContactRequest(){
+    try {
+      const contacts = await Get("showUserContactList");
+      setContactList(contacts.data.data.profileList)
+    } catch (error) {}
+  }
   async function acceptFriend(id) {
     try {
       const list = await Post("/acceptUserAddRequest" ,{id});
@@ -85,6 +93,7 @@ const AddFriend = ({ history }) => {
   }
   useEffect(() => {
     getFriendList();
+    getContactRequest()
   }, []);
   return (
     <>
@@ -136,7 +145,7 @@ const AddFriend = ({ history }) => {
         </div>
         <div className="col-md-9 col-xs-12 col-sm-12">
           <div className="row">
-            <div className="col-md-8">
+            <div className="col-md-5">
               <Input
                 type="text"
                 onChange={(e) => setUser(e.target.value)}
@@ -144,14 +153,17 @@ const AddFriend = ({ history }) => {
                 placeholder="Search by email or user id"
               ></Input>
             </div>
-            <div className="col-md-4 serach-user-div">
+            <div className="col-md-1 mt-4">
               <button
                 onClick={searchUserHandler}
                 type="button"
-                className="btn btn-success mt-3"
+                className="btn btn-success"
               >
                 Search
               </button>
+            </div>
+            <div className="col-md-5 mt-4">
+             <ContactList profileList ={contactList}></ContactList>
             </div>
           </div>
           <div
@@ -166,7 +178,7 @@ const AddFriend = ({ history }) => {
             <UserData profile={userProfile}></UserData>
           </div>
           <div className="row">
-            <div className="col-8">
+            <div className="col-md-5 col-sm-12 col-xs-12">
               <h5>Friend list</h5>
               <ul class="list-group">
                 {friendList.map((item, index) => (
@@ -178,6 +190,7 @@ const AddFriend = ({ history }) => {
                     </span>
                   </li>
                 ))}
+              {(friendList.length==0) && <li class="list-group-item">There is no friend request</li>  }
               </ul>
             </div>
           </div>
