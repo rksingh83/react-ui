@@ -12,15 +12,17 @@ import {ReactComponent as Cross} from '../../assets/cross.svg';
 import ImageSlider from  './image.slider' ;
 import { ToastContainer, toast } from 'react-toastify';
 import TopSingleHeader from '../top-header/new.header';
-const DisplayOriginalImage = ({match ,history})=>{
+import {connect} from 'react-redux'
+const DisplayOriginalImage = ({match ,history ,sharedWithMe})=>{
    const [imageUrl , setImageUrl] = useState('');
    const [imageId , setImageId] = useState(match.params.id);
    const [allImages , setAllImages] = useState([]);
  
   useEffect(() => {
+    const IMAGE_ORIGINAL_URL =  (sharedWithMe =='HOME')?'getAnyCloudImages':'getAnySharedCloudImages';
     const requestFile = { ids:[match.params.id],imagetype:"original",}
   
-    Post('/getAnyCloudImages',requestFile)
+    Post(`/${IMAGE_ORIGINAL_URL}`,requestFile)
     .then((res)=>{
       if(res.data.code==201){
         alert(res.data.error);
@@ -30,17 +32,22 @@ const DisplayOriginalImage = ({match ,history})=>{
      setImageUrl(res.data.imageInput[0].align_image_org)
      
    }) ;
-   const requestImages = { id:match.params.folderId}
+   const requestImages = { id:match.params.folderId} ;
+   const sharedRequest = { fileId: match.params.folderId, allPageAcess: true };
+   const allImagesRequest =  (sharedWithMe =='HOME')?requestImages:sharedRequest;
+   const IMAGE_URL =  (sharedWithMe =='HOME')?'getAllFileImages':'getAllSharedFileImages';
  
-   Post('/getAllFileImages',requestImages)
+   Post(`/${IMAGE_URL}`,allImagesRequest)
    .then((res)=>{
     if(res.data.code==201){
       alert(res.data.error);
       history.push('/logout');
   }
    const   allCloud = [] ;
-     res.data.imageInput.forEach((image=>allCloud.push(image.id)))
-     Post('/getAnyCloudImages',{ids:allCloud ,imagetype:"small"})
+     res.data.imageInput.forEach((image=>allCloud.push(image.id))) ;
+     const IMAGE_SMALL_URL =  (sharedWithMe =='HOME')?'getAnyCloudImages':'getAnySharedCloudImages';
+ 
+     Post(`/${IMAGE_SMALL_URL}`,{ids:allCloud ,imagetype:"small"})
      .then((res)=>{
       if(res.data.code==201){
         alert(res.data.error);
@@ -78,4 +85,8 @@ const DisplayOriginalImage = ({match ,history})=>{
     )
 
 }
-export default DisplayOriginalImage ;
+const mapStateToPros = ({ sharedWithMe: { sharedWithMe } }) => ({
+  sharedWithMe,
+});
+export default connect(mapStateToPros)(DisplayOriginalImage);
+//export default DisplayOriginalImage ;
