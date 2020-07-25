@@ -5,13 +5,13 @@ import "./create-image.style.scss";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
 import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { Link } from "react-router-dom";
-
-const DisplayLastImage = ({ match, history }) => {
+import {connect} from 'react-redux'
+const DisplayLastImage = ({ match, history, sharedWithMe }) => {
   const [imageUrl, setImageUrl] = useState("");
   useEffect(() => {
     const requestFile = { ids: [match.params.id], imagetype: "original" };
-
-    Post("/getAnyCloudImages", requestFile).then((res) => {
+    const IMAGE_ORIGINAL_URL =  (sharedWithMe =='HOME')?'getAnyCloudImages':'getAnySharedCloudImages';
+    Post(`/${IMAGE_ORIGINAL_URL}`, requestFile).then((res) => {
       if (res.data.code == 201) {
         alert(res.data.error);
         history.push("/logout");
@@ -100,4 +100,8 @@ const DisplayLastImage = ({ match, history }) => {
     </>
   );
 };
-export default DisplayLastImage;
+const mapStateToPros = ({ sharedWithMe: { sharedWithMe } }) => ({
+  sharedWithMe,
+});
+export default connect(mapStateToPros)(DisplayLastImage);
+//export default DisplayLastImage;

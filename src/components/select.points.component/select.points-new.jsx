@@ -6,9 +6,10 @@ import { Post, Get } from "../../service/service.setup";
 //import './create-image.style.scss' ;
 import { ReactComponent as Cross } from "../../assets/edit.svg";
 import { Link } from "react-router-dom";
+import {connect} from 'react-redux';
 import $ from "jquery";
 
-const SelectPoints = ({ match, history }) => {
+const SelectPoints = ({ match, history ,sharedWithMe }) => {
   var Markers = new Array();
   const [points, setPoints] = useState(0);
   const [reset, setReset] = useState([]);
@@ -26,7 +27,8 @@ const SelectPoints = ({ match, history }) => {
   //const oneStyle = {}
   useEffect(() => {
     var mapSprite = new Image();
-    Post("/getAnyCloudImages", {
+    const IMAGE_ORIGINAL_URL =  (sharedWithMe =='HOME')?'getAnyCloudImages':'getAnySharedCloudImages';
+    Post(`/${IMAGE_ORIGINAL_URL}`, {
       ids: [match.params.url],
       imagetype: "raw_small",
     }).then((res) => {
@@ -360,4 +362,9 @@ const SelectPoints = ({ match, history }) => {
   );
 };
 
-export default SelectPoints;
+
+const mapStateToPros = ({ sharedWithMe: { sharedWithMe } }) => ({
+  sharedWithMe,
+});
+export default connect(mapStateToPros)(SelectPoints);
+//export default SelectPoints;
