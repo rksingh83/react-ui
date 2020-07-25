@@ -7,6 +7,8 @@ import { ReactComponent as FolderCreate } from "../../assets/folder.svg";
 import { ReactComponent as Refresh } from "../../assets/referesh.svg";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
 import { ReactComponent as AddFriend } from "../../assets/add.svg";
+import { ReactComponent as Share } from "../../assets/shareimage.svg";
+import ShareFolderModal from '../modal/share-folder-modal'
 import {Link} from 'react-router-dom'
 import "./top.header.style.scss";
 const TopHeader = ({
@@ -22,6 +24,7 @@ const TopHeader = ({
   const [fileName, addName] = useState("");
   const [fileDescription, addDisc] = useState("");
   const [id, setId] = useState("");
+  const [shareFolder, setShareFolder] = useState(false);
   const saveHandler = () => {
     saveFolder(fileName, fileDescription, id);
     addName("");
@@ -79,7 +82,18 @@ const TopHeader = ({
             ></input>
           </div>
           <div
-            className={`  col-md-2  col-text-style ${
+            className={`  col-md-1  col-text-style ${
+              totalItem == 0 ? "hideCount" : "sec-header-item"
+            }`}
+          >
+            <Share onClick={() => setShareFolder(true)} />{" "}
+            <ShareFolderModal selected ={selectedItems} show ={shareFolder} hide ={setShareFolder}/>
+            <span className="on-hover" onClick={() => setShareFolder(true)}>
+              Share
+            </span>
+          </div>
+          <div
+            className={`  col-md-1  col-text-style ${
               totalItem == 0 ? "hideCount" : "sec-header-item"
             }`}
           >

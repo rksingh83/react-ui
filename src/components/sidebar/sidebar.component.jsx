@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import ModalPop from "../modal/modal.component";
-import { Post} from "../../service/service.setup";
+import { Post, Get } from "../../service/service.setup";
 import LeftSideBar from "./left.sidebar.compoent";
 import FolderDisplay from "../create-folder/folder-dispaly";
 import TopHeader from "../top-header/top.header.component";
 import DisplayImageDescription from "../display-discription/display-discription";
-const SideBar = ({ history }) => {
-  const totalEle = ["Home"];
+import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
+import { connect } from "react-redux";
+const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
+  const totalEle = ["Home", "Share With Me"];
   const [totalFolder, setTotalFolder] = useState([]);
   const [selectedFolder, setSelectedFolder] = useState({});
   const [finalCount, setFinalCount] = useState({});
@@ -19,6 +21,8 @@ const SideBar = ({ history }) => {
   const [description, setDescription] = useState("");
   const [iSDisplayDiv, setIsDisplayDiv] = useState(false);
   const [date, setDate] = useState("");
+  // const [sharedWithMe, setSharedWithMe] = useState(true);
+  const [sharedWithMeFolder, setSharedWithMeFolder] = useState([]);
   const sideBarStyle = {
     border: "1px solid rgba(0, 0, 0, 0.125)",
     height: "90vh",
@@ -51,21 +55,30 @@ const SideBar = ({ history }) => {
   };
   const handleActive = (e) => {
     setActiveIndex(LiElement.indexOf(e));
+    console.log(e);
+    if (LiElement.indexOf(e) == 0) {
+      setFolderFlag("HOME");
+    } else {
+      setFolderFlag("SHARED");
+    }
+    // setSharedWithMe(!sharedWithMe);
     setLiEl(totalEle);
   };
 
   useEffect(() => {
     const requestFile = { filefolderRequest: [] };
     Post("/getAllFiles", requestFile).then((res) => {
-      if(res.data.code==201){
+      if (res.data.code == 201) {
         alert(res.data.error);
-         history.push('/logout');
-    }
+        history.push("/logout");
+      }
       if (res.data.filefolderRequest) {
         setTotalFolder(res.data.filefolderRequest);
       }
+      getSharedWithMeFolder();
     });
   }, []);
+
   const pushName = (name) => {
     setTotalFolder([...totalFolder, name]);
 
@@ -110,6 +123,13 @@ const SideBar = ({ history }) => {
   const hideDescriptionHandler = (flag) => {
     setIsDisplayDiv(flag);
   };
+  async function getSharedWithMeFolder() {
+    try {
+      const folders = await Get("getAllSharedFiles");
+      console.log(folders.data.filefolderRequest);
+      setSharedWithMeFolder(folders.data.filefolderRequest);
+    } catch (error) {}
+  }
   return (
     <React.Fragment>
       <TopHeader
@@ -140,23 +160,46 @@ const SideBar = ({ history }) => {
           </ul>
         </div>
         <div className="col-md-10">
-          <div className ="row">
-          <FolderDisplay
-            isLoading={isLoading}
-            selectedFolderCount={selectedFolderCountHandler}
-            reNameFolder={reNameFolderHandler}
-            displayValue={false}
-            folders={totalFolder}
-            searchItem={searchItem}
-            history={history}
-            ToggleDescription={ToggleDescription}
-            onLeave={hideDescriptionHandler}
-            filteredFolder={filteredFolder}
-          />
-        </div>
+          <div className="row">
+            {(sharedWithMe == "HOME") && (
+              <FolderDisplay
+                isLoading={isLoading}
+                selectedFolderCount={selectedFolderCountHandler}
+                reNameFolder={reNameFolderHandler}
+                displayValue={false}
+                folders={totalFolder}
+                searchItem={searchItem}
+                history={history}
+                ToggleDescription={ToggleDescription}
+                onLeave={hideDescriptionHandler}
+                filteredFolder={filteredFolder}
+              />
+            )}
+            {sharedWithMe == "SHARED" && (
+              <FolderDisplay
+                isLoading={isLoading}
+                selectedFolderCount={selectedFolderCountHandler}
+                reNameFolder={reNameFolderHandler}
+                displayValue={false}
+                folders={sharedWithMeFolder}
+                searchItem={searchItem}
+                history={history}
+                ToggleDescription={ToggleDescription}
+                onLeave={hideDescriptionHandler}
+                filteredFolder={filteredFolder}
+              />
+            )}
+          </div>
         </div>
       </div>
     </React.Fragment>
   );
 };
-export default SideBar;
+const mapDispatchToProps = (dispatch) => ({
+  setFolderFlag: (flag) => dispatch(setFolderFlag(flag)),
+});
+
+const mapStateToPros = ({ sharedWithMe:{sharedWithMe} }) => ({ sharedWithMe });
+export default connect(mapStateToPros, mapDispatchToProps)(SideBar);
+
+//export default SideBar;
