@@ -7,7 +7,7 @@ import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import DisplayImages from "../display-uploaded-images.component/display-uploded-images";
 import DisplayImageDescription from "../display-discription/display-discription";
 import TopHeaderWithBack from "../top-header/simple-top.back";
-
+import SharedHeader from "../top-header/shared-header";
 import { Link } from "react-router-dom";
 const UploadFile = ({ match, history, sharedWithMe }) => {
   const [file, setFile] = useState("");
@@ -79,13 +79,18 @@ const UploadFile = ({ match, history, sharedWithMe }) => {
   };
   return (
     <>
-      <TopHeaderWithBack
-        id={match.params.id}
-        updateImages={imagesUpdate}
-        history={history}
-        images={images}
-        setImages={setImages}
-      />
+      {sharedWithMe == "HOME" && (
+        <TopHeaderWithBack
+          id={match.params.id}
+          updateImages={imagesUpdate}
+          history={history}
+          images={images}
+          setImages={setImages}
+        />
+      )}
+      {sharedWithMe == "SHARED" && (
+        <SharedHeader history={history}  />
+      )}
       <div className="row">
         <div className="col-md-2 custom-pad-li  d-none d-sm-block">
           <Link className="logo-container" to="/">

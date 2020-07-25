@@ -7,8 +7,9 @@ import TopHeader from "../top-header/top.header.component";
 import DisplayImageDescription from "../display-discription/display-discription";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import { connect } from "react-redux";
+import SharedHeader from "../top-header/shared-header";
 const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
-  const totalEle = ["Home", "Share With Me"];
+  const totalEle = ["My Files", "Share With Me"];
   const [totalFolder, setTotalFolder] = useState([]);
   const [selectedFolder, setSelectedFolder] = useState({});
   const [finalCount, setFinalCount] = useState({});
@@ -132,14 +133,17 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   }
   return (
     <React.Fragment>
-      <TopHeader
-        totalFolders={totalFolder}
-        selectedItems={selectedFolder}
-        searchItem={searchItem}
-        searchHandler={searchHandler}
-        deleteHandler={deleteHandler}
-        saveFolder={saveFolder}
-      />
+      {sharedWithMe == "HOME" && (
+        <TopHeader
+          totalFolders={totalFolder}
+          selectedItems={selectedFolder}
+          searchItem={searchItem}
+          searchHandler={searchHandler}
+          deleteHandler={deleteHandler}
+          saveFolder={saveFolder}
+        />
+      )}
+      {sharedWithMe == "SHARED" && <SharedHeader back ={true} />}
       <div className="row">
         <div className="col-md-2 custom-pad-li d-none d-sm-block">
           <ul className="list-group ul-pad" style={sideBarStyle}>
@@ -161,7 +165,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
         </div>
         <div className="col-md-10">
           <div className="row">
-            {(sharedWithMe == "HOME") && (
+            {sharedWithMe == "HOME" && (
               <FolderDisplay
                 isLoading={isLoading}
                 selectedFolderCount={selectedFolderCountHandler}
@@ -199,7 +203,9 @@ const mapDispatchToProps = (dispatch) => ({
   setFolderFlag: (flag) => dispatch(setFolderFlag(flag)),
 });
 
-const mapStateToPros = ({ sharedWithMe:{sharedWithMe} }) => ({ sharedWithMe });
+const mapStateToPros = ({ sharedWithMe: { sharedWithMe } }) => ({
+  sharedWithMe,
+});
 export default connect(mapStateToPros, mapDispatchToProps)(SideBar);
 
 //export default SideBar;
