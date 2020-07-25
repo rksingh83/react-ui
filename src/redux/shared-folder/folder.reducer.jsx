@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-  sharedWithMe: true,
+  sharedWithMe: "HOME",
 };
 
 const folderFlagReducer = (state = INITIAL_STATE, action) => {

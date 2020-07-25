@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Post} from "../../service/service.setup";
+import { Post } from "../../service/service.setup";
 import { connect } from "react-redux";
 import { setCurrentUser } from "../../redux/user/user.actions";
 import "./lon.style.scss";
@@ -7,8 +7,9 @@ import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import DisplayImages from "../display-uploaded-images.component/display-uploded-images";
 import DisplayImageDescription from "../display-discription/display-discription";
 import TopHeaderWithBack from "../top-header/simple-top.back";
+
 import { Link } from "react-router-dom";
-const UploadFile = ({ match, history }) => {
+const UploadFile = ({ match, history, sharedWithMe }) => {
   const [file, setFile] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState([]);
@@ -42,20 +43,37 @@ const UploadFile = ({ match, history }) => {
     setIsDisplayDiv(flag);
   };
   useEffect(() => {
-    const requestFile = { id: match.params.id };
-    setIsLoading(true);
-    Post("/getAllFileImages", requestFile).then((res) => {
-      if (res.data.code == 201) {
-        alert(res.data.error);
+    if (sharedWithMe == "HOME") {
+      getOwnImage();
+    } else {
+      getSharedWithMeImage();
+    }
+  }, []);
+  async function getSharedWithMeImage() {
+    try {
+      const request = { fileId: match.params.id, allPageAcess: true };
+      const images = await Post("/getAllSharedFileImages", request);
+      if (images.data.code == 201) {
+        alert(images.data.error);
         history.push("/logout");
       }
-      if (res.data.code == 201) {
-        // history.push('/logout');
-      }
-      setImages(res.data.imageInput);
+      setImages(images.data.imageInput);
       setIsLoading(false);
-    });
-  }, []);
+    } catch (error) {}
+  }
+  async function getOwnImage() {
+    try {
+      setIsLoading(true);
+      const requestFile = { id: match.params.id };
+      const images = await Post("/getAllFileImages", requestFile);
+      if (images.data.code == 201) {
+        alert(images.data.error);
+        history.push("/logout");
+      }
+      setImages(images.data.imageInput);
+      setIsLoading(false);
+    } catch (error) {}
+  }
   const updateHandler = (list) => {
     setImagesUpdate(list);
   };
@@ -111,5 +129,8 @@ const UploadFile = ({ match, history }) => {
     </>
   );
 };
-
-export default UploadFile;
+const mapStateToPros = ({ sharedWithMe: { sharedWithMe } }) => ({
+  sharedWithMe,
+});
+export default connect(mapStateToPros)(UploadFile);
+//export default UploadFile;
