@@ -8,7 +8,7 @@ import { ReactComponent as Refresh } from "../../assets/referesh.svg";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
 import { ReactComponent as AddFriend } from "../../assets/add.svg";
 import { ReactComponent as Share } from "../../assets/shareimage.svg";
-import ShareFolderModal from '../modal/share-folder-modal'
+import ShareFolderModal from '../modal/share-folder-modal';
 import {Link} from 'react-router-dom'
 import "./top.header.style.scss";
 const TopHeader = ({

@@ -8,6 +8,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { ReactComponent as Delete } from "../../assets/delete.svg";
 import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import OpenEditPop from "../modal/edit.modal";
+import { ReactComponent as Share } from "../../assets/shareimage.svg";
+import ShareFolderModal from "../modal/share-folder-modal";
 
 const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
   const [file, setFile] = useState("");
@@ -15,7 +17,9 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
   const [isShow, setIsShow] = useState(false);
   const [images, setImages] = useState({});
   const [pageNo, setPageNo] = useState("");
+ // console.log(updateImages);
   const [desc, setDesc] = useState("");
+  const [shareFolder, setShareFolder] = useState(false);
 
   const submitHandler = async (e) => {
     //  e.preventDefault();
@@ -26,7 +30,7 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
     imageName = `jpg_${imageName}.jpg`;
     //e.name = imageName;
 
-    formData.append("files", e,imageName);
+    formData.append("files", e, imageName);
     //console.log(e.name);
     try {
       let res = await Post("/uploadImage", formData, {
@@ -37,7 +41,7 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
       });
       if (res.status == 200) {
         toast.success(res.data.message);
-         window.location.reload();
+        window.location.reload();
       } else {
         toast.error("Something went wrong try later");
       }
@@ -83,7 +87,10 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
   return (
     <div className="row secondary-header single-header" style={topRowStyle}>
       <ToastContainer />
-      <div className="col-md-4 ml-2 sec-header-item" style={{ display: id ? "" : "none" }}>
+      <div
+        className="col-md-4 ml-2 sec-header-item"
+        style={{ display: id ? "" : "none" }}
+      >
         <form
           className="mr-4"
           style={{ display: "inline" }}
@@ -122,7 +129,26 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
           <Delete onClick={deleteHandler} className="header-icon" />
         </div>
       </div>
-      <div className="col-md-2 sec-header-item">
+      <div className="col-md-1 sec-header-item">
+        <div
+          style={{
+            display: updateImages && updateImages.length > 0 ? "" : "none",
+          }}
+        >
+          <Share onClick={() => setShareFolder(true)} />{" "}
+          <ShareFolderModal
+            selected={1}
+            show={shareFolder}
+            hide={setShareFolder}
+            images={{updateImages,id}}
+
+          />
+          <span className="on-hover" onClick={() => setShareFolder(true)}>
+            Share
+          </span>
+        </div>
+      </div>
+      <div className="col-md-1 sec-header-item">
         <div
           style={{
             display: updateImages && updateImages.length == 1 ? "" : "none",

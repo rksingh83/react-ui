@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import ContactList from "../contactlist/display.contactlist";
 import { Get, Post } from "../../service/service.setup";
-const ShareFolderModal = ({ show, hide ,selected }) => {
+const ShareFolderModal = ({ show, hide ,selected,images }) => {
   const [contactList, setContactList] = useState([]);
 
   async function getContactRequest() {
@@ -27,7 +27,7 @@ const ShareFolderModal = ({ show, hide ,selected }) => {
         </button>
       </Modal.Header>
       <Modal.Body>
-      <ContactList hide ={hide} selected ={selected}  isShare ={true} profileList ={contactList}></ContactList>
+      <ContactList hide ={hide} selected ={selected} images ={images} isShare ={true} profileList ={contactList}></ContactList>
       </Modal.Body>
       <Modal.Footer>
         <button
