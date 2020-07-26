@@ -9,7 +9,7 @@ import { ReactComponent as Close } from "../../assets/close.svg";
 import { Link } from "react-router-dom";
 import Input from "../boostrapinput/input.component";
 import UserData from "../profile/display.user.data";
-import ContactList from '../contactlist/display.contactlist'
+import ContactList from "../contactlist/display.contactlist";
 const AddFriend = ({ history }) => {
   const [user, setUser] = useState(null);
   const [userProfile, setUserProfile] = useState({});
@@ -71,29 +71,27 @@ const AddFriend = ({ history }) => {
       setFriendList(list.data.data.profileList);
     } catch (error) {}
   }
-  async function  getContactRequest(){
+  async function getContactRequest() {
     try {
       const contacts = await Get("showUserContactList");
-      setContactList(contacts.data.data.profileList)
+      setContactList(contacts.data.data.profileList);
     } catch (error) {}
   }
   async function acceptFriend(id) {
     try {
-      const list = await Post("/acceptUserAddRequest" ,{id});
+      const list = await Post("/acceptUserAddRequest", { id });
       alert(list.data.message);
-      
     } catch (error) {}
   }
   async function rejectFriend(id) {
     try {
-      const list = await Post("/rejectUserAddRequest",{id});
+      const list = await Post("/rejectUserAddRequest", { id });
       alert(list.data.message);
-     
     } catch (error) {}
   }
   useEffect(() => {
     getFriendList();
-    getContactRequest()
+    getContactRequest();
   }, []);
   return (
     <>
@@ -163,7 +161,7 @@ const AddFriend = ({ history }) => {
               </button>
             </div>
             <div className="col-md-5 mt-4">
-             <ContactList profileList ={contactList}></ContactList>
+              <ContactList profileList={contactList}></ContactList>
             </div>
           </div>
           <div
@@ -172,9 +170,16 @@ const AddFriend = ({ history }) => {
               display: Object.keys(userProfile).length == 0 ? "none" : "",
             }}
           >
-            <button onClick={addUserHandler} className="btn btn-success mb-2">
-              Add Friend
-            </button>
+            {!userProfile.requestAlreadySent && (
+              <button onClick={addUserHandler} className="btn btn-success mb-2">
+                Add Friend
+              </button>
+            )}
+            {userProfile.requestAlreadySent && (
+              <button className="btn btn-success mb-2">
+                Already Requested
+              </button>
+            )}
             <UserData profile={userProfile}></UserData>
           </div>
           <div className="row">
@@ -190,7 +195,9 @@ const AddFriend = ({ history }) => {
                     </span>
                   </li>
                 ))}
-              {(friendList.length==0) && <li class="list-group-item">There is no friend request</li>  }
+                {friendList.length == 0 && (
+                  <li class="list-group-item">There is no friend request</li>
+                )}
               </ul>
             </div>
           </div>

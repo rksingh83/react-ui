@@ -12,7 +12,9 @@ const UserData = ({ profile }) => {
                 <div className="col-4 ">
                   <h4 className ="main-heading">{profile.nickname}</h4>
                 </div>
-                <div className="col-4"></div>
+                <div className="col-4">
+
+                </div>
               </div>
             </div>
             <div className="col-md-6 col-sm-12 col-xs-12"></div>
@@ -21,7 +23,7 @@ const UserData = ({ profile }) => {
             <div className="col-md-6 col-sm-12 col-xs-12">
               <div className="row">
                 <div className="col-4  info-heading"> Full Name</div>
-                <div className="col-4">{profile.fullname}</div>
+                <div className="col-4">{profile.fullname} </div>
               </div>
             </div>
             <div className="col-md-6 col-sm-12 col-xs-12">
