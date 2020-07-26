@@ -17,7 +17,7 @@ const ContactList = ({ profileList, isShare, selected, hide, images }) => {
       }
       if (images && images.id) {
         images.updateImages.forEach((item) => imagesIds.push(item.id));
-        imagesRequest = {imageIds:imagesIds,user_id:id,file_id:images.id}
+        imagesRequest = {imageIds:imagesIds,user_id:id,file_id:images.id,active:true}
         
         
       }

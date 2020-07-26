@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Select from "../boostrapinput/select.component";
 import Input from "../boostrapinput/input.component";
 import { Post, Get } from "../../service/service.setup";
@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const UserProfileFormData = ({ profile }) => {
   const [userData, setProfile] = useState({});
-  
+
   const [genderList, setGender] = useState([
     { id: "male", name: "Male" },
     { id: "female", name: "Female" },
@@ -15,38 +15,34 @@ const UserProfileFormData = ({ profile }) => {
   ]);
   async function getProfile() {
     try {
-      
       const user = await Get("getProfile");
       //date = date.replace(/\//g, '_');
       setProfile(user.data.data.profile);
       console.log(user.data);
     } catch (error) {}
   }
-const saveDataHandler =  async()=>{
+  const saveDataHandler = async () => {
     try {
-        const user =  await Post('/setuserProfile',userData);
-        if(user.data.code==200)
-        window.location.reload();
-        console.log(user)
-    } catch (error) {
-        
-    }
-}
+      const user = await Post("/setuserProfile", userData);
+      if (user.data.code == 200) window.location.reload();
+      console.log(user);
+    } catch (error) {}
+  };
   useEffect(() => {
     getProfile();
   }, []);
-  const setProfileHandler = (e)=>{
-    const {name,value} =(e.target) ;
-    setProfile({...userData  ,[name]:value })
-  }
-  const setDobHandler = (e)=>{
+  const setProfileHandler = (e) => {
+    const { name, value } = e.target;
+    setProfile({ ...userData, [name]: value });
+  };
+  const setDobHandler = (e) => {
     //const {value} =(e.target) ;
-    console.log(e)
-    setProfile({...userData  ,'dob':e })
-  }
+    console.log(e);
+    setProfile({ ...userData, dob: e });
+  };
   return (
     <div className=" mt-4">
-      <div className="row" style={{justifyContent:"center"}}>
+      <div className="row" style={{ justifyContent: "center" }}>
         <div className="col-md-4 col-sm -12">
           <div className="card card-body">
             <Input
@@ -55,7 +51,7 @@ const saveDataHandler =  async()=>{
               label="Nick Name"
               placeholder="Enter Section name"
               name="nickname"
-              value  ={userData.nickname}
+              value={userData.nickname}
             ></Input>
 
             <Input
@@ -64,20 +60,24 @@ const saveDataHandler =  async()=>{
               label="Full Name "
               placeholder="Enter full name"
               name="fullname"
-              value ={userData.fullname}
+              value={userData.fullname}
             ></Input>
-            <DatePicker
-        selected={Date.now()}
-        name ='dob'
-        onChange={setDobHandler}
-      />
+            <Input
+              onChange={setProfileHandler}
+              type="date"
+              label="Full Name "
+              placeholder="Enter full name"
+              name="dob"
+              value={userData.dob}
+            ></Input>
+
             <Select
               onChange={setProfileHandler}
               label="Gender"
               placeholder="Enter your Password"
               list={genderList}
               name="gender"
-              value ={userData.gender}
+              value={userData.gender}
             ></Select>
             <Input
               onChange={setProfileHandler}
@@ -85,26 +85,31 @@ const saveDataHandler =  async()=>{
               label="City"
               placeholder="Enter Section City"
               name="nickname"
-              value ={userData.city}
+              value={userData.city}
             ></Input>
-                       <Input
+            <Input
               onChange={setProfileHandler}
               type="text"
               label="Address"
               placeholder="Enter Address"
-              value ={userData.address}
+              value={userData.address}
               name="address"
             ></Input>
-                    <Input
+            <Input
               onChange={setProfileHandler}
               type="text"
               label="Email"
               placeholder="email"
-              value ={userData.email}
+              value={userData.email}
               name="email"
+              disabled={true}
             ></Input>
 
-             <button onClick ={saveDataHandler}className="btn btn-success" type="button">
+            <button
+              onClick={saveDataHandler}
+              className="btn btn-success"
+              type="button"
+            >
               Save
             </button>
           </div>
