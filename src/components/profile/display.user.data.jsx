@@ -10,14 +10,19 @@ const UserData = ({ profile }) => {
             <div className="col-md-6 col-sm-12 col-xs-12">
               <div className="row div-row">
                 <div className="col-4 ">
-                  <h4 className ="main-heading">{profile.nickname}</h4>
+                  <h4 className="main-heading">{profile.nickname}</h4>
                 </div>
-                <div className="col-4">
-
-                </div>
+                <div className="col-4"></div>
               </div>
             </div>
-            <div className="col-md-6 col-sm-12 col-xs-12"></div>
+            <div className="col-md-6 col-sm-12 col-xs-12">
+              <div className="row div-row">
+                <div className="col-4 ">
+                  <p className="info-heading">User Name</p>
+                </div>
+                <div className="col-4">{profile.unique_user_id}</div>
+              </div>
+            </div>
           </div>
           <div className="row div-row">
             <div className="col-md-6 col-sm-12 col-xs-12">

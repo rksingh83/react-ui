@@ -48,6 +48,14 @@ const UserProfileFormData = ({ profile }) => {
             <Input
               onChange={setProfileHandler}
               type="text"
+              label= "User Name"
+              placeholder="User Name"
+              name="nickname"
+              value={userData.unique_user_id}
+            ></Input>
+            <Input
+              onChange={setProfileHandler}
+              type="text"
               label="Nick Name"
               placeholder="Enter Section name"
               name="nickname"
