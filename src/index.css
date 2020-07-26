@@ -65,3 +65,8 @@ a {
   display: flex;
   align-items: center !important;
 }
+.li-contact-list{
+   display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
