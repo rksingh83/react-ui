@@ -25,6 +25,7 @@ const UserProfileFormData = ({ profile }) => {
     try {
       const user = await Post("/setuserProfile", userData);
       if (user.data.code == 200) window.location.reload();
+      if (user.data.code == 207) alert(user.data.message);
       console.log(user);
     } catch (error) {}
   };
@@ -48,7 +49,7 @@ const UserProfileFormData = ({ profile }) => {
             <Input
               onChange={setProfileHandler}
               type="text"
-              label= "User Name"
+              label="User Name"
               placeholder="User Name"
               name="unique_user_id"
               value={userData.unique_user_id}
