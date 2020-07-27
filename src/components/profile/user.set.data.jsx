@@ -50,7 +50,7 @@ const UserProfileFormData = ({ profile }) => {
               type="text"
               label= "User Name"
               placeholder="User Name"
-              name="nickname"
+              name="unique_user_id"
               value={userData.unique_user_id}
             ></Input>
             <Input
