@@ -93,6 +93,19 @@ const AddFriend = ({ history }) => {
     getFriendList();
     getContactRequest();
   }, []);
+  async function removeContact() {
+    if (!window.confirm("Are You sure you want to remove ?")) return;
+
+    try {
+      const contacts = await Post(`/cancelUserAddRequest`, {
+        id: userProfile.id,
+      });
+      if (contacts.data.code == "200") {
+        alert(contacts.data.message);
+      }
+      window.location.reload();
+    } catch (error) {}
+  }
   return (
     <>
       <div className="row">
@@ -176,8 +189,14 @@ const AddFriend = ({ history }) => {
               </button>
             )}
             {userProfile.requestAlreadySent && (
-              <button className="btn btn-success mb-2">
-                Already Requested
+              <button className="btn btn-success mb-2">Requested</button>
+            )}
+            {userProfile.requestAlreadySent && (
+              <button
+                onClick={removeContact}
+                className="btn btn-success mb-2 ml-3"
+              >
+                Cancel
               </button>
             )}
             <UserData profile={userProfile}></UserData>
