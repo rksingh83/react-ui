@@ -93,11 +93,12 @@ const AddFriend = ({ history }) => {
     getFriendList();
     getContactRequest();
   }, []);
-  async function removeContact() {
+  async function removeContact(exist = undefined) {
     if (!window.confirm("Are You sure you want to remove ?")) return;
 
     try {
-      const contacts = await Post(`/cancelUserAddRequest`, {
+      const URL = exist ? "cancelUserAddRequest" : "removeContact";
+      const contacts = await Post(`/${URL}`, {
         id: userProfile.id,
       });
       if (contacts.data.code == "200") {
@@ -183,13 +184,21 @@ const AddFriend = ({ history }) => {
               display: Object.keys(userProfile).length == 0 ? "none" : "",
             }}
           >
-            {!userProfile.requestAlreadySent && (
+            {!userProfile.requestAlreadySent && !userProfile.alreadyFriend && (
               <button onClick={addUserHandler} className="btn btn-success mb-2">
                 Add Friend
               </button>
             )}
             {userProfile.requestAlreadySent && (
               <button className="btn btn-success mb-2">Requested</button>
+            )}
+            {userProfile.alreadyFriend && (
+              <button
+                onClick={() => removeContact(true)}
+                className="btn btn-success mb-2"
+              >
+                Remove
+              </button>
             )}
             {userProfile.requestAlreadySent && (
               <button
