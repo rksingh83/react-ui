@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import Select from "../boostrapinput/select.component";
 import Input from "../boostrapinput/input.component";
 import { Post, Get } from "../../service/service.setup";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 const UserProfileFormData = ({ profile }) => {
   const [userData, setProfile] = useState({});
