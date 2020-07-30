@@ -15,7 +15,8 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   const [finalCount, setFinalCount] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [LiElement, setLiEl] = useState(totalEle);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const currentIndex = (sharedWithMe == "SHARED")?1:0
+  const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [selectedItemsCount, setSelectedItemsCount] = useState(null);
   const [searchItem, setSearchHandler] = useState("");
   const [filteredFolder, setFilteredFolder] = useState("");
