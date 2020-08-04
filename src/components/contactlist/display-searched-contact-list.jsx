@@ -5,7 +5,7 @@ import { Get, Post } from "../../service/service.setup";
 import { ReactComponent as Close } from "../../assets/close.svg";
 import { ReactComponent as Share } from "../../assets/share.svg";
 const SearchedContactList = ({
-  profileList,
+  profileLists,
   isShare,
   selected,
   hide,
@@ -13,7 +13,7 @@ const SearchedContactList = ({
   addFriend,
 }) => {
   //http://localhost:9082/shareFile
-  console.log(profileList);
+  // console.log(profileList);
   async function shareWith(id) {
     if (!window.confirm("Are You sure you want to Share Folder ?")) return;
 
@@ -60,33 +60,33 @@ const SearchedContactList = ({
     <div className="row">
       <div className="col">
         <ul className="list-group">
-          <li className="list-group-item li-contact-list">
-            <span> {profileList.fullname}</span>
-            {profileList &&
-              !profileList.requestAlreadySent &&
-              !profileList.alreadyFriend && (
-                <button
-                  className="btn btn-success mb-2"
-                  onClick={() => addFriend(profileList.id)}
-                >
-                  Add Friend
-                </button>
+          {profileLists.map((profileList, index) => (
+            <li className="list-group-item li-contact-list" key={index}>
+              <span> {profileList.fullname}</span>
+              {profileList &&
+                !profileList.requestAlreadySent &&
+                !profileList.alreadyFriend && (
+                  <button
+                    className="btn btn-success mb-2"
+                    onClick={() => addFriend(profileList.id)}
+                  >
+                    Add Friend
+                  </button>
+                )}
+              {profileList.requestAlreadySent && <h5>Requested</h5>}
+              {profileList && profileList.requestAlreadySent && (
+                <Share onClick={() => shareWith(profileList.id)}></Share>
               )}
-            {profileList.requestAlreadySent && (
-              <h5>Requested</h5>
-            )}
-            {profileList && profileList.requestAlreadySent && (
-              <Share onClick={() => shareWith(profileList.id)}></Share>
-            )}
-            {profileList && profileList.alreadyFriend && (
-              <Share onClick={() => shareWith(profileList.id)}></Share>
-            )}
-            <span style={{ paddingLeft: "50px" }}>
-              {/* {profileList.requestAlreadySent && (
+              {profileList && profileList.alreadyFriend && (
+                <Share onClick={() => shareWith(profileList.id)}></Share>
+              )}
+              <span style={{ paddingLeft: "50px" }}>
+                {/* {profileList.requestAlreadySent && (
                 <Close onClick={() => removeContact(profileList.id)}></Close>
               )} */}
-            </span>
-          </li>
+              </span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

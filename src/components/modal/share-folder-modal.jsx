@@ -18,7 +18,11 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
   }
   const userSearchHandler = async () => {
     const user = await searchContact(searchUserId);
-    console.log(user.data.data.profile);
+    if (user.data.code == "213") {
+      alert(user.data.message);
+      setSearchUserId('');
+      return;
+    }
     setSearchedContactList(user.data.data.profile);
   };
   const addContactHandler = async (id) => {
@@ -56,7 +60,7 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
         </ul>
         {searchedContactList && (
           <SearchedContactList
-            profileList={searchedContactList}
+            profileLists={searchedContactList}
             addFriend={addContactHandler}
             hide={hide}
             selected={selected}
