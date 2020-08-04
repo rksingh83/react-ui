@@ -10,9 +10,10 @@ import { Link } from "react-router-dom";
 import Input from "../boostrapinput/input.component";
 import UserData from "../profile/display.user.data";
 import ContactList from "../contactlist/display.contactlist";
+import SearchedContactList from "../contactlist/display-searched-contact-list";
 const AddFriend = ({ history }) => {
   const [user, setUser] = useState(null);
-  const [userProfile, setUserProfile] = useState({});
+  const [userProfile, setUserProfile] = useState([]);
   const [friendList, setFriendList] = useState([]);
   const [contactList, setContactList] = useState([]);
   const styleImage = {
@@ -49,16 +50,16 @@ const AddFriend = ({ history }) => {
     }
   };
 
-  const addUserHandler = async () => {
+  const addUserHandler = async (id) => {
     try {
-      const userFind = await Post("/addUser", { id: userProfile.id });
+      const userFind = await Post("/addUser", { id: id });
       console.log(userFind);
       if (userFind.data.code == "200") {
         alert(userFind.data.message);
         window.location.reload();
         return;
       }
-      setUserProfile(userFind.data.data.profile);
+      //setUserProfile(userFind.data.data.profile);
     } catch (e) {
       alert("Something went wrong try latter");
       history.goBack();
@@ -178,37 +179,13 @@ const AddFriend = ({ history }) => {
               <ContactList profileList={contactList}></ContactList>
             </div>
           </div>
-          <div
-            className=""
-            style={{
-              display: Object.keys(userProfile).length == 0 ? "none" : "",
-            }}
-          >
-            {!userProfile.requestAlreadySent && !userProfile.alreadyFriend && (
-              <button onClick={addUserHandler} className="btn btn-success mb-2">
-                Add Friend
-              </button>
-            )}
-            {userProfile.requestAlreadySent && (
-              <button className="btn btn-success mb-2">Requested</button>
-            )}
-            {userProfile.alreadyFriend && (
-              <button
-                onClick={() => removeContact(true)}
-                className="btn btn-success mb-2"
-              >
-                Remove
-              </button>
-            )}
-            {userProfile.requestAlreadySent && (
-              <button
-                onClick={removeContact}
-                className="btn btn-success mb-2 ml-3"
-              >
-                Cancel
-              </button>
-            )}
-            <UserData profile={userProfile}></UserData>
+          <div className="col-md-6">
+           
+            
+            <SearchedContactList
+              addFriend={addUserHandler}
+              profileLists={userProfile}
+            />
           </div>
           <div className="row">
             <div className="col-md-5 col-sm-12 col-xs-12">

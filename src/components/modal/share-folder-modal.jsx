@@ -17,13 +17,13 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
     } catch (error) {}
   }
   const userSearchHandler = async () => {
-    const user = await searchContact(searchUserId);
-    if (user.data.code == "213") {
-      alert(user.data.message);
-      setSearchUserId('');
-      return;
+    try {
+      const user = await searchContact(searchUserId);
+      console.log("USER", user.data.data.profile);
+      setSearchedContactList(user.data.data.profile);
+    } catch {
+     // setSearchedContactList([]);
     }
-    setSearchedContactList(user.data.data.profile);
   };
   const addContactHandler = async (id) => {
     const user = await addContact(id);

@@ -4,6 +4,8 @@ import { Get, Post } from "../../service/service.setup";
 //import "./user-data.style.scss";
 import { ReactComponent as Close } from "../../assets/close.svg";
 import { ReactComponent as Share } from "../../assets/share.svg";
+import { ReactComponent as AddUser } from "../../assets/add-user.svg";
+
 const SearchedContactList = ({
   profileLists,
   isShare,
@@ -56,6 +58,7 @@ const SearchedContactList = ({
       window.location.reload();
     } catch (error) {}
   }
+
   return (
     <div className="row">
       <div className="col">
@@ -66,24 +69,24 @@ const SearchedContactList = ({
               {profileList &&
                 !profileList.requestAlreadySent &&
                 !profileList.alreadyFriend && (
-                  <button
-                    className="btn btn-success mb-2"
-                    onClick={() => addFriend(profileList.id)}
-                  >
-                    Add Friend
-                  </button>
+                  <AddUser onClick={() => addFriend(profileList.id)}></AddUser>
                 )}
               {profileList.requestAlreadySent && <h5>Requested</h5>}
-              {profileList && profileList.requestAlreadySent && (
+              {profileList && profileList.requestAlreadySent && isShare && (
                 <Share onClick={() => shareWith(profileList.id)}></Share>
               )}
-              {profileList && profileList.alreadyFriend && (
+              {profileList && profileList.alreadyFriend && isShare && (
                 <Share onClick={() => shareWith(profileList.id)}></Share>
               )}
               <span style={{ paddingLeft: "50px" }}>
-                {/* {profileList.requestAlreadySent && (
-                <Close onClick={() => removeContact(profileList.id)}></Close>
-              )} */}
+                {profileList.requestAlreadySent && (
+                  <Close onClick={() => removeContact(profileList.id)}></Close>
+                )}
+              </span>
+              <span style={{ paddingLeft: "50px" }}>
+                {profileList.alreadyFriend && (
+                  <Close onClick={() => removeContact(profileList.id)}></Close>
+                )}
               </span>
             </li>
           ))}
