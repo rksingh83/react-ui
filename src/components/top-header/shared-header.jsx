@@ -1,10 +1,19 @@
 import React from "react";
 
-const sharedHeader = ({ history, back }) => {
+const sharedHeader = ({
+  history,
+  back,
+  searchHandler,
+  fillAllDataHandler,
+  searchItem,
+}) => {
   return (
     <div className="row">
       <div className="col-md-12">
-        <nav style ={{minHeight:"3rem"}} className="navbar navbar-expand-lg navbar-light sec-header-bg single-header">
+        <nav
+          style={{ minHeight: "3rem" }}
+          className="navbar navbar-expand-lg navbar-light sec-header-bg single-header"
+        >
           <button
             className="navbar-toggler"
             type="button"
@@ -16,9 +25,24 @@ const sharedHeader = ({ history, back }) => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
+          <ul className="navbar-nav mr-auto text-white">
+            {back && (
+              <li className="nav-item">
+                <input
+                  placeholder="Search anything.."
+                  value={searchItem}
+                  onChange={searchHandler}
+                  onBlur={fillAllDataHandler}
+                  name="search"
+                  type="input"
+                  className="custom-input"
+                ></input>
+              </li>
+            )}
+          </ul>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            {!back && (
-              <ul className="navbar-nav ml-auto text-white">
+            <ul className="navbar-nav ml-auto text-white">
+              {!back && (
                 <li className="nav-item">
                   <button
                     className="btn btn-success"
@@ -27,8 +51,8 @@ const sharedHeader = ({ history, back }) => {
                     Back
                   </button>
                 </li>
-              </ul>
-            )}
+              )}
+            </ul>
           </div>
         </nav>
       </div>

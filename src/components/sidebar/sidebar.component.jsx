@@ -15,7 +15,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   const [finalCount, setFinalCount] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [LiElement, setLiEl] = useState(totalEle);
-  const currentIndex = (sharedWithMe == "SHARED")?1:0
+  const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [selectedItemsCount, setSelectedItemsCount] = useState(null);
   const [searchItem, setSearchHandler] = useState("");
@@ -25,6 +25,8 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   const [date, setDate] = useState("");
   // const [sharedWithMe, setSharedWithMe] = useState(true);
   const [sharedWithMeFolder, setSharedWithMeFolder] = useState([]);
+  const [sharedSearchItem, setSharedSearchHandler] = useState("");
+  const [sharedFilteredFolder, setSharedFilteredFolder] = useState("");
   const sideBarStyle = {
     border: "1px solid rgba(0, 0, 0, 0.125)",
     height: "90vh",
@@ -33,6 +35,16 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     setSearchHandler(e.target.value);
     setFilteredFolder(
       totalFolder.filter((item) =>
+        item.fileName.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
+  };
+
+  //
+  const sharedSearchHandler = (e) => {
+    setSharedSearchHandler(e.target.value);
+    setSharedFilteredFolder(
+      sharedWithMeFolder.filter((item) =>
         item.fileName.toLowerCase().includes(e.target.value.toLowerCase())
       )
     );
@@ -144,7 +156,15 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
           saveFolder={saveFolder}
         />
       )}
-      {sharedWithMe == "SHARED" && <SharedHeader back ={true} />}
+      {sharedWithMe == "SHARED" && (
+        <SharedHeader
+          totalFolders={totalFolder}
+          selectedItems={selectedFolder}
+          searchItem={sharedSearchItem}
+          searchHandler={sharedSearchHandler}
+          back={true}
+        />
+      )}
       <div className="row">
         <div className="col-md-2 custom-pad-li d-none d-sm-block">
           <ul className="list-group ul-pad" style={sideBarStyle}>
@@ -187,11 +207,11 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
                 reNameFolder={reNameFolderHandler}
                 displayValue={false}
                 folders={sharedWithMeFolder}
-                searchItem={searchItem}
+                searchItem={sharedSearchItem}
                 history={history}
                 ToggleDescription={ToggleDescription}
                 onLeave={hideDescriptionHandler}
-                filteredFolder={filteredFolder}
+                filteredFolder={sharedFilteredFolder}
               />
             )}
           </div>
