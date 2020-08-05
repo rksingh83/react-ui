@@ -6,11 +6,19 @@ import { ToastContainer, toast } from "react-toastify";
 import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import { Post } from "../../service/service.setup";
 import OpenPop from "../modal/open.model.component";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-const ImageSlider = ({ images, current, history ,setImageId}) => {
-  const totalEle = ["Home"];
+const ImageSlider = ({
+  sharedWithMe,
+  images,
+  current,
+  history,
+  setImageId,
+}) => {
+  const totalEle = ["Home", "My Files", "Share With Me"];
   const [LiElement, setLiEl] = useState(totalEle);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const currentIndex = sharedWithMe == "SHARED" ? 2 : 1;
+  const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [isShowPop, setIsShowPop] = useState(false);
   const [pageNo, setPageNo] = useState(null);
   const [desc, setDesc] = useState(null);
@@ -167,4 +175,8 @@ const ImageSlider = ({ images, current, history ,setImageId}) => {
   );
 };
 
-export default ImageSlider;
+//export default ImageSlider;
+const mapStateToPros = ({ sharedWithMe: { sharedWithMe } }) => ({
+  sharedWithMe,
+});
+export default connect(mapStateToPros)(ImageSlider);

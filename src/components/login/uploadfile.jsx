@@ -17,7 +17,8 @@ const UploadFile = ({ match, history, sharedWithMe }) => {
   const [pageNumber, setPageNumber] = useState("");
   const [date, setDate] = useState("");
   const [iSDisplayDiv, setIsDisplayDiv] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const currentIndex = sharedWithMe == "SHARED" ? 2 : 1;
+  const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [folderId, setFolderId] = useState(match.params.id);
   const [imagesUpdate, setImagesUpdate] = useState([]);
 
@@ -26,7 +27,7 @@ const UploadFile = ({ match, history, sharedWithMe }) => {
     height: "90vh",
   };
 
-  const totalEle = ["Home"];
+  const totalEle = ["Home" ,"My Files", "Share With Me"];
   const [LiElement, setLiEl] = useState(totalEle);
   const handleActive = (e) => {
     setActiveIndex(LiElement.indexOf(e));
