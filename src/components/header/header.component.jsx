@@ -66,7 +66,7 @@ const Header = ({ currentUser, hidden }) => {
           {currentUser && (
             <li className="nav-item">
               <Link className="option nav-link text-white" to="/profile">
-                My Profile
+                Profile
               </Link>
             </li>
           )}

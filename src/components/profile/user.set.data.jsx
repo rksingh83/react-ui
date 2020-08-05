@@ -19,7 +19,7 @@ const UserProfileFormData = ({ profile, history }) => {
       //date = date.replace(/\//g, '_');
       setProfile(user.data.data.profile[0]);
       console.log(user.data);
-    } catch (error) {}
+    } catch (error) { }
   }
   const saveDataHandler = async () => {
     try {
@@ -27,7 +27,7 @@ const UserProfileFormData = ({ profile, history }) => {
       if (user.data.code == 200) window.location.reload();
       if (user.data.code == 207) alert(user.data.message);
       console.log(user);
-    } catch (error) {}
+    } catch (error) { }
   };
   useEffect(() => {
     getProfile();
@@ -54,14 +54,14 @@ const UserProfileFormData = ({ profile, history }) => {
               name="unique_user_id"
               value={userData.unique_user_id}
             ></Input>
-            <Input
+            {/* <Input
               onChange={setProfileHandler}
               type="text"
               label="Nick Name"
               placeholder="Enter Section name"
               name="nickname"
               value={userData.nickname}
-            ></Input>
+            ></Input> */}
 
             <Input
               onChange={setProfileHandler}
@@ -74,8 +74,8 @@ const UserProfileFormData = ({ profile, history }) => {
             <Input
               onChange={setProfileHandler}
               type="date"
-              label="Full Name "
-              placeholder="Enter full name"
+              label="Date of Birth "
+              placeholder="Enter Date of Birth"
               name="dob"
               value={userData.dob}
             ></Input>
@@ -83,33 +83,49 @@ const UserProfileFormData = ({ profile, history }) => {
             <Select
               onChange={setProfileHandler}
               label="Gender"
-              placeholder="Enter your Password"
+              placeholder="Enter your Gender"
               list={genderList}
               name="gender"
               value={userData.gender}
             ></Select>
-            <Input
-              onChange={setProfileHandler}
-              type="text"
-              label="City"
-              placeholder="Enter Section City"
-              name="nickname"
-              value={userData.city}
-            ></Input>
+
             <Input
               onChange={setProfileHandler}
               type="text"
               label="Address"
-              placeholder="Enter Address"
+              placeholder="Enter Your Address "
               value={userData.address}
               name="address"
             ></Input>
-            <button
-              onClick={() => setIsOpenModal(true)}
-              className="btn btn-primary"
-            >
-              Edit Email
-            </button>
+
+            <Input
+              onChange={setProfileHandler}
+              type="text"
+              label="City"
+              placeholder="Enter Your City "
+              name="city"
+              value={userData.city}
+            ></Input>
+
+            <Input
+              onChange={setProfileHandler}
+              type="text"
+              label="Country"
+              placeholder="Enter Your Country "
+              name="country"
+              value={userData.country}
+            ></Input>
+
+            <Input
+              onChange={setProfileHandler}
+              type="text"
+              label="Phone Number"
+              placeholder="Enter Your Mobile Number "
+              name="phoneNumber"
+              value={userData.mobileNumber}
+            ></Input>
+
+
             <EditEmailModal
               show={isOpenModal}
               hide={setIsOpenModal}
@@ -118,13 +134,19 @@ const UserProfileFormData = ({ profile, history }) => {
             <Input
               onChange={setProfileHandler}
               type="text"
-              label="Email"
+              label="Email Address"
               placeholder="email"
               value={userData.email}
               name="email"
               disabled={true}
             ></Input>
 
+            <button
+              onClick={() => setIsOpenModal(true)}
+              className="btn btn-primary"
+            >
+              Change
+            </button>
             <button
               onClick={saveDataHandler}
               className="btn btn-success"
