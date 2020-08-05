@@ -181,9 +181,6 @@ const TopHeader = ({
             </span>
           </div>
           <div className="col-md-2  sec-header-item ">
-            <Link className="logo-container" to="/add-friend">
-              <AddFriend />
-            </Link>
             <div
               className={` col-text-style ${
                 totalItem == 0 ? "hideCount" : "sec-header-item"

@@ -38,7 +38,13 @@ const Header = ({ currentUser, hidden }) => {
               Home
             </Link>
           </li>
-
+          {currentUser && (
+            <li className="nav-item">
+              <Link className="option nav-link text-white" to="/add-friend">
+                Contacts
+              </Link>
+            </li>
+          )}
           {currentUser ? (
             ""
           ) : (
@@ -57,19 +63,17 @@ const Header = ({ currentUser, hidden }) => {
               </Link>
             </li>
           )}
+          {currentUser && (
+            <li className="nav-item">
+              <Link className="option nav-link text-white" to="/profile">
+                My Profile
+              </Link>
+            </li>
+          )}
           {currentUser ? (
             <li className="nav-item">
               <Link className="option nav-link text-white" to="/logout">
                 <Logout style={{ height: "28px" }} />
-              </Link>
-            </li>
-          ) : (
-            ""
-          )}
-          {currentUser ? (
-            <li className="nav-item">
-              <Link className="option nav-link text-white" to="/profile">
-                <User style={{ height: "28px" }} />
               </Link>
             </li>
           ) : (
