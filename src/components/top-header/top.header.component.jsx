@@ -8,8 +8,10 @@ import { ReactComponent as Refresh } from "../../assets/referesh.svg";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
 import { ReactComponent as AddFriend } from "../../assets/add.svg";
 import { ReactComponent as Share } from "../../assets/shareimage.svg";
-import ShareFolderModal from '../modal/share-folder-modal';
-import {Link} from 'react-router-dom'
+import ShareFolderModal from "../modal/share-folder-modal";
+import { Link } from "react-router-dom";
+import SharedListModal from "../modal/show-shared-list-modal";
+import { Post, Get } from "../../service/service.setup";
 import "./top.header.style.scss";
 const TopHeader = ({
   saveFolder,
@@ -24,7 +26,36 @@ const TopHeader = ({
   const [fileName, addName] = useState("");
   const [fileDescription, addDisc] = useState("");
   const [id, setId] = useState("");
+  const [folderId, setFolderId] = useState("");
   const [shareFolder, setShareFolder] = useState(false);
+  const [isOpenPop, setSharedListPop] = useState(false);
+  const [shareWithList, setShareWithList] = useState([]);
+  async function getFolders(fileId) {
+    try {
+      const user = await Post("/getFileSharedList", {
+        fileId,
+      });
+      if (
+        user.data.code == "200" &&
+        user.data.message == "Page is not shared with anyone."
+      ) {
+        alert(user.data.message);
+      }
+      setShareWithList(user.data.data.profile);
+      console.log(user);
+
+      setSharedListPop(true);
+    } catch (error) {}
+  }
+  const showContactListModal = () => {
+    let fileId = 0;
+    for (let key in selectedItems) {
+      if (selectedItems[key]) {
+        fileId = key;
+      }
+    }
+    getFolders(fileId);
+  };
   const saveHandler = () => {
     saveFolder(fileName, fileDescription, id);
     addName("");
@@ -87,7 +118,11 @@ const TopHeader = ({
             }`}
           >
             <Share onClick={() => setShareFolder(true)} />{" "}
-            <ShareFolderModal selected ={selectedItems} show ={shareFolder} hide ={setShareFolder}/>
+            <ShareFolderModal
+              selected={selectedItems}
+              show={shareFolder}
+              hide={setShareFolder}
+            />
             <span className="on-hover" onClick={() => setShareFolder(true)}>
               Share
             </span>
@@ -103,14 +138,36 @@ const TopHeader = ({
             </span>
           </div>
           <div
-            className={`  col-md-2 col-text-style ${
+            className={`  col-md-1 col-text-style ${
               totalItem > 1 || totalItem == 0 ? "hideCount" : "sec-header-item"
             }`}
           >
             <Pencil onClick={() => reNameFolder(false)} />{" "}
-            <span className="on-hover" onClick={() => reNameFolder(false)}>
+            <span
+              className="on-hover"
+              onClick={() => showContactListModal(false)}
+            >
               Edit
             </span>
+          </div>
+          <div
+            className={`  col-md-1 col-text-style ${
+              totalItem > 1 || totalItem == 0 ? "hideCount" : "sec-header-item"
+            }`}
+          >
+            <Pencil onClick={() => showContactListModal(false)} />{" "}
+            <span
+              className="on-hover"
+              onClick={() => showContactListModal(false)}
+            >
+              Shared List
+            </span>
+            <SharedListModal
+              hide={setSharedListPop}
+              show={isOpenPop}
+              folderId={folderId}
+              list={shareWithList}
+            ></SharedListModal>
           </div>
           <div className="col-md-2 sec-header-item col-text-style">
             <Refresh onClick={() => setShow(true)} />{" "}
@@ -125,16 +182,16 @@ const TopHeader = ({
             </span>
           </div>
           <div className="col-md-2  sec-header-item ">
-          <Link className="logo-container" to="/add-friend">
-            <AddFriend />
+            <Link className="logo-container" to="/add-friend">
+              <AddFriend />
             </Link>
             <div
               className={` col-text-style ${
                 totalItem == 0 ? "hideCount" : "sec-header-item"
               }`}
             >
-            <span className="count">{totalItem}</span> Selected{" "}
-            <Cross onClick={() => window.location.reload()}></Cross>
+              <span className="count">{totalItem}</span> Selected{" "}
+              <Cross onClick={() => window.location.reload()}></Cross>
             </div>
           </div>
         </div>
