@@ -151,17 +151,16 @@ const TopHeader = ({
             </span>
           </div>
           <div
-            className={`  col-md-1 col-text-style ${
+            className={`  col-md-2 col-text-style ${
               totalItem > 1 || totalItem == 0 ? "hideCount" : "sec-header-item"
             }`}
           >
-            <Pencil onClick={() => showContactListModal(false)} />{" "}
-            <span
-              className="on-hover"
-              onClick={() => showContactListModal(false)}
+            <button
+              onClick={showContactListModal}
+              className="btn btn-secondary"
             >
               Shared List
-            </span>
+            </button>
             <SharedListModal
               hide={setSharedListPop}
               show={isOpenPop}
@@ -175,7 +174,7 @@ const TopHeader = ({
               Create Folder
             </span>
           </div>
-          <div className="col-md-2 col-text-style sec-header-item">
+          <div className="col-md-1 col-text-style sec-header-item">
             <FolderCreate onClick={() => window.location.reload()} />{" "}
             <span className="on-hover" onClick={() => window.location.reload()}>
               Refresh

@@ -10,17 +10,39 @@ import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import OpenEditPop from "../modal/edit.modal";
 import { ReactComponent as Share } from "../../assets/shareimage.svg";
 import ShareFolderModal from "../modal/share-folder-modal";
-
+import SharedListModal from "../modal/show-shared-list-modal";
 const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
   const [file, setFile] = useState("");
   const [showModel, setShowModel] = useState(false);
   const [isShow, setIsShow] = useState(false);
   const [images, setImages] = useState({});
   const [pageNo, setPageNo] = useState("");
- // console.log(updateImages);
+  // console.log(updateImages);
   const [desc, setDesc] = useState("");
   const [shareFolder, setShareFolder] = useState(false);
+  const [isOpenPop, setSharedListPop] = useState(false);
+  const [shareWithList, setShareWithList] = useState([]);
+  async function getFolders(id, fileId) {
+    try {
+      const user = await Post("/getPageSharedList", {
+        fileId,
+        id,
+      });
+      if (
+        user.data.code == "200" &&
+        user.data.message == "Page is not shared with anyone."
+      ) {
+        alert(user.data.message);
+      }
+      setShareWithList(user.data.data.profile);
+      console.log(user);
 
+      setSharedListPop(true);
+    } catch (error) {}
+  }
+  const showContactListModal = () => {
+    getFolders(updateImages[0].id, id);
+  };
   const submitHandler = async (e) => {
     //  e.preventDefault();
 
@@ -140,8 +162,7 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
             selected={1}
             show={shareFolder}
             hide={setShareFolder}
-            images={{updateImages,id}}
-
+            images={{ updateImages, id }}
           />
           <span className="on-hover" onClick={() => setShareFolder(true)}>
             Share
@@ -168,8 +189,24 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
           />
         </div>
       </div>
+      <div className="col-md-2 sec-header-item">
+        <div
+          style={{
+            display: updateImages && updateImages.length == 1 ? "" : "none",
+          }}
+        >
+          <button onClick={showContactListModal} className="btn btn-secondary">
+            Shared List
+          </button>
+          <SharedListModal
+            hide={setSharedListPop}
+            show={isOpenPop}
+            list={shareWithList}
+          ></SharedListModal>
+        </div>
+      </div>
 
-      <div className=" ml-auto col-md-2">
+      <div className=" ml-auto col-md-1">
         <button
           onClick={() => history.goBack()}
           className="btn btn-success float-right"
