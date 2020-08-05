@@ -4,7 +4,7 @@ import UserData from "./display.user.data";
 import UserProfileFormData from "./user.set.data";
 import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
-const Profile = () => {
+const Profile = ({ history }) => {
   const [isShowEdit, setIsShowEdit] = useState(false);
   const [profile, setProfile] = useState({});
 
@@ -16,7 +16,7 @@ const Profile = () => {
   async function getProfile() {
     try {
       const user = await Get("getProfile");
-      setProfile(user.data.data.profile);
+      setProfile(user.data.data.profile[0]);
     } catch (error) {}
   }
   useEffect(() => {
@@ -43,7 +43,10 @@ const Profile = () => {
         </div>
       </div>
       <div style={{ display: isShowEdit ? "" : "none" }}>
-        <UserProfileFormData profile={profile}></UserProfileFormData>
+        <UserProfileFormData
+          history={history}
+          profile={profile}
+        ></UserProfileFormData>
       </div>
       <div style={{ display: isShowEdit ? "none" : "" }} className="">
         <UserData profile={profile}></UserData>

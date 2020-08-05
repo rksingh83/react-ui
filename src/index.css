@@ -70,3 +70,8 @@ a {
     justify-content: space-between !important;
     align-items: center !important;
 }
+.item-center{
+  display: flex !important;
+   justify-content: center !important;
+   align-items: center !important;
+}

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import Select from "../boostrapinput/select.component";
 import Input from "../boostrapinput/input.component";
 import { Post, Get } from "../../service/service.setup";
+import EditEmailModal from "../modal/change-email-modal";
 
-const UserProfileFormData = ({ profile }) => {
+const UserProfileFormData = ({ profile, history }) => {
   const [userData, setProfile] = useState({});
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const [genderList, setGender] = useState([
     { id: "male", name: "Male" },
@@ -15,7 +17,7 @@ const UserProfileFormData = ({ profile }) => {
     try {
       const user = await Get("getProfile");
       //date = date.replace(/\//g, '_');
-      setProfile(user.data.data.profile);
+      setProfile(user.data.data.profile[0]);
       console.log(user.data);
     } catch (error) {}
   }
@@ -102,6 +104,17 @@ const UserProfileFormData = ({ profile }) => {
               value={userData.address}
               name="address"
             ></Input>
+            <button
+              onClick={() => setIsOpenModal(true)}
+              className="btn btn-primary"
+            >
+              Edit Email
+            </button>
+            <EditEmailModal
+              show={isOpenModal}
+              hide={setIsOpenModal}
+              history={history}
+            ></EditEmailModal>
             <Input
               onChange={setProfileHandler}
               type="text"
