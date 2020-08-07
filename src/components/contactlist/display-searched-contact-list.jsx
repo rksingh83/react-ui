@@ -45,7 +45,7 @@ const SearchedContactList = ({
         alert(contacts.data.message);
       }
       hide(false);
-    } catch (error) {}
+    } catch (error) { }
   }
   async function removeContact(id) {
     if (!window.confirm("Are You sure you want to remove ?")) return;
@@ -56,7 +56,7 @@ const SearchedContactList = ({
         alert(contacts.data.message);
       }
       window.location.reload();
-    } catch (error) {}
+    } catch (error) { }
   }
 
   return (
@@ -88,6 +88,10 @@ const SearchedContactList = ({
                   <Close onClick={() => removeContact(profileList.id)}></Close>
                 )}
               </span>
+              <span style={{display: "block"}}><b>Username:</b>{profileList.unique_user_id}</span>
+              <span>Sex:{profileList.gender}</span>
+              <span><b>Date of Birth</b>{profileList.dob}</span>
+              <span> <b>Lives in</b> {profileList.address},{profileList.city},{profileList.country}</span>
             </li>
           ))}
         </ul>
