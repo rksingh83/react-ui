@@ -169,6 +169,7 @@ const AddFriend = ({ history }) => {
             <div className="col-md-1 mt-4">
               <button
                 onClick={searchUserHandler}
+                id="searchButton"
                 type="button"
                 className="btn btn-success"
               >
