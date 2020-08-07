@@ -5,9 +5,12 @@ import "./create-image.style.scss";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
 import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { Link } from "react-router-dom";
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
+import SharedHeader from "../top-header/shared-header";
 const DisplayLastImage = ({ match, history, sharedWithMe }) => {
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState("");;
+  const currentIndex = sharedWithMe == "SHARED" ? 2 : 1;
+  const [activeIndex, setActiveIndex] = useState(currentIndex);
   useEffect(() => {
     const requestFile = { ids: [match.params.id], imagetype: "original" };
     const IMAGE_ORIGINAL_URL =  (sharedWithMe =='HOME')?'getAnyCloudImages':'getAnySharedCloudImages';
@@ -43,7 +46,11 @@ const DisplayLastImage = ({ match, history, sharedWithMe }) => {
     <>
       <div className="row">
         <div className="col-md-12">
-          <nav className="navbar navbar-expand-lg navbar-light sec-header-bg">
+        {sharedWithMe == "SHARED" && (
+        <SharedHeader history={history}  />
+      )}
+        {sharedWithMe == "HOME" && (
+         <nav className="navbar navbar-expand-lg navbar-light sec-header-bg">
             <button
               className="navbar-toggler"
               type="button"
@@ -82,7 +89,7 @@ const DisplayLastImage = ({ match, history, sharedWithMe }) => {
                 </li>
               </ul>
             </div>
-          </nav>
+          </nav>)}
         </div>
       </div>
       <div className="row">
