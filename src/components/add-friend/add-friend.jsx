@@ -11,6 +11,7 @@ import Input from "../boostrapinput/input.component";
 import UserData from "../profile/display.user.data";
 import ContactList from "../contactlist/display.contactlist";
 import SearchedContactList from "../contactlist/display-searched-contact-list";
+import ContactsCard from "../contactlist/display-searched-contact-list-card";
 const AddFriend = ({ history }) => {
   const [user, setUser] = useState(null);
   const [userProfile, setUserProfile] = useState([]);
@@ -40,6 +41,7 @@ const AddFriend = ({ history }) => {
       if (userFind.data.code == "203") {
         setUser("");
         alert(userFind.data.message);
+        setUserProfile([]);
 
         return;
       }
@@ -158,15 +160,14 @@ const AddFriend = ({ history }) => {
         </div>
         <div className="col-md-9 col-xs-12 col-sm-12">
           <div className="row">
-            <div className="col-md-5">
+            <div className="col-md-4  ml-3 mt-4">
               <Input
                 type="text"
                 onChange={(e) => setUser(e.target.value)}
-                label="Search"
                 placeholder="Search by email or user id"
               ></Input>
             </div>
-            <div className="col-md-1 mt-4">
+            <div className="col-md-2 mt-4">
               <button
                 onClick={searchUserHandler}
                 id="searchButton"
@@ -181,15 +182,15 @@ const AddFriend = ({ history }) => {
             </div>
           </div>
           <div className="col-md-6">
-           
-            
-            <SearchedContactList
+            <ContactsCard
               addFriend={addUserHandler}
               profileLists={userProfile}
+              addFriend ={addUserHandler}
+              clearList = {setUserProfile}
             />
           </div>
           <div className="row">
-            <div className="col-md-5 col-sm-12 col-xs-12">
+            <div className="col-md-5 col-sm-12 col-xs-12 ml-3">
               <h5>Friend list</h5>
               <ul class="list-group">
                 {friendList.map((item, index) => (

@@ -75,3 +75,24 @@ a {
    justify-content: center !important;
    align-items: center !important;
 }
+.contact-cards-top{
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+.contact-card-li{
+  display: flex !important;
+
+}
+.contact-div{
+  width: 48%;
+
+}
+.label-card{
+  font-weight: 600;
+    font-size: 17px;
+}
+
+.label-card::after {
+  content: ":"; 
+  color: green;
+}

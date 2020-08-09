@@ -143,7 +143,7 @@ const UserProfileFormData = ({ profile, history }) => {
 
             <button
               onClick={() => setIsOpenModal(true)}
-              className="btn btn-primary"
+              className="btn btn-primary mb-2"
             >
               Change
             </button>
