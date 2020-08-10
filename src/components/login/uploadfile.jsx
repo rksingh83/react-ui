@@ -13,6 +13,7 @@ const UploadFile = ({ match, history, sharedWithMe }) => {
   const [file, setFile] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState([]);
+  const [currentFolderName, setCurrentFolderName] = useState('');
   const [imageDescription, setImagesDescription] = useState("Hi");
   const [pageNumber, setPageNumber] = useState("");
   const [date, setDate] = useState("");
@@ -59,6 +60,8 @@ const UploadFile = ({ match, history, sharedWithMe }) => {
         history.push("/logout");
       }
       setImages(images.data.imageInput);
+      console.log(images.data)
+      setCurrentFolderName(images.data.fileName)
       setIsLoading(false);
     } catch (error) {}
   }
@@ -72,6 +75,8 @@ const UploadFile = ({ match, history, sharedWithMe }) => {
         history.push("/logout");
       }
       setImages(images.data.imageInput);
+      console.log(images.data)
+      setCurrentFolderName(images.data.fileName)
       setIsLoading(false);
     } catch (error) {}
   }
@@ -87,6 +92,7 @@ const UploadFile = ({ match, history, sharedWithMe }) => {
           history={history}
           images={images}
           setImages={setImages}
+          currentFolder ={currentFolderName}
         />
       )}
       {sharedWithMe == "SHARED" && (

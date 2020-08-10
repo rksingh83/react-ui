@@ -9,9 +9,17 @@ import { ReactComponent as Delete } from "../../assets/delete.svg";
 import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import OpenEditPop from "../modal/edit.modal";
 import { ReactComponent as Share } from "../../assets/shareimage.svg";
+import { ReactComponent as FolderSvg } from "../../assets/folder-name.svg";
 import ShareFolderModal from "../modal/share-folder-modal";
 import SharedListModal from "../modal/show-shared-list-modal";
-const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
+const TopHeaderWithBack = ({
+  history,
+  id,
+  currentFolder,
+  updateImages,
+  ...props
+}) => {
+  console.log(currentFolder);
   const [file, setFile] = useState("");
   const [showModel, setShowModel] = useState(false);
   const [isShow, setIsShow] = useState(false);
@@ -111,8 +119,15 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
       <ToastContainer />
       <div
         className="col-md-4 ml-2 sec-header-item"
-        style={{ display: id ? "" : "none" }}
+        style={{
+          display: id ? "" : "none",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
       >
+         <span>
+          <span className="badge badge-info p-2">{currentFolder}</span>
+        </span>
         <form
           className="mr-4"
           style={{ display: "inline" }}
@@ -141,7 +156,9 @@ const TopHeaderWithBack = ({ history, id, updateImages, ...props }) => {
           Open WebCam
         </button>
         <WebCamModel id={id} hide={setShowModel} show={showModel} />
+       
       </div>
+
       <div className="col-md-2 sec-header-item">
         <div
           style={{

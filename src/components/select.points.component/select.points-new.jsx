@@ -6,10 +6,10 @@ import { Post, Get } from "../../service/service.setup";
 //import './create-image.style.scss' ;
 import { ReactComponent as Cross } from "../../assets/edit.svg";
 import { Link } from "react-router-dom";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 import $ from "jquery";
 
-const SelectPoints = ({ match, history ,sharedWithMe }) => {
+const SelectPoints = ({ match, history, sharedWithMe }) => {
   var Markers = new Array();
   const [points, setPoints] = useState(0);
   const [reset, setReset] = useState([]);
@@ -23,11 +23,13 @@ const SelectPoints = ({ match, history ,sharedWithMe }) => {
   const [twoStyle, setTwoStyle] = useState({});
   const [threeStyle, setThreeStyle] = useState({});
   const [fourStyle, setFourStyle] = useState({});
+  const [currentFolder, setCurrentFolderName] = useState("");
   var active = false;
   //const oneStyle = {}
   useEffect(() => {
     var mapSprite = new Image();
-    const IMAGE_ORIGINAL_URL =  (sharedWithMe =='HOME')?'getAnyCloudImages':'getAnySharedCloudImages';
+    const IMAGE_ORIGINAL_URL =
+      sharedWithMe == "HOME" ? "getAnyCloudImages" : "getAnySharedCloudImages";
     Post(`/${IMAGE_ORIGINAL_URL}`, {
       ids: [match.params.url],
       imagetype: "raw_small",
@@ -36,6 +38,7 @@ const SelectPoints = ({ match, history ,sharedWithMe }) => {
         alert(res.data.error);
         history.push("/logout");
       }
+      setCurrentFolderName(res.data.imageInput[0].fileName);
       mapSprite.src = res.data.imageInput[0].raw_image_small;
       setSrc(res.data.imageInput[0].raw_image_smal);
       var img = new Image();
@@ -236,7 +239,7 @@ const SelectPoints = ({ match, history ,sharedWithMe }) => {
       let res = await Post("/uploadSingleImagePoints", requestPayLoad);
 
       alert(res.data.message);
-        history.goBack();
+      history.goBack();
     } catch (err) {
       // console.log(err);
     }
@@ -273,6 +276,13 @@ const SelectPoints = ({ match, history ,sharedWithMe }) => {
               className="collapse navbar-collapse"
               id="navbarSupportedContent"
             >
+              <ul className="navbar-nav mr-auto text-white">
+                <li className="nav-item single-header-li">
+                  <span className="badge badge-info p-2">
+                    {currentFolder}
+                  </span>
+                </li>
+              </ul>
               <ul className="navbar-nav ml-auto text-white">
                 <li className="nav-item">
                   <button
@@ -361,7 +371,6 @@ const SelectPoints = ({ match, history ,sharedWithMe }) => {
     </>
   );
 };
-
 
 const mapStateToPros = ({ sharedWithMe: { sharedWithMe } }) => ({
   sharedWithMe,

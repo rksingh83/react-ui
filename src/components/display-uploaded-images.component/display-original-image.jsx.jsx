@@ -14,6 +14,7 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [imageId, setImageId] = useState(match.params.id);
   const [allImages, setAllImages] = useState([]);
+  const [currentFolderName, setCurrentFolderName] = useState("");
 
   useEffect(() => {
     const IMAGE_ORIGINAL_URL =
@@ -41,6 +42,7 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
         history.push("/logout");
       }
       const allCloud = [];
+      setCurrentFolderName(res.data.fileName);
       res.data.imageInput.forEach((image) => allCloud.push(image.id));
       const IMAGE_SMALL_URL =
         sharedWithMe == "HOME"
@@ -77,6 +79,7 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
           imageId={imageId}
           images={allImages}
           history={history}
+          currentFolder={currentFolderName}
         />
       )}
 

@@ -6,7 +6,7 @@ import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { Post } from "../../service/service.setup";
 
 import "./top.header.style.scss";
-const TopSingleHeader = ({ images, imageId, history }) => {
+const TopSingleHeader = ({ images, imageId, history, currentFolder }) => {
   const [show, setShow] = useState(false);
   const [fileName, addName] = useState("");
   const [fileDescription, addDisc] = useState("");
@@ -15,16 +15,16 @@ const TopSingleHeader = ({ images, imageId, history }) => {
   const saveHandler = () => {
     const requestPayLoad = {
       imageInput: [
-        { id:imageId,pageNumber: fileName, description: fileDescription },
+        { id: imageId, pageNumber: fileName, description: fileDescription },
       ],
     };
-    updateToServer(requestPayLoad ,true);
+    updateToServer(requestPayLoad, true);
     setShow(false);
   };
   const deleteHandler = () => {
     if (!window.confirm("Are You sure you want to delete ?")) return;
     const updateImages = images.filter((item) => item.id == imageId);
-    console.log(imageId)
+    console.log(imageId);
     const requestPayload = {
       imageInput: updateImages.filter((item) => (item.delete = 1)),
     };
@@ -39,14 +39,14 @@ const TopSingleHeader = ({ images, imageId, history }) => {
       console.log(err);
     }
   };
-    const editHandler = () => {
-        const updateImages = images.filter((item) => item.id == imageId);
-     //  setImages(updateImages[0]);
-     console.log(updateImages);
-      setShow(true);
-      addName(updateImages[0].pageNumber);
-      addDisc(updateImages[0].description ||"");
-    };
+  const editHandler = () => {
+    const updateImages = images.filter((item) => item.id == imageId);
+    //  setImages(updateImages[0]);
+    console.log(updateImages);
+    setShow(true);
+    addName(updateImages[0].pageNumber);
+    addDisc(updateImages[0].description || "");
+  };
   return (
     <div className="row">
       <div className="col-md-12">
@@ -63,15 +63,20 @@ const TopSingleHeader = ({ images, imageId, history }) => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav mr-auto text-white">
+              <li className="nav-item single-header-li">
+                <span className="badge badge-info p-2">{currentFolder}</span>
+              </li>
+            </ul>
             <ul className="navbar-nav ml-auto text-white">
               <li className="nav-item single-header-li">
-                <Delete  className = "single-header-svg" onClick={deleteHandler} />{" "}
+                <Delete className="single-header-svg" onClick={deleteHandler} />{" "}
               </li>
               <li className="nav-item single-header-li">
-                <Pencil  className = "single-header-svg" onClick={editHandler}  />{" "}
+                <Pencil className="single-header-svg" onClick={editHandler} />{" "}
               </li>
               <li className="nav-item">
-                <button 
+                <button
                   className="btn btn-success"
                   onClick={() => history.goBack()}
                 >

@@ -11,6 +11,7 @@ const DisplayLastImage = ({ match, history, sharedWithMe }) => {
   const [imageUrl, setImageUrl] = useState("");;
   const currentIndex = sharedWithMe == "SHARED" ? 2 : 1;
   const [activeIndex, setActiveIndex] = useState(currentIndex);
+  const [currentFolderName, setCurrentFolderName] = useState('');
   useEffect(() => {
     const requestFile = { ids: [match.params.id], imagetype: "original" };
     const IMAGE_ORIGINAL_URL =  (sharedWithMe =='HOME')?'getAnyCloudImages':'getAnySharedCloudImages';
@@ -19,6 +20,8 @@ const DisplayLastImage = ({ match, history, sharedWithMe }) => {
         alert(res.data.error);
         history.push("/logout");
       }
+      
+      setCurrentFolderName(res.data.imageInput[0].fileName);
       setImageUrl(res.data.imageInput[0].align_image_org);
     });
   }, []);
@@ -60,12 +63,18 @@ const DisplayLastImage = ({ match, history, sharedWithMe }) => {
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
+              
               <span className="navbar-toggler-icon"></span>
             </button>
             <div
               className="collapse navbar-collapse"
               id="navbarSupportedContent"
             >
+               <ul className="navbar-nav mr-auto text-white">
+              <li className="nav-item single-header-li">
+                <span className="badge badge-info p-2">{currentFolderName}</span>
+              </li>
+            </ul>
               <ul className="navbar-nav ml-auto text-white">
                 <li className="nav-item">
                   <Pencil
