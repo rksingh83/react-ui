@@ -49,7 +49,7 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
           ? "getAnyCloudImages"
           : "getAnySharedCloudImages";
 
-      Post(`/${IMAGE_SMALL_URL}`, { ids: allCloud, imagetype: "small" }).then(
+      Post(`/${IMAGE_SMALL_URL}`, { ids: allCloud, imagetype: "_align_small.jpg" }).then(
         (res) => {
           if (res.data.code == 201) {
             alert(res.data.error);
