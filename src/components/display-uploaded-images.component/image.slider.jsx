@@ -7,6 +7,8 @@ import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import { Post } from "../../service/service.setup";
 import OpenPop from "../modal/open.model.component";
 import { connect } from "react-redux";
+
+import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import { Link } from "react-router-dom";
 const ImageSlider = ({
   sharedWithMe,
@@ -14,10 +16,11 @@ const ImageSlider = ({
   current,
   history,
   setImageId,
+  setFolderFlag
 }) => {
-  const totalEle = ["Home", "My Files", "Share With Me"];
+  const totalEle = [ "My Files", "Share With Me"];
   const [LiElement, setLiEl] = useState(totalEle);
-  const currentIndex = sharedWithMe == "SHARED" ? 2 : 1;
+  const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [isShowPop, setIsShowPop] = useState(false);
   const [pageNo, setPageNo] = useState(null);
@@ -28,6 +31,12 @@ const ImageSlider = ({
 
   const handleActive = (e) => {
     setActiveIndex(LiElement.indexOf(e));
+    if (LiElement.indexOf(e) == 0) {
+      setFolderFlag("HOME");
+    } else {
+      setFolderFlag("SHARED");
+    }
+    // setSharedWithMe(!sharedWithMe);
     setLiEl(totalEle);
   };
   const openPop = (pageNo, des, dt, id) => {
@@ -174,9 +183,11 @@ const ImageSlider = ({
     </>
   );
 };
-
+const mapDispatchToProps = (dispatch) => ({
+  setFolderFlag: (flag) => dispatch(setFolderFlag(flag)),
+});
 //export default ImageSlider;
 const mapStateToPros = ({ sharedWithMe: { sharedWithMe } }) => ({
   sharedWithMe,
 });
-export default connect(mapStateToPros)(ImageSlider);
+export default connect(mapStateToPros ,mapDispatchToProps)(ImageSlider);

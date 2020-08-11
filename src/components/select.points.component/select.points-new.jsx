@@ -8,16 +8,19 @@ import { ReactComponent as Cross } from "../../assets/edit.svg";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import $ from "jquery";
-
-const SelectPoints = ({ match, history, sharedWithMe }) => {
+import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
+import LeftSideBar from "../sidebar/left.sidebar.compoent";
+const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
   var Markers = new Array();
   const [points, setPoints] = useState(0);
   const [reset, setReset] = useState([]);
   const [src, setSrc] = useState("");
   const [data, setData] = useState({});
+  const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
+  const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [isEdit, setIsEdit] = useState(false);
   const [imagePoints, setImagePoints] = useState({});
-  const totalEle = ["Home"];
+  const totalEle = ["My Files", "Share With Me"];
   const [LiElement, setLiEl] = useState(totalEle);
   const [oneStyle, setOneStyle] = useState({});
   const [twoStyle, setTwoStyle] = useState({});
@@ -26,6 +29,16 @@ const SelectPoints = ({ match, history, sharedWithMe }) => {
   const [currentFolder, setCurrentFolderName] = useState("");
   var active = false;
   //const oneStyle = {}
+  const handleActive = (e) => {
+    setActiveIndex(LiElement.indexOf(e));
+    if (LiElement.indexOf(e) == 0) {
+      setFolderFlag("HOME");
+    } else {
+      setFolderFlag("SHARED");
+    }
+    // setSharedWithMe(!sharedWithMe);
+    setLiEl(totalEle);
+  };
   useEffect(() => {
     var mapSprite = new Image();
     const IMAGE_ORIGINAL_URL =
@@ -123,7 +136,6 @@ const SelectPoints = ({ match, history, sharedWithMe }) => {
       // console.log(xPos , yPos)
       el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
     }
-   
   }, []);
   $("#outerContainer").click(function (e) {
     var offset = $(this).offset();
@@ -134,7 +146,7 @@ const SelectPoints = ({ match, history, sharedWithMe }) => {
     // } else {
     //
     // }
-   
+
     let temp = {};
 
     //alert("X: " + relativeX + "  Y: " + relativeY);
@@ -320,7 +332,14 @@ const SelectPoints = ({ match, history, sharedWithMe }) => {
         <div className=" custom-pad-li d-none d-sm-block col-md-2 p-0">
           <Link className="logo-container" to="/">
             <ul className=" ul-pad list-group left-side-bar">
-              <li className="custom-pad-li list-group-item active">Home</li>
+              {totalEle.map((item, index) => (
+                <LeftSideBar
+                  item={item}
+                  key={index}
+                  isActive={activeIndex == index ? true : false}
+                  changeActive={handleActive}
+                />
+              ))}
             </ul>
           </Link>
         </div>
@@ -377,9 +396,12 @@ const SelectPoints = ({ match, history, sharedWithMe }) => {
     </>
   );
 };
-
+const mapDispatchToProps = (dispatch) => ({
+  setFolderFlag: (flag) => dispatch(setFolderFlag(flag)),
+});
 const mapStateToPros = ({ sharedWithMe: { sharedWithMe } }) => ({
   sharedWithMe,
 });
-export default connect(mapStateToPros)(SelectPoints);
+
+export default connect(mapStateToPros ,mapDispatchToProps)(SelectPoints);
 //export default SelectPoints;

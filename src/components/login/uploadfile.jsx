@@ -8,8 +8,9 @@ import DisplayImages from "../display-uploaded-images.component/display-uploded-
 import DisplayImageDescription from "../display-discription/display-discription";
 import TopHeaderWithBack from "../top-header/simple-top.back";
 import SharedHeader from "../top-header/shared-header";
+import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import { Link } from "react-router-dom";
-const UploadFile = ({ match, history, sharedWithMe }) => {
+const UploadFile = ({ match, history, sharedWithMe ,setFolderFlag }) => {
   const [file, setFile] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState([]);
@@ -18,7 +19,7 @@ const UploadFile = ({ match, history, sharedWithMe }) => {
   const [pageNumber, setPageNumber] = useState("");
   const [date, setDate] = useState("");
   const [iSDisplayDiv, setIsDisplayDiv] = useState(false);
-  const currentIndex = sharedWithMe == "SHARED" ? 2 : 1;
+  const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [folderId, setFolderId] = useState(match.params.id);
   const [imagesUpdate, setImagesUpdate] = useState([]);
@@ -28,10 +29,16 @@ const UploadFile = ({ match, history, sharedWithMe }) => {
     height: "90vh",
   };
 
-  const totalEle = ["Home" ,"My Files", "Share With Me"];
+  const totalEle = ["My Files", "Share With Me"];
   const [LiElement, setLiEl] = useState(totalEle);
   const handleActive = (e) => {
     setActiveIndex(LiElement.indexOf(e));
+    if (LiElement.indexOf(e) == 0) {
+      setFolderFlag("HOME");
+    } else {
+      setFolderFlag("SHARED");
+    }
+    // setSharedWithMe(!sharedWithMe);
     setLiEl(totalEle);
   };
   const otpHandler = () => {};
@@ -144,5 +151,9 @@ const UploadFile = ({ match, history, sharedWithMe }) => {
 const mapStateToPros = ({ sharedWithMe: { sharedWithMe } }) => ({
   sharedWithMe,
 });
-export default connect(mapStateToPros)(UploadFile);
+const mapDispatchToProps = (dispatch) => ({
+  setFolderFlag: (flag) => dispatch(setFolderFlag(flag)),
+});
+
+export default connect(mapStateToPros ,mapDispatchToProps)(UploadFile);
 //export default UploadFile;

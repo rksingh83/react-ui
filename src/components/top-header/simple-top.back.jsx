@@ -125,8 +125,8 @@ const TopHeaderWithBack = ({
           justifyContent: "space-between",
         }}
       >
-         <span>
-          <span className="badge badge-info p-2">{currentFolder}</span>
+        <span className="badge badge-info p-2">
+          My Files > <span>{currentFolder}</span>
         </span>
         <form
           className="mr-4"
@@ -156,7 +156,6 @@ const TopHeaderWithBack = ({
           Open WebCam
         </button>
         <WebCamModel id={id} hide={setShowModel} show={showModel} />
-       
       </div>
 
       <div className="col-md-2 sec-header-item">

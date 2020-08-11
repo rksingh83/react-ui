@@ -69,7 +69,6 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   };
   const handleActive = (e) => {
     setActiveIndex(LiElement.indexOf(e));
-    console.log(e);
     if (LiElement.indexOf(e) == 0) {
       setFolderFlag("HOME");
     } else {
