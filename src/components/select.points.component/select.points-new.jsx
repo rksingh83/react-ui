@@ -45,18 +45,18 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
       sharedWithMe == "HOME" ? "getAnyCloudImages" : "getAnySharedCloudImages";
     Post(`/${IMAGE_ORIGINAL_URL}`, {
       ids: [match.params.url],
-      imagetype: "raw_small",
+      imagetype: "_raw_small.jpg",
     }).then((res) => {
       if (res.data.code == 201) {
         alert(res.data.error);
         history.push("/logout");
       }
       setCurrentFolderName(res.data.imageInput[0].fileName);
-      mapSprite.src = res.data.imageInput[0].raw_image_small;
-      setSrc(res.data.imageInput[0].raw_image_smal);
+      mapSprite.src = res.data.imageInput[0].raw_image_org;
+      setSrc(res.data.imageInput[0].raw_image_org);
       var img = new Image();
       img.src = mapSprite.src;
-      setSrc(res.data.imageInput[0].raw_image_small);
+      setSrc(res.data.imageInput[0].raw_image_org);
       setImagePoints(res.data.imageInput[0]);
       // displayPoint();
 

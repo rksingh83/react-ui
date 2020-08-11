@@ -18,7 +18,7 @@ const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const totalEle = ["My Files", "Share With Me"];
   const [LiElement, setLiEl] = useState(totalEle);
   useEffect(() => {
-    const requestFile = { ids: [match.params.id], imagetype: "original" };
+    const requestFile = { ids: [match.params.id], imagetype: "_align.jpg" };
     const IMAGE_ORIGINAL_URL =
       sharedWithMe == "HOME" ? "getAnyCloudImages" : "getAnySharedCloudImages";
     Post(`/${IMAGE_ORIGINAL_URL}`, requestFile).then((res) => {
@@ -28,7 +28,7 @@ const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag }) => {
       }
 
       setCurrentFolderName(res.data.imageInput[0].fileName);
-      setImageUrl(res.data.imageInput[0].align_image_org);
+      setImageUrl(res.data.imageInput[0].raw_image_org);
     });
   }, []);
   const handleActive = (e) => {
@@ -145,5 +145,5 @@ const mapStateToPros = ({ sharedWithMe: { sharedWithMe } }) => ({
 const mapDispatchToProps = (dispatch) => ({
   setFolderFlag: (flag) => dispatch(setFolderFlag(flag)),
 });
-export default connect(mapStateToPros ,mapDispatchToProps)(DisplayLastImage);
+export default connect(mapStateToPros, mapDispatchToProps)(DisplayLastImage);
 //export default DisplayLastImage;
