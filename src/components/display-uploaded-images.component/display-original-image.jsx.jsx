@@ -19,7 +19,7 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
   useEffect(() => {
     const IMAGE_ORIGINAL_URL =
       sharedWithMe == "HOME" ? "getAnyCloudImages" : "getAnySharedCloudImages";
-    const requestFile = { ids: [match.params.id], imagetype: "original" };
+    const requestFile = { ids: [match.params.id], imagetype: "_align.jpg" };
 
     Post(`/${IMAGE_ORIGINAL_URL}`, requestFile).then((res) => {
       if (res.data.code == 201) {
@@ -27,7 +27,7 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
         history.push("/logout");
       }
       //  console.log((res.data.imageInput[0].align_image_org))
-      setImageUrl(res.data.imageInput[0].align_image_org);
+      setImageUrl(res.data.imageInput[0].raw_image_org);
     });
     const requestImages = { id: match.params.folderId };
     const sharedRequest = { fileId: match.params.folderId, allPageAcess: true };
