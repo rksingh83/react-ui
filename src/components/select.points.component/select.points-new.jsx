@@ -45,6 +45,7 @@ const SelectPoints = ({ match, history, sharedWithMe }) => {
       img.src = mapSprite.src;
       setSrc(res.data.imageInput[0].raw_image_small);
       setImagePoints(res.data.imageInput[0]);
+      // displayPoint();
 
       console.log(mapSprite.height, mapSprite);
     });
@@ -122,35 +123,35 @@ const SelectPoints = ({ match, history, sharedWithMe }) => {
       // console.log(xPos , yPos)
       el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
     }
-    $("#outerContainer").click(function (e) {
-      var offset = $(this).offset();
-      var relativeX = e.pageX - offset.left;
-      var relativeY = 2.2 + e.pageY - offset.top;
-      // if (e.target.id == "one" || e.target.id == "two") {
-      //   var relativeY = e.pageY + offset.top+12;
-      // } else {
-      //
-      // }
-      console.log(e);
-      console.log(offset);
-      console.log(data);
-
-      //alert("X: " + relativeX + "  Y: " + relativeY);
-      data[e.target.id] = { X: relativeX, Y: relativeY };
-      setData(data);
-    });
+   
   }, []);
+  $("#outerContainer").click(function (e) {
+    var offset = $(this).offset();
+    var relativeX = e.pageX - offset.left;
+    var relativeY = 2.2 + e.pageY - offset.top;
+    // if (e.target.id == "one" || e.target.id == "two") {
+    //   var relativeY = e.pageY + offset.top+12;
+    // } else {
+    //
+    // }
+   
+    let temp = {};
+
+    //alert("X: " + relativeX + "  Y: " + relativeY);
+    data[e.target.id] = { X: relativeX, Y: relativeY };
+    setData({ ...data });
+  });
   const displayPoint = () => {
     const IMG = document.getElementById("img");
     const width = IMG.width / 700;
     const height = IMG.height / 400;
-
-    console.log(imagePoints);
+    let tempData = {};
     const bottomleftx =
       (imagePoints["bottomleftx"] * IMG.width) / (width * 100) - 20;
     const bottomlefty =
       (imagePoints["bottomlefty"] * IMG.height) / (height * 100) - 20;
     setOneStyle({ top: bottomlefty, left: bottomleftx });
+    tempData = { one: { X: bottomleftx + 20, Y: bottomlefty + 20 } };
 
     const bottomrightx =
       (imagePoints["bottomrightx"] * IMG.width) / (width * 100) - 20;
@@ -158,20 +159,26 @@ const SelectPoints = ({ match, history, sharedWithMe }) => {
       (imagePoints["bottomrighty"] * IMG.height) / (height * 100) - 20;
 
     setTwoStyle({ top: bottomrighty, left: bottomrightx });
+    tempData = {
+      ...tempData,
+      two: { X: bottomrightx + 20, Y: bottomrighty + 20 },
+    };
     //TR
     const toprightx =
       (imagePoints["toprightx"] * IMG.width) / (width * 100) - 20;
     const toprighty =
       (imagePoints["toprighty"] * IMG.height) / (height * 100) - 20;
-    console.log(toprightx);
-    console.log(toprighty);
+
     setFourStyle({ top: toprighty, left: toprightx });
+    tempData = { ...tempData, four: { X: toprightx + 20, Y: toprighty + 20 } };
     //TL
     const topleftx = (imagePoints["topleftx"] * IMG.width) / (width * 100) - 20;
     const toplefty =
       (imagePoints["toplefty"] * IMG.height) / (height * 100) - 20;
     setThreeStyle({ top: toplefty, left: topleftx });
+    tempData = { ...tempData, three: { X: topleftx + 20, Y: toplefty + 20 } };
     setIsEdit(true);
+    setData(tempData);
   };
   const updatePoints = async () => {
     // console.log(reset[0]);
@@ -223,6 +230,7 @@ const SelectPoints = ({ match, history, sharedWithMe }) => {
 
     const requestPayLoad = {};
     console.log(data);
+
     requestPayLoad["id"] = match.params.url;
     requestPayLoad["bottomleftx"] = ((data.one.X * width) / IMG.width) * 100;
     requestPayLoad["bottomlefty"] = ((data.one.Y * height) / IMG.height) * 100;
@@ -278,9 +286,7 @@ const SelectPoints = ({ match, history, sharedWithMe }) => {
             >
               <ul className="navbar-nav mr-auto text-white">
                 <li className="nav-item single-header-li">
-                  <span className="badge badge-info p-2">
-                    {currentFolder}
-                  </span>
+                  <span className="badge badge-info p-2">{currentFolder}</span>
                 </li>
               </ul>
               <ul className="navbar-nav ml-auto text-white">
