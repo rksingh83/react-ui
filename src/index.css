@@ -96,3 +96,8 @@ a {
   content: ":"; 
   color: green;
 }
+#pending{
+  background-Image: url("./assets/background.png");
+  background-size: 'cover';
+  background-position: 'center';
+}

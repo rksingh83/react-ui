@@ -6,10 +6,11 @@ import FolderDisplay from "../create-folder/folder-dispaly";
 import TopHeader from "../top-header/top.header.component";
 import DisplayImageDescription from "../display-discription/display-discription";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
+import PendingPageData from "../pending-data/pending-list";
 import { connect } from "react-redux";
 import SharedHeader from "../top-header/shared-header";
 const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
-  const totalEle = ["My Files", "Share With Me"];
+  const totalEle = ["My Files", "Share With Me", "Pending"];
   const [totalFolder, setTotalFolder] = useState([]);
   const [selectedFolder, setSelectedFolder] = useState({});
   const [finalCount, setFinalCount] = useState({});
@@ -71,8 +72,12 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     setActiveIndex(LiElement.indexOf(e));
     if (LiElement.indexOf(e) == 0) {
       setFolderFlag("HOME");
-    } else {
+    }
+    if (LiElement.indexOf(e) == 1) {
       setFolderFlag("SHARED");
+    }
+    if (LiElement.indexOf(e) == 2) {
+      setFolderFlag("PENDING");
     }
     // setSharedWithMe(!sharedWithMe);
     setLiEl(totalEle);
@@ -213,6 +218,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
                 filteredFolder={sharedFilteredFolder}
               />
             )}
+            {sharedWithMe == "PENDING" && <PendingPageData></PendingPageData>}
           </div>
         </div>
       </div>
