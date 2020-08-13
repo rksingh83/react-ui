@@ -15,7 +15,7 @@ import Input from "../boostrapinput/input.component";
 import { get } from "js-cookie";
 
 const PendingPageData = () => {
-  const [allPendingLIst, setPendingLis] = useState([]);
+  const [allPendingLIst, setPendingList] = useState([]);
   const [currentImage, setCurrentImage] = useState("");
   const [currentLookup, setCurrentLookup] = useState(false);
   useEffect(() => {
@@ -29,15 +29,38 @@ const PendingPageData = () => {
     let imageIds = [];
     response.data.imageInput.forEach((item) => imageIds.push(item.id));
     console.log(imageIds);
+    setPendingList(imageIds);
     setCurrentImage(imageIds[0]);
   };
   const getCurrentPage = async () => {
     const response = await getPendingPageById(currentImage);
     setCurrentLookup(response.data && response.data);
   };
+  const nextHandler = () => {
+    let index = allPendingLIst.indexOf(currentImage);
+    if (index == allPendingLIst.length - 1) {
+      alert("This is Last File");
+      return;
+    }
+    setCurrentImage(allPendingLIst[index + 1]);
+  };
+  const prevHandler = () => {
+    let index = allPendingLIst.indexOf(currentImage);
+    if (index == 0) {
+      alert("This is Last File");
+      return;
+    }
+    setCurrentImage(allPendingLIst[index - 1]);
+  };
   return (
     <React.Fragment>
-      {currentLookup && <LoadLookup   data = {currentLookup}></LoadLookup>}
+      {currentLookup && (
+        <LoadLookup
+          next={nextHandler}
+          prev={prevHandler}
+          data={currentLookup}
+        ></LoadLookup>
+      )}
     </React.Fragment>
   );
 };

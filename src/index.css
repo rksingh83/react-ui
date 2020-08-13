@@ -100,4 +100,5 @@ a {
   background-Image: url("./assets/background.png");
   background-size: 'cover';
   background-position: 'center';
+  background-size: 100% !important;
 }
