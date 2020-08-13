@@ -59,7 +59,7 @@ const PendingPageData = ({ data, prev, next }) => {
             <div className="col-md-4">
               <img style={imageStyle} src={data.pageLookup.cloudImagePath} />
             </div>
-            <div className="col-md-6">Data</div>
+            <div className="col-md-6">{data.pageLookup.title}</div>
           </div>
           <div className="row">
             <div className="col-md-1 page-lookup-heading">Share</div>
