@@ -6,7 +6,9 @@ import {
 
 const getAllPendingPageList = async () => {
   try {
-    return await Get("getAllPendingPageList");
+     const response =  await Get("getAllPendingPageList");
+
+     return response ;
 
   } catch (e) {
     alert("Something went wrong try latter")
@@ -24,6 +26,7 @@ const getPendingPageById = async (id) => {
     alert("Something went wrong try latter")
   }
 }
+
 
 
 export {

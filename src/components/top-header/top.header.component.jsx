@@ -93,7 +93,7 @@ const TopHeader = ({
     setId(deletedArr[0].id);
     addDisc(deletedArr[0].fileDescription);
     addName(deletedArr[0].fileName);
-    addFileTag(deletedArr[0].fileTag);
+    addFileTag(deletedArr[0].file_tag);
     if (!isDelete) setShow(true);
     const requestFile = {
       filefolderRequest: deletedArr,

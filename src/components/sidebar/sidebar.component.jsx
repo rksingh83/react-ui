@@ -56,10 +56,10 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     const dateCreated = "123";
     const requestFile = {
       filefolderRequest: [
-        { fileName, file_tag:fileTag, fileDescription, dateCreated, id },
+        { file_tag:fileTag, fileName,  fileDescription, dateCreated, id },
       ],
     };
-
+console.log(requestFile)
     if (id) {
       Post("/updateFileFolder", requestFile).then((res) =>
         updateName(res.data.filefolderRequest[0])

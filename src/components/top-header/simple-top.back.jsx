@@ -19,7 +19,7 @@ const TopHeaderWithBack = ({
   updateImages,
   ...props
 }) => {
-  console.log(currentFolder);
+  
   const [file, setFile] = useState("");
   const [showModel, setShowModel] = useState(false);
   const [isShow, setIsShow] = useState(false);

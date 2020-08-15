@@ -14,23 +14,30 @@ import { Link } from "react-router-dom";
 import Input from "../boostrapinput/input.component";
 import { get } from "js-cookie";
 
-const PendingPageData = ({history}) => {
+const PendingPageData = ({ history }) => {
   const [allPendingLIst, setPendingList] = useState([]);
   const [currentImage, setCurrentImage] = useState("");
   const [currentLookup, setCurrentLookup] = useState(false);
+  const [pendingFolderId, setPendingFolderId] = useState('');
   useEffect(() => {
-    console.log(getCurrentPage());
+    getCurrentPage();
   }, [currentImage]);
   useEffect(() => {
-    console.log(getAllPageList());
+    getAllPageList();
   }, []);
   const getAllPageList = async () => {
-    const response = await getAllPendingPageList();
-    let imageIds = [];
-    response.data.imageInput.forEach((item) => imageIds.push(item.id));
-    console.log(imageIds);
-    setPendingList(imageIds);
-    setCurrentImage(imageIds[0]);
+    try {
+      const response = await getAllPendingPageList();
+      let imageIds = [];
+      response.data.imageInput.forEach((item) => imageIds.push(item.id));
+      console.log("ALL IMAGES", imageIds);
+      setPendingFolderId(response.data.pendingFolderId)
+
+      setPendingList(imageIds);
+      setCurrentImage(imageIds[0]);
+    } catch (e) {
+      console.log(e.message);
+    }
   };
   const getCurrentPage = async () => {
     const response = await getPendingPageById(currentImage);
@@ -52,6 +59,7 @@ const PendingPageData = ({history}) => {
     }
     setCurrentImage(allPendingLIst[index - 1]);
   };
+ 
   return (
     <React.Fragment>
       {currentLookup && (
@@ -59,8 +67,9 @@ const PendingPageData = ({history}) => {
           next={nextHandler}
           prev={prevHandler}
           data={currentLookup}
-          currentImageId = {currentImage}
-          history ={history}
+          currentImageId={currentImage}
+          history={history}
+          pendingFolderId = {pendingFolderId}
         ></LoadLookup>
       )}
     </React.Fragment>
