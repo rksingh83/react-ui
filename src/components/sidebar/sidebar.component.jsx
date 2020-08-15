@@ -56,7 +56,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     const dateCreated = "123";
     const requestFile = {
       filefolderRequest: [
-        { fileName, fileTag, fileDescription, dateCreated, id },
+        { fileName, file_tag:fileTag, fileDescription, dateCreated, id },
       ],
     };
 
