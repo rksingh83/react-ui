@@ -24,6 +24,7 @@ const TopHeader = ({
 }) => {
   const [show, setShow] = useState(false);
   const [fileName, addName] = useState("");
+  const [fileTag, addFileTag] = useState("");
   const [fileDescription, addDisc] = useState("");
   const [id, setId] = useState("");
   const [folderId, setFolderId] = useState("");
@@ -57,7 +58,11 @@ const TopHeader = ({
     getFolders(fileId);
   };
   const saveHandler = () => {
-    saveFolder(fileName, fileDescription, id);
+    if(!fileTag||!fileName){
+      alert('Please Enter Required Field') ;
+      return false ;
+    }
+    saveFolder(fileName, fileTag, fileDescription, id);
     addName("");
     addDisc("");
     setId("");
@@ -88,6 +93,7 @@ const TopHeader = ({
     setId(deletedArr[0].id);
     addDisc(deletedArr[0].fileDescription);
     addName(deletedArr[0].fileName);
+    addFileTag(deletedArr[0].fileTag);
     if (!isDelete) setShow(true);
     const requestFile = {
       filefolderRequest: deletedArr,
@@ -200,6 +206,14 @@ const TopHeader = ({
             label="Folder"
             value={fileName}
             handleChange={(e) => addName(e.target.value)}
+            name="folder"
+            type="input"
+          ></Input>
+            <Input
+            placeholder="Enter your File Tag"
+            label="Tag"
+            value={fileTag}
+            handleChange={(e) => addFileTag(e.target.value)}
             name="folder"
             type="input"
           ></Input>

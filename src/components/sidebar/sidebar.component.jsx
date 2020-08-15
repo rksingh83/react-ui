@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ModalPop from "../modal/modal.component";
 import { Post, Get } from "../../service/service.setup";
 import LeftSideBar from "./left.sidebar.compoent";
 import FolderDisplay from "../create-folder/folder-dispaly";
@@ -11,12 +10,13 @@ import { connect } from "react-redux";
 import SharedHeader from "../top-header/shared-header";
 const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   const totalEle = ["My Files", "Share With Me", "Pending"];
+  const TextMAp = {HOME:0,SHARED:1,PENDING:2};
   const [totalFolder, setTotalFolder] = useState([]);
   const [selectedFolder, setSelectedFolder] = useState({});
   const [finalCount, setFinalCount] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [LiElement, setLiEl] = useState(totalEle);
-  const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
+  const currentIndex = TextMAp[sharedWithMe];
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [selectedItemsCount, setSelectedItemsCount] = useState(null);
   const [searchItem, setSearchHandler] = useState("");
@@ -51,11 +51,13 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     );
   };
 
-  const saveFolder = (fileName, fileDescription, id) => {
+  const saveFolder = (fileName, fileTag, fileDescription, id) => {
     setIsLoading(true);
     const dateCreated = "123";
     const requestFile = {
-      filefolderRequest: [{ fileName, fileDescription, dateCreated, id }],
+      filefolderRequest: [
+        { fileName, fileTag, fileDescription, dateCreated, id },
+      ],
     };
 
     if (id) {
@@ -218,7 +220,9 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
                 filteredFolder={sharedFilteredFolder}
               />
             )}
-            {sharedWithMe == "PENDING" && <PendingPageData></PendingPageData>}
+            {sharedWithMe == "PENDING" && (
+              <PendingPageData history={history}></PendingPageData>
+            )}
           </div>
         </div>
       </div>

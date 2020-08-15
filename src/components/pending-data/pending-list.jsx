@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import Input from "../boostrapinput/input.component";
 import { get } from "js-cookie";
 
-const PendingPageData = () => {
+const PendingPageData = ({history}) => {
   const [allPendingLIst, setPendingList] = useState([]);
   const [currentImage, setCurrentImage] = useState("");
   const [currentLookup, setCurrentLookup] = useState(false);
@@ -59,6 +59,8 @@ const PendingPageData = () => {
           next={nextHandler}
           prev={prevHandler}
           data={currentLookup}
+          currentImageId = {currentImage}
+          history ={history}
         ></LoadLookup>
       )}
     </React.Fragment>

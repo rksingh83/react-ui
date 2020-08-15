@@ -4,7 +4,7 @@ import {
   FileSelect,
 } from "../boostrapinput/pending-select.component";
 import Input from "../boostrapinput/input.component";
-const PendingPageData = ({ data, prev, next }) => {
+const PendingPageData = ({ data, prev, next, currentImageId, history }) => {
   const [fileTag, setFileTag] = useState("");
   const imageStyle = {
     width: "100%",
@@ -57,7 +57,12 @@ const PendingPageData = ({ data, prev, next }) => {
           </div>
           <div className="row">
             <div className="col-md-4">
-              <img style={imageStyle} src={data.pageLookup.cloudImagePath} />
+              <img
+                onClick={() => history.push(`/edit/${currentImageId}`)}
+                style={imageStyle}
+                src={data.pageLookup.cloudImagePath}
+                className ='hover'
+              />
             </div>
             <div className="col-md-6">{data.pageLookup.title}</div>
           </div>
@@ -88,7 +93,7 @@ const PendingPageData = ({ data, prev, next }) => {
               />
             </div>
             <div className="col-md-4">
-              <Input type="text" />
+              <Input type="text" value = {data.pageLookup.pageNumber} />
             </div>
           </div>
           <div className="row">

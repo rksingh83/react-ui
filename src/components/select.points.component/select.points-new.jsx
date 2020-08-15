@@ -16,11 +16,12 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const [reset, setReset] = useState([]);
   const [src, setSrc] = useState("");
   const [data, setData] = useState({});
-  const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
+  const TextMAp = {HOME:0,SHARED:1,PENDING:2};
+  const currentIndex = TextMAp[sharedWithMe]
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [isEdit, setIsEdit] = useState(false);
   const [imagePoints, setImagePoints] = useState({});
-  const totalEle = ["My Files", "Share With Me"];
+  const totalEle = ["My Files", "Share With Me" ,"Pending"];
   const [LiElement, setLiEl] = useState(totalEle);
   const [oneStyle, setOneStyle] = useState({});
   const [twoStyle, setTwoStyle] = useState({});
