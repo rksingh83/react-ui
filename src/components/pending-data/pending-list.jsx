@@ -6,10 +6,8 @@ import {
 } from "../../service/pendingData";
 
 import "./add-friend.style.scss";
-import { ReactComponent as Cross } from "../../assets/cross.svg";
-import { ReactComponent as Pencil } from "../../assets/edit.svg";
-import { ReactComponent as Yes } from "../../assets/yes.svg";
-import { ReactComponent as Close } from "../../assets/close.svg";
+
+
 import { Link } from "react-router-dom";
 import Input from "../boostrapinput/input.component";
 import { get } from "js-cookie";
@@ -18,10 +16,14 @@ const PendingPageData = ({ history }) => {
   const [allPendingLIst, setPendingList] = useState([]);
   const [currentImage, setCurrentImage] = useState("");
   const [currentLookup, setCurrentLookup] = useState(false);
-  const [pendingFolderId, setPendingFolderId] = useState('');
+  const [pendingFolderId, setPendingFolderId] = useState("");
   useEffect(() => {
     getCurrentPage();
   }, [currentImage]);
+  useEffect(() => {
+    console.log("in use efftect" ,allPendingLIst)
+    setCurrentImage(allPendingLIst[0]);
+  }, [allPendingLIst]);
   useEffect(() => {
     getAllPageList();
   }, []);
@@ -31,10 +33,8 @@ const PendingPageData = ({ history }) => {
       let imageIds = [];
       response.data.imageInput.forEach((item) => imageIds.push(item.id));
       console.log("ALL IMAGES", imageIds);
-      setPendingFolderId(response.data.pendingFolderId)
-
+      setPendingFolderId(response.data.pendingFolderId);
       setPendingList(imageIds);
-      setCurrentImage(imageIds[0]);
     } catch (e) {
       console.log(e.message);
     }
@@ -59,7 +59,16 @@ const PendingPageData = ({ history }) => {
     }
     setCurrentImage(allPendingLIst[index - 1]);
   };
- 
+  const removeSavedImageId = () => {
+    let allList = allPendingLIst;
+    console.log("ALL IDS" ,allList,currentImage)
+    let index = allPendingLIst.indexOf(currentImage) ;
+    if(index>-1){
+      allList.splice(index,1)
+    }
+    console.log(allList);
+    setPendingList([...allList]);
+  };
   return (
     <React.Fragment>
       {currentLookup && (
@@ -69,7 +78,8 @@ const PendingPageData = ({ history }) => {
           data={currentLookup}
           currentImageId={currentImage}
           history={history}
-          pendingFolderId = {pendingFolderId}
+          pendingFolderId={pendingFolderId}
+          removeImageId={removeSavedImageId}
         ></LoadLookup>
       )}
     </React.Fragment>
