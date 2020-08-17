@@ -8,9 +8,17 @@ import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import PendingPageData from "../pending-data/pending-list";
 import { connect } from "react-redux";
 import SharedHeader from "../top-header/shared-header";
+// PENDING IMPORT
+import PendingHeader from "../pending-data/header";
+import LoadLookup from "../pending-data/display-page-lookup";
+import {
+  getAllPendingPageList,
+  getPendingPageById,
+} from "../../service/pendingData";
+
 const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   const totalEle = ["My Files", "Share With Me", "Pending"];
-  const TextMAp = {HOME:0,SHARED:1,PENDING:2};
+  const TextMAp = { HOME: 0, SHARED: 1, PENDING: 2 };
   const [totalFolder, setTotalFolder] = useState([]);
   const [selectedFolder, setSelectedFolder] = useState({});
   const [finalCount, setFinalCount] = useState({});
@@ -28,6 +36,12 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   const [sharedWithMeFolder, setSharedWithMeFolder] = useState([]);
   const [sharedSearchItem, setSharedSearchHandler] = useState("");
   const [sharedFilteredFolder, setSharedFilteredFolder] = useState("");
+  // PENDING COMPONENT
+  const [allPendingLIst, setPendingList] = useState([]);
+  const [currentImage, setCurrentImage] = useState("");
+  const [currentLookup, setCurrentLookup] = useState(false);
+  const [pendingFolderId, setPendingFolderId] = useState("");
+
   const sideBarStyle = {
     border: "1px solid rgba(0, 0, 0, 0.125)",
     height: "90vh",
@@ -56,10 +70,10 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     const dateCreated = "123";
     const requestFile = {
       filefolderRequest: [
-        { file_tag:fileTag, fileName,  fileDescription, dateCreated, id },
+        { file_tag: fileTag, fileName, fileDescription, dateCreated, id },
       ],
     };
-console.log(requestFile)
+    console.log(requestFile);
     if (id) {
       Post("/updateFileFolder", requestFile).then((res) =>
         updateName(res.data.filefolderRequest[0])
@@ -150,6 +164,59 @@ console.log(requestFile)
       setSharedWithMeFolder(folders.data.filefolderRequest);
     } catch (error) {}
   }
+  // pending
+  useEffect(() => {
+    getCurrentPage();
+  }, [currentImage]);
+  useEffect(() => {
+    console.log("in use efftect", allPendingLIst);
+    setCurrentImage(allPendingLIst[0]);
+  }, [allPendingLIst]);
+  useEffect(() => {
+    getAllPageList();
+  }, []);
+  const getAllPageList = async () => {
+    try {
+      const response = await getAllPendingPageList();
+      let imageIds = [];
+      response.data.imageInput.forEach((item) => imageIds.push(item.id));
+      console.log("ALL IMAGES", imageIds);
+      setPendingFolderId(response.data.pendingFolderId);
+      setPendingList(imageIds);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+  const getCurrentPage = async () => {
+    const response = await getPendingPageById(currentImage);
+    setCurrentLookup(response.data && response.data);
+  };
+  const nextHandler = () => {
+    let index = allPendingLIst.indexOf(currentImage);
+    if (index == allPendingLIst.length - 1) {
+      alert("This is Last File");
+      return;
+    }
+    setCurrentImage(allPendingLIst[index + 1]);
+  };
+  const prevHandler = () => {
+    let index = allPendingLIst.indexOf(currentImage);
+    if (index == 0) {
+      alert("This is Last File");
+      return;
+    }
+    setCurrentImage(allPendingLIst[index - 1]);
+  };
+  const removeSavedImageId = () => {
+    let allList = allPendingLIst;
+    console.log("ALL IDS", allList, currentImage);
+    let index = allPendingLIst.indexOf(currentImage);
+    if (index > -1) {
+      allList.splice(index, 1);
+    }
+    console.log(allList);
+    setPendingList([...allList]);
+  };
   return (
     <React.Fragment>
       {sharedWithMe == "HOME" && (
@@ -171,6 +238,15 @@ console.log(requestFile)
           back={true}
         />
       )}
+      {sharedWithMe == "PENDING" && (
+        <PendingHeader
+          currentImageId={currentImage}
+          pendingFolderId={pendingFolderId}
+          next={nextHandler}
+          prev={prevHandler}
+        />
+      )}
+
       <div className="row">
         <div className="col-md-2 custom-pad-li d-none d-sm-block">
           <ul className="list-group ul-pad" style={sideBarStyle}>
@@ -220,8 +296,14 @@ console.log(requestFile)
                 filteredFolder={sharedFilteredFolder}
               />
             )}
-            {sharedWithMe == "PENDING" && (
-              <PendingPageData history={history}></PendingPageData>
+            {sharedWithMe == "PENDING" && currentLookup && (
+              <LoadLookup
+                data={currentLookup}
+                currentImageId={currentImage}
+                history={history}
+                pendingFolderId={pendingFolderId}
+                removeImageId={removeSavedImageId}
+              ></LoadLookup>
             )}
           </div>
         </div>

@@ -1,10 +1,22 @@
-.page-lookup-heading{
+.page-lookup-heading {
 
-font-size: 18px ;
-font-weight: bold;
-margin-top: 4px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 4px;
 
 }
-.hover::hover{
+
+.hover::hover {
     cursor: pointer;
+}
+
+.main {
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+    background: rgba(0, 0, 0, 0.125);
+}
+.header-svg{
+    width: 50px;
+    height: 46px;
 }
