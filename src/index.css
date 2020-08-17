@@ -65,39 +65,46 @@ a {
   display: flex;
   align-items: center !important;
 }
-.li-contact-list{
-   display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-}
-.item-center{
+
+.li-contact-list {
   display: flex !important;
-   justify-content: center !important;
-   align-items: center !important;
+  justify-content: space-between !important;
+  align-items: center !important;
 }
-.contact-cards-top{
+
+.item-center {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.contact-cards-top {
   display: flex !important;
   flex-wrap: wrap !important;
 }
-.contact-card-li{
+
+.contact-card-li {
   display: flex !important;
 
 }
-.contact-div{
+
+.contact-div {
   width: 48%;
 
 }
-.label-card{
+
+.label-card {
   font-weight: 600;
-    font-size: 17px;
+  font-size: 17px;
 }
 
 .label-card::after {
-  content: ":"; 
+  content: ":";
   color: green;
 }
-#pending{
-  background-Image: url("./assets/background.png");
+
+#pending {
+  background-Image: url("");
   background-size: 'cover';
   background-position: 'center';
   background-size: 100% !important;

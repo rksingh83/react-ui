@@ -5,6 +5,7 @@ import { ReactComponent as Back } from "../../assets/back-arr.svg";
 import {
   UserSelect,
   FileSelect,
+  FileTagSelect,
 } from "../boostrapinput/pending-select.component";
 import Input from "../boostrapinput/input.component";
 import UploadForm from "../upload-image/upload-images";
@@ -22,12 +23,14 @@ const PendingPageData = ({
   const [pageNo, setPageNo] = useState(data.pageLookup.pageNumber);
 
   const [title, setTitle] = useState(data.pageLookup.title);
+  const [ID, setID] = useState(data.pageLookup.id);
   const [description, setDescription] = useState(data.pageLookup.description);
 
   const imageStyle = {
     width: "100%",
+    border: "1px solid green",
   };
-  
+
   const fileTagHandler = (e) => {
     let folder = data.pageLookup.file.filter(
       (item) => item.id == e.target.value
@@ -93,31 +96,20 @@ const PendingPageData = ({
     } catch (e) {}
   };
   return (
-    <div className="container-sm mt-4" style={{ maxWidth: "600px" }}>
-      <div className=" row">
-        <div className="col-md-5 page-lookup-heading">File Name</div>
-        <div className="col-md-6">
-          <FileSelect
-            onChange={fileTagHandler}
-            list={data.pageLookup.file}
-            value={fileId}
-          />
+    <div className="container-sm mt-4" style={{ maxWidth: "" }}>
+      <div className="row">
+        <div className="col-md-12">
+          <button
+            onClick={saveUpdateData}
+            className="btn btn-primary mb-3 btn-sm"
+          >
+            Save
+          </button>
         </div>
       </div>
+
       <div className="row">
-        <div className="col-md-2 page-lookup-heading">File Tag</div>
-        <div className="col-md-3">
-          <img
-            style={{ width: "100%" }}
-            src={data.pageLookup.fileTagImagPath}
-          />
-        </div>
-        <div className="col-md-6">
-          <Input disabled={true} value={fileTag} />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-5">
+        <div className="col-md-4">
           <img
             onClick={() => history.push(`/edit/${currentImageId}`)}
             style={imageStyle}
@@ -125,83 +117,118 @@ const PendingPageData = ({
             className="hover"
           />
         </div>
-        <div className="col-md-6">
+        <div className="col-md-7">
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-3 page-lookup-heading">File Name</div>
+            <div className="col-md-3 page-lookup-heading"></div>
+            <div className="col-md-6">
+              <FileSelect
+                onChange={fileTagHandler}
+                list={data.pageLookup.file}
+                value={fileId}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-2 page-lookup-heading">File Tag</div>
+            <div className="col-md-4">
+              <img style={imageStyle} src={data.pageLookup.fileTagImagPath} />
+            </div>
+            <div className="col-md-6">
+              <FileTagSelect
+                onChange={fileTagHandler}
+                list={data.pageLookup.file}
+                value={fileId}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-2 page-lookup-heading">Title</div>
+
+            <div className="col-md-10">
               <Input
                 type="text"
                 onChange={(e) => setTitle(e.target.value)}
                 value={title}
+                placeholder="Title"
               />
             </div>
           </div>
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-2 page-lookup-heading">Description</div>
+            <div className="col-md-10">
               <Input
                 type="text"
                 onChange={(e) => setDescription(e.target.value)}
                 value={description}
+                placeholder="Description"
               />
             </div>
           </div>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-1 page-lookup-heading">Share</div>
-        <div className="col-md-4">
-          <img style={imageStyle} src={data.pageLookup.shareImagePath} />
-        </div>
-        <div className="col-md-6">
-          <UserSelect
-            value={shareId}
-            onChange={(e) => setShareId(e.target.value)}
-            list={data.data.profileList}
-          />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-1 page-lookup-heading">Date</div>
-        <div className="col-md-4">
-          <img style={imageStyle} src={data.pageLookup.dateImagePath} />
-        </div>
-        <div className="col-md-6">
-          <Input
-            value={date}
-            type="date"
-            onChange={(e) => setDate(e.target.value)}
-          />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-1 page-lookup-heading"> Page No.</div>
-        <div className="col-md-4">
-          <img style={imageStyle} src={data.pageLookup.pageNumberImagePath} />
-        </div>
-        <div className="col-md-6">
-          <Input
-            type="text"
-            onChange={(e) => setPageNo(e.target.value)}
-            value={pageNo}
-          />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-1 page-lookup-heading"> ID.</div>
-        <div className="col-md-4">
-          <img style={imageStyle} src={data.pageLookup.idImagePath} />
-        </div>
-        <div className="col-md-6">
-          <Input readOnly={true} value={data.pageLookup.id} type="text" />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-12">
-          <button
-            onClick={saveUpdateData}
-            className="btn btn-secondary mb-3 btn-block"
-          >
-            Save
-          </button>
+
+          <div className="row">
+            <div className="col-md-4 mb-2 page-lookup-heading">
+              File Segmentation
+            </div>
+            <div className="col-md-4">
+              <img
+                style={imageStyle}
+                src={data.pageLookup.segmentationImagePath}
+              />
+            </div>
+            <div className="col-md-6"></div>
+          </div>
+          <div className="row">
+            <div className="col-md-2 page-lookup-heading">Share</div>
+            <div className="col-md-4">
+              <img style={imageStyle} src={data.pageLookup.shareImagePath} />
+            </div>
+            <div className="col-md-6">
+              <UserSelect
+                value={shareId}
+                onChange={(e) => setShareId(e.target.value)}
+                list={data.data.profileList}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-2 page-lookup-heading">Date</div>
+            <div className="col-md-4">
+              <img style={imageStyle} src={data.pageLookup.dateImagePath} />
+            </div>
+            <div className="col-md-6">
+              <Input
+                value={date}
+                type="date"
+                onChange={(e) => setDate(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-2 page-lookup-heading"> Page No.</div>
+            <div className="col-md-4">
+              <img
+                style={imageStyle}
+                src={data.pageLookup.pageNumberImagePath}
+              />
+            </div>
+            <div className="col-md-6">
+              <Input
+                type="text"
+                onChange={(e) => setPageNo(e.target.value)}
+                value={pageNo}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-2 page-lookup-heading"> ID.</div>
+            <div className="col-md-4">
+              <img style={imageStyle} src={data.pageLookup.idImagePath} />
+            </div>
+            <div className="col-md-6">
+              <Input  onChange={(e) => setID(e.target.value)}   value = {ID} type="text" />
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -22,6 +22,26 @@ const FileSelect = ({ handleChange, list, label, ...restProps }) => {
   );
 };
 
+const FileTagSelect= ({ handleChange, list, label, ...restProps }) => {
+  console.log(restProps);
+
+  return (
+    <div className="form-group">
+      {label ? <label>{label}</label> : null}
+      <select className="form-control" onChange={handleChange} {...restProps}>
+        <option>Select</option>
+        {list.map((e, key) => {
+          return (
+            <option key={key} value={e.id}>
+              {e.fileTag}
+            </option>
+          );
+        })}
+      </select>
+    </div>
+  );
+};
+
 const UserSelect = ({ handleChange, list, label, ...restProps }) => {
   console.log(restProps);
 
@@ -42,4 +62,4 @@ const UserSelect = ({ handleChange, list, label, ...restProps }) => {
   );
 };
 
-export { FileSelect, UserSelect };
+export { FileSelect, UserSelect, FileTagSelect };
