@@ -16,12 +16,12 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const [reset, setReset] = useState([]);
   const [src, setSrc] = useState("");
   const [data, setData] = useState({});
-  const TextMAp = {HOME:0,SHARED:1,PENDING:2};
-  const currentIndex = TextMAp[sharedWithMe]
+  const TextMAp = { HOME: 0, SHARED: 1, PENDING: 2 };
+  const currentIndex = TextMAp[sharedWithMe];
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [isEdit, setIsEdit] = useState(false);
   const [imagePoints, setImagePoints] = useState({});
-  const totalEle = ["My Files", "Share With Me" ,"Pending"];
+  const totalEle = ["My Files", "Share With Me", "Pending"];
   const [LiElement, setLiEl] = useState(totalEle);
   const [oneStyle, setOneStyle] = useState({});
   const [twoStyle, setTwoStyle] = useState({});
@@ -157,7 +157,7 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const displayPoint = () => {
     const IMG = document.getElementById("img");
     const width = IMG.width / 700;
-    const height = IMG.height / 400;
+    const height = IMG.height / 700;
     let tempData = {};
     const bottomleftx =
       (imagePoints["bottomleftx"] * IMG.width) / (width * 100) - 20;
@@ -203,7 +203,7 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
     // });
     const IMG = document.getElementById("img");
     const width = IMG.width / 700;
-    const height = IMG.height / 400;
+    const height = IMG.height / 700;
     console.log("HEIGHT", IMG.height);
     console.log("HEIGHT", height);
     console.log("width", IMG.width);
@@ -404,5 +404,5 @@ const mapStateToPros = ({ sharedWithMe: { sharedWithMe } }) => ({
   sharedWithMe,
 });
 
-export default connect(mapStateToPros ,mapDispatchToProps)(SelectPoints);
+export default connect(mapStateToPros, mapDispatchToProps)(SelectPoints);
 //export default SelectPoints;
