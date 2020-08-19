@@ -12,11 +12,18 @@ import UserData from "../profile/display.user.data";
 import ContactList from "../contactlist/display.contactlist";
 import SearchedContactList from "../contactlist/display-searched-contact-list";
 import ContactsCard from "../contactlist/display-searched-contact-list-card";
+import CreateGroupModal from "./create-group-modal";
+import { GetAllGroups } from "../../service/group-service";
+import ListTabs from "./tab";
+import DisplayGroupList from "./display-group";
 const AddFriend = ({ history }) => {
   const [user, setUser] = useState(null);
   const [userProfile, setUserProfile] = useState([]);
   const [friendList, setFriendList] = useState([]);
   const [contactList, setContactList] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [currentList, setCurrentList] = useState("CONTACTS");
+  const [allGroups, setGroups] = useState([]);
   const styleImage = {
     width: "100%",
     height: "100%",
@@ -29,6 +36,14 @@ const AddFriend = ({ history }) => {
   const pencilStyle = {
     width: "4rem",
     height: "2rem",
+  };
+  const getAllGroups = async () => {
+    try {
+      const res = await GetAllGroups();
+      if (res.data.code == "200") {
+        setGroups(res.data.data.userGroup);
+      }
+    } catch (e) {}
   };
   const searchUserHandler = async () => {
     try {
@@ -95,6 +110,7 @@ const AddFriend = ({ history }) => {
   useEffect(() => {
     getFriendList();
     getContactRequest();
+    getAllGroups();
   }, []);
   async function removeContact(exist = undefined) {
     if (!window.confirm("Are You sure you want to remove ?")) return;
@@ -131,6 +147,15 @@ const AddFriend = ({ history }) => {
               id="navbarSupportedContent"
             >
               <ul className="navbar-nav ml-auto text-white">
+                <li className="nav-item">
+                  <button
+                    onClick={() => setOpenModal(true)}
+                    className="btn btn-success"
+                  >
+                    Create New Group
+                  </button>
+                  <CreateGroupModal getAllGroups ={getAllGroups} hide={setOpenModal} show={openModal} />
+                </li>
                 <li className="nav-item">
                   <Cross
                     onClick={() => history.goBack()}
@@ -178,15 +203,24 @@ const AddFriend = ({ history }) => {
               </button>
             </div>
             <div className="col-md-5 mt-4">
-              <ContactList profileList={contactList}></ContactList>
+              <ListTabs
+                setCurrentTab={setCurrentList}
+                currentTab={currentList}
+              />
+              {currentList == "CONTACTS" && (
+                <ContactList profileList={contactList} />
+              )}
+              {currentList == "GROUPS" && (
+                <DisplayGroupList groups={allGroups} />
+              )}
             </div>
           </div>
           <div className="col-md-6">
             <ContactsCard
               addFriend={addUserHandler}
               profileLists={userProfile}
-              addFriend ={addUserHandler}
-              clearList = {setUserProfile}
+              addFriend={addUserHandler}
+              clearList={setUserProfile}
             />
           </div>
           <div className="row">

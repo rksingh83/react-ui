@@ -52,7 +52,6 @@ const ContactList = ({ profileList, isShare, selected, hide, images }) => {
   return (
     <div className="row">
       <div className="col">
-        <h5>Your Contact List</h5>
         <ul className="list-group">
           {profileList.map((item, index) => (
             <li className="list-group-item li-contact-list" key={index}>

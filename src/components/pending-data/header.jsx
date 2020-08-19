@@ -1,6 +1,6 @@
 import React from "react";
-import { ReactComponent as Next } from "../../assets/next-arr.svg";
-import { ReactComponent as Back } from "../../assets/back-arr.svg";
+import { ReactComponent as Next } from "../../assets/next.svg";
+import { ReactComponent as Back } from "../../assets/back.svg";
 import UploadForm from "../upload-image/upload-images";
 import { Post, Get } from "../../service/service.setup";
 const PendingHeader = ({
