@@ -244,6 +244,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
           pendingFolderId={pendingFolderId}
           next={nextHandler}
           prev={prevHandler}
+          all ={allPendingLIst}
         />
       )}
 

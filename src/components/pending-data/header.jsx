@@ -3,7 +3,13 @@ import { ReactComponent as Next } from "../../assets/next-arr.svg";
 import { ReactComponent as Back } from "../../assets/back-arr.svg";
 import UploadForm from "../upload-image/upload-images";
 import { Post, Get } from "../../service/service.setup";
-const PendingHeader = ({ prev, next, pendingFolderId, currentImageId }) => {
+const PendingHeader = ({
+  prev,
+  next,
+  pendingFolderId,
+  currentImageId,
+  all,
+}) => {
   const uploadImageHandler = async (e) => {
     //  e.preventDefault();
     const formData = new FormData();
@@ -39,6 +45,16 @@ const PendingHeader = ({ prev, next, pendingFolderId, currentImageId }) => {
         <UploadForm submitHandler={uploadImageHandler}></UploadForm>
       </div>
       <div></div>
+      <div>
+        <span className="info"> Total Pending </span>
+        <span className="badge badge-info">{all.length}</span>
+      </div>
+      <div>
+        <span className="info">Current</span>
+        <span className="badge badge-info">
+          {all.indexOf(currentImageId) + 1}
+        </span>
+      </div>
       <div>
         <Next className="header-svg" onClick={next} />
       </div>

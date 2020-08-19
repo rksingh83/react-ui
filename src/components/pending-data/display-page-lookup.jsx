@@ -21,7 +21,9 @@ const PendingPageData = ({
   const [shareId, setShareId] = useState(data.pageLookup.shareId);
   const [date, setDate] = useState(data.pageLookup.date);
   const [pageNo, setPageNo] = useState(data.pageLookup.pageNumber);
-
+  const [segmentation, setSegmentation] = useState(
+    data.pageLookup.segmentation
+  );
   const [title, setTitle] = useState(data.pageLookup.title);
   const [ID, setID] = useState(data.pageLookup.id);
   const [description, setDescription] = useState(data.pageLookup.description);
@@ -77,7 +79,8 @@ const PendingPageData = ({
       pendingFolderId,
       imageId: currentImageId,
       pageNumber: pageNo,
-      id: data.pageLookup.id,
+      id: ID,
+      segmentation,
     };
     console.log(requestData);
     try {
@@ -117,7 +120,7 @@ const PendingPageData = ({
             className="hover"
           />
         </div>
-        <div className="col-md-7">
+        <div className="col-md-8">
           <div className="row">
             <div className="col-md-3 page-lookup-heading">File Name</div>
             <div className="col-md-3 page-lookup-heading"></div>
@@ -167,16 +170,23 @@ const PendingPageData = ({
           </div>
 
           <div className="row">
-            <div className="col-md-4 mb-2 page-lookup-heading">
+            <div className="col-md-3 mb-2 page-lookup-heading">
               File Segmentation
             </div>
-            <div className="col-md-4">
+            <div className="col-md-3 segmentation">
               <img
                 style={imageStyle}
                 src={data.pageLookup.segmentationImagePath}
+                className ='img-height'
               />
             </div>
-            <div className="col-md-6"></div>
+            <div className="col-md-6">
+              <Input
+                type="text"
+                onChange={(e) => setSegmentation(e.target.value)}
+                value={segmentation}
+              />
+            </div>
           </div>
           <div className="row">
             <div className="col-md-2 page-lookup-heading">Share</div>
@@ -226,7 +236,11 @@ const PendingPageData = ({
               <img style={imageStyle} src={data.pageLookup.idImagePath} />
             </div>
             <div className="col-md-6">
-              <Input  onChange={(e) => setID(e.target.value)}   value = {ID} type="text" />
+              <Input
+                onChange={(e) => setID(e.target.value)}
+                value={ID}
+                type="text"
+              />
             </div>
           </div>
         </div>

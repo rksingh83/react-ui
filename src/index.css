@@ -109,3 +109,19 @@ a {
   background-position: 'center';
   background-size: 100% !important;
 }
+
+.segmentation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-height {
+  height: 60%;
+}
+
+.info {
+  font-size: 16px;
+  font-weight: 600;
+  padding-right: 10px;
+}
