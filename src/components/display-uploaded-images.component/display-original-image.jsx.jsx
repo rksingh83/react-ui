@@ -79,7 +79,8 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
           imageId={imageId}
           images={allImages}
           history={history}
-          currentFolder={currentFolderName}
+          currentFolder={currentFolderName} 
+          folderId = {match.params.folderId}
         />
       )}
 

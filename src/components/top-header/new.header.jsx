@@ -1,17 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Input from "../boostrapinput/input.component";
 import { ReactComponent as Delete } from "../../assets/delete.svg";
 import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { Post } from "../../service/service.setup";
-
+import LoadLookup from "../pending-data/display-page-lookup";
+import {
+  getAllPendingPageList,
+  getPendingPageById,
+} from "../../service/pendingData";
 import "./top.header.style.scss";
-const TopSingleHeader = ({ images, imageId, history, currentFolder }) => {
+const TopSingleHeader = ({
+  images,
+  imageId,
+  history,
+  currentFolder,
+  folderId,
+}) => {
+  console.log(currentFolder);
   const [show, setShow] = useState(false);
   const [fileName, addName] = useState("");
   const [fileDescription, addDisc] = useState("");
+  const [currentLookup, setCurrentLookup] = useState(false);
   const [id, setId] = useState("");
-
+  const removeSavedImageId = () => 1;
   const saveHandler = () => {
     const requestPayLoad = {
       imageInput: [
@@ -20,6 +32,13 @@ const TopSingleHeader = ({ images, imageId, history, currentFolder }) => {
     };
     updateToServer(requestPayLoad, true);
     setShow(false);
+  };
+  useEffect(() => {
+    getCurrentPage();
+  }, [imageId]);
+  const getCurrentPage = async () => {
+    const response = await getPendingPageById(imageId);
+    setCurrentLookup(response.data && response.data);
   };
   const deleteHandler = () => {
     if (!window.confirm("Are You sure you want to delete ?")) return;
@@ -87,31 +106,29 @@ const TopSingleHeader = ({ images, imageId, history, currentFolder }) => {
           </div>
         </nav>
       </div>
-      <Modal show={show} onHide={() => setShow(false)} animation={true}>
-        <Modal.Header></Modal.Header>
-        <Modal.Body>
-          <Input
-            placeholder="Enter your folder"
-            label="Folder"
-            value={fileName}
-            handleChange={(e) => addName(e.target.value)}
-            name="folder"
-            type="input"
-          ></Input>
-          <Input
-            placeholder="Enter your description"
-            label="Description"
-            value={fileDescription}
-            handleChange={(e) => addDisc(e.target.value)}
-            name="dis"
-            type="input"
-          ></Input>
-          <Input
-            value={""}
-            handleChange={() => setId(id)}
-            name="id"
-            type="hidden"
-          ></Input>
+      <Modal
+        size="lg"
+        show={show}
+        onHide={() => setShow(false)}
+        animation={true}
+      >
+        <Modal.Header>
+          <button
+            className="btn-danger btn"
+            variant="secondary"
+            onClick={() => setShow(false)}
+          >
+            Close
+          </button>
+        </Modal.Header>
+        <Modal.Body className="modal-lg">
+          <LoadLookup
+            data={currentLookup}
+            currentImageId={imageId}
+            history={history}
+            pendingFolderId={folderId}
+            removeImageId={removeSavedImageId}
+          ></LoadLookup>
         </Modal.Body>
         <Modal.Footer>
           <button
@@ -120,13 +137,6 @@ const TopSingleHeader = ({ images, imageId, history, currentFolder }) => {
             onClick={() => setShow(false)}
           >
             Close
-          </button>
-          <button
-            className="btn btn-success"
-            variant="primary"
-            onClick={saveHandler}
-          >
-            Save Changes
           </button>
         </Modal.Footer>
       </Modal>
