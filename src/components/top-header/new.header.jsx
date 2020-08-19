@@ -19,7 +19,7 @@ const TopSingleHeader = ({
   const [fileDescription, addDisc] = useState("");
   const [currentLookup, setCurrentLookup] = useState(false);
   const [id, setId] = useState("");
-  const removeSavedImageId = () => 1;
+  const removeSavedImageId = () => setShow(false);
   const saveHandler = () => {
     const requestPayLoad = {
       imageInput: [
