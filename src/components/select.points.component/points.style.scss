@@ -21,28 +21,29 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: .5;
 }
 
 .one {
   width: 40px;
   height: 40px;
   background-color: rgb(245, 230, 99);
-  border: 10px solid rgba(136, 136, 136, 0.5);
+  // border: 10px solid rgba(136, 136, 136, 0.5);
 }
 
 .two {
   width: 40px;
   height: 40px;
-  background-color: rgba(196, 241, 190, 1);
-  border: 10px solid rgba(136, 136, 136, 0.5);
+  background-color: rgb(245, 230, 99);
+  // border: 10px solid rgba(136, 136, 136, 0.5);
 
 }
 
 .three {
   width: 40px;
   height: 40px;
-  background-color: rgb(0, 255, 231);
-  border: 10px solid rgba(136, 136, 136, 0.5);
+  background-color: rgb(245, 230, 99);
+  // border: 10px solid rgba(136, 136, 136, 0.5);
   top: 0px;
   left: 0px;
 }
@@ -50,8 +51,8 @@
 .four {
   width: 40px;
   height: 40px;
-  background-color: rgb(233, 210, 244);
-  border: 10px solid rgba(136, 136, 136, 0.5);
+  background-color: rgb(245, 230, 99);
+  //border: 10px solid rgba(136, 136, 136, 0.5);
   top: 0px;
   right: 0px
 }
@@ -68,6 +69,7 @@
   border: 1px solid rgba(0, 0, 0, 0.125);
   height: 90vh;
 }
-.sec-header-bg{
-  background :rgba(0, 0, 0, 0.125)
+
+.sec-header-bg {
+  background: rgba(0, 0, 0, 0.125)
 }
