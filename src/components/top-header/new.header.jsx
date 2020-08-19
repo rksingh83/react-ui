@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
-import Input from "../boostrapinput/input.component";
 import { ReactComponent as Delete } from "../../assets/delete.svg";
 import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { Post } from "../../service/service.setup";
 import LoadLookup from "../pending-data/display-page-lookup";
-import {
-  getAllPendingPageList,
-  getPendingPageById,
-} from "../../service/pendingData";
+import { getPendingPageById } from "../../service/pendingData";
 import "./top.header.style.scss";
 const TopSingleHeader = ({
   images,

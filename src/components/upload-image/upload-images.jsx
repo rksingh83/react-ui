@@ -1,7 +1,7 @@
 import React from "react";
 
 const UploadForm = ({ submitHandler }) => (
-  <form className="mr-4" onSubmit={submitHandler}>
+  <form className="mr-4 mt-2" onSubmit={submitHandler}>
     <div style={{ position: "relative" }}>
       <label className="btn btn-success">Retake</label>
       <input
