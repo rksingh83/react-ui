@@ -13,7 +13,7 @@ import ContactList from "../contactlist/display.contactlist";
 import SearchedContactList from "../contactlist/display-searched-contact-list";
 import ContactsCard from "../contactlist/display-searched-contact-list-card";
 import CreateGroupModal from "./create-group-modal";
-import { GetAllGroups } from "../../service/group-service";
+import { GetAllGroups, EditGroup } from "../../service/group-service";
 import ListTabs from "./tab";
 import DisplayGroupList from "./display-group";
 const AddFriend = ({ history }) => {
@@ -22,8 +22,12 @@ const AddFriend = ({ history }) => {
   const [friendList, setFriendList] = useState([]);
   const [contactList, setContactList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [currentGroup, setCurrentGroup] = useState({});
   const [currentList, setCurrentList] = useState("CONTACTS");
   const [allGroups, setGroups] = useState([]);
+  const [groupName, setGroupName] = useState("");
+  const [groupDes, setGroupDes] = useState("");
+  const [groupId, setGroupId] = useState(0);
   const styleImage = {
     width: "100%",
     height: "100%",
@@ -44,6 +48,35 @@ const AddFriend = ({ history }) => {
         setGroups(res.data.data.userGroup);
       }
     } catch (e) {}
+  };
+  // edit group
+  const editGroupHandler = async (data) => {
+    try {
+      if (data.deleted) {
+        if (!window.confirm("Are You sure you want to remove ?")) return;
+      }
+      const res = await EditGroup(data);
+      if (res.data.code == "200") {
+        alert(res.data.message);
+        getAllGroups();
+      }
+    } catch (e) {
+      alert("Something went wrong try latter");
+    }
+  };
+  const updateHandler = (id) => {
+    const group = allGroups.filter((item) => item.groupID == id);
+    setCurrentGroup(group[0]);
+    setGroupName(group[0].groupName);
+    setGroupDes(group[0].groupDescription);
+    setGroupId(id)
+    setOpenModal(true);
+  };
+  const onClose = () => {
+    setOpenModal(false);
+    setGroupName("");
+    setGroupDes("");
+    setGroupId(0)
   };
   const searchUserHandler = async () => {
     try {
@@ -154,7 +187,16 @@ const AddFriend = ({ history }) => {
                   >
                     Create New Group
                   </button>
-                  <CreateGroupModal getAllGroups ={getAllGroups} hide={setOpenModal} show={openModal} />
+                  <CreateGroupModal
+                    getAllGroups={getAllGroups}
+                    hide={onClose}
+                    show={openModal}
+                    groupName={groupName}
+                    groupDes={groupDes}
+                    setDes={setGroupDes}
+                    setName={setGroupName}
+                    groupId ={groupId}
+                  />
                 </li>
                 <li className="nav-item">
                   <Cross
@@ -211,7 +253,11 @@ const AddFriend = ({ history }) => {
                 <ContactList profileList={contactList} />
               )}
               {currentList == "GROUPS" && (
-                <DisplayGroupList groups={allGroups} />
+                <DisplayGroupList
+                  update={editGroupHandler}
+                  groups={allGroups}
+                  updateHandler={updateHandler}
+                />
               )}
             </div>
           </div>

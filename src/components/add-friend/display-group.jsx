@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactComponent as Delete } from "../../assets/delete.svg";
 import { ReactComponent as Pencil } from "../../assets/edit.svg";
-const DisplayGroupList = ({ groups }) => {
+const DisplayGroupList = ({ groups, update, updateHandler }) => {
   const svgStyle = {
     height: "35px",
   };
@@ -13,8 +13,14 @@ const DisplayGroupList = ({ groups }) => {
             <li className="list-group-item li-contact-list" key={index}>
               <span> {item.groupName}</span>
               <span>
-                <Delete style={svgStyle} />
-                <Pencil style={svgStyle} />
+                <Delete
+                  onClick={() => update({ deleted: true, id: item.groupID })}
+                  style={svgStyle}
+                />
+                <Pencil
+                  onClick={() => updateHandler(item.groupID)}
+                  style={svgStyle}
+                />
               </span>
             </li>
           ))}

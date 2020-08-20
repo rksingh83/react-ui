@@ -1,22 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import TextField from "@material-ui/core/TextField";
 import MaterialInput from "../forminput/materialInput";
-import { CreateGroup } from "../../service/group-service";
-const CreateGroupModal = ({ show, hide, getAllGroups }) => {
-  const [groupName, setGroupName] = useState("");
-  const [groupDes, setGroupDes] = useState("");
+import { CreateGroup, EditGroup } from "../../service/group-service";
+const CreateGroupModal = ({
+  show,
+  hide,
+  getAllGroups,
+  groupName,
+  groupDes,
+  setDes,
+  setName,
+  groupId,
+}) => {
   const createGroupHandler = async () => {
     if (groupDes == "" || groupName == "") {
       alert("Pease enter call required filed");
       return false;
     }
-    const res = await CreateGroup(groupName, groupDes);
+    let res = {};
+    if (groupId > 0) {
+      res = await EditGroup({
+        group_description: groupDes,
+        group_name: groupName,
+        id: groupId,
+        deleted: false,
+      });
+    } else {
+      res = await CreateGroup(groupName, groupDes);
+    }
     if (res.data.code == "200") {
       alert(res.data.message);
-      setGroupDes("");
-      setGroupName("");
-      hide(false);
+
+      hide();
       getAllGroups();
     }
   };
@@ -31,7 +47,7 @@ const CreateGroupModal = ({ show, hide, getAllGroups }) => {
           Close
         </button>
         <button
-          className="btn-danger btn"
+          className="btn-info btn"
           variant="secondary"
           onClick={createGroupHandler}
         >
@@ -41,7 +57,7 @@ const CreateGroupModal = ({ show, hide, getAllGroups }) => {
       <Modal.Body>
         <TextField
           value={groupName}
-          onChange={(e) => setGroupName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
           id="outlined-basic"
           label="Group Name"
           fullWidth
@@ -51,7 +67,7 @@ const CreateGroupModal = ({ show, hide, getAllGroups }) => {
         />
         <TextField
           value={groupDes}
-          onChange={(e) => setGroupDes(e.target.value)}
+          onChange={(e) => setDes(e.target.value)}
           id="outlined-basic"
           label="Description"
           fullWidth

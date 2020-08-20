@@ -26,6 +26,16 @@ const GetAllGroups = async () => {
   }
 }
 
+const EditGroup = async (data) => {
+  try {
+    const response = await Post('/editUserGroup', data);
+    return response;
+  } catch (e) {
+
+  }
+}
 export {
-  CreateGroup,GetAllGroups
+  CreateGroup,
+  GetAllGroups,
+  EditGroup
 }
