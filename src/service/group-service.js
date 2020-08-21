@@ -34,8 +34,34 @@ const EditGroup = async (data) => {
 
   }
 }
+const GetGroupMember = async (id) => {
+  try {
+    const response = await Post('/getAllUserGroupMembers', {
+      groupID: id
+    });
+    return response;
+  } catch (e) {
+
+  }
+}
+const AddMemberToGroup = (ids, groupId) => {
+  let profileList = [];
+  ids.forEach(id => {
+    profileList.push({
+      id
+    })
+  });
+  const request = {
+    groupId,
+    profileList
+  };
+  return Post('/addUserGroupMembers', request);
+}
 export {
   CreateGroup,
   GetAllGroups,
-  EditGroup
+  EditGroup,
+  GetGroupMember,
+  AddMemberToGroup
+
 }

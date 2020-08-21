@@ -16,7 +16,9 @@ import CreateGroupModal from "./create-group-modal";
 import { GetAllGroups, EditGroup } from "../../service/group-service";
 import ListTabs from "./tab";
 import DisplayGroupList from "./display-group";
-const AddFriend = ({ history }) => {
+import { setContacts } from "../../redux/contacts/contacts.actions";
+import { connect } from "react-redux";
+const AddFriend = ({ history, setContacts, contacts }) => {
   const [user, setUser] = useState(null);
   const [userProfile, setUserProfile] = useState([]);
   const [friendList, setFriendList] = useState([]);
@@ -69,14 +71,14 @@ const AddFriend = ({ history }) => {
     setCurrentGroup(group[0]);
     setGroupName(group[0].groupName);
     setGroupDes(group[0].groupDescription);
-    setGroupId(id)
+    setGroupId(id);
     setOpenModal(true);
   };
   const onClose = () => {
     setOpenModal(false);
     setGroupName("");
     setGroupDes("");
-    setGroupId(0)
+    setGroupId(0);
   };
   const searchUserHandler = async () => {
     try {
@@ -195,7 +197,7 @@ const AddFriend = ({ history }) => {
                     groupDes={groupDes}
                     setDes={setGroupDes}
                     setName={setGroupName}
-                    groupId ={groupId}
+                    groupId={groupId}
                   />
                 </li>
                 <li className="nav-item">
@@ -257,6 +259,7 @@ const AddFriend = ({ history }) => {
                   update={editGroupHandler}
                   groups={allGroups}
                   updateHandler={updateHandler}
+                  profileLists={contactList}
                 />
               )}
             </div>
@@ -293,4 +296,13 @@ const AddFriend = ({ history }) => {
     </>
   );
 };
-export default AddFriend;
+//export default AddFriend;
+
+const mapDispatchToProps = (dispatch) => ({
+  setContacts: (contacts) => dispatch(setContacts(contacts)),
+});
+
+const mapStateToPros = ({ contacts: { contacts } }) => ({
+  contacts,
+});
+export default connect(mapStateToPros, mapDispatchToProps)(AddFriend);
