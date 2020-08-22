@@ -30,6 +30,7 @@ const AddFriend = ({ history, setContacts, contacts }) => {
   const [groupName, setGroupName] = useState("");
   const [groupDes, setGroupDes] = useState("");
   const [groupId, setGroupId] = useState(0);
+  const [inviteContactModal, openInviteContactModal] = useState(false);
   const styleImage = {
     width: "100%",
     height: "100%",

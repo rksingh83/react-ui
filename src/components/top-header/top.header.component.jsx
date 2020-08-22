@@ -149,8 +149,11 @@ const TopHeader = ({
             ></input>
           </div>
           <div className="col-md-3 sec-header-item col-text-style">
-            <UploadForm  isUpload ={true} submitHandler={fileUploadHandler} />
-            <Refresh style ={{marginLeft:"2rem"}} onClick={() => setShow(true)} />{" "}
+            <UploadForm isUpload={true} submitHandler={fileUploadHandler} />
+            <Refresh
+              style={{ marginLeft: "2rem" }}
+              onClick={() => setShow(true)}
+            />{" "}
             <span className="on-hover" onClick={() => setShow(true)}>
               Create Folder
             </span>
@@ -219,8 +222,8 @@ const TopHeader = ({
                 totalItem == 0 ? "hideCount" : "sec-header-item"
               }`}
             >
-              <span className="count">{totalItem}</span> Selected{" "}
-              <Cross onClick={() => window.location.reload()}></Cross>
+              <span className="count badge badge-info mr-1">{totalItem} </span>{" "}
+              Selected <Cross className ='ml-1' onClick={() => window.location.reload()}></Cross>
             </div>
           </div>
         </div>

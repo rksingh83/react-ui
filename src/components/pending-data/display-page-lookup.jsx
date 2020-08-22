@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Post, Get } from "../../service/service.setup";
 import { ReactComponent as Next } from "../../assets/next-arr.svg";
 import { ReactComponent as Back } from "../../assets/back-arr.svg";
@@ -32,7 +32,15 @@ const PendingPageData = ({
     width: "100%",
     border: "1px solid green",
   };
+  useEffect(() => {
+    console.log(data.pageLookup);
 
+    setDate(data.pageLookup.date);
+    setPageNo(data.pageLookup.pageNumber);
+    setTitle(data.pageLookup.title);
+    setID(data.pageLookup.id);
+    setDescription(data.pageLookup.description);
+  }, [data.pageLookup]);
   const fileTagHandler = (e) => {
     let folder = data.pageLookup.file.filter(
       (item) => item.id == e.target.value

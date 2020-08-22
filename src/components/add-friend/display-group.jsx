@@ -39,7 +39,8 @@ const DisplayGroupList = ({
   };
   const getGroups = async (id) => {
     const list = await GetGroupMember(id);
-    setMembersInGroup(list.data.data.userGroup[0].profileList);
+    if (list.data.data)
+      setMembersInGroup(list.data.data.userGroup[0].profileList);
   };
   const saveGroupHandler = async (groupId) => {
     if (memberList.length > 0) {
