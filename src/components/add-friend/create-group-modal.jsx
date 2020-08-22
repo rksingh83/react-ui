@@ -15,7 +15,7 @@ const CreateGroupModal = ({
 }) => {
   const createGroupHandler = async () => {
     if (groupDes == "" || groupName == "") {
-      alert("Pease enter call required filed");
+      alert("Please Enter Group Name and Description both!!");
       return false;
     }
     let res = {};
