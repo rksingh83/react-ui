@@ -16,7 +16,9 @@ const CreateFolder = ({
   selectedFolderCount,
   displayValue,
   owner,
+  isPending,
 }) => {
+  console.log(isPending)
   const style = {
     display: "flex",
     alignItems: "center",
@@ -56,14 +58,16 @@ const CreateFolder = ({
       className={`mainDiv `}
       style={style}
     >
-      <Tick
-        style={{
-          display: displayClass ? "block" : "",
-          opacity: displayClass ? "1" : "",
-        }}
-        onClick={() => toggleEl(fileId)}
-        className="tick"
-      />
+      {!isPending && (
+        <Tick
+          style={{
+            display: displayClass ? "block" : "",
+            opacity: displayClass ? "1" : "",
+          }}
+          onClick={() => toggleEl(fileId)}
+          className="tick"
+        />
+      )}
       <div className={`hoverDiv ${displayClass ? "active" : ""}`}>
         {/* <Select style ={{width:"30%",height:"30%"}} onClick = {()=>editFolder(text ,des ,fileId)}></Select> */}
       </div>
