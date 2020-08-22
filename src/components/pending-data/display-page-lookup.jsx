@@ -145,7 +145,7 @@ const PendingPageData = ({
               />
             </div>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-md-2 page-lookup-heading">Title</div>
 
             <div className="col-md-10">
@@ -156,7 +156,7 @@ const PendingPageData = ({
                 placeholder="Title"
               />
             </div>
-          </div>
+          </div> */}
           <div className="row">
             <div className="col-md-2 page-lookup-heading">Description</div>
             <div className="col-md-10">
@@ -170,21 +170,19 @@ const PendingPageData = ({
           </div>
 
           <div className="row">
-            <div className="col-md-3 mb-2 page-lookup-heading">
-              File Segmentation
-            </div>
+            <div className="col-md-3 mb-2 page-lookup-heading">File Title</div>
             <div className="col-md-3 segmentation">
               <img
                 style={imageStyle}
                 src={data.pageLookup.segmentationImagePath}
-                className ='img-height'
+                className="img-height"
               />
             </div>
             <div className="col-md-6">
               <Input
                 type="text"
-                onChange={(e) => setSegmentation(e.target.value)}
-                value={segmentation}
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
               />
             </div>
           </div>
