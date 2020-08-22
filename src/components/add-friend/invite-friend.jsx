@@ -28,7 +28,7 @@ const InviteUser = ({ show, hide }) => {
           variant="secondary"
           onClick={() => sendEmail(email)}
         >
-          Send Request
+          Send Invite Email
         </button>
       </Modal.Header>
       <Modal.Body>
