@@ -103,7 +103,7 @@ const DisplayGroupList = ({
             </li>
           ))}
           {groups.length == 0 && (
-            <li class="list-group-item">There is no group request</li>
+            <li class="list-group-item">No Group Created Yet.</li>
           )}
         </ul>
       </div>

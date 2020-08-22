@@ -96,7 +96,7 @@ const ImageSlider = ({
     const allImages = document.querySelectorAll(".show-image");
     let currentIndex = getCurrentIndex();
     if (currentIndex == images.length - 1) {
-      toast.error("You've reached last image in the file ");
+      alert("You've reached last image in the file ");
       return;
     }
     if (currentIndex < images.length) {
@@ -116,7 +116,7 @@ const ImageSlider = ({
     const allImages = document.querySelectorAll(".show-image");
     let currentIndex = getCurrentIndex();
     if (currentIndex == 0) {
-      toast.error("You've reached first image in the file ");
+      alert("You've reached first image in the file ");
       return;
     }
     if (currentIndex < images.length) {

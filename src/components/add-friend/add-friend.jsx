@@ -300,7 +300,7 @@ const AddFriend = ({ history, setContacts, contacts }) => {
                   </li>
                 ))}
                 {friendList.length == 0 && (
-                  <li class="list-group-item">There is no friend request</li>
+                  <li class="list-group-item">No Contact Request.</li>
                 )}
               </ul>
             </div>

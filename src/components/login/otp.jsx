@@ -103,7 +103,7 @@ export const ForgotPassword = ({history})=>{
   .then(res=>{
   
      if(res.data.error){
-      toast.error(res.data.error) 
+      alert(res.data.error) 
          if(res.data.code==200){
           setIsDisplayOtpInput(true);
           setIsDisplayOtpSend(false)
@@ -117,7 +117,7 @@ export const ForgotPassword = ({history})=>{
     .then(res=>{
     
        if(res.data.error){
-        toast.error(res.data.error) 
+        alert(res.data.error) 
 
        }
        if(res.data.code==200){
@@ -131,7 +131,7 @@ export const ForgotPassword = ({history})=>{
     .then(res=>{
    
        if(res.data.error){
-        toast.error(res.data.error) 
+        alert.error(res.data.error) 
 
        }
        if(res.data.code==200){
