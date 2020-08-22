@@ -70,7 +70,7 @@ const TopHeaderWithBack = ({
         },
       });
       if (res.status == 200) {
-        alert.success(res.data.message);
+        alert(res.data.message);
         window.location.reload();
       } else {
         alert("Something went wrong try later");
