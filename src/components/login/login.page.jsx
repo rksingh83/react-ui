@@ -20,7 +20,7 @@ const LoginPage = ({ history, setCurrentUser, setCurrentFile }) => {
     e.preventDefault();
     Post("/signin", { email, password }).then((res) => {
       if (res.data.error) {
-        toast.error(res.data.error);
+        alert(res.data.error);
       } else {
         const code = res.data.code;
 

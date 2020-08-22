@@ -70,10 +70,10 @@ const TopHeaderWithBack = ({
         },
       });
       if (res.status == 200) {
-        toast.success(res.data.message);
+        alert.success(res.data.message);
         window.location.reload();
       } else {
-        toast.error("Something went wrong try later");
+        alert("Something went wrong try later");
       }
     } catch (err) {
       console.log(err);
