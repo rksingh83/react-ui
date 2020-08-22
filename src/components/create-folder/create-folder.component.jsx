@@ -71,7 +71,6 @@ const CreateFolder = ({
       <div className={`hoverDiv ${displayClass ? "active" : ""}`}>
         {/* <Select style ={{width:"30%",height:"30%"}} onClick = {()=>editFolder(text ,des ,fileId)}></Select> */}
       </div>
-      {owner && <span>({owner})</span>}
       <img
         onClick={() => nevigateFolder(fileId)}
         style={imageStyle}
@@ -79,6 +78,9 @@ const CreateFolder = ({
       ></img>
       <p className="folder-link" onClick={() => nevigateFolder(fileId)}>
         {text}
+        <br></br>
+        {owner && <span>({owner})</span>}
+
       </p>
     </div>
   );
