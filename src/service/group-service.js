@@ -34,10 +34,10 @@ const EditGroup = async (data) => {
 
   }
 }
-const GetGroupMember = async (groupId) => {
+const GetGroupMember = async (groupID) => {
   try {
     const response = await Post('/getAllUserGroupMembers', {
-      groupId
+      groupID
     });
     return response;
   } catch (e) {
