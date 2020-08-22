@@ -64,12 +64,16 @@ const DisplayImages = ({
           >
             <Tick className="tick" onClick={(e) => toggleEl(item.id, e)} />
             <div className="editIcon"></div>
-            <img style = {{height:"100px"}} src ={require('../../assets/spiral.png')}></img>
+            <img
+              style={{ height: "100px" }}
+              src={require("../../assets/spiral.png")}
+            ></img>
             <img
               className="image-display"
               src={item.raw_image_org}
               onClick={() => history.push(`/original/${item.id}/${folderId}`)}
             ></img>
+            {item.title && <span className ='img-title'>{item.title}</span>}
           </div>
         ))}
       </div>
