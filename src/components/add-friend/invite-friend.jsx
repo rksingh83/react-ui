@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import TextField from "@material-ui/core/TextField";
-const CreateGroupModal = ({ show, hide }) => {
+import { Post } from "../../service/service.setup";
+const InviteUser = ({ show, hide }) => {
   const [email, setEmail] = useState("");
 
+  const sendEmail = async (email) => {
+    const res = await Post("/inviteUser", { email });
+    if ((res.data.code = "200")) {
+      alert("Send Email Successfully");
+      hide(false);
+    }
+    hide(false);
+  };
   return (
     <Modal size="md" show={show} onHide={() => hide(false)} animation={true}>
       <Modal.Header>
@@ -17,7 +26,7 @@ const CreateGroupModal = ({ show, hide }) => {
         <button
           className="btn-info btn"
           variant="secondary"
-          onClick={createGroupHandler}
+          onClick={() => sendEmail(email)}
         >
           Send Request
         </button>
@@ -25,7 +34,7 @@ const CreateGroupModal = ({ show, hide }) => {
       <Modal.Body>
         <TextField
           value={email}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           id="outlined-basic"
           label="User Email"
           fullWidth
@@ -46,4 +55,4 @@ const CreateGroupModal = ({ show, hide }) => {
     </Modal>
   );
 };
-export default CreateGroupModal;
+export default InviteUser;

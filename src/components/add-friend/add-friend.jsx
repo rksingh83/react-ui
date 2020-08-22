@@ -18,6 +18,7 @@ import ListTabs from "./tab";
 import DisplayGroupList from "./display-group";
 import { setContacts } from "../../redux/contacts/contacts.actions";
 import { connect } from "react-redux";
+import InviteUser from "./invite-friend";
 const AddFriend = ({ history, setContacts, contacts }) => {
   const [user, setUser] = useState(null);
   const [userProfile, setUserProfile] = useState([]);
@@ -183,6 +184,18 @@ const AddFriend = ({ history, setContacts, contacts }) => {
               id="navbarSupportedContent"
             >
               <ul className="navbar-nav ml-auto text-white">
+                <li className="nav-item">
+                  <button
+                    onClick={() => openInviteContactModal(true)}
+                    className="btn btn-success mr-4"
+                  >
+                    Invite Contact
+                  </button>
+                  <InviteUser
+                    show={inviteContactModal}
+                    hide={openInviteContactModal}
+                  />
+                </li>
                 <li className="nav-item">
                   <button
                     onClick={() => setOpenModal(true)}
