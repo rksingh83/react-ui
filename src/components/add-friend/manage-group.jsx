@@ -11,15 +11,9 @@ const AddContactToGroup = ({
   groupId,
   addMember,
   saveGroup,
+  currentGroupMembers,
+  getGroups,
 }) => {
-  const [currentGroupMembers, setCurrentGroupMember] = useState([]);
-  useEffect(() => {
-    getGroups(groupId);
-  }, [groupId]);
-  const getGroups = async (id) => {
-    const list = await GetGroupMember(id);
-    console.log(list);
-  };
   return (
     <Modal size="md" show={show} onHide={() => hide(false)} animation={true}>
       <Modal.Header>
@@ -35,18 +29,21 @@ const AddContactToGroup = ({
           variant="secondary"
           onClick={() => saveGroup(groupId)}
         >
-          Save
+          Add Member
         </button>
       </Modal.Header>
       <Modal.Body>
         <>
+          <h4 className="m-2">Members in group</h4>
+          <DisplayContact profileLists={currentGroupMembers}></DisplayContact>
+          <h4 className="m-2">Your Contacts</h4>
           <DisplayContact
             addMember={addMember}
             profileLists={profileLists}
             groupId={groupId}
+            getGroups={getGroups}
+            isShowCheckedBox ={true}
           ></DisplayContact>
-          <h4 className="m-2">Member</h4>
-          <DisplayContact profileLists={currentGroupMembers}></DisplayContact>
         </>
       </Modal.Body>
       <Modal.Footer>

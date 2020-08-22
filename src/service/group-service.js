@@ -34,17 +34,17 @@ const EditGroup = async (data) => {
 
   }
 }
-const GetGroupMember = async (id) => {
+const GetGroupMember = async (groupId) => {
   try {
     const response = await Post('/getAllUserGroupMembers', {
-      groupID: id
+      groupId
     });
     return response;
   } catch (e) {
 
   }
 }
-const AddMemberToGroup = (ids, groupId) => {
+const AddMemberToGroup = (ids, groupID) => {
   let profileList = [];
   ids.forEach(id => {
     profileList.push({
@@ -52,7 +52,7 @@ const AddMemberToGroup = (ids, groupId) => {
     })
   });
   const request = {
-    groupId,
+    groupID,
     profileList
   };
   return Post('/addUserGroupMembers', request);

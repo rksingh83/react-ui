@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ReactComponent as Delete } from "../../assets/delete.svg";
 import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import AddContactToGroup from "./manage-group";
-import { AddMemberToGroup } from "../../service/group-service";
+import { AddMemberToGroup, GetGroupMember } from "../../service/group-service";
 const DisplayGroupList = ({ groups, update, updateHandler, profileLists }) => {
   const svgStyle = {
     height: "35px",
@@ -10,6 +10,7 @@ const DisplayGroupList = ({ groups, update, updateHandler, profileLists }) => {
   console.log(profileLists, "contact");
   const [openModal, setOpenModal] = useState(false);
   const [memberList, addMember] = useState([]);
+  const [membersInGroup, setMembersInGroup] = useState([]);
   const addMemberHandler = (e) => {
     console.log(e.target.value);
     const currentList = memberList;
@@ -24,16 +25,30 @@ const DisplayGroupList = ({ groups, update, updateHandler, profileLists }) => {
     console.log(currentList);
     addMember([...currentList]);
   };
+  const setOpenModalHandler = (id) => {
+    setOpenModal(true);
+    getGroups(id);
+  };
+  const getGroups = async (id) => {
+    const list = await GetGroupMember(id);
+    setMembersInGroup(list.data.data.userGroup[0].profileList);
+  };
   const saveGroupHandler = async (groupId) => {
     if (memberList.length > 0) {
       const res = await AddMemberToGroup(memberList, groupId);
       if (res.data.code == "200") {
         alert("Added Successfully");
         setOpenModal(false);
+        addMember([]);
       }
+    } else {
+      alert("Please  Select Member");
     }
   };
-
+  const hideModelHandler = () => {
+    setOpenModal();
+    addMember([]);
+  };
   return (
     <div className="row">
       <div className="col">
@@ -44,7 +59,7 @@ const DisplayGroupList = ({ groups, update, updateHandler, profileLists }) => {
               <span>
                 <button
                   className="btn btn-success mr-2"
-                  onClick={() => setOpenModal(true)}
+                  onClick={() => setOpenModalHandler(item.groupID)}
                 >
                   Manage Group
                 </button>
@@ -55,6 +70,7 @@ const DisplayGroupList = ({ groups, update, updateHandler, profileLists }) => {
                   groupId={item.groupID}
                   addMember={addMemberHandler}
                   saveGroup={saveGroupHandler}
+                  currentGroupMembers={membersInGroup}
                 />
                 <Delete
                   onClick={() => update({ deleted: true, id: item.groupID })}
