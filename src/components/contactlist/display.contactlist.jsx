@@ -6,7 +6,6 @@ import { ReactComponent as Close } from "../../assets/close.svg";
 import { ReactComponent as Share } from "../../assets/share.svg";
 const ContactList = ({ profileList, isShare, selected, hide, images }) => {
   //http://localhost:9082/shareFile
-  console.log(images);
   async function shareWith(id) {
     if (!window.confirm("Are You sure you want to Share Folder ?")) return;
 

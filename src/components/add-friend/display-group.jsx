@@ -3,7 +3,15 @@ import { ReactComponent as Delete } from "../../assets/delete.svg";
 import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import AddContactToGroup from "./manage-group";
 import { AddMemberToGroup, GetGroupMember } from "../../service/group-service";
-const DisplayGroupList = ({ groups, update, updateHandler, profileLists }) => {
+import { ReactComponent as Share } from "../../assets/share.svg";
+const DisplayGroupList = ({
+  groups,
+  update,
+  updateHandler,
+  profileLists,
+  isShare,
+  shareWith,
+}) => {
   const svgStyle = {
     height: "35px",
   };
@@ -56,31 +64,37 @@ const DisplayGroupList = ({ groups, update, updateHandler, profileLists }) => {
           {groups.map((item, index) => (
             <li className="list-group-item li-contact-list" key={index}>
               <span> {item.groupName}</span>
-              <span>
-                <button
-                  className="btn btn-success mr-2"
-                  onClick={() => setOpenModalHandler(item.groupID)}
-                >
-                  Manage Group
-                </button>
-                <AddContactToGroup
-                  show={openModal}
-                  profileLists={profileLists}
-                  hide={setOpenModal}
-                  groupId={item.groupID}
-                  addMember={addMemberHandler}
-                  saveGroup={saveGroupHandler}
-                  currentGroupMembers={membersInGroup}
-                />
-                <Delete
-                  onClick={() => update({ deleted: true, id: item.groupID })}
-                  style={svgStyle}
-                />
-                <Pencil
-                  onClick={() => updateHandler(item.groupID)}
-                  style={svgStyle}
-                />
-              </span>
+              {isShare && (
+                <Share onClick={() => shareWith(item.groupID)}></Share>
+              )}
+
+              {!isShare && (
+                <span>
+                  <button
+                    className="btn btn-success mr-2"
+                    onClick={() => setOpenModalHandler(item.groupID)}
+                  >
+                    Manage Group
+                  </button>
+                  <AddContactToGroup
+                    show={openModal}
+                    profileLists={profileLists}
+                    hide={setOpenModal}
+                    groupId={item.groupID}
+                    addMember={addMemberHandler}
+                    saveGroup={saveGroupHandler}
+                    currentGroupMembers={membersInGroup}
+                  />
+                  <Delete
+                    onClick={() => update({ deleted: true, id: item.groupID })}
+                    style={svgStyle}
+                  />
+                  <Pencil
+                    onClick={() => updateHandler(item.groupID)}
+                    style={svgStyle}
+                  />
+                </span>
+              )}
             </li>
           ))}
           {groups.length == 0 && (

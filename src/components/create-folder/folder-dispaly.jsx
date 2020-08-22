@@ -17,6 +17,7 @@ const FolderDisplay = ({ ToggleDescription ,onLeave, history,filteredFolder ,sea
         <CreateFolder
           text={item.fileName}
           des={item.fileDescription} 
+          owner={item.owner} 
           date ={item.dateCreated}
           fileId ={item.id}
           imageSrc="./icon.png"

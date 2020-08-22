@@ -15,6 +15,7 @@ const CreateFolder = ({
   editFolder,
   selectedFolderCount,
   displayValue,
+  owner,
 }) => {
   const style = {
     display: "flex",
@@ -66,6 +67,7 @@ const CreateFolder = ({
       <div className={`hoverDiv ${displayClass ? "active" : ""}`}>
         {/* <Select style ={{width:"30%",height:"30%"}} onClick = {()=>editFolder(text ,des ,fileId)}></Select> */}
       </div>
+      {owner && <span>({owner})</span>}
       <img
         onClick={() => nevigateFolder(fileId)}
         style={imageStyle}
