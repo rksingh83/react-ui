@@ -8,6 +8,7 @@ import { ReactComponent as Refresh } from "../../assets/referesh.svg";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
 import { ReactComponent as AddFriend } from "../../assets/add.svg";
 import { ReactComponent as Share } from "../../assets/shareimage.svg";
+import UploadForm from "../upload-image/upload-images";
 import ShareFolderModal from "../modal/share-folder-modal";
 import { Link } from "react-router-dom";
 import SharedListModal from "../modal/show-shared-list-modal";
@@ -58,9 +59,9 @@ const TopHeader = ({
     getFolders(fileId);
   };
   const saveHandler = () => {
-    if(!fileTag||!fileName){
-      alert('Please Enter Required Field') ;
-      return false ;
+    if (!fileTag || !fileName) {
+      alert("Please Enter Required Field");
+      return false;
     }
     saveFolder(fileName, fileTag, fileDescription, id);
     addName("");
@@ -103,6 +104,35 @@ const TopHeader = ({
   const deleteFolders = (requestFile, restArr) => {
     deleteHandler(requestFile, restArr);
   };
+  const fileUploadHandler = async (e) => {
+    //  e.preventDefault();
+
+    const formData = new FormData();
+    var d = new Date();
+    let imageName = d.getTime();
+    imageName = `jpg_${imageName}.jpg`;
+    //e.name = imageName;
+
+    formData.append("files", e, imageName);
+    //console.log(e.name);
+    try {
+      let res = await Post("/uploadImage", formData, {
+        headers: {
+          fileId: -1,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (res.status == 200) {
+        alert(res.data.message);
+        window.location.reload();
+      } else {
+        alert("Something went wrong try later");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="row secondary-header single-header" style={topRowStyle}>
       <div className="col-md-12">
@@ -117,6 +147,13 @@ const TopHeader = ({
               type="input"
               className="custom-input"
             ></input>
+          </div>
+          <div className="col-md-3 sec-header-item col-text-style">
+            <UploadForm  isUpload ={true} submitHandler={fileUploadHandler} />
+            <Refresh style ={{marginLeft:"2rem"}} onClick={() => setShow(true)} />{" "}
+            <span className="on-hover" onClick={() => setShow(true)}>
+              Create Folder
+            </span>
           </div>
           <div
             className={`  col-md-1  col-text-style ${
@@ -143,8 +180,9 @@ const TopHeader = ({
               Delete
             </span>
           </div>
+
           <div
-            className={`  col-md-1 col-text-style ${
+            className={`  col-md-2 col-text-style ${
               totalItem > 1 || totalItem == 0 ? "hideCount" : "sec-header-item"
             }`}
           >
@@ -155,15 +193,9 @@ const TopHeader = ({
             >
               Edit
             </span>
-          </div>
-          <div
-            className={`  col-md-2 col-text-style ${
-              totalItem > 1 || totalItem == 0 ? "hideCount" : "sec-header-item"
-            }`}
-          >
             <button
               onClick={showContactListModal}
-              className="btn btn-secondary"
+              className="btn btn-secondary ml-2"
             >
               Shared List
             </button>
@@ -174,19 +206,14 @@ const TopHeader = ({
               list={shareWithList}
             ></SharedListModal>
           </div>
-          <div className="col-md-2 sec-header-item col-text-style">
-            <Refresh onClick={() => setShow(true)} />{" "}
-            <span className="on-hover" onClick={() => setShow(true)}>
-              Create Folder
-            </span>
-          </div>
+
           <div className="col-md-1 col-text-style sec-header-item">
             <FolderCreate onClick={() => window.location.reload()} />{" "}
             <span className="on-hover" onClick={() => window.location.reload()}>
               Refresh
             </span>
           </div>
-          <div className="col-md-2  sec-header-item ">
+          <div className="col-md-1  sec-header-item ">
             <div
               className={` col-text-style ${
                 totalItem == 0 ? "hideCount" : "sec-header-item"
@@ -209,7 +236,7 @@ const TopHeader = ({
             name="folder"
             type="input"
           ></Input>
-            <Input
+          <Input
             placeholder="Enter your File Tag"
             label="Tag"
             value={fileTag}
