@@ -32,6 +32,14 @@ const TopHeader = ({
   const [shareFolder, setShareFolder] = useState(false);
   const [isOpenPop, setSharedListPop] = useState(false);
   const [shareWithList, setShareWithList] = useState([]);
+  const columnMinWidth = {
+    minWidth: "12.5%",
+    boxSizing: "border-box",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+  };
+
   async function getFolders(fileId) {
     try {
       const user = await Post("/getFileSharedList", {
@@ -151,7 +159,10 @@ const TopHeader = ({
           <div className="col-md-1 sec-header-item col-text-style">
             <UploadForm isUpload={true} submitHandler={fileUploadHandler} />
           </div>
-          <div className="col-md-2 pl-4 sec-header-item col-text-style">
+          <div
+            style={columnMinWidth}
+            className="col-md-1 sec-header-item col-text-style"
+          >
             <Refresh
               style={{ marginLeft: "2rem" }}
               onClick={() => setShow(true)}
@@ -161,9 +172,19 @@ const TopHeader = ({
             </span>
           </div>
           <div
+            style={columnMinWidth}
+            className="col-md-1 col-text-style sec-header-item"
+          >
+            <FolderCreate onClick={() => window.location.reload()} />{" "}
+            <span className="on-hover" onClick={() => window.location.reload()}>
+              Refresh
+            </span>
+          </div>
+          <div
             className={`  col-md-1  col-text-style ${
               totalItem == 0 ? "hideCount" : "sec-header-item"
             }`}
+            style={columnMinWidth}
           >
             <Share onClick={() => setShareFolder(true)} />{" "}
             <ShareFolderModal
@@ -179,6 +200,7 @@ const TopHeader = ({
             className={`  col-md-1  col-text-style ${
               totalItem == 0 ? "hideCount" : "sec-header-item"
             }`}
+            style={columnMinWidth}
           >
             <Delete onClick={() => reNameFolder(true)} />{" "}
             <span className="on-hover" onClick={() => reNameFolder(true)}>
@@ -187,9 +209,10 @@ const TopHeader = ({
           </div>
 
           <div
-            className={`  col-md-2 col-text-style ${
+            className={`  col-md-1 col-text-style ${
               totalItem > 1 || totalItem == 0 ? "hideCount" : "sec-header-item"
             }`}
+            style={columnMinWidth}
           >
             <Pencil onClick={() => reNameFolder(false)} />{" "}
             <span
@@ -212,20 +235,14 @@ const TopHeader = ({
             ></SharedListModal> */}
           </div>
 
-          <div className="col-md-1 col-text-style sec-header-item">
-            <FolderCreate onClick={() => window.location.reload()} />{" "}
-            <span className="on-hover" onClick={() => window.location.reload()}>
-              Refresh
-            </span>
-          </div>
-          <div className="col-md-1  sec-header-item ">
+          <div style={columnMinWidth} className="col-md-1  sec-header-item ">
             <div
               className={` col-text-style ${
                 totalItem == 0 ? "hideCount" : "sec-header-item"
               }`}
             >
               <span className="count badge badge-info mr-1">{totalItem} </span>{" "}
-              Selected{" "}
+              <span style ={{padding:"0 10px"}}> Selected</span>
               <Cross
                 className="ml-1"
                 onClick={() => window.location.reload()}
