@@ -131,7 +131,7 @@ export const ForgotPassword = ({history})=>{
     .then(res=>{
    
        if(res.data.error){
-        alert.error(res.data.error) 
+        alert(res.data.error) 
 
        }
        if(res.data.code==200){
