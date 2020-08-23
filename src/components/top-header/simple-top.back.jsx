@@ -129,6 +129,16 @@ const TopHeaderWithBack = ({
   return (
     <div className="row secondary-header single-header" style={topRowStyle}>
       <ToastContainer />
+      <div className="col-md-2  sec-header-item">
+            <input
+              placeholder="Search anything.."
+              value={props.imageSearchInput}
+              onChange={props.searchImageHandler}
+              name="search"
+              type="input"
+              className="custom-input"
+            ></input>
+            </div>
       <div
         className="col-md-4 ml-2 sec-header-item"
         style={{

@@ -10,11 +10,11 @@ import TopHeaderWithBack from "../top-header/simple-top.back";
 import SharedHeader from "../top-header/shared-header";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import { Link } from "react-router-dom";
-const UploadFile = ({ match, history, sharedWithMe ,setFolderFlag }) => {
+const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const [file, setFile] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState([]);
-  const [currentFolderName, setCurrentFolderName] = useState('');
+  const [currentFolderName, setCurrentFolderName] = useState("");
   const [imageDescription, setImagesDescription] = useState("Hi");
   const [pageNumber, setPageNumber] = useState("");
   const [date, setDate] = useState("");
@@ -23,10 +23,24 @@ const UploadFile = ({ match, history, sharedWithMe ,setFolderFlag }) => {
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [folderId, setFolderId] = useState(match.params.id);
   const [imagesUpdate, setImagesUpdate] = useState([]);
+  const [filteredImages, setFilteredImages] = useState("");
+  const [searchImage, setSearchImage] = useState("");
 
   const sideBarStyle = {
     border: "1px solid rgba(0, 0, 0, 0.125)",
     height: "90vh",
+  };
+  const searchImageHandler = (e) => {
+    setSearchImage(e.target.value);
+    setFilteredImages(
+      images.filter((item) => {
+        if (item.title) {
+          return item.title
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase());
+        }
+      })
+    );
   };
 
   const totalEle = ["My Files", "Share With Me"];
@@ -67,8 +81,8 @@ const UploadFile = ({ match, history, sharedWithMe ,setFolderFlag }) => {
         history.push("/logout");
       }
       setImages(images.data.imageInput);
-      console.log(images.data)
-      setCurrentFolderName(images.data.fileName)
+      console.log(images.data);
+      setCurrentFolderName(images.data.fileName);
       setIsLoading(false);
     } catch (error) {}
   }
@@ -82,8 +96,8 @@ const UploadFile = ({ match, history, sharedWithMe ,setFolderFlag }) => {
         history.push("/logout");
       }
       setImages(images.data.imageInput);
-      console.log(images.data)
-      setCurrentFolderName(images.data.fileName)
+      console.log(images.data);
+      setCurrentFolderName(images.data.fileName);
       setIsLoading(false);
     } catch (error) {}
   }
@@ -99,12 +113,12 @@ const UploadFile = ({ match, history, sharedWithMe ,setFolderFlag }) => {
           history={history}
           images={images}
           setImages={setImages}
-          currentFolder ={currentFolderName}
+          currentFolder={currentFolderName}
+          searchImageHandler={searchImageHandler}
+          imageSearchInput={searchImage}
         />
       )}
-      {sharedWithMe == "SHARED" && (
-        <SharedHeader history={history}  />
-      )}
+      {sharedWithMe == "SHARED" && <SharedHeader history={history} />}
       <div className="row">
         <div className="col-md-2 custom-pad-li  d-none d-sm-block">
           <Link className="logo-container" to="/">
@@ -142,6 +156,8 @@ const UploadFile = ({ match, history, sharedWithMe ,setFolderFlag }) => {
             folderId={folderId}
             updateHandler={updateHandler}
             isLoading={isLoading}
+            filteredImages={filteredImages}
+            searchInput={searchImage}
           />
         </div>
       </div>
@@ -155,5 +171,5 @@ const mapDispatchToProps = (dispatch) => ({
   setFolderFlag: (flag) => dispatch(setFolderFlag(flag)),
 });
 
-export default connect(mapStateToPros ,mapDispatchToProps)(UploadFile);
+export default connect(mapStateToPros, mapDispatchToProps)(UploadFile);
 //export default UploadFile;

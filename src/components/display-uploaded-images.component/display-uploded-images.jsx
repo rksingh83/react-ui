@@ -13,9 +13,12 @@ const DisplayImages = ({
   onHove,
   history,
   updateHandler,
+  filteredImages,
+  searchInput,
 }) => {
   const [isEditShow, setIsEditShow] = useState(false);
   const [imagesList, setImagesList] = useState([]);
+  let localRender = searchInput == "" ? images : filteredImages;
   if (isLoading) {
     return (
       <div className="loader-display">
@@ -53,7 +56,7 @@ const DisplayImages = ({
         onMouseLeave={() => setIsEditShow(false)}
         style={{ display: "flex", flexWrap: "wrap" }}
       >
-        {images.map((item, index) => (
+        {localRender.map((item, index) => (
           <div
             className="image-container"
             onMouseEnter={() =>
@@ -73,7 +76,7 @@ const DisplayImages = ({
               src={item.raw_image_org}
               onClick={() => history.push(`/original/${item.id}/${folderId}`)}
             ></img>
-            {item.title && <span className ='img-title'>{item.title}</span>}
+            {item.title && <span className="img-title">{item.title}</span>}
           </div>
         ))}
       </div>
