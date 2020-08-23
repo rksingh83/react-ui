@@ -99,23 +99,12 @@ const TopHeaderWithBack = ({
     }
   };
   const editHandler = () => {
-    //   setImages(updateImages[0]);
     getCurrentPage(imageId);
-
-    //   setPageNo(updateImages[0].pageNumber);
-    //   setDesc(updateImages[0].description);
-    // };
-    // const saveHandler = () => {
-    //   const requestPayLoad = {
-    //     imageInput: [
-    //       { id: updateImages[0].id, pageNumber: pageNo, description: desc },
-    //     ],
-    //   };
-    //   updateToServer(requestPayLoad);
-    //   setIsShow(false);
   };
   // on Save of Edit modal this will close Modal
-  const closeEditModal = () => setIsShow(false);
+  const closeEditModal = () => {
+    window.location.reload();
+  };
   useEffect(() => {
     //  getCurrentPage();
     if (updateImages.length > 0) setImageId(updateImages[0].id);
@@ -130,17 +119,17 @@ const TopHeaderWithBack = ({
     <div className="row secondary-header single-header" style={topRowStyle}>
       <ToastContainer />
       <div className="col-md-2  sec-header-item">
-            <input
-              placeholder="Search anything.."
-              value={props.imageSearchInput}
-              onChange={props.searchImageHandler}
-              name="search"
-              type="input"
-              className="custom-input"
-            ></input>
-            </div>
+        <input
+          placeholder="Search By Title"
+          value={props.imageSearchInput}
+          onChange={props.searchImageHandler}
+          name="search"
+          type="input"
+          className="custom-input"
+        ></input>
+      </div>
       <div
-        className="col-md-4 ml-2 sec-header-item"
+        className="col-md-2 ml-2 sec-header-item"
         style={{
           display: id ? "" : "none",
           display: "flex",

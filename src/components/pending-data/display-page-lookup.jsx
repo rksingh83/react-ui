@@ -130,6 +130,23 @@ const PendingPageData = ({
         </div>
         <div className="col-md-8">
           <div className="row">
+            <div className="col-md-3 mb-2 page-lookup-heading">File Title</div>
+            <div className="col-md-3 segmentation">
+              <img
+                style={imageStyle}
+                src={data.pageLookup.segmentationImagePath}
+                className="img-height"
+              />
+            </div>
+            <div className="col-md-6">
+              <Input
+                type="text"
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
+              />
+            </div>
+          </div>
+          <div className="row">
             <div className="col-md-3 page-lookup-heading">File Name</div>
             <div className="col-md-3 page-lookup-heading"></div>
             <div className="col-md-6">
@@ -177,23 +194,6 @@ const PendingPageData = ({
             </div>
           </div>
 
-          <div className="row">
-            <div className="col-md-3 mb-2 page-lookup-heading">File Title</div>
-            <div className="col-md-3 segmentation">
-              <img
-                style={imageStyle}
-                src={data.pageLookup.segmentationImagePath}
-                className="img-height"
-              />
-            </div>
-            <div className="col-md-6">
-              <Input
-                type="text"
-                onChange={(e) => setTitle(e.target.value)}
-                value={title}
-              />
-            </div>
-          </div>
           <div className="row">
             <div className="col-md-2 page-lookup-heading">Share</div>
             <div className="col-md-4">

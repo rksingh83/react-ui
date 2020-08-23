@@ -8,7 +8,7 @@ const OpenEditPop = ({
   currentLookup,
   folderId,
   history,
-  removeSavedImageId,
+  removeImageId,
 }) => {
   const setValue = (e) => {
     e.target.value = e.target.value;
@@ -22,7 +22,7 @@ const OpenEditPop = ({
           currentImageId={imageId}
           history={history}
           pendingFolderId={folderId}
-          removeImageId={removeSavedImageId}
+          removeImageId={removeImageId}
         ></LoadLookup>
       </Modal.Body>
       <Modal.Footer>
