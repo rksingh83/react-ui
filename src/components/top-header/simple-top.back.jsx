@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
 import { Post, Get } from "../../service/service.setup";
 import { ReactComponent as Photo } from "../../assets/photo.svg";
@@ -12,6 +12,7 @@ import { ReactComponent as Share } from "../../assets/shareimage.svg";
 import { ReactComponent as FolderSvg } from "../../assets/folder-name.svg";
 import ShareFolderModal from "../modal/share-folder-modal";
 import SharedListModal from "../modal/show-shared-list-modal";
+import { getPendingPageById } from "../../service/pendingData";
 const TopHeaderWithBack = ({
   history,
   id,
@@ -19,17 +20,15 @@ const TopHeaderWithBack = ({
   updateImages,
   ...props
 }) => {
-  
   const [file, setFile] = useState("");
   const [showModel, setShowModel] = useState(false);
   const [isShow, setIsShow] = useState(false);
   const [images, setImages] = useState({});
-  const [pageNo, setPageNo] = useState("");
-  // console.log(updateImages);
-  const [desc, setDesc] = useState("");
+  const [imageId, setImageId] = useState(0);
   const [shareFolder, setShareFolder] = useState(false);
   const [isOpenPop, setSharedListPop] = useState(false);
   const [shareWithList, setShareWithList] = useState([]);
+  const [currentLookup, setCurrentLookup] = useState(false);
   async function getFolders(id, fileId) {
     try {
       const user = await Post("/getPageSharedList", {
@@ -100,19 +99,32 @@ const TopHeaderWithBack = ({
     }
   };
   const editHandler = () => {
-    setImages(updateImages[0]);
-    setIsShow(true);
-    setPageNo(updateImages[0].pageNumber);
-    setDesc(updateImages[0].description);
+    //   setImages(updateImages[0]);
+    getCurrentPage(imageId);
+
+    //   setPageNo(updateImages[0].pageNumber);
+    //   setDesc(updateImages[0].description);
+    // };
+    // const saveHandler = () => {
+    //   const requestPayLoad = {
+    //     imageInput: [
+    //       { id: updateImages[0].id, pageNumber: pageNo, description: desc },
+    //     ],
+    //   };
+    //   updateToServer(requestPayLoad);
+    //   setIsShow(false);
   };
-  const saveHandler = () => {
-    const requestPayLoad = {
-      imageInput: [
-        { id: updateImages[0].id, pageNumber: pageNo, description: desc },
-      ],
-    };
-    updateToServer(requestPayLoad);
-    setIsShow(false);
+  // on Save of Edit modal this will close Modal
+  const closeEditModal = () => setIsShow(false);
+  useEffect(() => {
+    //  getCurrentPage();
+    if (updateImages.length > 0) setImageId(updateImages[0].id);
+  }, [updateImages]);
+  const getCurrentPage = async (imageId) => {
+    const response = await getPendingPageById(imageId);
+    console.log(response);
+    setCurrentLookup(response.data && response.data);
+    setIsShow(true);
   };
   return (
     <div className="row secondary-header single-header" style={topRowStyle}>
@@ -193,16 +205,14 @@ const TopHeaderWithBack = ({
         >
           <Pencil onClick={editHandler} className="header-icon" />
           <OpenEditPop
-            onClose={setIsShow}
-            className="header-icon"
+            currentLookup={currentLookup}
+            imageId={imageId}
+            history={history}
+            folderId={id}
+            removeImageId={closeEditModal}
             isShow={isShow}
-            images={images}
-            setPageNo={setPageNo}
-            setDesc={setDesc}
-            pageNo={pageNo}
-            desc={desc}
-            saveHandler={saveHandler}
-          />
+            onClose={setIsShow}
+          ></OpenEditPop>
         </div>
       </div>
       <div className="col-md-2 sec-header-item">
