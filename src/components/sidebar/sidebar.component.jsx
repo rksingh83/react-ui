@@ -60,7 +60,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     setSharedSearchHandler(e.target.value);
     setSharedFilteredFolder(
       sharedWithMeFolder.filter((item) =>
-        item.fileName.toLowerCase().includes(e.target.value.toLowerCase())
+        item.fileName.toLowerCase().includes(e.target.value.toLowerCase())||item.owner.toLowerCase().includes(e.target.value.toLowerCase())
       )
     );
   };
