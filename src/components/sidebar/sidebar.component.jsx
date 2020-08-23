@@ -295,6 +295,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
                 ToggleDescription={ToggleDescription}
                 onLeave={hideDescriptionHandler}
                 filteredFolder={sharedFilteredFolder}
+                isShare ={true}
               />
             )}
             {sharedWithMe == "PENDING" && currentLookup && (

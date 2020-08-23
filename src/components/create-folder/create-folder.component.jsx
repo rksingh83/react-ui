@@ -17,8 +17,9 @@ const CreateFolder = ({
   displayValue,
   owner,
   isPending,
+  isShare,
 }) => {
-  console.log(isPending)
+  console.log(isPending);
   const style = {
     display: "flex",
     alignItems: "center",
@@ -58,7 +59,7 @@ const CreateFolder = ({
       className={`mainDiv `}
       style={style}
     >
-      {!isPending && (
+      {!isPending && !isShare && (
         <Tick
           style={{
             display: displayClass ? "block" : "",
@@ -80,7 +81,6 @@ const CreateFolder = ({
         {text}
         <br></br>
         {owner && <span>({owner})</span>}
-
       </p>
     </div>
   );

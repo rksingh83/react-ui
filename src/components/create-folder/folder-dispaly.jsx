@@ -12,8 +12,8 @@ const FolderDisplay = ({
   isLoading,
   folders,
   reNameFolder,
-  handleEditShow,
   selectedFolderCount,
+  isShare
 }) => {
   let localRender = searchItem == "" ? folders : filteredFolder;
   if (isLoading) {
@@ -42,7 +42,8 @@ const FolderDisplay = ({
             ToggleDescription={ToggleDescription}
             selectedFolderCount={selectedFolderCount}
             onLeave={onLeave}
-            isPending={item.pending}
+            isPending={item.pending} 
+            isShare = {isShare}
           ></CreateFolder>
         ))}
       </div>

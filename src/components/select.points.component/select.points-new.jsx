@@ -5,6 +5,7 @@ import "./points.style.scss";
 import { Post, Get } from "../../service/service.setup";
 //import './create-image.style.scss' ;
 import { ReactComponent as Cross } from "../../assets/edit.svg";
+import { ReactComponent as Refresh } from "../../assets/refresh-point.svg";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import $ from "jquery";
@@ -303,6 +304,9 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
                 </li>
               </ul>
               <ul className="navbar-nav ml-auto text-white">
+                <li className="nav-item">
+                  <Refresh className ='mr-2' style ={{height:'35px'}} onClick={() => window.location.reload()} />
+                </li>
                 <li className="nav-item">
                   <button
                     className=" mr-2 btn btn-success"
