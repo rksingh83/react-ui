@@ -29,6 +29,13 @@ const TopHeaderWithBack = ({
   const [isOpenPop, setSharedListPop] = useState(false);
   const [shareWithList, setShareWithList] = useState([]);
   const [currentLookup, setCurrentLookup] = useState(false);
+  const columnMinWidth = {
+    minWidth: "12.5%",
+    boxSizing: "border-box",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+  };
   async function getFolders(id, fileId) {
     try {
       const user = await Post("/getPageSharedList", {
@@ -79,8 +86,8 @@ const TopHeaderWithBack = ({
     }
   };
   const topRowStyle = {
-    padding: "10px 10px",
     background: "rgba(0, 0, 0, 0.125)",
+    padding:"5px 0px"
   };
   const deleteHandler = () => {
     if (!window.confirm("Are You sure you want to delete ?")) return;
@@ -128,24 +135,23 @@ const TopHeaderWithBack = ({
           className="custom-input"
         ></input>
       </div>
-      <div
-        className="col-md-2 ml-2 sec-header-item"
-        style={{
-          display: id ? "" : "none",
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
+      <div className="col-md-1 ml-2 sec-header-item" style={columnMinWidth}>
         <span className="badge badge-info p-2">
-          Books> <span>{currentFolder}</span>
+          My Books <span>{currentFolder}</span>
         </span>
+      </div>
+      <div
+        className="col-md-2 sec-header-item col-text-style"
+        style={columnMinWidth}
+      >
         <form
-          className="mr-4"
+          className=""
           style={{ display: "inline" }}
           onSubmit={submitHandler}
         >
           <label className="input-label">
-            <Photo style={{ width: "30px" }} />
+            <Photo style={{ height: "35px", marginBottom: "3px" }} />
+            <span>Upload</span>
             <input
               className="input-file"
               onChange={(e) => submitHandler(e.target.files[0])}
@@ -160,25 +166,32 @@ const TopHeaderWithBack = ({
             value="Upload"
           /> */}
         </form>
-        <button
+        {/* <button
           className="btn-success ml-4 btn d-none"
           onClick={() => setShowModel(true)}
         >
           Open WebCam
         </button>
-        <WebCamModel id={id} hide={setShowModel} show={showModel} />
+        <WebCamModel id={id} hide={setShowModel} show={showModel} /> */}
       </div>
 
-      <div className="col-md-2 sec-header-item">
+      <div
+        className="col-md-2 sec-header-item col-text-style"
+        style={columnMinWidth}
+      >
         <div
           style={{
             display: updateImages && updateImages.length > 0 ? "" : "none",
           }}
         >
           <Delete onClick={deleteHandler} className="header-icon" />
+          Delete
         </div>
       </div>
-      <div className="col-md-1 sec-header-item">
+      <div
+        className="col-md-1 sec-header-item col-text-style"
+        style={columnMinWidth}
+      >
         <div
           style={{
             display: updateImages && updateImages.length > 0 ? "" : "none",
@@ -196,13 +209,17 @@ const TopHeaderWithBack = ({
           </span>
         </div>
       </div>
-      <div className="col-md-1 sec-header-item">
+      <div
+        className="col-md-1 sec-header-item col-text-style"
+        style={columnMinWidth}
+      >
         <div
           style={{
             display: updateImages && updateImages.length == 1 ? "" : "none",
           }}
         >
           <Pencil onClick={editHandler} className="header-icon" />
+          <span>Edit</span>
           <OpenEditPop
             currentLookup={currentLookup}
             imageId={imageId}
@@ -214,24 +231,7 @@ const TopHeaderWithBack = ({
           ></OpenEditPop>
         </div>
       </div>
-      <div className="col-md-2 sec-header-item">
-        <div
-          style={{
-            display: updateImages && updateImages.length == 1 ? "" : "none",
-          }}
-        >
-          <button onClick={showContactListModal} className="btn btn-secondary">
-            Shared List
-          </button>
-          <SharedListModal
-            hide={setSharedListPop}
-            show={isOpenPop}
-            list={shareWithList}
-          ></SharedListModal>
-        </div>
-      </div>
-
-      <div className=" ml-auto col-md-1">
+      <div className=" ml-auto col-md-1 sec-header-item col-text-style">
         <button
           onClick={() => history.goBack()}
           className="btn btn-success float-right"
