@@ -148,14 +148,16 @@ const TopHeader = ({
               className="custom-input"
             ></input>
           </div>
-          <div className="col-md-3 sec-header-item col-text-style">
+          <div className="col-md-1 sec-header-item col-text-style">
             <UploadForm isUpload={true} submitHandler={fileUploadHandler} />
+          </div>
+          <div className="col-md-2 pl-4 sec-header-item col-text-style">
             <Refresh
               style={{ marginLeft: "2rem" }}
               onClick={() => setShow(true)}
             />{" "}
             <span className="on-hover" onClick={() => setShow(true)}>
-              Create Folder
+              Create Book
             </span>
           </div>
           <div
@@ -196,7 +198,7 @@ const TopHeader = ({
             >
               Edit
             </span>
-            <button
+            {/* <button
               onClick={showContactListModal}
               className="btn btn-secondary ml-2"
             >
@@ -207,7 +209,7 @@ const TopHeader = ({
               show={isOpenPop}
               folderId={folderId}
               list={shareWithList}
-            ></SharedListModal>
+            ></SharedListModal> */}
           </div>
 
           <div className="col-md-1 col-text-style sec-header-item">
@@ -223,7 +225,11 @@ const TopHeader = ({
               }`}
             >
               <span className="count badge badge-info mr-1">{totalItem} </span>{" "}
-              Selected <Cross className ='ml-1' onClick={() => window.location.reload()}></Cross>
+              Selected{" "}
+              <Cross
+                className="ml-1"
+                onClick={() => window.location.reload()}
+              ></Cross>
             </div>
           </div>
         </div>

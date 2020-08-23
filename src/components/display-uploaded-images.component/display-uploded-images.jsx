@@ -68,7 +68,7 @@ const DisplayImages = ({
             <Tick className="tick" onClick={(e) => toggleEl(item.id, e)} />
             <div className="editIcon"></div>
             <img
-              style={{ height: "100px" }}
+              style={{ height: "96%" }}
               src={require("../../assets/spiral.png")}
             ></img>
             <img

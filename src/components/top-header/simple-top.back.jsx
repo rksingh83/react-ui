@@ -236,7 +236,7 @@ const TopHeaderWithBack = ({
           onClick={() => history.goBack()}
           className="btn btn-success float-right"
         >
-          Go Back
+          Back
         </button>
       </div>
     </div>

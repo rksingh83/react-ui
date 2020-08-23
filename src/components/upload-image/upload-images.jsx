@@ -6,9 +6,10 @@ const UploadForm = ({ submitHandler, isUpload }) => {
     : { width: "76px", height: "44px" };
 
   return (
-    <form className="mr-4 mt-2" onSubmit={submitHandler}>
+    <form className="" onSubmit={submitHandler}>
       <div style={{ position: "relative" }}>
-        {isUpload && <Photo style={{ width: "30px" }} />}
+        {isUpload && <Photo style={{ height: "35px", marginBottom: "14px" }} />}
+        {isUpload && <span>Upload</span>}
         {!isUpload && <label className="btn btn-success">Retake</label>}
         <input
           className="input-file"

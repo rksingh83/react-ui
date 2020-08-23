@@ -11,7 +11,7 @@ const sharedHeader = ({
     <div className="row">
       <div className="col-md-12">
         <nav
-          style={{ minHeight: "3rem" }}
+          style={{ minHeight: "3rem" , paddingLeft:"0px" }}
           className="navbar navbar-expand-lg navbar-light sec-header-bg single-header"
         >
           <button
@@ -29,13 +29,26 @@ const sharedHeader = ({
             {back && (
               <li className="nav-item">
                 <input
-                  placeholder="Search anything.."
+                  placeholder="Search By User"
                   value={searchItem}
                   onChange={searchHandler}
                   onBlur={fillAllDataHandler}
                   name="search"
                   type="input"
                   className="custom-input"
+                ></input>
+              </li>
+            )} 
+             {back && (
+              <li className="nav-item">
+                <input
+                  placeholder="Search By File Name."
+                  value={searchItem}
+                  onChange={searchHandler}
+                  onBlur={fillAllDataHandler}
+                  name="search"
+                  type="input"
+                  className="custom-input ml-2"
                 ></input>
               </li>
             )}

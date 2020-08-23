@@ -43,7 +43,7 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
     );
   };
 
-  const totalEle =  ["Books", "Shared Books", "Pending"];
+  const totalEle =  [" My Books", "Shared Books", "Pending"];
   const [LiElement, setLiEl] = useState(totalEle);
   const handleActive = (e) => {
     setActiveIndex(LiElement.indexOf(e));
@@ -131,13 +131,13 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
                   changeActive={handleActive}
                 />
               ))}
-              <DisplayImageDescription
+              {/* <DisplayImageDescription
                 pageNumber={pageNumber}
                 iSDisplayDiv={iSDisplayDiv}
                 isShowNumber={true}
                 date={date}
                 imageDescription={imageDescription}
-              />
+              /> */}
             </ul>
           </Link>
         </div>
