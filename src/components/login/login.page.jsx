@@ -59,7 +59,7 @@ const LoginPage = ({ history, setCurrentUser, setCurrentFile }) => {
     <>
     <div className ="row" style ={{justifyContent:"center"}}>
     <div className="row logo-div" style ={{justifyContent:"center"}}>
-          <img  style ={{height:"55px" ,marginTop:"10px"}}src= {require('../../assets/logo.png')}></img>
+          <img  style ={{height:"75px" ,marginTop:"10px"}}src= {require('../../assets/logo.png')}></img>
         </div>
     </div>
     <div className="row mt-4">

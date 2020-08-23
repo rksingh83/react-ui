@@ -18,7 +18,7 @@ const ImageSlider = ({
   setImageId,
   setFolderFlag
 }) => {
-  const totalEle = [ "My Files", "Share With Me"];
+  const totalEle = ["Books", "Shared Books", "Pending"];
   const [LiElement, setLiEl] = useState(totalEle);
   const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
   const [activeIndex, setActiveIndex] = useState(currentIndex);

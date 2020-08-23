@@ -68,11 +68,11 @@ class SingnUp extends React.Component{
         </Input>
         <Input  placeholder ="Enter password Name" label ='Password'
          value ={password} handleChange={this.handleChange} name='password'
-         type='input'>
+         type='password'>
         </Input>
         <Input  placeholder ="Confirm your password" label ='Confirm Password'
          value ={cnfpass} handleChange={this.handleChange} name='cnfpass'
-         type='input'>
+         type='password'>
         </Input>
         <Input label =''
          value = "SIGN UP"  className= "btn btn-success btn-block" onClick={this.handleSubmit} name='cnfpass'

@@ -22,7 +22,7 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [isEdit, setIsEdit] = useState(false);
   const [imagePoints, setImagePoints] = useState({});
-  const totalEle = ["My Files", "Share With Me", "Pending"];
+  const totalEle = ["Books", "Shared Books", "Pending"];
   const [LiElement, setLiEl] = useState(totalEle);
   const [oneStyle, setOneStyle] = useState({});
   const [twoStyle, setTwoStyle] = useState({});
