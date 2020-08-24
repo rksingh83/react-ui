@@ -17,7 +17,7 @@ import {
 } from "../../service/pendingData";
 
 const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
-  const totalEle = ["Books", "Shared Books", "Pending"];
+  const totalEle = ["My Books", "Shared Books", "Pending"];
   const TextMAp = { HOME: 0, SHARED: 1, PENDING: 2 };
   const [totalFolder, setTotalFolder] = useState([]);
   const [selectedFolder, setSelectedFolder] = useState({});

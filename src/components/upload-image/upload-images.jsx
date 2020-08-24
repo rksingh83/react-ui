@@ -8,7 +8,7 @@ const UploadForm = ({ submitHandler, isUpload }) => {
   return (
     <form className="" onSubmit={submitHandler}>
       <div style={{ position: "relative" }}>
-        {isUpload && <Photo style={{ height: "35px", marginBottom: "14px" }} />}
+        {isUpload && <Photo style={{ height: "35px", marginBottom: "10px" }} />}
         {isUpload && <span className="on-hover">Upload</span>}
         {!isUpload && <label className="btn btn-success">Retake</label>}
         <input

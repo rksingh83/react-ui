@@ -22,7 +22,7 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [isEdit, setIsEdit] = useState(false);
   const [imagePoints, setImagePoints] = useState({});
-  const totalEle = ["Books", "Shared Books", "Pending"];
+  const totalEle = ["My Books", "Shared Books", "Pending"];
   const [LiElement, setLiEl] = useState(totalEle);
   const [oneStyle, setOneStyle] = useState({});
   const [twoStyle, setTwoStyle] = useState({});
@@ -305,7 +305,11 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
               </ul>
               <ul className="navbar-nav ml-auto text-white">
                 <li className="nav-item">
-                  <Refresh className ='mr-2' style ={{height:'35px'}} onClick={() => window.location.reload()} />
+                  <Refresh
+                    className="mr-2"
+                    style={{ height: "35px" }}
+                    onClick={() => window.location.reload()}
+                  />
                 </li>
                 <li className="nav-item">
                   <button

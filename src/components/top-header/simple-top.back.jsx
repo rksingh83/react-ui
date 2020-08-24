@@ -87,7 +87,7 @@ const TopHeaderWithBack = ({
   };
   const topRowStyle = {
     background: "rgba(0, 0, 0, 0.125)",
-    padding:"5px 0px"
+    padding: "5px 0px",
   };
   const deleteHandler = () => {
     if (!window.confirm("Are You sure you want to delete ?")) return;
@@ -137,7 +137,7 @@ const TopHeaderWithBack = ({
       </div>
       <div className="col-md-1 ml-2 sec-header-item" style={columnMinWidth}>
         <span className="badge badge-info p-2">
-          My Books <span>{currentFolder}</span>
+          My My Books <span>{currentFolder}</span>
         </span>
       </div>
       <div
