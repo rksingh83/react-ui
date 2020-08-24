@@ -6,12 +6,14 @@ const sharedHeader = ({
   searchHandler,
   fillAllDataHandler,
   searchItem,
+  setSharedFileSearchHandler,
+  setSharedFileSearInput,
 }) => {
   return (
     <div className="row">
       <div className="col-md-12">
         <nav
-          style={{ minHeight: "3rem" , paddingLeft:"0px" }}
+          style={{ minHeight: "3rem", paddingLeft: "0px" }}
           className="navbar navbar-expand-lg navbar-light sec-header-bg single-header"
         >
           <button
@@ -38,14 +40,14 @@ const sharedHeader = ({
                   className="custom-input"
                 ></input>
               </li>
-            )} 
-             {back && (
+            )}
+            {back && (
               <li className="nav-item">
                 <input
                   placeholder="Search By File Name."
-                  value={searchItem}
-                  onChange={searchHandler}
-                  onBlur={fillAllDataHandler}
+                  value={setSharedFileSearInput}
+                  onChange={setSharedFileSearchHandler}
+                  onBlur={setSharedFileSearchHandler}
                   name="search"
                   type="input"
                   className="custom-input ml-2"

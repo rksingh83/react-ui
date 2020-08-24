@@ -36,6 +36,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   const [sharedWithMeFolder, setSharedWithMeFolder] = useState([]);
   const [sharedSearchItem, setSharedSearchHandler] = useState("");
   const [sharedFilteredFolder, setSharedFilteredFolder] = useState("");
+  const [sharedFileSearchInput, setSharedFileSearch] = useState("");
   // PENDING COMPONENT
   const [allPendingLIst, setPendingList] = useState([]);
   const [currentImage, setCurrentImage] = useState("");
@@ -60,11 +61,23 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     setSharedSearchHandler(e.target.value);
     setSharedFilteredFolder(
       sharedWithMeFolder.filter((item) =>
-        item.fileName.toLowerCase().includes(e.target.value.toLowerCase())||item.owner.toLowerCase().includes(e.target.value.toLowerCase())
+        item.owner.toLowerCase().includes(e.target.value.toLowerCase())
       )
     );
   };
-
+  // shared File Search Handler
+  const sharedFileSearchHandler = (e) => {
+    let searchOn =
+      sharedFilteredFolder.length == 0
+        ? sharedWithMeFolder
+        : sharedFilteredFolder;
+    setSharedFileSearch(e.target.value);
+    setSharedFilteredFolder(
+      searchOn.filter((item) =>
+        item.fileName.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
+  };
   const saveFolder = (fileName, fileTag, fileDescription, id) => {
     setIsLoading(true);
     const dateCreated = "123";
@@ -235,6 +248,8 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
           selectedItems={selectedFolder}
           searchItem={sharedSearchItem}
           searchHandler={sharedSearchHandler}
+          setSharedFileSearchHandler={sharedFileSearchHandler}
+          sharedFileSearchInput={sharedFileSearchInput}
           back={true}
         />
       )}
@@ -244,7 +259,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
           pendingFolderId={pendingFolderId}
           next={nextHandler}
           prev={prevHandler}
-          all ={allPendingLIst}
+          all={allPendingLIst}
         />
       )}
 
@@ -295,7 +310,8 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
                 ToggleDescription={ToggleDescription}
                 onLeave={hideDescriptionHandler}
                 filteredFolder={sharedFilteredFolder}
-                isShare ={true}
+                isShare={true}
+                sharedFileSearchInput={sharedFileSearchInput}
               />
             )}
             {sharedWithMe == "PENDING" && currentLookup && (

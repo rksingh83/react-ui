@@ -13,9 +13,18 @@ const FolderDisplay = ({
   folders,
   reNameFolder,
   selectedFolderCount,
-  isShare
+  isShare,
+  sharedFileSearchInput,
 }) => {
-  let localRender = searchItem == "" ? folders : filteredFolder;
+  let localRender = [];
+  if (isShare) {
+    localRender =
+      searchItem == "" && sharedFileSearchInput == ""
+        ? folders
+        : filteredFolder;
+  } else {
+    localRender = searchItem == "" ? folders : filteredFolder;
+  }
   if (isLoading) {
     return (
       <div className="loader-display">
@@ -42,8 +51,8 @@ const FolderDisplay = ({
             ToggleDescription={ToggleDescription}
             selectedFolderCount={selectedFolderCount}
             onLeave={onLeave}
-            isPending={item.pending} 
-            isShare = {isShare}
+            isPending={item.pending}
+            isShare={isShare}
           ></CreateFolder>
         ))}
       </div>
