@@ -1,32 +1,41 @@
-import React, { useState, useEffect } from "react";
-import Modal from "react-bootstrap/Modal";
-import { Post, Get } from "../../service/service.setup";
+import React, { useEffect, useState } from "react";
+import { Get, Post } from "../../service/service.setup";
+const SharedListUL = ({ list, selectedItems }) => {
+  const [sharedList, setShareWithList] = useState([]);
+  useEffect(() => {
+    let fileId = 0;
+    for (let key in selectedItems) {
+      if (selectedItems[key]) {
+        fileId = key;
+      }
+    }
+    getFolders(fileId);
+  }, []);
 
-import { sendOTPToEmail, EmailVerification } from "../../service/sharefiles";
-const SharedListModal = ({ show, hide, list }) => {
+  async function getFolders(fileId) {
+    try {
+      const user = await Post("/getFileSharedList", {
+        fileId,
+      });
+      if (
+        user.data.code == "200" &&
+        user.data.message == "Page is not shared with anyone."
+      ) {
+        alert(user.data.message);
+      }
+      setShareWithList(user.data.data.profile);
+    } catch (error) {}
+  }
   return (
-    <Modal size="md" show={show} onHide={() => hide(false)} animation={true}>
-      <Modal.Header></Modal.Header>
-      <Modal.Body>
-        <ul className="list-group">
-          {list.map((item, index) => (
-            <li className="list-group-item li-contact-list" key={index}>
-              <span> {item.fullname}</span>
-              {item.fullaccess && <span>Full Access</span>}
-            </li>
-          ))}
-        </ul>
-      </Modal.Body>
-      <Modal.Footer>
-        <button
-          className="btn-danger btn"
-          variant="secondary"
-          onClick={() => hide(false)}
-        >
-          Close
-        </button>
-      </Modal.Footer>
-    </Modal>
+    <ul className="list-group">
+      {sharedList.map((item, index) => (
+        <li className="list-group-item li-contact-list" key={index}>
+          <span> {item.fullname}</span>
+          {item.fullaccess && <span>Full Access</span>}
+        </li>
+      ))}
+    </ul>
   );
 };
-export default SharedListModal;
+
+export default SharedListUL;

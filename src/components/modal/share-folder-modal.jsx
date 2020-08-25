@@ -7,7 +7,7 @@ import SearchedContactList from "../contactlist/display-searched-contact-list";
 import { addContact, searchContact } from "../../service/sharefiles";
 import DisplayGroupList from "../add-friend/display-group";
 import ListTabs from "../add-friend/tab";
-
+import SharedListUL from "../modal/show-shared-list-modal";
 const ShareFolderModal = ({ show, hide, selected, images }) => {
   const [contactList, setContactList] = useState([]);
   const [groups, setGroups] = useState([]);
@@ -46,9 +46,9 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
       });
     }
   };
-  const shareGroupHandler = (id)=>{
-    shareWith(id)
-  }
+  const shareGroupHandler = (id) => {
+    shareWith(id);
+  };
   async function shareWith(id) {
     if (!window.confirm("Are You sure you want to Share Folder ?")) return;
 
@@ -63,7 +63,7 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
         images.updateImages.forEach((item) => imagesIds.push(item.id));
         imagesRequest = {
           imageIds: imagesIds,
-           group_id: id,
+          group_id: id,
           file_id: images.id,
           active: true,
         };
@@ -96,9 +96,12 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
       </Modal.Header>
       <Modal.Body>
         {currentList == "GROUPS" && (
-          <DisplayGroupList shareWith = {shareGroupHandler} groups={groups} isShare={true} />
+          <DisplayGroupList
+            shareWith={shareGroupHandler}
+            groups={groups}
+            isShare={true}
+          />
         )}
-
         {currentList == "CONTACTS" && (
           <ul>
             <li>
@@ -131,6 +134,9 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
             isShare={true}
             profileList={contactList}
           ></ContactList>
+        )}
+        {currentList == "SHARED_LIST" && (
+          <SharedListUL selectedItems={selected} />
         )}
       </Modal.Body>
       <Modal.Footer>
