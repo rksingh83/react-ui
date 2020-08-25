@@ -207,7 +207,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
       const response = await getAllPendingPageList();
       let imageIds = [];
       response.data.imageInput.forEach((item) => imageIds.push(item.id));
-      console.log("ALL IMAGES", imageIds);
+    //  console.log("ALL IMAGES", imageIds);
       setPendingFolderId(response.data.pendingFolderId);
       setPendingList(imageIds);
     } catch (e) {

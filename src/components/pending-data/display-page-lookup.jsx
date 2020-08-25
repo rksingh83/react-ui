@@ -18,15 +18,11 @@ const PendingPageData = ({
   pageData,
   pageLookUpHandler,
 }) => {
-  
-
   const imageStyle = {
     width: "100%",
     border: "1px solid green",
   };
-  useEffect(() => {
-    
-  }, [data.pageLookup]);
+  useEffect(() => {}, [data.pageLookup]);
   const fileTagHandler = (e) => {
     // let folder = data.pageLookup.file.filter(
     //   (item) => item.id == e.target.value
@@ -64,28 +60,17 @@ const PendingPageData = ({
     }
   };
   const saveUpdateData = async () => {
-
     try {
       const response = await Post("/savePageLookup", {});
       console.log();
       if (response.data.code == "200") {
-       
         removeImageId();
       }
     } catch (e) {}
   };
   return (
     <div className="container-sm mt-4" style={{ maxWidth: "" }}>
-      <div className="row">
-        <div className="col-md-12">
-          <button
-            onClick={saveUpdateData}
-            className="btn btn-primary mb-3 btn-sm"
-          >
-            Save
-          </button>
-        </div>
-      </div>
+      <div className="row"></div>
 
       <div className="row">
         <div className="col-md-4">
