@@ -37,6 +37,18 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   const [sharedSearchItem, setSharedSearchHandler] = useState("");
   const [sharedFilteredFolder, setSharedFilteredFolder] = useState("");
   const [sharedFileSearchInput, setSharedFileSearch] = useState("");
+  const [lookupPageState, setLookupPageState] = useState({
+    fileId: 0,
+    shareId: 0,
+    title: "",
+    description: "",
+    date: "",
+    pendingFolderId: 0,
+    imageId: 0,
+    pageNumber: 0,
+    id: 0,
+    segmentation: "",
+  });
   // PENDING COMPONENT
   const [allPendingLIst, setPendingList] = useState([]);
   const [currentImage, setCurrentImage] = useState("");
@@ -203,6 +215,8 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   const getCurrentPage = async () => {
     const response = await getPendingPageById(currentImage);
     setCurrentLookup(response.data && response.data);
+   // setLookupPageState(response.data && response.data.pageLookup);
+    if (response) setLookupPageState(response.data.pageLookup);
   };
   const nextHandler = () => {
     let index = allPendingLIst.indexOf(currentImage);
@@ -229,6 +243,15 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     }
     console.log(allList);
     setPendingList([...allList]);
+  };
+  // set lookup form state
+  const pageLookUpHandler = (e) => {
+    const currentState = { ...lookupPageState };
+    const { name, value } = e.target;
+    console.log(name, value);
+    currentState[name] = value;
+    console.log(currentState);
+    setLookupPageState(currentState);
   };
   return (
     <React.Fragment>
@@ -321,6 +344,8 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
                 history={history}
                 pendingFolderId={pendingFolderId}
                 removeImageId={removeSavedImageId}
+                pageData={lookupPageState}
+                pageLookUpHandler={pageLookUpHandler}
               ></LoadLookup>
             )}
           </div>

@@ -15,6 +15,8 @@ const PendingPageData = ({
   history,
   pendingFolderId,
   removeImageId,
+  pageData,
+  pageLookUpHandler,
 }) => {
   const [fileTag, setFileTag] = useState("");
   const [fileId, setFileId] = useState(data.pageLookup.fileId);
@@ -141,8 +143,9 @@ const PendingPageData = ({
             <div className="col-md-6">
               <Input
                 type="text"
-                onChange={(e) => setTitle(e.target.value)}
-                value={title}
+                onChange={pageLookUpHandler}
+                value={pageData.title}
+                name ="title"
               />
             </div>
           </div>
@@ -187,9 +190,10 @@ const PendingPageData = ({
             <div className="col-md-10">
               <Input
                 type="text"
-                onChange={(e) => setDescription(e.target.value)}
-                value={description}
+                onChange={pageLookUpHandler}
+                value={pageData.description}
                 placeholder="Description"
+                name="description"
               />
             </div>
           </div>
@@ -201,9 +205,10 @@ const PendingPageData = ({
             </div>
             <div className="col-md-6">
               <UserSelect
-                value={shareId}
-                onChange={(e) => setShareId(e.target.value)}
+                value={pageData.shareId}
+                onChange={pageLookUpHandler}
                 list={data.data.profileList}
+                name="shareId"
               />
             </div>
           </div>
@@ -214,9 +219,10 @@ const PendingPageData = ({
             </div>
             <div className="col-md-6">
               <Input
-                value={date}
+                value={pageData.date}
                 type="date"
-                onChange={(e) => setDate(e.target.value)}
+                onChange={pageLookUpHandler}
+                name="date"
               />
             </div>
           </div>
@@ -231,8 +237,9 @@ const PendingPageData = ({
             <div className="col-md-6">
               <Input
                 type="text"
-                onChange={(e) => setPageNo(e.target.value)}
-                value={pageNo}
+                onChange={pageLookUpHandler}
+                value={pageData.pageNumber}
+                name="pageNumber"
               />
             </div>
           </div>
@@ -243,8 +250,9 @@ const PendingPageData = ({
             </div>
             <div className="col-md-6">
               <Input
-                onChange={(e) => setID(e.target.value)}
-                value={ID}
+                onChange={pageLookUpHandler}
+                value={pageData.id}
+                name="id"
                 type="text"
               />
             </div>
