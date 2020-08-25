@@ -11,6 +11,7 @@ import SharedHeader from "../top-header/shared-header";
 // PENDING IMPORT
 import PendingHeader from "../pending-data/header";
 import LoadLookup from "../pending-data/display-page-lookup";
+import CustomLoader from "../loader/loader";
 import {
   getAllPendingPageList,
   getPendingPageById,
@@ -54,6 +55,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   const [currentImage, setCurrentImage] = useState("");
   const [currentLookup, setCurrentLookup] = useState(false);
   const [pendingFolderId, setPendingFolderId] = useState("");
+  const [isShowLoader, setShowLoader] = useState(false);
 
   const sideBarStyle = {
     border: "1px solid rgba(0, 0, 0, 0.125)",
@@ -215,7 +217,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   const getCurrentPage = async () => {
     const response = await getPendingPageById(currentImage);
     setCurrentLookup(response.data && response.data);
-   // setLookupPageState(response.data && response.data.pageLookup);
+    // setLookupPageState(response.data && response.data.pageLookup);
     if (response) setLookupPageState(response.data.pageLookup);
   };
   const nextHandler = () => {
@@ -236,7 +238,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   };
   const removeSavedImageId = () => {
     let allList = allPendingLIst;
-    console.log("ALL IDS", allList, currentImage);
+   
     let index = allPendingLIst.indexOf(currentImage);
     if (index > -1) {
       allList.splice(index, 1);
@@ -247,11 +249,35 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   // set lookup form state
   const pageLookUpHandler = (e) => {
     const currentState = { ...lookupPageState };
-    const { name, value } = e.target;
-    console.log(name, value);
-    currentState[name] = value;
     console.log(currentState);
+    const { name, value } = e.target;
+    if (name == "fileId" || name == "tag") {
+      let folder = currentState.file.filter((item) => item.id == value);
+      let tag = folder.length > 0 ? folder[0].fileTag : "";
+      if (!tag) tag = "";
+      currentState["fileId"] = value;
+      currentState["tag"] = value;
+    } else {
+      currentState[name] = value;
+    }
+    console.log(name, value);
+
     setLookupPageState(currentState);
+  };
+  const saveUpdateData = async () => {
+    console.log(lookupPageState);
+    setShowLoader(true);
+    try {
+      const response = await Post("/savePageLookup", lookupPageState);
+      console.log();
+      if (response.data.code == "200") {
+        alert("Saved Successfully");
+        if (response.data.isFileMoved) removeSavedImageId();
+      }
+      setShowLoader(false);
+    } catch (e) {
+      setShowLoader(false);
+    }
   };
   return (
     <React.Fragment>
@@ -283,6 +309,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
           next={nextHandler}
           prev={prevHandler}
           all={allPendingLIst}
+          saveHandler={saveUpdateData}
         />
       )}
 
@@ -307,6 +334,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
         </div>
         <div className="col-md-10">
           <div className="row">
+            {isShowLoader && <CustomLoader />}
             {sharedWithMe == "HOME" && (
               <FolderDisplay
                 isLoading={isLoading}

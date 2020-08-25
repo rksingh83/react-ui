@@ -18,39 +18,23 @@ const PendingPageData = ({
   pageData,
   pageLookUpHandler,
 }) => {
-  const [fileTag, setFileTag] = useState("");
-  const [fileId, setFileId] = useState(data.pageLookup.fileId);
-  const [shareId, setShareId] = useState(data.pageLookup.shareId);
-  const [date, setDate] = useState(data.pageLookup.date);
-  const [pageNo, setPageNo] = useState(data.pageLookup.pageNumber);
-  const [segmentation, setSegmentation] = useState(
-    data.pageLookup.segmentation
-  );
-  const [title, setTitle] = useState(data.pageLookup.title);
-  const [ID, setID] = useState(data.pageLookup.id);
-  const [description, setDescription] = useState(data.pageLookup.description);
+  
 
   const imageStyle = {
     width: "100%",
     border: "1px solid green",
   };
   useEffect(() => {
-    console.log(data.pageLookup);
-
-    setDate(data.pageLookup.date);
-    setPageNo(data.pageLookup.pageNumber);
-    setTitle(data.pageLookup.title);
-    setID(data.pageLookup.id);
-    setDescription(data.pageLookup.description);
+    
   }, [data.pageLookup]);
   const fileTagHandler = (e) => {
-    let folder = data.pageLookup.file.filter(
-      (item) => item.id == e.target.value
-    );
-    let tag = folder.length > 0 ? folder[0].fileTag : "";
-    if (!tag) tag = "";
-    setFileId(e.target.value);
-    setFileTag(tag);
+    // let folder = data.pageLookup.file.filter(
+    //   (item) => item.id == e.target.value
+    // );
+    // let tag = folder.length > 0 ? folder[0].fileTag : "";
+    // if (!tag) tag = "";
+    // setFileId(e.target.value);
+    // setFileTag(tag);
   };
 
   const uploadImageHandler = async (e) => {
@@ -80,30 +64,12 @@ const PendingPageData = ({
     }
   };
   const saveUpdateData = async () => {
-    const requestData = {
-      fileId,
-      shareId,
-      title,
-      description,
-      date,
-      pendingFolderId,
-      imageId: currentImageId,
-      pageNumber: pageNo,
-      id: ID,
-      segmentation,
-    };
-    console.log(requestData);
+
     try {
-      const response = await Post("/savePageLookup", requestData);
+      const response = await Post("/savePageLookup", {});
       console.log();
       if (response.data.code == "200") {
-        alert("Image Updated Successfully");
-        setFileId("");
-        setShareId("");
-        setDescription("");
-        setDate("");
-        setTitle("");
-        setPageNo("");
+       
         removeImageId();
       }
     } catch (e) {}
@@ -145,7 +111,7 @@ const PendingPageData = ({
                 type="text"
                 onChange={pageLookUpHandler}
                 value={pageData.title}
-                name ="title"
+                name="title"
               />
             </div>
           </div>
@@ -154,9 +120,10 @@ const PendingPageData = ({
             <div className="col-md-3 page-lookup-heading"></div>
             <div className="col-md-6">
               <FileSelect
-                onChange={fileTagHandler}
+                onChange={pageLookUpHandler}
                 list={data.pageLookup.file}
-                value={fileId}
+                value={pageData.fileId}
+                name="fileId"
               />
             </div>
           </div>
@@ -167,9 +134,10 @@ const PendingPageData = ({
             </div>
             <div className="col-md-6">
               <FileTagSelect
-                onChange={fileTagHandler}
+                onChange={pageLookUpHandler}
                 list={data.pageLookup.file}
-                value={fileId}
+                value={pageData.fileId}
+                name="tag"
               />
             </div>
           </div>

@@ -9,6 +9,7 @@ const PendingHeader = ({
   pendingFolderId,
   currentImageId,
   all,
+  saveHandler,
 }) => {
   const uploadImageHandler = async (e) => {
     //  e.preventDefault();
@@ -44,7 +45,9 @@ const PendingHeader = ({
       <div>
         <UploadForm submitHandler={uploadImageHandler}></UploadForm>
       </div>
-      <div></div>
+      <div>
+        <button onClick ={()=>saveHandler()}>Save</button>
+      </div>
       <div>
         <span className="info"> Total Pending </span>
         <span className="badge badge-info">{all.length}</span>
