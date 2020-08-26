@@ -16,7 +16,7 @@ const TopSingleHeader = ({
   folderId,
   next,
   prev,
-  pageSaveHandler
+  pageSaveHandler,
 }) => {
   console.log(currentFolder);
   const [show, setShow] = useState(false);
@@ -99,11 +99,9 @@ const TopSingleHeader = ({
                 <Next className="header-svg" onClick={next} />
               </li>
               <li>
-              <button onClick ={()=>pageSaveHandler()}>Save</button>
+                <button onClick={() => pageSaveHandler()}>Save</button>
               </li>
-              <li className="nav-item single-header-li">
-                <Pencil className="single-header-svg" onClick={editHandler} />{" "}
-              </li>
+
               <li className="nav-item">
                 <button
                   className="btn btn-success"

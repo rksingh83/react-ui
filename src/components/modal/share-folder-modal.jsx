@@ -15,6 +15,11 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
   const [searchedContactList, setSearchedContactList] = useState("");
   const [currentList, setCurrentList] = useState("CONTACTS");
   
+  const onClose = ()=>{
+    setSearchedContactList([]) ;
+    setSearchUserId("");
+    hide(false);
+  }
   async function getContactRequest() {
     try {
       const contacts = await Get("showUserContactList");
@@ -37,13 +42,20 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
       // setSearchedContactList([]);
     }
   };
+  useEffect(()=>{
+    setSearchedContactList([])
+  },[selected])
   const addContactHandler = async (id) => {
-    const user = await addContact(id);
+    //const user = await addContact(id);
+   const user = true ;
+   const addedUser = (searchedContactList.filter(item=>item.id==id))[0] ;
+   addedUser.requestAlreadySent = true
+ 
     if (user) {
-      setSearchedContactList({
-        ...searchedContactList,
+      setSearchedContactList([{
+        ...addedUser,
         requestAlreadySent: true,
-      });
+      }]);
     }
   };
   const shareGroupHandler = (id) => {
@@ -88,11 +100,6 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
     <Modal size="md" show={show} onHide={() => hide(false)} animation={true}>
       <Modal.Header>
         <ListTabs setCurrentTab={setCurrentList} currentTab={currentList} />
-        {currentList == "CONTACTS" && (
-          <button onClick={userSearchHandler} className="btn btn-success">
-            Search
-          </button>
-        )}
       </Modal.Header>
       <Modal.Body>
         {currentList == "GROUPS" && (
@@ -104,15 +111,18 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
         )}
         {currentList == "CONTACTS" && (
           <ul>
-            <li>
+            <li className="share-search">
               <TextField
+                style={{ width: "80%" }}
                 value={searchUserId}
                 onChange={(e) => setSearchUserId(e.target.value)}
                 id="outlined-basic"
                 label="Enter UserName"
-                fullWidth
                 variant="outlined"
               />
+              <button onClick={userSearchHandler} className="btn btn-success">
+                Search
+              </button>
             </li>{" "}
           </ul>
         )}
@@ -143,7 +153,7 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
         <button
           className="btn-danger btn"
           variant="secondary"
-          onClick={() => hide(false)}
+          onClick={onClose}
         >
           Close
         </button>

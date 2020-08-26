@@ -88,10 +88,6 @@ const SearchedContactList = ({
                   <Close onClick={() => removeContact(profileList.id)}></Close>
                 )}
               </span>
-              <span style={{display: "block"}}><b>Username:</b>{profileList.unique_user_id}</span>
-              <span>Sex:{profileList.gender}</span>
-              <span><b>Date of Birth</b>{profileList.dob}</span>
-              <span> <b>Lives in</b> {profileList.address},{profileList.city},{profileList.country}</span>
             </li>
           ))}
         </ul>

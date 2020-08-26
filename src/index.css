@@ -123,3 +123,8 @@ a {
   font-weight: 600;
   padding-right: 10px;
 }
+.share-search{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
