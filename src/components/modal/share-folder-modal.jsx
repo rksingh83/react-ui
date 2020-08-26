@@ -14,7 +14,7 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
   const [searchUserId, setSearchUserId] = useState("");
   const [searchedContactList, setSearchedContactList] = useState("");
   const [currentList, setCurrentList] = useState("CONTACTS");
-
+  
   async function getContactRequest() {
     try {
       const contacts = await Get("showUserContactList");
