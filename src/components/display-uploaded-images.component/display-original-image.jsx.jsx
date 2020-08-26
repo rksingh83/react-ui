@@ -203,7 +203,7 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
             </ul>
           </Link>
         </div>
-        <div className="col-md-8">
+        <div className="col-md-10">
           {currentLookup && sharedWithMe == "HOME" && (
             <LoadLookup
               data={currentLookup}

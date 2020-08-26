@@ -135,7 +135,7 @@ const ImageSlider = ({
   return (
     <>
      
-      <div className="col-md-9" style={ParentStyles}>
+      <div className="col-md-12" style={ParentStyles}>
         <ToastContainer />
         {images.map((image, index) => (
           <div
