@@ -5,6 +5,8 @@ import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { Post } from "../../service/service.setup";
 import LoadLookup from "../pending-data/display-page-lookup";
 import { getPendingPageById } from "../../service/pendingData";
+import { ReactComponent as Next } from "../../assets/next.svg";
+import { ReactComponent as Back } from "../../assets/back.svg";
 import "./top.header.style.scss";
 const TopSingleHeader = ({
   images,
@@ -12,6 +14,9 @@ const TopSingleHeader = ({
   history,
   currentFolder,
   folderId,
+  next,
+  prev,
+  pageSaveHandler
 }) => {
   console.log(currentFolder);
   const [show, setShow] = useState(false);
@@ -86,6 +91,15 @@ const TopSingleHeader = ({
             <ul className="navbar-nav ml-auto text-white">
               <li className="nav-item single-header-li">
                 <Delete className="single-header-svg" onClick={deleteHandler} />{" "}
+              </li>
+              <li>
+                <Back className="header-svg" onClick={prev} />
+              </li>
+              <li>
+                <Next className="header-svg" onClick={next} />
+              </li>
+              <li>
+              <button onClick ={()=>pageSaveHandler()}>Save</button>
               </li>
               <li className="nav-item single-header-li">
                 <Pencil className="single-header-svg" onClick={editHandler} />{" "}
