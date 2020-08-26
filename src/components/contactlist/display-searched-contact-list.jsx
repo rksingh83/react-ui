@@ -66,24 +66,23 @@ const SearchedContactList = ({
           {profileLists.map((profileList, index) => (
             <li className="list-group-item li-contact-list" key={index}>
               <span> {profileList.fullname}</span>
+             <span>
               {profileList &&
                 !profileList.requestAlreadySent &&
                 !profileList.alreadyFriend && (
                   <AddUser onClick={() => addFriend(profileList.id)}></AddUser>
                 )}
-              {profileList.requestAlreadySent && <h5>Requested</h5>}
+              {profileList.requestAlreadySent && <h5 style ={{display:'inline'}}>Requested</h5>}
               {profileList && profileList.requestAlreadySent && isShare && (
                 <Share onClick={() => shareWith(profileList.id)}></Share>
               )}
               {profileList && profileList.alreadyFriend && isShare && (
                 <Share onClick={() => shareWith(profileList.id)}></Share>
               )}
-              <span style={{ paddingLeft: "50px" }}>
                 {profileList.requestAlreadySent && (
                   <Close onClick={() => removeContact(profileList.id)}></Close>
                 )}
-              </span>
-              <span style={{ paddingLeft: "50px" }}>
+              
                 {profileList.alreadyFriend && (
                   <Close onClick={() => removeContact(profileList.id)}></Close>
                 )}

@@ -55,10 +55,9 @@ const ContactList = ({ profileList, isShare, selected, hide, images }) => {
           {profileList.map((item, index) => (
             <li className="list-group-item li-contact-list" key={index}>
               <span> {item.fullname}</span>
-              <span style={{ paddingLeft: "50px" }}>
+              <span>
                 {isShare && <Share onClick={() => shareWith(item.id)}></Share>}
-              </span>
-              <span style={{ paddingLeft: "50px" }}>
+
                 {!isShare && (
                   <Close onClick={() => removeContact(item.id)}></Close>
                 )}
