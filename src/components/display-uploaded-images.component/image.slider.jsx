@@ -134,20 +134,7 @@ const ImageSlider = ({
   };
   return (
     <>
-      <div className=" custom-pad-li d-none d-sm-block col-md-2 p-0">
-        <Link className="logo-container" to="/">
-          <ul className=" ul-pad list-group" style={sideBarStyle}>
-            {totalEle.map((item, index) => (
-              <LeftSideBar
-                item={item}
-                key={index}
-                isActive={activeIndex == index ? true : false}
-                changeActive={handleActive}
-              />
-            ))}
-          </ul>
-        </Link>
-      </div>
+     
       <div className="col-md-9" style={ParentStyles}>
         <ToastContainer />
         {images.map((image, index) => (

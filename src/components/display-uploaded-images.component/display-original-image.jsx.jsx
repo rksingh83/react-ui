@@ -5,7 +5,7 @@ import GetLoader from "../../ui/loder";
 import { Post, Get } from "../../service/service.setup";
 import "./create-image.style.scss";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
-//import ImageSlider from "./image.slider";
+import ImageSlider from "./image.slider";
 import { ToastContainer, toast } from "react-toastify";
 import TopSingleHeader from "../top-header/new.header";
 import LoadLookup from "../pending-data/display-page-lookup";
@@ -19,12 +19,11 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [imageId, setImageId] = useState(match.params.id);
 
-
   const [allImages, setAllImages] = useState([]);
   const [currentFolderName, setCurrentFolderName] = useState("");
   const [currentLookup, setCurrentLookup] = useState(false);
   const [isShowLoader, setShowLoader] = useState(false);
-  const [allPendingLIst ,setAllPendingList]  = useState([])
+  const [allPendingLIst, setAllPendingList] = useState([]);
   const [lookupPageState, setLookupPageState] = useState({
     fileId: 0,
     shareId: 0,
@@ -46,7 +45,7 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
     if (LiElement.indexOf(e) == 0) {
       //setFolderFlag("HOME");
     } else {
-    //  setFolderFlag("SHARED");
+      //  setFolderFlag("SHARED");
     }
     // setSharedWithMe(!sharedWithMe);
     setLiEl(totalEle);
@@ -57,7 +56,7 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
   };
   const nextHandler = () => {
     let index = allPendingLIst.indexOf(imageId);
-    console.log(allPendingLIst ,index);
+    console.log(allPendingLIst, index);
     if (index == allPendingLIst.length - 1) {
       alert("This is Last File");
       return;
@@ -72,9 +71,9 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
     }
     setImageId(allPendingLIst[index - 1]);
   };
- 
+
   useEffect(() => {
-   // getCurrentPage();
+    // getCurrentPage();
     const IMAGE_ORIGINAL_URL =
       sharedWithMe == "HOME" ? "getAnyCloudImages" : "getAnySharedCloudImages";
     const requestFile = { ids: [match.params.id], imagetype: "_align.jpg" };
@@ -116,14 +115,13 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
           history.push("/logout");
         }
         setAllImages(res.data.imageInput);
-        setAllPendingList(allCloud)
+        setAllPendingList(allCloud);
       });
     });
   }, []);
-  useEffect(()=>{
-    getCurrentPage();
-
-  },[imageId])
+  useEffect(() => {
+    if (sharedWithMe == "HOME") getCurrentPage();
+  }, [imageId]);
   // page lookup
   const getCurrentPage = async () => {
     const response = await getPendingPageById(imageId);
@@ -166,7 +164,7 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
       console.log();
       if (response.data.code == "200") {
         alert("Saved Successfully");
-       // if (response.data.isFileMoved) removeSavedImageId();
+        // if (response.data.isFileMoved) removeSavedImageId();
       }
       setShowLoader(false);
     } catch (e) {
@@ -182,48 +180,51 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
           history={history}
           currentFolder={currentFolderName}
           folderId={match.params.folderId}
-          next ={nextHandler}
-          prev ={prevHandler}
-          pageSaveHandler ={saveUpdateData}
+          next={nextHandler}
+          prev={prevHandler}
+          pageSaveHandler={saveUpdateData}
         />
       )}
 
       {sharedWithMe == "SHARED" && <SharedHeader history={history} />}
-      <div className ="row">
-      {isShowLoader && <CustomLoader />}
-      <div className=" custom-pad-li  col-md-2 p-0">
-        <Link className="logo-container" to="/">
-          <ul className=" ul-pad list-group" style={sideBarStyle}>
-            {totalEle.map((item, index) => (
-              <LeftSideBar
-                item={item}
-                key={index}
-                isActive={activeIndex == index ? true : false}
-                changeActive={handleActive}
-              />
-            ))}
-          </ul>
-        </Link>
+      <div className="row">
+        {isShowLoader && <CustomLoader />}
+        <div className=" custom-pad-li  col-md-2 p-0">
+          <Link className="logo-container" to="/">
+            <ul className=" ul-pad list-group" style={sideBarStyle}>
+              {totalEle.map((item, index) => (
+                <LeftSideBar
+                  item={item}
+                  key={index}
+                  isActive={activeIndex == index ? true : false}
+                  changeActive={handleActive}
+                />
+              ))}
+            </ul>
+          </Link>
+        </div>
+        <div className="col-md-8">
+          {currentLookup && sharedWithMe == "HOME" && (
+            <LoadLookup
+              data={currentLookup}
+              currentImageId={imageId}
+              history={history}
+              pendingFolderId={1}
+              pageData={lookupPageState}
+              pageLookUpHandler={pageLookUpHandler}
+            ></LoadLookup>
+          )}
+
+          {sharedWithMe == "SHARED" && (
+            <ImageSlider
+              current={match.params.id}
+              history={history}
+              setImageId={setImageId}
+              images={allImages}
+            ></ImageSlider>
+          )}
+        </div>
       </div>
-      <div className="col-md-8">
-        {currentLookup && (
-          <LoadLookup
-            data={currentLookup}
-            currentImageId={imageId}
-            history={history}
-            pendingFolderId={1}
-            pageData={lookupPageState}
-            pageLookUpHandler={pageLookUpHandler}
-          ></LoadLookup>
-        )}
-      </div>
-      </div>
-      {/* <ImageSlider
-          current={match.params.id}
-          history={history}
-          setImageId={setImageId}
-          images={allImages}
-        ></ImageSlider> */}
     </>
   );
 };
