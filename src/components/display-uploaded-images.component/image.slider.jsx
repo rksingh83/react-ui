@@ -146,7 +146,7 @@ const ImageSlider = ({
           >
             <img
               className="image"
-              onClick={() => history.push(`/last/${image.id}`)}
+            onClick={() => history.push(`/last/${image.id}`)}
               className="display-image"
               src={image.raw_image_org}
             ></img>

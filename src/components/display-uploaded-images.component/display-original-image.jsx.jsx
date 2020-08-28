@@ -215,6 +215,7 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
               pendingFolderId={1}
               pageData={lookupPageState}
               pageLookUpHandler={pageLookUpHandler}
+              isRedirectLast ={true}
             ></LoadLookup>
           )}
 

@@ -17,6 +17,7 @@ const PendingPageData = ({
   removeImageId,
   pageData,
   pageLookUpHandler,
+  isRedirectLast,
 }) => {
   const imageStyle = {
     width: "100%",
@@ -74,12 +75,22 @@ const PendingPageData = ({
 
       <div className="row">
         <div className="col-md-4">
-          <img
-            onClick={() => history.push(`/edit/${currentImageId}`)}
-            style={imageStyle}
-            src={data.pageLookup.cloudImagePath}
-            className="hover"
-          />
+          {isRedirectLast && (
+            <img
+              onClick={() => history.push(`/last/${currentImageId}`)}
+              style={imageStyle}
+              src={data.pageLookup.cloudImagePath}
+              className="hover"
+            />
+          )}
+            {!isRedirectLast && (
+            <img
+              onClick={() => history.push(`/edit/${currentImageId}`)}
+              style={imageStyle}
+              src={data.pageLookup.cloudImagePath}
+              className="hover"
+            />
+          )}
         </div>
         <div className="col-md-8">
           <div className="row">
