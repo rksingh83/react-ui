@@ -38,10 +38,11 @@ const PendingHeader = ({
     }
   };
   return (
-    <main className="main">
-      <div>
-        <Back className="header-svg" onClick={prev} />
-      </div>
+    <main className="">
+      <div className ="row">
+      <div className ="col-md-2" style= {{background:"rgba(0, 0, 0, 0.125)"}}></div>
+      <div className ="col-md-10 main">
+     
       <div>
         <UploadForm submitHandler={uploadImageHandler}></UploadForm>
       </div>
@@ -59,7 +60,12 @@ const PendingHeader = ({
         </span>
       </div>
       <div>
+        <Back className="header-svg" onClick={prev} />
+      </div>
+      <div>
         <Next className="header-svg" onClick={next} />
+      </div>
+      </div>
       </div>
     </main>
   );
