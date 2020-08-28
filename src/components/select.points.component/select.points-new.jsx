@@ -65,7 +65,7 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
       setImagePoints(res.data.imageInput[0]);
       // displayPoint();
 
-      console.log({ height: img.height, width: img.width } ,src);
+      console.log({ height: img.height, width: img.width }, src);
       if (img.height > 0 && img.width)
         setCordinates({ height: img.height, width: img.width });
     });
@@ -330,7 +330,7 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
     return true;
   };
   useEffect(() => {
-    displayPoint(true);
+    // displayPoint(true);
   }, [cordinates]);
   return (
     <>
