@@ -99,7 +99,7 @@ const TopSingleHeader = ({
                 <Next className="header-svg" onClick={next} />
               </li>
               <li>
-                <button onClick={() => pageSaveHandler()}>Save</button>
+                <button className ="btn btn-info ml-2 mr-2" onClick={() => pageSaveHandler()}>Save</button>
               </li>
 
               <li className="nav-item">

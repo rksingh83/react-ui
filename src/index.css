@@ -128,3 +128,6 @@ a {
   justify-content: space-between;
   align-items: center;
 }
+.list-group{font-size: 14px;
+    color: #000!important;
+    font-weight: 500 !important;}
