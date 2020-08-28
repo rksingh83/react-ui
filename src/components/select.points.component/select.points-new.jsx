@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import TestButton from "../create-folder/create.btn.component";
 import GetLoader from "../../ui/loder";
 import "./points.style.scss";
@@ -15,13 +15,14 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
   var Markers = new Array();
   const [points, setPoints] = useState(0);
   const [reset, setReset] = useState([]);
-  const [src, setSrc] = useState("");
+  const [src, setSrc] = useState("ww");
   const [data, setData] = useState({});
   const TextMAp = { HOME: 0, SHARED: 1, PENDING: 2 };
   const currentIndex = TextMAp[sharedWithMe];
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [isEdit, setIsEdit] = useState(false);
   const [imagePoints, setImagePoints] = useState({});
+  const [cordinates, setCordinates] = useState(null);
   const totalEle = ["My Books", "Shared Books", "Pending"];
   const [LiElement, setLiEl] = useState(totalEle);
   const [oneStyle, setOneStyle] = useState({});
@@ -30,6 +31,8 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const [fourStyle, setFourStyle] = useState({});
   const [currentFolder, setCurrentFolderName] = useState("");
   var active = false;
+  const EditButton = useRef(null);
+  const fourDiv = useRef(null);
   //const oneStyle = {}
   const handleActive = (e) => {
     setActiveIndex(LiElement.indexOf(e));
@@ -62,7 +65,9 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
       setImagePoints(res.data.imageInput[0]);
       // displayPoint();
 
-      console.log(mapSprite.height, mapSprite);
+      console.log({ height: img.height, width: img.width } ,src);
+      if (img.height > 0 && img.width)
+        setCordinates({ height: img.height, width: img.width });
     });
     var container = document.querySelector("#container");
     var activeItem = null;
@@ -159,12 +164,58 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
     const IMG = document.getElementById("img");
     const width = IMG.width / 700;
     const height = IMG.height / 700;
+    console.log(height, "wid", width);
     let tempData = {};
     const bottomleftx =
       (imagePoints["bottomleftx"] * IMG.width) / (width * 100) - 20;
     const bottomlefty =
       (imagePoints["bottomlefty"] * IMG.height) / (height * 100) - 20;
     setOneStyle({ top: bottomlefty, left: bottomleftx });
+    tempData = { one: { X: bottomleftx + 20, Y: bottomlefty + 20 } };
+
+    const bottomrightx =
+      (imagePoints["bottomrightx"] * IMG.width) / (width * 100) - 20;
+    const bottomrighty =
+      (imagePoints["bottomrighty"] * IMG.height) / (height * 100) - 20;
+
+    setTwoStyle({ top: bottomrighty, left: bottomrightx });
+    tempData = {
+      ...tempData,
+      two: { X: bottomrightx + 20, Y: bottomrighty + 20 },
+    };
+    //TR
+    const toprightx =
+      (imagePoints["toprightx"] * IMG.width) / (width * 100) - 20;
+    const toprighty =
+      (imagePoints["toprighty"] * IMG.height) / (height * 100) - 20;
+
+    setFourStyle({ top: toprighty, left: toprightx });
+    tempData = { ...tempData, four: { X: toprightx + 20, Y: toprighty + 20 } };
+    //TL
+    const topleftx = (imagePoints["topleftx"] * IMG.width) / (width * 100) - 20;
+    const toplefty =
+      (imagePoints["toplefty"] * IMG.height) / (height * 100) - 20;
+    setThreeStyle({ top: toplefty, left: topleftx });
+    tempData = { ...tempData, three: { X: topleftx + 20, Y: toplefty + 20 } };
+    setIsEdit(true);
+    setData(tempData);
+  };
+  const renderPoint = () => {
+    let IMG = cordinates;
+    console.log(imagePoints);
+
+    //const IMG = document.getElementById("img");
+    const width = IMG.width / 700;
+    const height = IMG.height / 700;
+    console.log(height, "wid", width);
+    let tempData = {};
+    const bottomleftx =
+      (imagePoints["bottomleftx"] * IMG.width) / (width * 100) - 20;
+    const bottomlefty =
+      (imagePoints["bottomlefty"] * IMG.height) / (height * 100) - 20;
+    setOneStyle({ top: bottomlefty, left: bottomleftx });
+    fourDiv.current.style.top = bottomlefty;
+    fourDiv.current.style.left = bottomleftx;
     tempData = { one: { X: bottomleftx + 20, Y: bottomlefty + 20 } };
 
     const bottomrightx =
@@ -278,6 +329,9 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
     }
     return true;
   };
+  useEffect(() => {
+    displayPoint(true);
+  }, [cordinates]);
   return (
     <>
       <div className="row">
@@ -313,6 +367,7 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
                 </li>
                 <li className="nav-item">
                   <button
+                    ref={EditButton}
                     className=" mr-2 btn btn-success"
                     onClick={() => displayPoint(true)}
                   >
@@ -368,6 +423,7 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
             >
               <div
                 id="one"
+                ref={fourDiv}
                 className={`item one ${isEdit ? "" : "hide-point"}`}
                 style={oneStyle}
               >

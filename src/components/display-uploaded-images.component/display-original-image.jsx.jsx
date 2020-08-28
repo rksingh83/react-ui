@@ -64,11 +64,13 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
     setImageId(allPendingLIst[index + 1]);
   };
   const prevHandler = () => {
+    console.log(allPendingLIst);
     let index = allPendingLIst.indexOf(imageId);
     if (index == 0) {
       alert("This is Last File");
       return;
     }
+    console.log(imageId); 
     setImageId(allPendingLIst[index - 1]);
   };
 
@@ -101,6 +103,7 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
       const allCloud = [];
       setCurrentFolderName(res.data.fileName);
       res.data.imageInput.forEach((image) => allCloud.push(image.id));
+      setAllPendingList(allCloud);
       const IMAGE_SMALL_URL =
         sharedWithMe == "HOME"
           ? "getAnyCloudImages"
@@ -115,7 +118,7 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
           history.push("/logout");
         }
         setAllImages(res.data.imageInput);
-        setAllPendingList(allCloud);
+        
       });
     });
   }, []);
