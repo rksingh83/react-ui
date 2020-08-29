@@ -109,7 +109,7 @@ const TopSingleHeader = ({
                   className="btn btn-info ml-2 mr-2"
                   onClick={() => history.push(`/edit/${imageId}`)}
                 >
-                  Points
+                  Edit Points
                 </button>
               </li>
               <li className="nav-item">
