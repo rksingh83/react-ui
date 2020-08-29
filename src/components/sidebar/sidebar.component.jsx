@@ -13,6 +13,7 @@ import PendingHeader from "../pending-data/header";
 import LoadLookup from "../pending-data/display-page-lookup";
 import CustomLoader from "../loader/loader";
 import ShowMessages from "../common/display-message-modal";
+import {getDate} from '../common/utility'
 import {
   getAllPendingPageList,
   getPendingPageById,
@@ -46,7 +47,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     shareId: 0,
     title: "",
     description: "",
-    date: "",
+    date: getDate(),
     pendingFolderId: 0,
     imageId: 0,
     pageNumber: 0,
