@@ -12,12 +12,15 @@ import SharedHeader from "../top-header/shared-header";
 import PendingHeader from "../pending-data/header";
 import LoadLookup from "../pending-data/display-page-lookup";
 import CustomLoader from "../loader/loader";
+import ShowMessages from "../common/display-message-modal";
 import {
   getAllPendingPageList,
   getPendingPageById,
 } from "../../service/pendingData";
 
 const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
+  // RESPONSE MESSAGE POP
+
   const totalEle = ["My Books", "Shared Books", "Pending"];
   const TextMAp = { HOME: 0, SHARED: 1, PENDING: 2 };
   const [totalFolder, setTotalFolder] = useState([]);
@@ -56,6 +59,8 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   const [currentLookup, setCurrentLookup] = useState(false);
   const [pendingFolderId, setPendingFolderId] = useState("");
   const [isShowLoader, setShowLoader] = useState(false);
+  const [showPopUp, setShowPop] = useState(false);
+  const [responseMgs, setResponseMgs] = useState("");
 
   const sideBarStyle = {
     border: "1px solid rgba(0, 0, 0, 0.125)",
@@ -130,7 +135,9 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     const requestFile = { filefolderRequest: [] };
     Post("/getAllFiles", requestFile).then((res) => {
       if (res.data.code == 201) {
-        alert(res.data.error);
+        // alert(res.data.error);
+        setResponseMgs(res.data.error);
+        setShowPop(true);
         history.push("/logout");
       }
       if (res.data.filefolderRequest) {
@@ -207,7 +214,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
       const response = await getAllPendingPageList();
       let imageIds = [];
       response.data.imageInput.forEach((item) => imageIds.push(item.id));
-    //  console.log("ALL IMAGES", imageIds);
+      //  console.log("ALL IMAGES", imageIds);
       setPendingFolderId(response.data.pendingFolderId);
       setPendingList(imageIds);
     } catch (e) {
@@ -223,7 +230,10 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   const nextHandler = () => {
     let index = allPendingLIst.indexOf(currentImage);
     if (index == allPendingLIst.length - 1) {
-      alert("This is Last File");
+      // alert("This is Last File");
+      setResponseMgs("This is last file");
+      setShowPop(true);
+
       return;
     }
     setCurrentImage(allPendingLIst[index + 1]);
@@ -231,14 +241,15 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   const prevHandler = () => {
     let index = allPendingLIst.indexOf(currentImage);
     if (index == 0) {
-      alert("This is Last File");
+      setResponseMgs("This is last file");
+      setShowPop(true);
       return;
     }
     setCurrentImage(allPendingLIst[index - 1]);
   };
   const removeSavedImageId = () => {
     let allList = allPendingLIst;
-   
+
     let index = allPendingLIst.indexOf(currentImage);
     if (index > -1) {
       allList.splice(index, 1);
@@ -271,7 +282,8 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
       const response = await Post("/savePageLookup", lookupPageState);
       console.log();
       if (response.data.code == "200") {
-        alert("Saved Successfully");
+        setResponseMgs("Saved Successfully");
+        setShowPop(true);
         if (response.data.isFileMoved) removeSavedImageId();
       }
       setShowLoader(false);
@@ -281,6 +293,11 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   };
   return (
     <React.Fragment>
+      <ShowMessages
+        hide={() => setShowPop(false)}
+        message={responseMgs}
+        show={showPopUp}
+      />
       {sharedWithMe == "HOME" && (
         <TopHeader
           totalFolders={totalFolder}

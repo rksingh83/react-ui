@@ -10,17 +10,22 @@ import { setCurrentFile } from "../../redux/file/file.actions";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import ShowMessages from "../common/display-message-modal";
 import "./lon.style.scss";
 
 const LoginPage = ({ history, setCurrentUser, setCurrentFile }) => {
   // console.log(props)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPopUp, setShowPop] = useState(false);
+  const [responseMgs, setResponseMgs] = useState("");
   const loginHandler = (e) => {
     e.preventDefault();
     Post("/signin", { email, password }).then((res) => {
       if (res.data.error) {
-        alert(res.data.error);
+        // alert(res.data.error);
+        setResponseMgs(res.data.error);
+        setShowPop(true);
       } else {
         const code = res.data.code;
 
@@ -35,10 +40,11 @@ const LoginPage = ({ history, setCurrentUser, setCurrentFile }) => {
           const requestFile = { filefolderRequest: [] };
           setCurrentUser(res.data.data);
           Post("/getAllFiles", requestFile).then((res) => {
-            if(res.data.code==201){
-                 alert(res.data.error);
-               history.push('/logout');
-             }
+            if (res.data.code == 201) {
+              setResponseMgs(res.data.error);
+              setShowPop(true);
+              history.push("/logout");
+            }
             if (res.data.filefolderRequest) {
               //  let data =  (res.data.filefolderRequest).map(item=>item.fileName)
               setCurrentFile(res.data.filefolderRequest);
@@ -57,64 +63,71 @@ const LoginPage = ({ history, setCurrentUser, setCurrentFile }) => {
   };
   return (
     <>
-    <div className ="row" style ={{justifyContent:"center"}}>
-    <div className="row logo-div" style ={{justifyContent:"center"}}>
-          <img  style ={{height:"75px" ,marginTop:"10px"}}src= {require('../../assets/logo.png')}></img>
+      <div className="row" style={{ justifyContent: "center" }}>
+        <ShowMessages
+          hide={() => setShowPop(false)}
+          message={responseMgs}
+          show={showPopUp}
+        />
+        <div className="row logo-div" style={{ justifyContent: "center" }}>
+          <img
+            style={{ height: "75px", marginTop: "10px" }}
+            src={require("../../assets/logo.png")}
+          ></img>
         </div>
-    </div>
-    <div className="row mt-4">
-      <ToastContainer />
-      
-      <div className="container">
-        
-        <div className="col col-md-6 col-lg-4 col-xs-10">
-          <div>
-            <div className="card card-body bg-custom">
-              <div className="sign-up">
-                <form onSubmit={loginHandler}>
-                  <Input
-                    placeholder="Enter your Email"
-                    label="Email"
-                    value={email}
-                    handleChange={(e) => setEmail(e.target.value)}
-                    name="email"
-                    required
-                    type="input"
-                  ></Input>
-                  <Input
-                    placeholder="Enter your password"
-                    label="Password"
-                    value={password}
-                    handleChange={(e) => setPassword(e.target.value)}
-                    name="email"
-                    type="password"
-                  ></Input>
-                  <Input
-                    label=""
-                    value="LOGIN"
-                    className="btn btn-success btn-block"
-                    onClick={loginHandler}
-                    name="cnfpass"
-                    type="submit"
-                  ></Input>
+      </div>
+      <div className="row mt-4">
+        <ToastContainer />
 
-                  <Link to="/signup">
-                    <button className="btn btn-success btn-block mt-3">
-                      SIGNUP
-                    </button>
-                  </Link>
-                  <Link to="/forgot">
-                    <button className="btn btn-success btn-block mt-3">
-                      FORGOT PASSWORD
-                    </button>
-                  </Link>
-                </form>
+        <div className="container">
+          <div className="col col-md-6 col-lg-4 col-xs-10">
+            <div>
+              <div className="card card-body bg-custom">
+                <div className="sign-up">
+                  <form onSubmit={loginHandler}>
+                    <Input
+                      placeholder="Enter your Email"
+                      label="Email"
+                      value={email}
+                      handleChange={(e) => setEmail(e.target.value)}
+                      name="email"
+                      required
+                      type="input"
+                    ></Input>
+                    <Input
+                      placeholder="Enter your password"
+                      label="Password"
+                      value={password}
+                      handleChange={(e) => setPassword(e.target.value)}
+                      name="email"
+                      type="password"
+                    ></Input>
+                    <Input
+                      label=""
+                      value="LOGIN"
+                      className="btn btn-success btn-block"
+                      onClick={loginHandler}
+                      name="cnfpass"
+                      type="submit"
+                    ></Input>
+
+                    <Link to="/signup">
+                      <button className="btn btn-success btn-block mt-3">
+                        SIGNUP
+                      </button>
+                    </Link>
+                    <Link to="/forgot">
+                      <button className="btn btn-success btn-block mt-3">
+                        FORGOT PASSWORD
+                      </button>
+                    </Link>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 };

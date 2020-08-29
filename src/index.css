@@ -123,11 +123,20 @@ a {
   font-weight: 600;
   padding-right: 10px;
 }
-.share-search{
+
+.share-search {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.list-group{font-size: 14px;
-    color: #000!important;
-    font-weight: 500 !important;}
+
+.list-group {
+  font-size: 14px;
+  color: #000 !important;
+  font-weight: 500 !important;
+}
+
+.message {
+  color: #000 !important;
+  font-weight: 500 !important;
+}

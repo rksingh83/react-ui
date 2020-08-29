@@ -12,6 +12,8 @@ import UploadForm from "../upload-image/upload-images";
 import ShareFolderModal from "../modal/share-folder-modal";
 import { Link } from "react-router-dom";
 import SharedListModal from "../modal/show-shared-list-modal";
+import CustomLoader from "../loader/loader";
+import ShowMessages from "../common/display-message-modal";
 import { Post, Get } from "../../service/service.setup";
 import "./top.header.style.scss";
 const TopHeader = ({
@@ -32,6 +34,9 @@ const TopHeader = ({
   const [shareFolder, setShareFolder] = useState(false);
   const [isOpenPop, setSharedListPop] = useState(false);
   const [shareWithList, setShareWithList] = useState([]);
+  const [isShowLoader, setShowLoader] = useState(false);
+  const [showPopUp, setShowPop] = useState(false);
+  const [responseMgs, setResponseMgs] = useState("");
   const columnMinWidth = {
     minWidth: "12.5%",
     boxSizing: "border-box",
@@ -114,7 +119,7 @@ const TopHeader = ({
   };
   const fileUploadHandler = async (e) => {
     //  e.preventDefault();
-
+    setShowLoader(true);
     const formData = new FormData();
     var d = new Date();
     let imageName = d.getTime();
@@ -131,10 +136,13 @@ const TopHeader = ({
         },
       });
       if (res.status == 200) {
-        alert(res.data.message);
+        setResponseMgs(res.data.message);
+        setShowPop(true);
         window.location.reload();
+        setShowLoader(false);
       } else {
         alert("Something went wrong try later");
+        setShowLoader(false);
       }
     } catch (err) {
       console.log(err);
@@ -143,6 +151,13 @@ const TopHeader = ({
 
   return (
     <div className="row secondary-header single-header" style={topRowStyle}>
+      {isShowLoader && <CustomLoader />}
+      <ShowMessages
+        hide={() => setShowPop(false)}
+        message={responseMgs}
+        show={showPopUp}
+      />
+
       <div className="col-md-12">
         <div className="row min-height">
           <div className="col-md-2  sec-header-item">
@@ -242,7 +257,7 @@ const TopHeader = ({
               }`}
             >
               <span className="count badge badge-info mr-1">{totalItem} </span>{" "}
-              <span style ={{padding:"0 10px"}}> Selected</span>
+              <span style={{ padding: "0 10px" }}> Selected</span>
               <Cross
                 className="ml-1"
                 onClick={() => window.location.reload()}

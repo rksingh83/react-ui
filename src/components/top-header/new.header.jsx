@@ -89,14 +89,7 @@ const TopSingleHeader = ({
               </li>
             </ul>
             <ul className="navbar-nav ml-auto text-white">
-              <li>
-                <button
-                  className="btn btn-info ml-2 mr-2"
-                  onClick={() => history.push(`/edit/${imageId}`)}
-                >
-                  Points
-                </button>
-              </li>
+            
               <li className="nav-item single-header-li">
                 <Delete className="single-header-svg" onClick={deleteHandler} />{" "}
               </li>
@@ -114,7 +107,14 @@ const TopSingleHeader = ({
                   Save
                 </button>
               </li>
-
+              <li>
+                <button
+                  className="btn btn-info ml-2 mr-2"
+                  onClick={() => history.push(`/edit/${imageId}`)}
+                >
+                  Points
+                </button>
+              </li>
               <li className="nav-item">
                 <button
                   className="btn btn-success"

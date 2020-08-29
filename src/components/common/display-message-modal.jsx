@@ -1,37 +1,23 @@
 import React from "react";
-import Alert from 'react-bootstrap/Alert'
+import Popup from "reactjs-popup";
+import Modal from "react-bootstrap/Modal";
 
 const ShowMessages = ({ show, hide, message }) => {
-  const style = {
-    display: "flex",
-    flexDirection: "column",
-    textAlign: "center",
-    alignItems: "center",
-    padding: "11px",
-    margin: "10px",
-    justifyContent: "space-around",
-  };
-  const textStyle = {
-    fontSize: "16px",
-    padding: "10px 10px",
-    fontWeight: "550",
-    color: "#757575",
-  };
-  const btnStyle = {};
+  console.log(show);
   return (
-     <Alert  show={show}  variant="danger" onClose={() => hide(false)} dismissible>
-      <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
-      <div style={style}>
-        <span style={textStyle}>{message}</span>
+    <Modal size="md" show={show} animation={true}>
+      <Modal.Header></Modal.Header>
+      <Modal.Body className="text-center"><div className ="message">{message}</div></Modal.Body>
+      <Modal.Footer>
         <button
-          style={btnStyle}
-          onClick={() => hide(false)}
-          className="btn btn-primary w-25"
+          className="btn-danger btn"
+          variant="secondary"
+          onClick={hide}
         >
-          Ok
+          Close
         </button>
-      </div>
-    </Alert>
+      </Modal.Footer>
+    </Modal>
   );
 };
 
