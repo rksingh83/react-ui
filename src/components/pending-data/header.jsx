@@ -10,9 +10,11 @@ const PendingHeader = ({
   currentImageId,
   all,
   saveHandler,
+  ...props
 }) => {
   const uploadImageHandler = async (e) => {
     //  e.preventDefault();
+    props.toggleLoader(true)
     const formData = new FormData();
     var d = new Date();
     let imageName = d.getTime();
@@ -28,7 +30,9 @@ const PendingHeader = ({
         },
       });
       if (res.status == 200) {
-        alert(res.data.message);
+        props.resMgs(res.data.message);
+        props.setShowPop(true)
+        props.toggleLoader(false)
         window.location.reload();
       } else {
         alert("Something went wrong try later");

@@ -223,10 +223,12 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     }
   };
   const getCurrentPage = async () => {
+    setShowLoader(true);
     const response = await getPendingPageById(currentImage);
     setCurrentLookup(response.data && response.data);
     // setLookupPageState(response.data && response.data.pageLookup);
     if (response) setLookupPageState(response.data.pageLookup);
+    setShowLoader(false);
   };
   const nextHandler = () => {
     let index = allPendingLIst.indexOf(currentImage);
@@ -328,6 +330,9 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
           prev={prevHandler}
           all={allPendingLIst}
           saveHandler={saveUpdateData}
+          toggleLoader ={setShowLoader}
+          setShowPop ={setShowPop}
+          resMgs  ={setResponseMgs}
         />
       )}
 

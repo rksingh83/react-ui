@@ -15,6 +15,7 @@ import { getPendingPageById } from "../../service/pendingData";
 import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import { Link } from "react-router-dom";
 import CustomLoader from "../loader/loader";
+import ShowMessages from "../common/display-message-modal";
 const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [imageId, setImageId] = useState(match.params.id);
@@ -40,6 +41,9 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
   const [LiElement, setLiEl] = useState(totalEle);
   const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
   const [activeIndex, setActiveIndex] = useState(currentIndex);
+  // loader and alert box
+  const [showPopUp, setShowPop] = useState(false);
+  const [responseMgs, setResponseMgs] = useState("");
   const handleActive = (e) => {
     setActiveIndex(LiElement.indexOf(e));
     if (LiElement.indexOf(e) == 0) {
@@ -58,19 +62,19 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
     let index = allPendingLIst.indexOf(imageId);
     console.log(allPendingLIst, index);
     if (index == allPendingLIst.length - 1) {
-      alert("This is Last File");
+      responseMgs("This is Last File");
+      setShowPop(true);
       return;
     }
     setImageId(allPendingLIst[index + 1]);
   };
   const prevHandler = () => {
-    console.log(allPendingLIst);
-    let index = allPendingLIst.indexOf(imageId);
+    let index = allPendingLIst.indexOf(parseInt(imageId));
     if (index == 0) {
-      alert("This is Last File");
+      responseMgs("This is Last File");
+      setShowPop(true);
       return;
     }
-    console.log(imageId); 
     setImageId(allPendingLIst[index - 1]);
   };
 
@@ -82,7 +86,9 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
 
     Post(`/${IMAGE_ORIGINAL_URL}`, requestFile).then((res) => {
       if (res.data.code == 201) {
-        alert(res.data.error);
+       // alert(res.data.error);
+        responseMgs(res.data.error);
+        setShowPop(true);
         history.push("/logout");
       }
       //  console.log((res.data.imageInput[0].align_image_org))
@@ -97,7 +103,10 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
 
     Post(`/${IMAGE_URL}`, allImagesRequest).then((res) => {
       if (res.data.code == 201) {
-        alert(res.data.error);
+        //alert(res.data.error);
+        responseMgs(res.data.error);
+        setShowPop(true);
+        
         history.push("/logout");
       }
       const allCloud = [];
@@ -114,23 +123,27 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
         imagetype: "_align_small.jpg",
       }).then((res) => {
         if (res.data.code == 201) {
-          alert(res.data.error);
+         //  alert(res.data.error);
+         responseMgs(res.data.error);
+         setShowPop(true);
           history.push("/logout");
         }
         setAllImages(res.data.imageInput);
-        
       });
     });
   }, []);
   useEffect(() => {
+    console.log("imageId", imageId);
     if (sharedWithMe == "HOME") getCurrentPage();
   }, [imageId]);
   // page lookup
   const getCurrentPage = async () => {
+    setShowLoader(true);
     const response = await getPendingPageById(imageId);
     setCurrentLookup(response.data && response.data);
     // setLookupPageState(response.data && response.data.pageLookup);
     if (response) setLookupPageState(response.data.pageLookup);
+    setShowLoader(false);
   };
   // handle input
   const pageLookUpHandler = (e) => {
@@ -166,7 +179,9 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
       const response = await Post("/savePageLookup", lookupPageState);
       console.log();
       if (response.data.code == "200") {
-        alert("Saved Successfully");
+       // alert("Saved Successfully");
+        responseMgs("Saved Successfully");
+        setShowPop(true);
         // if (response.data.isFileMoved) removeSavedImageId();
       }
       setShowLoader(false);
@@ -176,6 +191,12 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
   };
   return (
     <>
+      {isShowLoader && <CustomLoader />}
+      <ShowMessages
+        hide={() => setShowPop(false)}
+        message={responseMgs}
+        show={showPopUp}
+      />
       {sharedWithMe == "HOME" && (
         <TopSingleHeader
           imageId={imageId}
@@ -215,7 +236,7 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
               pendingFolderId={1}
               pageData={lookupPageState}
               pageLookUpHandler={pageLookUpHandler}
-              isRedirectLast ={true}
+              isRedirectLast={true}
             ></LoadLookup>
           )}
 
