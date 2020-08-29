@@ -25,7 +25,7 @@ const ContactList = ({ profileList, isShare, selected, hide, images }) => {
           active: true,
         };
       }
-      console.log(imagesIds);
+      
       const request = { imageIds: folderIds, user_id: id, active: true };
 
       const requestData = images && images.id ? imagesRequest : request;

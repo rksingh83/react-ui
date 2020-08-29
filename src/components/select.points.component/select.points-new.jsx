@@ -65,7 +65,7 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
       setImagePoints(res.data.imageInput[0]);
       // displayPoint();
 
-      console.log({ height: img.height, width: img.width }, src);
+      // ({ height: img.height, width: img.width }, src);
       if (img.height > 0 && img.width)
         setCordinates({ height: img.height, width: img.width });
     });
@@ -256,11 +256,11 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
     const IMG = document.getElementById("img");
     const width = IMG.width / 700;
     const height = IMG.height / 700;
-    console.log("HEIGHT", IMG.height);
-    console.log("HEIGHT", height);
-    console.log("width", IMG.width);
-    console.log("width", width);
-    console.log(data);
+    // console.log("HEIGHT", IMG.height);
+    // console.log("HEIGHT", height);
+    // console.log("width", IMG.width);
+    // console.log("width", width);
+    // console.log(data);
 
     if (
       !(

@@ -15,12 +15,12 @@ const DisplayGroupList = ({
   const svgStyle = {
     height: "35px",
   };
-  console.log(profileLists, "contact");
+
   const [openModal, setOpenModal] = useState(false);
   const [memberList, addMember] = useState([]);
   const [membersInGroup, setMembersInGroup] = useState([]);
   const addMemberHandler = (e) => {
-    console.log(e.target.value);
+    
     const currentList = memberList;
     if (e.target.checked) {
       currentList.push(e.target.value);
@@ -30,7 +30,7 @@ const DisplayGroupList = ({
         currentList.splice(index, 1);
       }
     }
-    console.log(currentList);
+  
     addMember([...currentList]);
   };
   const setOpenModalHandler = (id) => {

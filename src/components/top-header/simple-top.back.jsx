@@ -49,7 +49,6 @@ const TopHeaderWithBack = ({
         alert(user.data.message);
       }
       setShareWithList(user.data.data.profile);
-      console.log(user);
 
       setSharedListPop(true);
     } catch (error) {}
@@ -67,7 +66,6 @@ const TopHeaderWithBack = ({
     //e.name = imageName;
 
     formData.append("files", e, imageName);
-    //console.log(e.name);
     try {
       let res = await Post("/uploadImage", formData, {
         headers: {
@@ -82,7 +80,7 @@ const TopHeaderWithBack = ({
         alert("Something went wrong try later");
       }
     } catch (err) {
-      console.log(err);
+      
     }
   };
   const topRowStyle = {
@@ -102,7 +100,7 @@ const TopHeaderWithBack = ({
       if (res.data.code == 200) alert(res.data.message);
       window.location.reload();
     } catch (err) {
-      console.log(err);
+      
     }
   };
   const editHandler = () => {
@@ -118,7 +116,6 @@ const TopHeaderWithBack = ({
   }, [updateImages]);
   const getCurrentPage = async (imageId) => {
     const response = await getPendingPageById(imageId);
-    console.log(response);
     setCurrentLookup(response.data && response.data);
     setIsShow(true);
   };

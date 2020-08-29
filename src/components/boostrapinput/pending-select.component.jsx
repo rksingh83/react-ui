@@ -3,8 +3,6 @@ import React from "react";
 import "./input.style.scss";
 
 const FileSelect = ({ handleChange, list, label, ...restProps }) => {
-  console.log(restProps);
-
   return (
     <div className="form-group">
       {label ? <label>{label}</label> : null}
@@ -22,9 +20,7 @@ const FileSelect = ({ handleChange, list, label, ...restProps }) => {
   );
 };
 
-const FileTagSelect= ({ handleChange, list, label, ...restProps }) => {
-  console.log(restProps);
-
+const FileTagSelect = ({ handleChange, list, label, ...restProps }) => {
   return (
     <div className="form-group">
       {label ? <label>{label}</label> : null}
@@ -43,8 +39,6 @@ const FileTagSelect= ({ handleChange, list, label, ...restProps }) => {
 };
 
 const UserSelect = ({ handleChange, list, label, ...restProps }) => {
-  console.log(restProps);
-
   return (
     <div className="form-group">
       {label ? <label>{label}</label> : null}

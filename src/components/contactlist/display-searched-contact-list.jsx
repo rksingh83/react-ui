@@ -35,7 +35,7 @@ const SearchedContactList = ({
           active: false,
         };
       }
-      console.log(imagesIds);
+      
       const request = { imageIds: folderIds, user_id: id, active: false };
 
       const requestData = images && images.id ? imagesRequest : request;

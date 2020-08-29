@@ -18,7 +18,6 @@ const TopSingleHeader = ({
   prev,
   pageSaveHandler,
 }) => {
-  console.log(currentFolder);
   const [show, setShow] = useState(false);
   const [fileName, addName] = useState("");
   const [fileDescription, addDisc] = useState("");
@@ -44,7 +43,7 @@ const TopSingleHeader = ({
   const deleteHandler = () => {
     if (!window.confirm("Are You sure you want to delete ?")) return;
     const updateImages = images.filter((item) => item.id == imageId);
-    console.log(imageId);
+
     const requestPayload = {
       imageInput: updateImages.filter((item) => (item.delete = 1)),
     };
@@ -55,14 +54,12 @@ const TopSingleHeader = ({
       let res = await Post("/updateImage", data);
       if (res.data.code == 200) alert(res.data.message);
       history.goBack();
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
   const editHandler = () => {
     const updateImages = images.filter((item) => item.id == imageId);
     //  setImages(updateImages[0]);
-    console.log(updateImages);
+
     setShow(true);
     addName(updateImages[0].pageNumber);
     addDisc(updateImages[0].description || "");
@@ -89,7 +86,6 @@ const TopSingleHeader = ({
               </li>
             </ul>
             <ul className="navbar-nav ml-auto text-white">
-            
               <li className="nav-item single-header-li">
                 <Delete className="single-header-svg" onClick={deleteHandler} />{" "}
               </li>

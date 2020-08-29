@@ -40,7 +40,7 @@ const PendingPageData = ({
     var d = new Date();
     let imageName = d.getTime();
     imageName = `jpg_${imageName}.jpg`;
-    console.log(e);
+    
     formData.append("files", e, imageName);
     try {
       let res = await Post("/reUploadImage", formData, {
@@ -57,13 +57,12 @@ const PendingPageData = ({
         alert("Something went wrong try later");
       }
     } catch (err) {
-      console.log(err);
+  
     }
   };
   const saveUpdateData = async () => {
     try {
       const response = await Post("/savePageLookup", {});
-      console.log();
       if (response.data.code == "200") {
         removeImageId();
       }

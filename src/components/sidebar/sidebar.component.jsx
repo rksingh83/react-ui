@@ -13,7 +13,7 @@ import PendingHeader from "../pending-data/header";
 import LoadLookup from "../pending-data/display-page-lookup";
 import CustomLoader from "../loader/loader";
 import ShowMessages from "../common/display-message-modal";
-import {getDate} from '../common/utility'
+import { getDate } from "../common/utility";
 import {
   getAllPendingPageList,
   getPendingPageById,
@@ -106,7 +106,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
         { file_tag: fileTag, fileName, fileDescription, dateCreated, id },
       ],
     };
-    console.log(requestFile);
+
     if (id) {
       Post("/updateFileFolder", requestFile).then((res) =>
         updateName(res.data.filefolderRequest[0])
@@ -195,7 +195,6 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   async function getSharedWithMeFolder() {
     try {
       const folders = await Get("getAllSharedFiles");
-      console.log(folders.data.filefolderRequest);
       setSharedWithMeFolder(folders.data.filefolderRequest);
     } catch (error) {}
   }
@@ -204,7 +203,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     getCurrentPage();
   }, [currentImage]);
   useEffect(() => {
-    console.log("in use efftect", allPendingLIst);
+    
     setCurrentImage(allPendingLIst[0]);
   }, [allPendingLIst]);
   useEffect(() => {
@@ -219,7 +218,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
       setPendingFolderId(response.data.pendingFolderId);
       setPendingList(imageIds);
     } catch (e) {
-      console.log(e.message);
+  
     }
   };
   const getCurrentPage = async () => {
@@ -257,13 +256,13 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     if (index > -1) {
       allList.splice(index, 1);
     }
-    console.log(allList);
+  
     setPendingList([...allList]);
   };
   // set lookup form state
   const pageLookUpHandler = (e) => {
     const currentState = { ...lookupPageState };
-    console.log(currentState);
+    
     const { name, value } = e.target;
     if (name == "fileId" || name == "tag") {
       let folder = currentState.file.filter((item) => item.id == value);
@@ -274,16 +273,13 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     } else {
       currentState[name] = value;
     }
-    console.log(name, value);
 
     setLookupPageState(currentState);
   };
   const saveUpdateData = async () => {
-    console.log(lookupPageState);
     setShowLoader(true);
     try {
       const response = await Post("/savePageLookup", lookupPageState);
-      console.log();
       if (response.data.code == "200") {
         setResponseMgs("Saved Successfully");
         setShowPop(true);
@@ -330,9 +326,9 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
           prev={prevHandler}
           all={allPendingLIst}
           saveHandler={saveUpdateData}
-          toggleLoader ={setShowLoader}
-          setShowPop ={setShowPop}
-          resMgs  ={setResponseMgs}
+          toggleLoader={setShowLoader}
+          setShowPop={setShowPop}
+          resMgs={setResponseMgs}
         />
       )}
 

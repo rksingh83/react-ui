@@ -18,7 +18,7 @@ const UserProfileFormData = ({ profile, history }) => {
       const user = await Get("getProfile");
       //date = date.replace(/\//g, '_');
       setProfile(user.data.data.profile[0]);
-      console.log(user.data);
+    
     } catch (error) { }
   }
   const saveDataHandler = async () => {
@@ -26,7 +26,7 @@ const UserProfileFormData = ({ profile, history }) => {
       const user = await Post("/setuserProfile", userData);
       if (user.data.code == 200) window.location.reload();
       if (user.data.code == 207) alert(user.data.message);
-      console.log(user);
+    
     } catch (error) { }
   };
   useEffect(() => {
@@ -38,7 +38,6 @@ const UserProfileFormData = ({ profile, history }) => {
   };
   const setDobHandler = (e) => {
     //const {value} =(e.target) ;
-    console.log(e);
     setProfile({ ...userData, dob: e });
   };
   return (

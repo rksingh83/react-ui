@@ -3,7 +3,7 @@ import Popup from "reactjs-popup";
 import Modal from "react-bootstrap/Modal";
 
 const ShowMessages = ({ show, hide, message }) => {
-  console.log(show);
+  
   return (
     <Modal size="md" show={show} animation={true}>
       <Modal.Header></Modal.Header>

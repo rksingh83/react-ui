@@ -17,10 +17,10 @@ const SelectPoints = ({ match, history }) => {
       ids: [match.params.url],
       imagetype: "raw_small",
     }).then((res) => {
-      if(res.data.code==201){
+      if (res.data.code == 201) {
         alert(res.data.error);
-         history.push('/logout');
-    }
+        history.push("/logout");
+      }
       mapSprite.src = res.data.imageInput[0].raw_image_small;
       var img = new Image();
       img.src = mapSprite.src;
@@ -189,7 +189,6 @@ const SelectPoints = ({ match, history }) => {
     const IMG = document.getElementById("img");
     const width = IMG.width / 700;
     const height = IMG.height / 700;
-    console.log("WIDTH", width, height);
 
     const requestPayLoad = {};
     requestPayLoad["id"] = match.params.url;
@@ -204,8 +203,6 @@ const SelectPoints = ({ match, history }) => {
     requestPayLoad["toplefty"] = ((small.Y * height) / IMG.height) * 100;
     requestPayLoad["toprightx"] = ((topRight.X * width) / IMG.width) * 100;
     requestPayLoad["toprighty"] = ((topRight.Y * height) / IMG.height) * 100;
-    console.log("Points are right here in next line");
-    console.log(requestPayLoad);
 
     try {
       let res = await Post("/uploadSingleImagePoints", requestPayLoad);
@@ -215,7 +212,6 @@ const SelectPoints = ({ match, history }) => {
     } catch (err) {
       console.log(err);
     }
-    console.log(data);
   };
   return (
     <div

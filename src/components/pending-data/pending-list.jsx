@@ -7,7 +7,6 @@ import {
 
 import "./add-friend.style.scss";
 
-
 import { Link } from "react-router-dom";
 import Input from "../boostrapinput/input.component";
 import { get } from "js-cookie";
@@ -21,7 +20,6 @@ const PendingPageData = ({ history }) => {
     getCurrentPage();
   }, [currentImage]);
   useEffect(() => {
-    console.log("in use efftect" ,allPendingLIst)
     setCurrentImage(allPendingLIst[0]);
   }, [allPendingLIst]);
   useEffect(() => {
@@ -32,12 +30,9 @@ const PendingPageData = ({ history }) => {
       const response = await getAllPendingPageList();
       let imageIds = [];
       response.data.imageInput.forEach((item) => imageIds.push(item.id));
-      console.log("ALL IMAGES", imageIds);
       setPendingFolderId(response.data.pendingFolderId);
       setPendingList(imageIds);
-    } catch (e) {
-      console.log(e.message);
-    }
+    } catch (e) {}
   };
   const getCurrentPage = async () => {
     const response = await getPendingPageById(currentImage);
@@ -61,12 +56,12 @@ const PendingPageData = ({ history }) => {
   };
   const removeSavedImageId = () => {
     let allList = allPendingLIst;
-    console.log("ALL IDS" ,allList,currentImage)
-    let index = allPendingLIst.indexOf(currentImage) ;
-    if(index>-1){
-      allList.splice(index,1)
+
+    let index = allPendingLIst.indexOf(currentImage);
+    if (index > -1) {
+      allList.splice(index, 1);
     }
-    console.log(allList);
+
     setPendingList([...allList]);
   };
   return (

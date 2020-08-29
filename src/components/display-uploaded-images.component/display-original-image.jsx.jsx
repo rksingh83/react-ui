@@ -60,9 +60,8 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
   };
   const nextHandler = () => {
     let index = allPendingLIst.indexOf(imageId);
-    console.log(allPendingLIst, index);
     if (index == allPendingLIst.length - 1) {
-      responseMgs("This is Last File");
+      setResponseMgs("This is Last File");
       setShowPop(true);
       return;
     }
@@ -71,7 +70,7 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
   const prevHandler = () => {
     let index = allPendingLIst.indexOf(parseInt(imageId));
     if (index == 0) {
-      responseMgs("This is Last File");
+      setResponseMgs("This is Last File");
       setShowPop(true);
       return;
     }
@@ -86,12 +85,12 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
 
     Post(`/${IMAGE_ORIGINAL_URL}`, requestFile).then((res) => {
       if (res.data.code == 201) {
-       // alert(res.data.error);
+        // alert(res.data.error);
         responseMgs(res.data.error);
         setShowPop(true);
         history.push("/logout");
       }
-      //  console.log((res.data.imageInput[0].align_image_org))
+
       setImageUrl(res.data.imageInput[0].raw_image_org);
     });
     const requestImages = { id: match.params.folderId };
@@ -106,7 +105,7 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
         //alert(res.data.error);
         responseMgs(res.data.error);
         setShowPop(true);
-        
+
         history.push("/logout");
       }
       const allCloud = [];
@@ -123,9 +122,9 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
         imagetype: "_align_small.jpg",
       }).then((res) => {
         if (res.data.code == 201) {
-         //  alert(res.data.error);
-         responseMgs(res.data.error);
-         setShowPop(true);
+          //  alert(res.data.error);
+          setResponseMgs(res.data.error);
+          setShowPop(true);
           history.push("/logout");
         }
         setAllImages(res.data.imageInput);
@@ -133,7 +132,6 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
     });
   }, []);
   useEffect(() => {
-    console.log("imageId", imageId);
     if (sharedWithMe == "HOME") getCurrentPage();
   }, [imageId]);
   // page lookup
@@ -177,10 +175,10 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
     setShowLoader(true);
     try {
       const response = await Post("/savePageLookup", lookupPageState);
-      console.log();
+
       if (response.data.code == "200") {
-       // alert("Saved Successfully");
-        responseMgs("Saved Successfully");
+        // alert("Saved Successfully");
+        setResponseMgs("Saved Successfully");
         setShowPop(true);
         // if (response.data.isFileMoved) removeSavedImageId();
       }

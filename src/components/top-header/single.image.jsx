@@ -42,7 +42,7 @@ const singleImageHeader = ({ history, id, updateImages, ...props }) => {
         alert("Something went wrong try later");
       }
     } catch (err) {
-      console.log(err);
+      
     }
   };
   const topRowStyle = {
@@ -62,7 +62,7 @@ const singleImageHeader = ({ history, id, updateImages, ...props }) => {
       if (res.data.code == 200) alert(res.data.message);
       window.location.reload();
     } catch (err) {
-      console.log(err);
+      
     }
   };
   const editHandler = () => {

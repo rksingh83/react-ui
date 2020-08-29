@@ -28,7 +28,7 @@ const searchContact = async (id) => {
     const userFind = await Post("/searchUser", {
       unique_user_id: id
     });
-    console.log(userFind.data);
+  
     if (userFind.data.code == "203") {
       alert(userFind.data.message);
       return;
@@ -52,7 +52,7 @@ const sendOTPToEmail = async (email) => {
     const userFind = await Post("/changeEmailAddress", {
       email: email
     });
-    console.log(userFind.data);
+    
     if (userFind.data.code == "203") {
       alert(userFind.data.message);
       return;
@@ -78,7 +78,7 @@ const EmailVerification = async (email, otp) => {
       email: email,
       emailOtp: otp
     });
-    console.log(userFind.data);
+  
     if (userFind.data.code == "203") {
       alert(userFind.data.message);
       return;

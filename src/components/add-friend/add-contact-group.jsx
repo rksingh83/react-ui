@@ -7,7 +7,7 @@ const DisplayContact = ({ profileLists, addMember, isShowCheckedBox }) => {
     width: "3rem",
     position: "relative",
   };
-  console.log(profileLists);
+  
   return (
     <div className="row">
       <div className="col">

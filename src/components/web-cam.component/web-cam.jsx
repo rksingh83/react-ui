@@ -46,20 +46,20 @@ const WebcamCapture = ({ id }) => {
 
   const capture = React.useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
-    console.log(imageSrc);
+    
     setFile(blobToFile(converBase64toBlob(imageSrc, "image/jpeg"), "test.png"));
 
     setImgSrc(imageSrc);
   }, [webcamRef, setImgSrc]);
   const upload = async () => {
-    console.log(file);
-    console.log(new File([file], "name.png"));
+    
+     (new File([file], "name.png"));
     const formData = new FormData();
     var d = new Date();
     let imageName = d.getTime();
     imageName = `jpg_${imageName}.jpg`
     formData.append("files", new File([file],imageName));
-    console.log(formData);
+    
     try {
       let res = await Post("/uploadImage", formData, {
         headers: {
@@ -70,7 +70,7 @@ const WebcamCapture = ({ id }) => {
       alert(res.data.message);
       window.location.reload()
     } catch (err) {
-      console.log(err);
+    
     }
   };
   return (

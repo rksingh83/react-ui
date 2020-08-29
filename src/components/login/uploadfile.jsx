@@ -81,7 +81,7 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
         history.push("/logout");
       }
       setImages(images.data.imageInput);
-      console.log(images.data);
+      
       setCurrentFolderName(images.data.fileName);
       setIsLoading(false);
     } catch (error) {}
@@ -96,7 +96,7 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
         history.push("/logout");
       }
       setImages(images.data.imageInput);
-      console.log(images.data);
+      
       setCurrentFolderName(images.data.fileName);
       setIsLoading(false);
     } catch (error) {}

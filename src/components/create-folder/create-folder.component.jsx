@@ -19,7 +19,7 @@ const CreateFolder = ({
   isPending,
   isShare,
 }) => {
-  console.log(isPending);
+  
   const style = {
     display: "flex",
     alignItems: "center",

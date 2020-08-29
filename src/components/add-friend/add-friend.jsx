@@ -19,6 +19,8 @@ import DisplayGroupList from "./display-group";
 import { setContacts } from "../../redux/contacts/contacts.actions";
 import { connect } from "react-redux";
 import InviteUser from "./invite-friend";
+import CustomLoader from "../loader/loader";
+import ShowMessages from "../common/display-message-modal";
 const AddFriend = ({ history, setContacts, contacts }) => {
   const [user, setUser] = useState(null);
   const [userProfile, setUserProfile] = useState([]);
@@ -32,6 +34,10 @@ const AddFriend = ({ history, setContacts, contacts }) => {
   const [groupDes, setGroupDes] = useState("");
   const [groupId, setGroupId] = useState(0);
   const [inviteContactModal, openInviteContactModal] = useState(false);
+  // Loader and Alert  
+  const [showPopUp, setShowPop] = useState(false);
+  const [responseMgs, setResponseMgs] = useState("");
+  const [isShowLoader, setShowLoader] = useState(false);
   const styleImage = {
     width: "100%",
     height: "100%",
@@ -88,16 +94,19 @@ const AddFriend = ({ history, setContacts, contacts }) => {
         alert("Please enter Email or User Id");
         return;
       }
+      setShowLoader(true)
       const userFind = await Post("/searchUser", { unique_user_id: user });
-      console.log(userFind.data);
+      
       if (userFind.data.code == "203") {
         setUser("");
-        alert(userFind.data.message);
+        setResponseMgs(userFind.data.message);
+        setShowPop(true)
         setUserProfile([]);
-
+        setShowLoader(false)
         return;
       }
       setUserProfile(userFind.data.data.profile);
+      setShowLoader(false)
     } catch (e) {
       alert("Something went wrong try latter");
       history.goBack();
@@ -107,7 +116,7 @@ const AddFriend = ({ history, setContacts, contacts }) => {
   const addUserHandler = async (id) => {
     try {
       const userFind = await Post("/addUser", { id: id });
-      console.log(userFind);
+    
       if (userFind.data.code == "200") {
         alert(userFind.data.message);
         window.location.reload();
@@ -166,6 +175,12 @@ const AddFriend = ({ history, setContacts, contacts }) => {
   return (
     <>
       <div className="row">
+      <ShowMessages
+        hide={() => setShowPop(false)}
+        message={responseMgs}
+        show={showPopUp}
+      />
+      {isShowLoader && <CustomLoader />}
         <div className="col-md-12">
           <nav className="navbar navbar-expand-lg navbar-light sec-header-bg">
             <button
@@ -248,6 +263,7 @@ const AddFriend = ({ history, setContacts, contacts }) => {
                 type="text"
                 onChange={(e) => setUser(e.target.value)}
                 placeholder="Search by email or user id"
+                required ={true}
               ></Input>
             </div>
             <div className="col-md-2 mt-4">
@@ -264,6 +280,7 @@ const AddFriend = ({ history, setContacts, contacts }) => {
               <ListTabs
                 setCurrentTab={setCurrentList}
                 currentTab={currentList}
+                isHideShare ={true}
               />
               {currentList == "CONTACTS" && (
                 <ContactList profileList={contactList} />

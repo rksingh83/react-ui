@@ -80,7 +80,7 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
           active: true,
         };
       }
-      console.log(imagesIds);
+    
       const request = { imageIds: folderIds, group_id: id, active: true };
 
       const requestData = images && images.id ? imagesRequest : request;

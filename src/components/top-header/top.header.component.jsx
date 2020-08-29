@@ -57,7 +57,6 @@ const TopHeader = ({
         alert(user.data.message);
       }
       setShareWithList(user.data.data.profile);
-      console.log(user);
 
       setSharedListPop(true);
     } catch (error) {}
@@ -145,7 +144,7 @@ const TopHeader = ({
         setShowLoader(false);
       }
     } catch (err) {
-      console.log(err);
+
     }
   };
 

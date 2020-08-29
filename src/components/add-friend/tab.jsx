@@ -1,6 +1,6 @@
 import React from "react";
 
-const ListTabs = ({ setCurrentTab, currentTab }) => {
+const ListTabs = ({ setCurrentTab, currentTab, isHideShare }) => {
   return (
     <ul className="nav nav-pills nav-justified mb-2">
       <li
@@ -19,14 +19,16 @@ const ListTabs = ({ setCurrentTab, currentTab }) => {
       >
         Groups
       </li>
-      <li
-        className={` border border-success nav-link p-2 ${
-          currentTab == "SHARED_LIST" ? "active" : ""
-        }`}
-        onClick={() => setCurrentTab("SHARED_LIST")}
-      >
-        Shared With
-      </li>
+      {!isHideShare && (
+        <li
+          className={` border border-success nav-link p-2 ${
+            currentTab == "SHARED_LIST" ? "active" : ""
+          }`}
+          onClick={() => setCurrentTab("SHARED_LIST")}
+        >
+          Shared With
+        </li>
+      )}
     </ul>
   );
 };

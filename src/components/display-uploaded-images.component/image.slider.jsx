@@ -64,7 +64,7 @@ const ImageSlider = ({
       let res = await Post("/updateImage", data);
       if (res.data.code == 200) alert(res.data.message);
     } catch (err) {
-      console.log(err);
+    
     }
   };
   const sideBarStyle = {
@@ -74,7 +74,7 @@ const ImageSlider = ({
   const styles = {
     position: "absolute",
   };
-  console.log(images);
+
   const ParentStyles = {
     position: "relative",
     display: "flex",

@@ -37,7 +37,7 @@ const EditEmailModal = ({ history, show, hide }) => {
       history.push("/logout");
       return;
     }
-    console.log(result);
+    
   };
   useEffect(() => {
     //getFriendList();

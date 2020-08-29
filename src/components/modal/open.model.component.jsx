@@ -12,8 +12,6 @@ const OpenPop = ({
   ...props
 }) => {
   const data = { pageNo, des, dt, id: props.id };
-  console.log(data);
-  console.log(props);
   return (
     <Modal show={isShow} onHide={handleClose} animation={true}>
       <Modal.Header closebutton></Modal.Header>
