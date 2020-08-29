@@ -5,8 +5,9 @@ import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { Post } from "../../service/service.setup";
 import LoadLookup from "../pending-data/display-page-lookup";
 import { getPendingPageById } from "../../service/pendingData";
-import { ReactComponent as Next } from "../../assets/next.svg";
-import { ReactComponent as Back } from "../../assets/back.svg";
+import { ReactComponent as Next } from "../../assets/new-right.svg";
+import { ReactComponent as Back } from "../../assets/new-left.svg";
+
 import "./top.header.style.scss";
 const TopSingleHeader = ({
   images,

@@ -4,7 +4,7 @@ import { Post, Get } from "../../service/service.setup";
 import { ReactComponent as Photo } from "../../assets/photo.svg";
 import "./top.header.style.scss";
 import WebCamModel from "../web-cam.component/web-cam-modal";
-import { ToastContainer, toast } from "react-toastify";
+
 import { ReactComponent as Delete } from "../../assets/delete.svg";
 import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import OpenEditPop from "../modal/edit.modal";
@@ -79,9 +79,7 @@ const TopHeaderWithBack = ({
       } else {
         alert("Something went wrong try later");
       }
-    } catch (err) {
-      
-    }
+    } catch (err) {}
   };
   const topRowStyle = {
     background: "rgba(0, 0, 0, 0.125)",
@@ -99,9 +97,7 @@ const TopHeaderWithBack = ({
       let res = await Post("/updateImage", data);
       if (res.data.code == 200) alert(res.data.message);
       window.location.reload();
-    } catch (err) {
-      
-    }
+    } catch (err) {}
   };
   const editHandler = () => {
     getCurrentPage(imageId);
@@ -121,7 +117,6 @@ const TopHeaderWithBack = ({
   };
   return (
     <div className="row secondary-header single-header" style={topRowStyle}>
-      <ToastContainer />
       <div className="col-md-2  sec-header-item">
         <input
           placeholder="Search By Title"
