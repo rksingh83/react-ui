@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./create-image.style.scss";
-import { ReactComponent as Next } from "../../assets/next.svg";
-import { ReactComponent as Back } from "../../assets/back.svg";
+import { ReactComponent as Next } from "../../assets/new-right.svg";
+import { ReactComponent as Back } from "../../assets/new-left.svg";
 import { ToastContainer, toast } from "react-toastify";
 import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import { Post } from "../../service/service.setup";

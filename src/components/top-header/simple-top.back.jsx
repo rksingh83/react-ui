@@ -6,12 +6,10 @@ import "./top.header.style.scss";
 import WebCamModel from "../web-cam.component/web-cam-modal";
 
 import { ReactComponent as Delete } from "../../assets/delete.svg";
-import { ReactComponent as Pencil } from "../../assets/edit.svg";
-import OpenEditPop from "../modal/edit.modal";
-import { ReactComponent as Share } from "../../assets/shareimage.svg";
+
+import { ReactComponent as Share } from "../../assets/teaching.svg";
 import { ReactComponent as FolderSvg } from "../../assets/folder-name.svg";
 import ShareFolderModal from "../modal/share-folder-modal";
-import SharedListModal from "../modal/show-shared-list-modal";
 import { getPendingPageById } from "../../service/pendingData";
 const TopHeaderWithBack = ({
   history,
@@ -201,28 +199,7 @@ const TopHeaderWithBack = ({
           </span>
         </div>
       </div>
-      <div
-        className="col-md-1 sec-header-item col-text-style"
-        style={columnMinWidth}
-      >
-        <div
-          style={{
-            display: updateImages && updateImages.length == 1 ? "" : "none",
-          }}
-        >
-          <Pencil onClick={editHandler} className="header-icon" />
-          <span>Edit</span>
-          <OpenEditPop
-            currentLookup={currentLookup}
-            imageId={imageId}
-            history={history}
-            folderId={id}
-            removeImageId={closeEditModal}
-            isShow={isShow}
-            onClose={setIsShow}
-          ></OpenEditPop>
-        </div>
-      </div>
+
       <div className=" ml-auto col-md-1 sec-header-item col-text-style">
         <button
           onClick={() => history.goBack()}

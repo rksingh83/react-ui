@@ -72,7 +72,7 @@ const DisplayOriginalImage = ({
   const nextHandler = () => {
     let index = allPendingLIst.indexOf(imageId);
     if (index == allPendingLIst.length - 1) {
-      setResponseMgs("This is Last File");
+      setResponseMgs("You've reached last image in the file ");
       setShowPop(true);
       return;
     }
@@ -81,7 +81,7 @@ const DisplayOriginalImage = ({
   const prevHandler = () => {
     let index = allPendingLIst.indexOf(parseInt(imageId));
     if (index == 0) {
-      setResponseMgs("This is Last File");
+      setResponseMgs("You've reached first image in the file ");
       setShowPop(true);
       return;
     }
