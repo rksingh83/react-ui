@@ -3,20 +3,18 @@ import Popup from "reactjs-popup";
 import Modal from "react-bootstrap/Modal";
 
 const ShowMessages = ({ show, hide, message }) => {
-  
   return (
     <Modal size="md" show={show} animation={true}>
-      <Modal.Header></Modal.Header>
-      <Modal.Body className="text-center"><div className ="message">{message}</div></Modal.Body>
-      <Modal.Footer>
+      <Modal.Body className="text-center message-body ">
+        <div className="message">{message}</div>
         <button
-          className="btn-danger btn"
+          className="btn-info btn ok-button "
           variant="secondary"
           onClick={hide}
         >
-          Close
+          OK
         </button>
-      </Modal.Footer>
+      </Modal.Body>
     </Modal>
   );
 };

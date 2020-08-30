@@ -10,6 +10,7 @@ import TopHeaderWithBack from "../top-header/simple-top.back";
 import SharedHeader from "../top-header/shared-header";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import { Link } from "react-router-dom";
+import CustomLoader from "../loader/loader";
 const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const [file, setFile] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -25,6 +26,8 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const [imagesUpdate, setImagesUpdate] = useState([]);
   const [filteredImages, setFilteredImages] = useState("");
   const [searchImage, setSearchImage] = useState("");
+  const [isShowLoader, setShowLoader] = useState(false);
+  
 
   const sideBarStyle = {
     border: "1px solid rgba(0, 0, 0, 0.125)",
@@ -73,6 +76,7 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
     }
   }, []);
   async function getSharedWithMeImage() {
+    setShowLoader(true)
     try {
       const request = { fileId: match.params.id, allPageAcess: true };
       const images = await Post("/getAllSharedFileImages", request);
@@ -84,9 +88,13 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
       
       setCurrentFolderName(images.data.fileName);
       setIsLoading(false);
-    } catch (error) {}
+      setShowLoader(false)
+    } catch (error) {
+      setShowLoader(false)
+    }
   }
   async function getOwnImage() {
+    setShowLoader(true)
     try {
       setIsLoading(true);
       const requestFile = { id: match.params.id };
@@ -99,7 +107,10 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
       
       setCurrentFolderName(images.data.fileName);
       setIsLoading(false);
-    } catch (error) {}
+      setShowLoader(false)
+    } catch (error) {
+      setShowLoader(false)
+    }
   }
   const updateHandler = (list) => {
     setImagesUpdate(list);
@@ -141,13 +152,8 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
             </ul>
           </Link>
         </div>
-        <div className="col-md-9">
-          <div
-            className="empty-folder"
-            style={{ display: images.length == 0 ? "" : "none" }}
-          >
-            <h4>Folder is Empty</h4>
-          </div>
+        <div className="col-md-10">
+        {isShowLoader && <CustomLoader />}
           <DisplayImages
             history={history}
             onHove={showContentHandler}

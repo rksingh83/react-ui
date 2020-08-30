@@ -57,25 +57,31 @@ const DisplayImages = ({
         style={{ display: "flex", flexWrap: "wrap" }}
       >
         {localRender.map((item, index) => (
-          <div
-            className="image-container"
-            onMouseEnter={() =>
-              onHove(item.pageNumber, item.description, item.ff_local_datetime)
-            }
-            onMouseLeave={() => onLeave(false)}
-            key={index}
-          >
-            <Tick className="tick" onClick={(e) => toggleEl(item.id, e)} />
-            <div className="editIcon"></div>
-            <img
-              style={{ height: "96%" }}
-              src={require("../../assets/spiral.png")}
-            ></img>
-            <img
-              className="image-display"
-              src={item.raw_image_org}
-              onClick={() => history.push(`/original/${item.id}/${folderId}`)}
-            ></img>
+          <div className ="image-top-container">
+            <div
+              className="image-container"
+              onMouseEnter={() =>
+                onHove(
+                  item.pageNumber,
+                  item.description,
+                  item.ff_local_datetime
+                )
+              }
+              onMouseLeave={() => onLeave(false)}
+              key={index}
+            >
+              <Tick className="tick" onClick={(e) => toggleEl(item.id, e)} />
+              <div className="editIcon"></div>
+              <img
+                style={{ height: "96%" }}
+                src={require("../../assets/spiral.png")}
+              ></img>
+              <img
+                className="image-display"
+                src={item.raw_image_org}
+                onClick={() => history.push(`/original/${item.id}/${folderId}`)}
+              ></img>
+            </div>
             {item.title && <span className="img-title">{item.title}</span>}
           </div>
         ))}

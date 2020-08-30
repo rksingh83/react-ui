@@ -140,3 +140,14 @@ a {
   color: #000 !important;
   font-weight: 500 !important;
 }
+
+.message-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 9rem;
+  justify-content: space-around;
+  align-items: center;
+}
+.ok-button{
+  width: 4rem;
+}
