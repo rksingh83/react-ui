@@ -27,7 +27,6 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const [filteredImages, setFilteredImages] = useState("");
   const [searchImage, setSearchImage] = useState("");
   const [isShowLoader, setShowLoader] = useState(false);
-  
 
   const sideBarStyle = {
     border: "1px solid rgba(0, 0, 0, 0.125)",
@@ -52,8 +51,12 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
     setActiveIndex(LiElement.indexOf(e));
     if (LiElement.indexOf(e) == 0) {
       setFolderFlag("HOME");
-    } else {
+    }
+    if (LiElement.indexOf(e) == 1) {
       setFolderFlag("SHARED");
+    }
+    if (LiElement.indexOf(e) == 2) {
+      setFolderFlag("PENDING");
     }
     // setSharedWithMe(!sharedWithMe);
     setLiEl(totalEle);
@@ -76,7 +79,7 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
     }
   }, []);
   async function getSharedWithMeImage() {
-    setShowLoader(true)
+    setShowLoader(true);
     try {
       const request = { fileId: match.params.id, allPageAcess: true };
       const images = await Post("/getAllSharedFileImages", request);
@@ -85,16 +88,16 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
         history.push("/logout");
       }
       setImages(images.data.imageInput);
-      
+
       setCurrentFolderName(images.data.fileName);
       setIsLoading(false);
-      setShowLoader(false)
+      setShowLoader(false);
     } catch (error) {
-      setShowLoader(false)
+      setShowLoader(false);
     }
   }
   async function getOwnImage() {
-    setShowLoader(true)
+    setShowLoader(true);
     try {
       setIsLoading(true);
       const requestFile = { id: match.params.id };
@@ -104,12 +107,12 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
         history.push("/logout");
       }
       setImages(images.data.imageInput);
-      
+
       setCurrentFolderName(images.data.fileName);
       setIsLoading(false);
-      setShowLoader(false)
+      setShowLoader(false);
     } catch (error) {
-      setShowLoader(false)
+      setShowLoader(false);
     }
   }
   const updateHandler = (list) => {
@@ -153,7 +156,7 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
           </Link>
         </div>
         <div className="col-md-10">
-        {isShowLoader && <CustomLoader />}
+          {isShowLoader && <CustomLoader />}
           <DisplayImages
             history={history}
             onHove={showContentHandler}

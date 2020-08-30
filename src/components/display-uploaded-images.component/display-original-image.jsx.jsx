@@ -16,7 +16,13 @@ import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import { Link } from "react-router-dom";
 import CustomLoader from "../loader/loader";
 import ShowMessages from "../common/display-message-modal";
-const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
+import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
+const DisplayOriginalImage = ({
+  match,
+  history,
+  sharedWithMe,
+  setFolderFlag,
+}) => {
   const [imageUrl, setImageUrl] = useState("");
   const [imageId, setImageId] = useState(match.params.id);
 
@@ -45,11 +51,16 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
   const [showPopUp, setShowPop] = useState(false);
   const [responseMgs, setResponseMgs] = useState("");
   const handleActive = (e) => {
+    console.log(e);
     setActiveIndex(LiElement.indexOf(e));
     if (LiElement.indexOf(e) == 0) {
-      //setFolderFlag("HOME");
-    } else {
-      //  setFolderFlag("SHARED");
+      setFolderFlag("HOME");
+    }
+    if (LiElement.indexOf(e) == 1) {
+      setFolderFlag("SHARED");
+    }
+    if (LiElement.indexOf(e) == 2) {
+      setFolderFlag("PENDING");
     }
     // setSharedWithMe(!sharedWithMe);
     setLiEl(totalEle);
@@ -254,5 +265,11 @@ const DisplayOriginalImage = ({ match, history, sharedWithMe }) => {
 const mapStateToPros = ({ sharedWithMe: { sharedWithMe } }) => ({
   sharedWithMe,
 });
-export default connect(mapStateToPros)(DisplayOriginalImage);
+const mapDispatchToProps = (dispatch) => ({
+  setFolderFlag: (flag) => dispatch(setFolderFlag(flag)),
+});
+export default connect(
+  mapStateToPros,
+  mapDispatchToProps
+)(DisplayOriginalImage);
 //export default DisplayOriginalImage ;

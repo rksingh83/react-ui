@@ -38,8 +38,12 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
     setActiveIndex(LiElement.indexOf(e));
     if (LiElement.indexOf(e) == 0) {
       setFolderFlag("HOME");
-    } else {
+    }
+    if (LiElement.indexOf(e) == 1) {
       setFolderFlag("SHARED");
+    }
+    if (LiElement.indexOf(e) == 2) {
+      setFolderFlag("PENDING");
     }
     // setSharedWithMe(!sharedWithMe);
     setLiEl(totalEle);
