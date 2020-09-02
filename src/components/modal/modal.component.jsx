@@ -90,8 +90,8 @@ const ModalPop = ({ history, currentFile, openModel }) => {
         <Modal.Header closebutton></Modal.Header>
         <Modal.Body>
           <Input
-            placeholder="Enter your folder"
-            label="Folder"
+            placeholder="Enter your Book Name"
+            label="Book Name"
             value={fileName}
             handleChange={addFolderHandler}
             name="folder"
