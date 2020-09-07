@@ -43,6 +43,7 @@ const DisplayOriginalImage = ({
     id: 0,
     segmentation: "",
   });
+  const [isPrimerUser, setIsPrimerUser] = useState("");
   const totalEle = ["My Books", "Shared Books", "Pending"];
   const [LiElement, setLiEl] = useState(totalEle);
   const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
@@ -151,7 +152,10 @@ const DisplayOriginalImage = ({
     const response = await getPendingPageById(imageId);
     setCurrentLookup(response.data && response.data);
     // setLookupPageState(response.data && response.data.pageLookup);
-    if (response) setLookupPageState(response.data.pageLookup);
+    if (response) {
+      setLookupPageState(response.data.pageLookup);
+      setIsPrimerUser(response.data.user_membership)
+    }
     setShowLoader(false);
   };
   // handle input
@@ -245,6 +249,7 @@ const DisplayOriginalImage = ({
               pendingFolderId={1}
               pageData={lookupPageState}
               pageLookUpHandler={pageLookUpHandler}
+              isMemberShip ={isPrimerUser}
               isRedirectLast={true}
             ></LoadLookup>
           )}

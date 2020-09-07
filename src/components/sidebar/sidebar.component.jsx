@@ -42,6 +42,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   const [sharedSearchItem, setSharedSearchHandler] = useState("");
   const [sharedFilteredFolder, setSharedFilteredFolder] = useState("");
   const [sharedFileSearchInput, setSharedFileSearch] = useState("");
+  const [isPrimerUser, setIsPrimerUser] = useState("");
   const [lookupPageState, setLookupPageState] = useState({
     fileId: 0,
     shareId: 0,
@@ -118,8 +119,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     }
   };
   const handleActive = (e) => {
- 
-    console.log(e)
+    console.log(e);
     setActiveIndex(LiElement.indexOf(e));
     if (LiElement.indexOf(e) == 0) {
       setFolderFlag("HOME");
@@ -205,7 +205,6 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     getCurrentPage();
   }, [currentImage]);
   useEffect(() => {
-    
     setCurrentImage(allPendingLIst[0]);
   }, [allPendingLIst]);
   useEffect(() => {
@@ -219,16 +218,17 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
       //  console.log("ALL IMAGES", imageIds);
       setPendingFolderId(response.data.pendingFolderId);
       setPendingList(imageIds);
-    } catch (e) {
-  
-    }
+    } catch (e) {}
   };
   const getCurrentPage = async () => {
     setShowLoader(true);
     const response = await getPendingPageById(currentImage);
     setCurrentLookup(response.data && response.data);
     // setLookupPageState(response.data && response.data.pageLookup);
-    if (response) setLookupPageState(response.data.pageLookup);
+    if (response) {
+      setLookupPageState(response.data.pageLookup);
+      setIsPrimerUser(response.data.user_membership)
+    }
     setShowLoader(false);
   };
   const nextHandler = () => {
@@ -258,13 +258,13 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     if (index > -1) {
       allList.splice(index, 1);
     }
-  
+
     setPendingList([...allList]);
   };
   // set lookup form state
   const pageLookUpHandler = (e) => {
     const currentState = { ...lookupPageState };
-    
+
     const { name, value } = e.target;
     if (name == "fileId" || name == "tag") {
       let folder = currentState.file.filter((item) => item.id == value);
@@ -394,6 +394,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
                 pendingFolderId={pendingFolderId}
                 removeImageId={removeSavedImageId}
                 pageData={lookupPageState}
+                isMemberShip ={isPrimerUser}
                 pageLookUpHandler={pageLookUpHandler}
               ></LoadLookup>
             )}

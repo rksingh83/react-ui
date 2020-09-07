@@ -18,7 +18,13 @@ const PendingPageData = ({
   pageData,
   pageLookUpHandler,
   isRedirectLast,
+  isMemberShip,
 }) => {
+  const col = isMemberShip == 1 ? "col-md-6" : "col-md-10";
+  const title_col =
+    isMemberShip == 1
+      ? "col-md-3 page-lookup-heading"
+      : "col-md-2 page-lookup-heading";
   const imageStyle = {
     width: "100%",
     border: "1px solid green",
@@ -40,7 +46,7 @@ const PendingPageData = ({
     var d = new Date();
     let imageName = d.getTime();
     imageName = `jpg_${imageName}.jpg`;
-    
+
     formData.append("files", e, imageName);
     try {
       let res = await Post("/reUploadImage", formData, {
@@ -56,9 +62,7 @@ const PendingPageData = ({
       } else {
         alert("Something went wrong try later");
       }
-    } catch (err) {
-  
-    }
+    } catch (err) {}
   };
   const saveUpdateData = async () => {
     try {
@@ -82,7 +86,7 @@ const PendingPageData = ({
               className="hover"
             />
           )}
-            {!isRedirectLast && (
+          {!isRedirectLast && (
             <img
               onClick={() => history.push(`/edit/${currentImageId}`)}
               style={imageStyle}
@@ -93,15 +97,17 @@ const PendingPageData = ({
         </div>
         <div className="col-md-8">
           <div className="row">
-            <div className="col-md-3 mb-2 page-lookup-heading">File Title</div>
-            <div className="col-md-3 segmentation">
-              <img
-                style={imageStyle}
-                src={data.pageLookup.segmentationImagePath}
-                className="img-height"
-              />
-            </div>
-            <div className="col-md-6">
+            <div className={title_col}>File Title</div>
+            {isMemberShip == 1 && (
+              <div className="col-md-3 segmentation">
+                <img
+                  style={imageStyle}
+                  src={data.pageLookup.segmentationImagePath}
+                  className="img-height"
+                />
+              </div>
+            )}
+            <div className={col}>
               <Input
                 type="text"
                 onChange={pageLookUpHandler}
@@ -111,9 +117,11 @@ const PendingPageData = ({
             </div>
           </div>
           <div className="row">
-            <div className="col-md-3 page-lookup-heading">File Name</div>
-            <div className="col-md-3 page-lookup-heading"></div>
-            <div className="col-md-6">
+            <div className={title_col}>File Name</div>
+            {isMemberShip == 1 && (
+              <div className="col-md-3 page-lookup-heading"></div>
+            )}
+            <div className={col}>
               <FileSelect
                 onChange={pageLookUpHandler}
                 list={data.pageLookup.file}
@@ -124,10 +132,12 @@ const PendingPageData = ({
           </div>
           <div className="row">
             <div className="col-md-2 page-lookup-heading">File Tag</div>
-            <div className="col-md-4">
-              <img style={imageStyle} src={data.pageLookup.fileTagImagPath} />
-            </div>
-            <div className="col-md-6">
+            {isMemberShip == 1 && (
+              <div className="col-md-4">
+                <img style={imageStyle} src={data.pageLookup.fileTagImagPath} />
+              </div>
+            )}
+            <div className={col}>
               <FileTagSelect
                 onChange={pageLookUpHandler}
                 list={data.pageLookup.file}
@@ -163,10 +173,12 @@ const PendingPageData = ({
 
           <div className="row">
             <div className="col-md-2 page-lookup-heading">Share</div>
-            <div className="col-md-4">
-              <img style={imageStyle} src={data.pageLookup.shareImagePath} />
-            </div>
-            <div className="col-md-6">
+            {isMemberShip == 1 && (
+              <div className="col-md-4">
+                <img style={imageStyle} src={data.pageLookup.shareImagePath} />
+              </div>
+            )}
+            <div className={col}>
               <UserSelect
                 value={pageData.shareId}
                 onChange={pageLookUpHandler}
@@ -177,10 +189,12 @@ const PendingPageData = ({
           </div>
           <div className="row">
             <div className="col-md-2 page-lookup-heading">Date</div>
-            <div className="col-md-4">
-              <img style={imageStyle} src={data.pageLookup.dateImagePath} />
-            </div>
-            <div className="col-md-6">
+            {isMemberShip == 1 && (
+              <div className="col-md-4">
+                <img style={imageStyle} src={data.pageLookup.dateImagePath} />
+              </div>
+            )}
+            <div className={col}>
               <Input
                 value={pageData.date}
                 type="date"
@@ -191,13 +205,15 @@ const PendingPageData = ({
           </div>
           <div className="row">
             <div className="col-md-2 page-lookup-heading"> Page No.</div>
-            <div className="col-md-4">
-              <img
-                style={imageStyle}
-                src={data.pageLookup.pageNumberImagePath}
-              />
-            </div>
-            <div className="col-md-6">
+            {isMemberShip == 1 && (
+              <div className="col-md-4">
+                <img
+                  style={imageStyle}
+                  src={data.pageLookup.pageNumberImagePath}
+                />
+              </div>
+            )}
+            <div className={col}>
               <Input
                 type="text"
                 onChange={pageLookUpHandler}
@@ -208,10 +224,12 @@ const PendingPageData = ({
           </div>
           <div className="row">
             <div className="col-md-2 page-lookup-heading"> ID.</div>
-            <div className="col-md-4">
-              <img style={imageStyle} src={data.pageLookup.idImagePath} />
-            </div>
-            <div className="col-md-6">
+            {isMemberShip == 1 && (
+              <div className="col-md-4">
+                <img style={imageStyle} src={data.pageLookup.idImagePath} />
+              </div>
+            )}
+            <div className={col}>
               <Input
                 onChange={pageLookUpHandler}
                 value={pageData.id}

@@ -163,7 +163,7 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
     //alert("X: " + relativeX + "  Y: " + relativeY);
     data[e.target.id] = { X: relativeX, Y: relativeY };
     setData({ ...data });
-  });
+  },[]);
   const displayPoint = () => {
     const IMG = document.getElementById("img");
     const width = IMG.width / 700;
@@ -205,27 +205,26 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
     setData(tempData);
   };
   const renderPoint = () => {
-    let IMG = cordinates;
-    console.log(imagePoints);
+   
 
-    //const IMG = document.getElementById("img");
+    const IMG = document.getElementById("img");
     const width = IMG.width / 700;
     const height = IMG.height / 700;
     console.log(height, "wid", width);
     let tempData = {};
     const bottomleftx =
-      (imagePoints["bottomleftx"] * IMG.width) / (width * 100) - 20;
+      (10 * IMG.width) / (width * 100) - 20;
     const bottomlefty =
-      (imagePoints["bottomlefty"] * IMG.height) / (height * 100) - 20;
+      (90 * IMG.height) / (height * 100) - 20;
     setOneStyle({ top: bottomlefty, left: bottomleftx });
     fourDiv.current.style.top = bottomlefty;
     fourDiv.current.style.left = bottomleftx;
     tempData = { one: { X: bottomleftx + 20, Y: bottomlefty + 20 } };
 
     const bottomrightx =
-      (imagePoints["bottomrightx"] * IMG.width) / (width * 100) - 20;
+      (90 * IMG.width) / (width * 100) - 20;
     const bottomrighty =
-      (imagePoints["bottomrighty"] * IMG.height) / (height * 100) - 20;
+      (90 * IMG.height) / (height * 100) - 20;
 
     setTwoStyle({ top: bottomrighty, left: bottomrightx });
     tempData = {
@@ -234,16 +233,16 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
     };
     //TR
     const toprightx =
-      (imagePoints["toprightx"] * IMG.width) / (width * 100) - 20;
+      (90 * IMG.width) / (width * 100) - 20;
     const toprighty =
-      (imagePoints["toprighty"] * IMG.height) / (height * 100) - 20;
+      (10 * IMG.height) / (height * 100) - 20;
 
     setFourStyle({ top: toprighty, left: toprightx });
     tempData = { ...tempData, four: { X: toprightx + 20, Y: toprighty + 20 } };
     //TL
-    const topleftx = (imagePoints["topleftx"] * IMG.width) / (width * 100) - 20;
+    const topleftx = (10 * IMG.width) / (width * 100) - 20;
     const toplefty =
-      (imagePoints["toplefty"] * IMG.height) / (height * 100) - 20;
+      (10 * IMG.height) / (height * 100) - 20;
     setThreeStyle({ top: toplefty, left: topleftx });
     tempData = { ...tempData, three: { X: topleftx + 20, Y: toplefty + 20 } };
     setIsEdit(true);
@@ -336,6 +335,19 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
   useEffect(() => {
     // displayPoint(true);
   }, [cordinates]);
+  const reSetPoint = ()=>{
+    const IMG = document.getElementById("img");
+    const bottomleftx =
+    (10 * IMG.width) / (IMG.width * 100) ;
+  const bottomlefty =
+    (10* IMG.height) / (IMG.height * 100);
+  //setOneStyle({ top: bottomlefty, left: bottomleftx });
+  fourDiv.current.style.top = "0px";
+  fourDiv.current.style.left = "0px"
+  fourDiv.current.style.top = bottomlefty;
+  fourDiv.current.style.left = bottomleftx;
+    console.log(fourDiv.current.style);
+  }
   return (
     <>
       <div className="row">
@@ -366,7 +378,7 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
                   <Refresh
                     className="mr-2"
                     style={{ height: "35px" }}
-                    onClick={() => window.location.reload()}
+                    onClick={renderPoint}
                   />
                 </li>
                 <li className="nav-item">
