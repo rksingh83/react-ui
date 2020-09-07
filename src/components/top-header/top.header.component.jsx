@@ -269,8 +269,8 @@ const TopHeader = ({
         <Modal.Header></Modal.Header>
         <Modal.Body>
           <Input
-            placeholder="Enter your folder"
-            label="Folder"
+            placeholder="Enter your Book Name"
+            label="Book Name"
             value={fileName}
             handleChange={(e) => addName(e.target.value)}
             name="folder"
