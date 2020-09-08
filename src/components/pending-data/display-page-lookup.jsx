@@ -28,6 +28,12 @@ const PendingPageData = ({
   const imageStyle = {
     width: "100%",
     border: "1px solid green",
+    height: "77px",
+    marginBottom:"10px"
+  };
+  const tmnImageStyle = {
+    width: "100%",
+    border: "1px solid green",
   };
   useEffect(() => {}, [data.pageLookup]);
   const fileTagHandler = (e) => {
@@ -76,12 +82,12 @@ const PendingPageData = ({
     <div className="container-sm mt-4" style={{ maxWidth: "" }}>
       <div className="row"></div>
 
-      <div className="row">
+      <div className="row ">
         <div className="col-md-4">
           {isRedirectLast && (
             <img
               onClick={() => history.push(`/last/${currentImageId}`)}
-              style={imageStyle}
+              style={tmnImageStyle}
               src={data.pageLookup.cloudImagePath}
               className="hover"
             />
@@ -89,7 +95,7 @@ const PendingPageData = ({
           {!isRedirectLast && (
             <img
               onClick={() => history.push(`/edit/${currentImageId}`)}
-              style={imageStyle}
+              style={tmnImageStyle}
               src={data.pageLookup.cloudImagePath}
               className="hover"
             />

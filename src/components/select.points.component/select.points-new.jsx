@@ -147,23 +147,24 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
       // console.log(xPos , yPos)
       el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
     }
-  }, []);
-  $("#outerContainer").click(function (e) {
-    var offset = $(this).offset();
-    var relativeX = e.pageX - offset.left;
-    var relativeY = 2.2 + e.pageY - offset.top;
-    // if (e.target.id == "one" || e.target.id == "two") {
-    //   var relativeY = e.pageY + offset.top+12;
-    // } else {
-    //
-    // }
-
-    let temp = {};
-
-    //alert("X: " + relativeX + "  Y: " + relativeY);
-    data[e.target.id] = { X: relativeX, Y: relativeY };
-    setData({ ...data });
-  },[]);
+    $("#outerContainer").click(function (e) {
+      var offset = $(this).offset();
+      var relativeX = e.pageX - offset.left;
+      var relativeY = 2.2 + e.pageY - offset.top;
+      // if (e.target.id == "one" || e.target.id == "two") {
+      //   var relativeY = e.pageY + offset.top+12;
+      // } else {
+      //
+      // }
+  
+      let temp = {};
+  
+      //alert("X: " + relativeX + "  Y: " + relativeY);
+      data[e.target.id] = { X: relativeX, Y: relativeY };
+      setData({ ...data });
+    });
+  }, [data]);
+ 
   const displayPoint = () => {
     const IMG = document.getElementById("img");
     const width = IMG.width / 700;

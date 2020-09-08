@@ -28,7 +28,7 @@ const searchContact = async (id) => {
     const userFind = await Post("/searchUser", {
       unique_user_id: id
     });
-  
+
     if (userFind.data.code == "203") {
       alert(userFind.data.message);
       return;
@@ -52,7 +52,7 @@ const sendOTPToEmail = async (email) => {
     const userFind = await Post("/changeEmailAddress", {
       email: email
     });
-    
+
     if (userFind.data.code == "203") {
       alert(userFind.data.message);
       return;
@@ -78,7 +78,7 @@ const EmailVerification = async (email, otp) => {
       email: email,
       emailOtp: otp
     });
-  
+
     if (userFind.data.code == "203") {
       alert(userFind.data.message);
       return;
@@ -94,9 +94,33 @@ const EmailVerification = async (email, otp) => {
   }
 };
 
+const ChangePassword = async (email, password) => {
+  try {
+    const response = await Post("/changePassword", {
+      password,
+      email
+    });
+
+    if (response.data.code == "203") {
+      alert(response.data.message);
+      return;
+    }
+    if (response.data.code == "401") {
+      alert(response.data.message);
+      return;
+    }
+    return response;
+  } catch (e) {
+    alert("Something went wrong try latter");
+    //history.goBack();
+  }
+
+}
+
 export {
   searchContact,
   addContact,
   sendOTPToEmail,
-  EmailVerification
+  EmailVerification,
+  ChangePassword
 }

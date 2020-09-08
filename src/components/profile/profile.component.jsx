@@ -4,8 +4,12 @@ import UserData from "./display.user.data";
 import UserProfileFormData from "./user.set.data";
 import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
+import UpdatePassword from "../modal/change-password-modal";
 const Profile = ({ history }) => {
   const [isShowEdit, setIsShowEdit] = useState(false);
+  const [isShowUpdatePasswordModal, setIsShowUpdatePasswordModal] = useState(
+    false
+  );
   const [profile, setProfile] = useState({});
 
   const [gender, setGender] = useState([
@@ -28,11 +32,20 @@ const Profile = ({ history }) => {
       <div className="row">
         <div className="col pb-2">
           <h5 className="edit-heading"> Edit User Details</h5>
+        
+          <UpdatePassword
+            hide={setIsShowUpdatePasswordModal}
+            show={isShowUpdatePasswordModal}
+            email = {profile.email}
+          />
           <Pencil
             onClick={() => setIsShowEdit(true)}
             className="svg-styling"
             style={{ display: isShowEdit ? "none" : "" }}
           ></Pencil>
+            <span onClick={() => setIsShowUpdatePasswordModal(true)}>
+            Change Password
+          </span>
           <Cross
             className="svg-styling"
             onClick={() => setIsShowEdit(false)}
