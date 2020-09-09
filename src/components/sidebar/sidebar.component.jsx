@@ -301,6 +301,32 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
       setShowLoader(false);
     }
   };
+  const pendingImgDeleteHandler = async () => {
+    if (!window.confirm("Are You sure you want to delete ?")) return;
+    setShowLoader(true);
+    const requestPayload = {
+      imageInput: [
+        {
+          id: currentImage,
+          fileId: pendingFolderId,
+          delete: 1,
+        },
+      ],
+    };
+    // updateToServer(requestPayload);
+    try {
+      let res = await Post("/updateImage", requestPayload);
+      if (res.data.code == 200) {
+        setResponseMgs(res.data.message);
+        setShowPop(true);
+      }
+      // window.location.reload();
+      removeSavedImageId();
+      setShowLoader(false);
+    } catch (err) {
+      setShowLoader(false);
+    }
+  };
   return (
     <React.Fragment>
       <ShowMessages
@@ -340,6 +366,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
           toggleLoader={setShowLoader}
           setShowPop={setShowPop}
           resMgs={setResponseMgs}
+          deleteImg={pendingImgDeleteHandler}
         />
       )}
 

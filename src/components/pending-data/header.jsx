@@ -51,6 +51,11 @@ const PendingHeader = ({
             <UploadForm submitHandler={uploadImageHandler}></UploadForm>
           </div>
           <div>
+            <button className="btn btn-danger" onClick={props.deleteImg}>
+              Delete
+            </button>
+          </div>
+          <div>
             <button className="btn btn-info " onClick={() => saveHandler()}>
               Save
             </button>
