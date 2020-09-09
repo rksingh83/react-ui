@@ -7,7 +7,7 @@ import LoadLookup from "../pending-data/display-page-lookup";
 import { getPendingPageById } from "../../service/pendingData";
 import { ReactComponent as Next } from "../../assets/new-right.svg";
 import { ReactComponent as Back } from "../../assets/new-left.svg";
-
+import UploadForm from "../upload-image/upload-images";
 import "./top.header.style.scss";
 const TopSingleHeader = ({
   images,
@@ -18,6 +18,7 @@ const TopSingleHeader = ({
   next,
   prev,
   pageSaveHandler,
+  ...props
 }) => {
   const [show, setShow] = useState(false);
   const [fileName, addName] = useState("");
@@ -39,7 +40,9 @@ const TopSingleHeader = ({
   }, [imageId]);
   const getCurrentPage = async () => {
     const response = await getPendingPageById(imageId);
-    setCurrentLookup(response.data && response.data);
+    if (response.data) {
+      setCurrentLookup({ ...response.data });
+    }
   };
   const deleteHandler = () => {
     if (!window.confirm("Are You sure you want to delete ?")) return;
@@ -64,6 +67,37 @@ const TopSingleHeader = ({
     setShow(true);
     addName(updateImages[0].pageNumber);
     addDisc(updateImages[0].description || "");
+  };
+  const uploadImageHandler = async (e) => {
+    //  e.preventDefault();
+    // props.toggleLoader(true);
+    props.toggleLoader(true);
+    const formData = new FormData();
+    var d = new Date();
+    let imageName = d.getTime();
+    imageName = `jpg_${imageName}.jpg`;
+
+    formData.append("files", e, imageName);
+    try {
+      let res = await Post("/reUploadImage", formData, {
+        headers: {
+          fileId: folderId,
+          imageId: imageId,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (res.status == 200) {
+        props.setResponseMgs(res.data.message);
+        props.toggleModal(true);
+        //   props.toggleLoader(false);
+        window.location.reload();
+      } else {
+        alert("Something went wrong try later");
+      }
+      props.toggleLoader(false);
+    } catch (err) {
+      props.toggleLoader(false);
+    }
   };
   return (
     <div className="row">
@@ -95,6 +129,9 @@ const TopSingleHeader = ({
               </li>
               <li>
                 <Next className="header-svg" onClick={next} />
+              </li>
+              <li>
+                <UploadForm submitHandler={uploadImageHandler}></UploadForm>
               </li>
               <li>
                 <button

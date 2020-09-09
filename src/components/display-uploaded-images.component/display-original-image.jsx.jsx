@@ -71,7 +71,7 @@ const DisplayOriginalImage = ({
     height: "90vh",
   };
   const nextHandler = () => {
-    let index = allPendingLIst.indexOf(imageId);
+    let index = allPendingLIst.indexOf(parseInt(imageId));
     if (index == allPendingLIst.length - 1) {
       setResponseMgs("You've reached last image in the file ");
       setShowPop(true);
@@ -154,7 +154,7 @@ const DisplayOriginalImage = ({
     // setLookupPageState(response.data && response.data.pageLookup);
     if (response) {
       setLookupPageState(response.data.pageLookup);
-      setIsPrimerUser(response.data.user_membership)
+      setIsPrimerUser(response.data.user_membership);
     }
     setShowLoader(false);
   };
@@ -220,6 +220,9 @@ const DisplayOriginalImage = ({
           next={nextHandler}
           prev={prevHandler}
           pageSaveHandler={saveUpdateData}
+          toggleModal={setShowPop}
+          setResponseMgs={setResponseMgs}
+          toggleLoader={setShowLoader}
         />
       )}
 
@@ -249,7 +252,7 @@ const DisplayOriginalImage = ({
               pendingFolderId={1}
               pageData={lookupPageState}
               pageLookUpHandler={pageLookUpHandler}
-              isMemberShip ={isPrimerUser}
+              isMemberShip={isPrimerUser}
               isRedirectLast={true}
             ></LoadLookup>
           )}
