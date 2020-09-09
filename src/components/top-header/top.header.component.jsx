@@ -24,6 +24,7 @@ const TopHeader = ({
   deleteHandler,
   searchItem,
   searchHandler,
+  ...props
 }) => {
   const [show, setShow] = useState(false);
   const [fileName, addName] = useState("");
@@ -144,9 +145,7 @@ const TopHeader = ({
         alert("Something went wrong try later");
         setShowLoader(false);
       }
-    } catch (err) {
-
-    }
+    } catch (err) {}
   };
 
   return (
@@ -174,6 +173,13 @@ const TopHeader = ({
           <div className="col-md-1 sec-header-item col-text-style">
             <UploadForm isUpload={true} submitHandler={fileUploadHandler} />
           </div>
+          {totalItem == 0 && (
+            <div className="col-md-1 sec-header-item col-text-style item-center">
+              <span>
+                Limits <span className="badge badge-info">{props.uploadLimits}</span>
+              </span>
+            </div>
+          )}
           <div
             style={columnMinWidth}
             className="col-md-1 sec-header-item col-text-style"

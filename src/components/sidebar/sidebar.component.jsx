@@ -14,6 +14,7 @@ import LoadLookup from "../pending-data/display-page-lookup";
 import CustomLoader from "../loader/loader";
 import ShowMessages from "../common/display-message-modal";
 import { getDate } from "../common/utility";
+import { GetPageLimits } from "../../service/common";
 import {
   getAllPendingPageList,
   getPendingPageById,
@@ -63,6 +64,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   const [isShowLoader, setShowLoader] = useState(false);
   const [showPopUp, setShowPop] = useState(false);
   const [responseMgs, setResponseMgs] = useState("");
+  const [userImageUploadLimits, setUserImageUploadLimits] = useState(0);
 
   const sideBarStyle = {
     border: "1px solid rgba(0, 0, 0, 0.125)",
@@ -144,6 +146,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   useEffect(() => {
     getOwnFile();
     getSharedWithMeFolder();
+    getUserImageUploadLimits();
   }, []);
   const getOwnFile = () => {
     const requestFile = { filefolderRequest: [] };
@@ -327,6 +330,11 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
       setShowLoader(false);
     }
   };
+  // get users upload limits
+  const getUserImageUploadLimits = async () => {
+    const res = await GetPageLimits();
+    setUserImageUploadLimits(res.data.pagesLeft);
+  };
   return (
     <React.Fragment>
       <ShowMessages
@@ -342,6 +350,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
           searchHandler={searchHandler}
           deleteHandler={deleteHandler}
           saveFolder={saveFolder}
+          uploadLimits ={userImageUploadLimits}
         />
       )}
       {sharedWithMe == "SHARED" && (

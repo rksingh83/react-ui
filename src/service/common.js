@@ -25,8 +25,17 @@ const AddCoupon = async (token) => {
   }
 
 }
+const GetPageLimits = async () => {
+  try {
+    return await Get("getUserPageLimit");
+  } catch (e) {
+
+  }
+
+}
 
 export {
-  AddCoupon
+  AddCoupon,
+  GetPageLimits
 
 }
