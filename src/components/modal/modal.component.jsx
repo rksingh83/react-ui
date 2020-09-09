@@ -32,6 +32,11 @@ const ModalPop = ({ history, currentFile, openModel }) => {
       });
     } else {
       Post("/createFileFolder", requestFile).then((res) => {
+        if (res.data.code == "213") {
+          alert(res.data.error);
+          //setShowPop(true);
+          return;
+        }
         if (res.data.code == 201) {
           alert(res.data.error);
           history.push("/logout");
