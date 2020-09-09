@@ -100,7 +100,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     );
   };
   const saveFolder = (fileName, fileTag, fileDescription, id) => {
-    setIsLoading(true);
+    setShowLoader(true);
     const dateCreated = "123";
     const requestFile = {
       filefolderRequest: [
@@ -113,9 +113,16 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
         updateName(res.data.filefolderRequest[0])
       );
     } else {
-      Post("/createFileFolder", requestFile).then((res) =>
-        pushName(res.data.filefolderRequest[0])
-      );
+      Post("/createFileFolder", requestFile).then((res) => {
+        if (res.data.code == "213") {
+          setResponseMgs(res.data.message);
+          setShowPop(true);
+          setShowLoader(false);
+          return false;
+        }
+        pushName(res.data.filefolderRequest[0]);
+        setShowLoader(false);
+      });
     }
   };
   const handleActive = (e) => {
@@ -135,6 +142,10 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   };
 
   useEffect(() => {
+    getOwnFile();
+    getSharedWithMeFolder();
+  }, []);
+  const getOwnFile = () => {
     const requestFile = { filefolderRequest: [] };
     Post("/getAllFiles", requestFile).then((res) => {
       if (res.data.code == 201) {
@@ -146,10 +157,8 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
       if (res.data.filefolderRequest) {
         setTotalFolder(res.data.filefolderRequest);
       }
-      getSharedWithMeFolder();
     });
-  }, []);
-
+  };
   const pushName = (name) => {
     setTotalFolder([...totalFolder, name]);
 
@@ -227,7 +236,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     // setLookupPageState(response.data && response.data.pageLookup);
     if (response) {
       setLookupPageState(response.data.pageLookup);
-      setIsPrimerUser(response.data.user_membership)
+      setIsPrimerUser(response.data.user_membership);
     }
     setShowLoader(false);
   };
@@ -394,7 +403,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
                 pendingFolderId={pendingFolderId}
                 removeImageId={removeSavedImageId}
                 pageData={lookupPageState}
-                isMemberShip ={isPrimerUser}
+                isMemberShip={isPrimerUser}
                 pageLookUpHandler={pageLookUpHandler}
               ></LoadLookup>
             )}

@@ -79,6 +79,7 @@ const TopHeader = ({
     addName("");
     addDisc("");
     setId("");
+    addFileTag("");
     setShow(false);
   };
   const topRowStyle = {
