@@ -5,49 +5,37 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import TextField from "@material-ui/core/TextField";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
 import { ChangePassword } from "../../service/sharefiles";
-const UpdatePassword = ({ history, show, hide, email }) => {
-  const [searchUserId, setSearchUserId] = useState("");
-  const [emailInput, setEmailInput] = useState(false);
-  const [otp, setOTP] = useState("");
+const UpdatePassword = ({ show, hide }) => {
   const [startLoader, setStartLoader] = useState(false);
   const FORM_BASE = {
     currentPassword: "",
     password: "",
     confirmPassword: "",
   };
-  const [inputs, setInputs] = useState({
-    currentPassword: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const [inputs, setInputs] = useState(FORM_BASE);
+  const [errorMgs, setErrorMgs] = useState(FORM_BASE);
   const [error, setError] = useState({
     currentPassword: false,
     password: false,
     confirmPassword: false,
-  });
-  const [errorMgs, setErrorMgs] = useState({
-    currentPassword: "",
-    password: "",
-    confirmPassword: "",
   });
   const errorMessages = {
     currentPassword: "Current password required",
     password: " New password required",
     confirmPassword: "Confirm password",
   };
-
+const inputHight  = {height:"1rem"}
   const inputHandler = (e) => {
     const tempError = {};
-      const tempErrorMgs = {};
+    const tempErrorMgs = {};
     const { name, value } = e.target;
     let currentInput = { ...inputs };
     currentInput[name] = value;
     setInputs(currentInput);
     tempError[name] = false;
-    tempErrorMgs[name] = '';
+    tempErrorMgs[name] = "";
     setError(tempError);
     setErrorMgs(tempErrorMgs);
-    console.log();
   };
   const closeHandler = () => {
     setInputs({
@@ -66,7 +54,7 @@ const UpdatePassword = ({ history, show, hide, email }) => {
   };
 
   const updatePasswordHandler = async () => {
-    setError({ ...error, current: true });
+    setStartLoader(true);
     if (
       inputs.currentPassword == "" ||
       inputs.password == "" ||
@@ -83,11 +71,13 @@ const UpdatePassword = ({ history, show, hide, email }) => {
       setError(tempError);
       setErrorMgs(tempErrorMgs);
       // closeHandler()
+      setStartLoader(false);
       return false;
     }
     if (inputs.password != inputs.confirmPassword) {
       setError({ ...error, password: true, confirmPassword: true });
       setErrorMgs({ ...errorMgs, confirmPassword: "Passwords do not match" });
+      setStartLoader(false);
       return false;
     }
     // CHECK NEW AND CONFIRM PASSWORD IS SAME
@@ -96,8 +86,9 @@ const UpdatePassword = ({ history, show, hide, email }) => {
       inputs.currentPassword,
       inputs.password
     );
-
+    setStartLoader(false);
     response && alert(response.data.message);
+
     closeHandler();
   };
   return (
@@ -126,6 +117,7 @@ const UpdatePassword = ({ history, show, hide, email }) => {
               required
               error={error.currentPassword}
               helperText={errorMgs.currentPassword}
+          
             />
           </li>
           <li className="mt-2">
@@ -143,11 +135,11 @@ const UpdatePassword = ({ history, show, hide, email }) => {
               error={error.password}
               helperText={errorMgs.password}
               required
+        
             />
           </li>
           <li className="mt-2">
             <TextField
-              value={otp}
               onChange={inputHandler}
               id="outlined-basic"
               label="Confirm New Password"

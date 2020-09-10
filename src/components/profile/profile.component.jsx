@@ -32,27 +32,30 @@ const Profile = ({ history }) => {
       <div className="row">
         <div className="col pb-2">
           <h5 className="edit-heading"> Edit User Details</h5>
-        
+
           <UpdatePassword
             hide={setIsShowUpdatePasswordModal}
             show={isShowUpdatePasswordModal}
-            email = {profile.email}
+            email={profile.email}
           />
           <Pencil
             onClick={() => setIsShowEdit(true)}
             className="svg-styling"
             style={{ display: isShowEdit ? "none" : "" }}
           ></Pencil>
-            <span onClick={() => setIsShowUpdatePasswordModal(true)}>
-            Change Password
-          </span>
+
           <Cross
             className="svg-styling"
             onClick={() => setIsShowEdit(false)}
             style={{ display: isShowEdit ? "" : "none" }}
+          ></Cross>
+          <button
+            className="ml-auto btn btn-info"
+            onClick={() => setIsShowUpdatePasswordModal(true)}
+            style ={{float:"right"}}
           >
-            >
-          </Cross>
+            Change Password
+          </button>
         </div>
       </div>
       <div style={{ display: isShowEdit ? "" : "none" }}>
