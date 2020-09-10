@@ -5,22 +5,48 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import TextField from "@material-ui/core/TextField";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
 import { ChangePassword } from "../../service/sharefiles";
-const UpdatePassword = ({ history, show, hide ,email }) => {
+const UpdatePassword = ({ history, show, hide, email }) => {
   const [searchUserId, setSearchUserId] = useState("");
   const [emailInput, setEmailInput] = useState(false);
   const [otp, setOTP] = useState("");
   const [startLoader, setStartLoader] = useState(false);
+  const FORM_BASE = {
+    currentPassword: "",
+    password: "",
+    confirmPassword: "",
+  };
   const [inputs, setInputs] = useState({
     currentPassword: "",
     password: "",
     confirmPassword: "",
   });
+  const [error, setError] = useState({
+    currentPassword: false,
+    password: false,
+    confirmPassword: false,
+  });
+  const [errorMgs, setErrorMgs] = useState({
+    currentPassword: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const errorMessages = {
+    currentPassword: "Current password required",
+    password: " New password required",
+    confirmPassword: "Confirm password",
+  };
 
   const inputHandler = (e) => {
+    const tempError = {};
+      const tempErrorMgs = {};
     const { name, value } = e.target;
     let currentInput = { ...inputs };
     currentInput[name] = value;
     setInputs(currentInput);
+    tempError[name] = false;
+    tempErrorMgs[name] = '';
+    setError(tempError);
+    setErrorMgs(tempErrorMgs);
     console.log();
   };
   const closeHandler = () => {
@@ -30,11 +56,49 @@ const UpdatePassword = ({ history, show, hide ,email }) => {
       confirmPassword: "",
     });
     hide(false);
+    setErrorMgs(FORM_BASE);
+    setInputs(FORM_BASE);
+    setError({
+      currentPassword: false,
+      password: false,
+      confirmPassword: false,
+    });
   };
+
   const updatePasswordHandler = async () => {
-    
-    const response = await ChangePassword(email ,inputs.password);
-    console.log(response)
+    setError({ ...error, current: true });
+    if (
+      inputs.currentPassword == "" ||
+      inputs.password == "" ||
+      inputs.confirmPassword == ""
+    ) {
+      const tempError = {};
+      const tempErrorMgs = {};
+      Object.keys(inputs).map((key) => {
+        if (inputs[key] == "") {
+          tempError[key] = true;
+          tempErrorMgs[key] = errorMessages[key];
+        }
+      });
+      setError(tempError);
+      setErrorMgs(tempErrorMgs);
+      // closeHandler()
+      return false;
+    }
+    if (inputs.password != inputs.confirmPassword) {
+      setError({ ...error, password: true, confirmPassword: true });
+      setErrorMgs({ ...errorMgs, confirmPassword: "Passwords do not match" });
+      return false;
+    }
+    // CHECK NEW AND CONFIRM PASSWORD IS SAME
+
+    const response = await ChangePassword(
+      inputs.currentPassword,
+      inputs.password
+    );
+
+    response && alert(response.data.message);
+    closeHandler();
   };
   return (
     <Modal size="md" show={show} onHide={() => hide(false)} animation={true}>
@@ -49,7 +113,6 @@ const UpdatePassword = ({ history, show, hide ,email }) => {
         <ul>
           <li>
             <TextField
-              value={searchUserId}
               onChange={inputHandler}
               id="outlined-basic"
               label="Current Password"
@@ -58,11 +121,15 @@ const UpdatePassword = ({ history, show, hide ,email }) => {
               variant="outlined"
               name="currentPassword"
               value={inputs.currentPassword}
+              autoComplete="off"
+              type="password"
+              required
+              error={error.currentPassword}
+              helperText={errorMgs.currentPassword}
             />
           </li>
           <li className="mt-2">
             <TextField
-              value={otp}
               onChange={inputHandler}
               id="outlined-basic"
               label="New Password"
@@ -71,6 +138,11 @@ const UpdatePassword = ({ history, show, hide ,email }) => {
               name="password"
               mt={3}
               value={inputs.password}
+              autoComplete="off"
+              type="password"
+              error={error.password}
+              helperText={errorMgs.password}
+              required
             />
           </li>
           <li className="mt-2">
@@ -84,6 +156,11 @@ const UpdatePassword = ({ history, show, hide ,email }) => {
               name="confirmPassword"
               name="confirmPassword"
               value={inputs.confirmPassword}
+              autoComplete="off"
+              type="password"
+              helperText={errorMgs.confirmPassword}
+              error={error.confirmPassword}
+              required
               mt={3}
             />
           </li>
