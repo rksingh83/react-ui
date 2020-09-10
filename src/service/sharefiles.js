@@ -94,11 +94,11 @@ const EmailVerification = async (email, otp) => {
   }
 };
 
-const ChangePassword = async (email, password) => {
+const ChangePassword = async (currentPassword, newPassword) => {
   try {
     const response = await Post("/changePassword", {
-      password,
-      email
+      currentPassword,
+      newPassword
     });
 
     if (response.data.code == "203") {
@@ -106,8 +106,8 @@ const ChangePassword = async (email, password) => {
       return;
     }
     if (response.data.code == "401") {
-      alert(response.data.message);
-      return;
+      alert(response.data.error);
+      return false;
     }
     return response;
   } catch (e) {
