@@ -9,7 +9,6 @@ import "./header.style.scss";
 import "bootstrap/js/src/collapse.js";
 import { connect } from "react-redux";
 import ApplyCoupon from "../modal/apply-coupon";
-
 const Header = ({ currentUser, hidden }) => {
   const imgStyle = { width: "27px" };
   const isToken = Cookies.get("token");
@@ -72,20 +71,12 @@ const Header = ({ currentUser, hidden }) => {
               </Link>
             </li>
           )}
-          {currentUser && (
-            <li className="nav-item">
-              <ApplyCoupon
-                show={openApplyCouponModal}
-                hide={setOpenApplyCoupon}
-              />
-              <span
-                onClick={() => setOpenApplyCoupon(true)}
-                className="option nav-link text-white"
-              >
-                Apply Pages Coupon
-              </span>
-            </li>
-          )}
+          <li className="nav-item">
+            <Link className="option nav-link text-white" to="/coupon">
+              Coupon
+            </Link>
+          </li>
+          
           {currentUser ? (
             <li className="nav-item">
               <Link className="option nav-link text-white" to="/logout">

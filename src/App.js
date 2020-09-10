@@ -21,6 +21,8 @@ import {Post ,Get} from './service/service.setup' ;
 import SelectPoints from './components/select.points.component/select.points-new'
 import Profile from './components/profile/profile.component';
 import AddFriend from './components/add-friend/add-friend';
+
+import Coupon from './components/apply-coupon/applied.coupon.component'
 class App extends React.Component{
  //#endregio
  constructor(props){
@@ -54,6 +56,7 @@ class App extends React.Component{
     <Route  path ='/uploadFile/:id' component={UploadFile}/>
     <Route  path ='/edit/:url' component={SelectPoints}/>
     <Route  path ='/profile' component={Profile}/>
+    <Route  path ='/coupon' component={Coupon}/>
     <Route  path ='/original/:id/:folderId' component={DisplayOriginalImage}/> 
     <Route  path ='/last/:id' component={DisplayLastImage}/> 
     <Route  path ='/add-friend' component={AddFriend}/> 

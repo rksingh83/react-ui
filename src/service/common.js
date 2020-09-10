@@ -33,9 +33,18 @@ const GetPageLimits = async () => {
   }
 
 }
+const GetUserTransactions = async () => {
+  try {
+    return await Get("getUserTransactionList");
+  } catch (e) {
+
+  }
+
+}
 
 export {
   AddCoupon,
-  GetPageLimits
+  GetPageLimits ,
+  GetUserTransactions
 
 }
