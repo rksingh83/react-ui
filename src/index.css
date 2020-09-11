@@ -122,7 +122,7 @@ a {
   font-size: 16px;
   font-weight: 600;
   padding-right: 10px;
-  color:#0078d4
+  color: #0078d4
 }
 
 .share-search {
@@ -133,7 +133,7 @@ a {
 
 .list-group {
   font-size: 14px;
-  color: #0078d4 !important ;
+  color: #0078d4 !important;
   font-weight: 500;
 }
 
@@ -149,6 +149,23 @@ a {
   justify-content: space-around;
   align-items: center;
 }
-.ok-button{
+
+.ok-button {
   width: 4rem;
+}
+
+.verticalLine {
+  border-left: thick solid #0000004a;
+}
+
+.border-custom {
+  border-left: 1px solid #00000020;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.center-item{
+display: flex;
+justify-content: center;
 }

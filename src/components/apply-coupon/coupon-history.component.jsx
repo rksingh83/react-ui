@@ -22,7 +22,10 @@ const CouponHistory = ({ transactions, bookCounts }) => (
         ))}
       </DisplayTable>
     </div>
-    <div className="col-md-6">
+    <div className="col-md-1 center-item">
+      <div className= "border-custom"></div>
+    </div>
+    <div className="col-md-5">
       <h6>Books Details</h6>
       <DisplayTable heads={["Book Name", "Total Pages", "Latest Upload Date"]}>
         {bookCounts.map((book, index) => (

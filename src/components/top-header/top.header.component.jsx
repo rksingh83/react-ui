@@ -173,10 +173,11 @@ const TopHeader = ({
           <div className="col-md-1 sec-header-item col-text-style">
             <UploadForm isUpload={true} submitHandler={fileUploadHandler} />
           </div>
-          {totalItem == 0 && (
+          {totalItem == 0 && props.uploadLimits < 10 && (
             <div className="col-md-1 sec-header-item col-text-style item-center">
               <span>
-                Limits <span className="badge badge-info">{props.uploadLimits}</span>
+                Limits{" "}
+                <span className="badge badge-info">{props.uploadLimits}</span>
               </span>
             </div>
           )}
