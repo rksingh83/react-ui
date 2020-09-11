@@ -3,10 +3,10 @@ import React from 'react';
 import './input.style.scss'
 
 
-const Input =({handleChange,label,...restProps })=>{
+const Input =({handleChange, mt ,label,...restProps })=>{
      
   return(
-       <div className ='form-group'>
+       <div className = {`form-group ${mt}`}>
          {
          label?
          (<label>

@@ -2,9 +2,9 @@ import React from "react";
 
 import "./input.style.scss";
 
-const FileSelect = ({ handleChange, list, label, ...restProps }) => {
+const FileSelect = ({ handleChange, mt ,list, label, ...restProps }) => {
   return (
-    <div className="form-group">
+    <div className=   {`form-group ${mt}`}>
       {label ? <label>{label}</label> : null}
       <select className="form-control" onChange={handleChange} {...restProps}>
         <option>Select</option>
@@ -20,9 +20,9 @@ const FileSelect = ({ handleChange, list, label, ...restProps }) => {
   );
 };
 
-const FileTagSelect = ({ handleChange, list, label, ...restProps }) => {
+const FileTagSelect = ({ handleChange, mt, list, label, ...restProps }) => {
   return (
-    <div className="form-group">
+    <div className=  {`form-group ${mt}`}>
       {label ? <label>{label}</label> : null}
       <select className="form-control" onChange={handleChange} {...restProps}>
         <option>Select</option>
@@ -38,9 +38,9 @@ const FileTagSelect = ({ handleChange, list, label, ...restProps }) => {
   );
 };
 
-const UserSelect = ({ handleChange, list, label, ...restProps }) => {
+const UserSelect = ({ handleChange, mt, list, label, ...restProps }) => {
   return (
-    <div className="form-group">
+    <div className=  {`form-group ${mt}`}>
       {label ? <label>{label}</label> : null}
       <select className="form-control" onChange={handleChange} {...restProps}>
         <option>Select</option>

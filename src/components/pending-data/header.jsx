@@ -48,17 +48,23 @@ const PendingHeader = ({
         ></div>
         <div className="col-md-10 main">
           <div>
-            <UploadForm submitHandler={uploadImageHandler}></UploadForm>
+            {all.length > 0 && (
+              <UploadForm submitHandler={uploadImageHandler}></UploadForm>
+            )}
           </div>
           <div>
-            <button className="btn btn-danger" onClick={props.deleteImg}>
-              Delete
-            </button>
+            {all.length > 0 && (
+              <button className="btn btn-danger" onClick={props.deleteImg}>
+                Delete
+              </button>
+            )}
           </div>
           <div>
-            <button className="btn btn-info " onClick={() => saveHandler()}>
-              Save
-            </button>
+            {all.length > 0 && (
+              <button className="btn btn-info " onClick={() => saveHandler()}>
+                Save
+              </button>
+            )}
           </div>
           <div>
             <span className="info"> Total Pending </span>

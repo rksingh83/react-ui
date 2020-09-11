@@ -120,6 +120,7 @@ const PendingPageData = ({
                 onChange={pageLookUpHandler}
                 value={pageData.title}
                 name="title"
+                mt ={"mt-0"}
               />
             </div>
           </div>
@@ -134,6 +135,7 @@ const PendingPageData = ({
                 list={data.pageLookup.file}
                 value={pageData.fileId}
                 name="fileId"
+                mt ={"mt-0"}
               />
             </div>
           </div>
@@ -154,6 +156,7 @@ const PendingPageData = ({
                 list={data.pageLookup.file}
                 value={pageData.fileId}
                 name="tag"
+                mt ={"mt-0"}
               />
             </div>
           </div>
@@ -199,6 +202,7 @@ const PendingPageData = ({
                 onChange={pageLookUpHandler}
                 list={data.data.profileList}
                 name="shareId"
+                mt ={"mt-0"}
               />
             </div>
           </div>
@@ -219,6 +223,7 @@ const PendingPageData = ({
                 type="date"
                 onChange={pageLookUpHandler}
                 name="date"
+                mt ={"mt-0"}
               />
             </div>
           </div>
