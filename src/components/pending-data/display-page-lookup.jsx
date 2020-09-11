@@ -20,16 +20,16 @@ const PendingPageData = ({
   isRedirectLast,
   isMemberShip,
 }) => {
-  const col = isMemberShip == 1 ? "col-md-6" : "col-md-10";
+  const col = isMemberShip == 1 ? "col-md-3" : "col-md-10";
+  const INPUT_COL = isMemberShip == 1 ? "col-md-3" : "col-md-6";
   const title_col =
     isMemberShip == 1
-      ? "col-md-3 page-lookup-heading"
+      ? "col-md-2 page-lookup-heading"
       : "col-md-2 page-lookup-heading";
   const imageStyle = {
-    width: "100%",
     border: "1px solid green",
-    height: "77px",
-    marginBottom:"10px"
+    height: "40px",
+    marginBottom: "10px",
   };
   const tmnImageStyle = {
     width: "100%",
@@ -105,9 +105,10 @@ const PendingPageData = ({
           <div className="row">
             <div className={title_col}>File Title</div>
             {isMemberShip == 1 && (
-              <div className="col-md-3 segmentation">
+              <div className="col-md-7">
                 <img
                   style={imageStyle}
+                  width="320px"
                   src={data.pageLookup.segmentationImagePath}
                   className="img-height"
                 />
@@ -125,7 +126,7 @@ const PendingPageData = ({
           <div className="row">
             <div className={title_col}>File Name</div>
             {isMemberShip == 1 && (
-              <div className="col-md-3 page-lookup-heading"></div>
+              <div className="col-md-7 page-lookup-heading"></div>
             )}
             <div className={col}>
               <FileSelect
@@ -139,8 +140,12 @@ const PendingPageData = ({
           <div className="row">
             <div className="col-md-2 page-lookup-heading">File Tag</div>
             {isMemberShip == 1 && (
-              <div className="col-md-4">
-                <img style={imageStyle} src={data.pageLookup.fileTagImagPath} />
+              <div className="col-md-7">
+                <img
+                  width="240px"
+                  style={imageStyle}
+                  src={data.pageLookup.fileTagImagPath}
+                />
               </div>
             )}
             <div className={col}>
@@ -180,8 +185,12 @@ const PendingPageData = ({
           <div className="row">
             <div className="col-md-2 page-lookup-heading">Share</div>
             {isMemberShip == 1 && (
-              <div className="col-md-4">
-                <img style={imageStyle} src={data.pageLookup.shareImagePath} />
+              <div className="col-md-7">
+                <img
+                  width="440px"
+                  style={imageStyle}
+                  src={data.pageLookup.shareImagePath}
+                />
               </div>
             )}
             <div className={col}>
@@ -196,8 +205,12 @@ const PendingPageData = ({
           <div className="row">
             <div className="col-md-2 page-lookup-heading">Date</div>
             {isMemberShip == 1 && (
-              <div className="col-md-4">
-                <img style={imageStyle} src={data.pageLookup.dateImagePath} />
+              <div className="col-md-7">
+                <img
+                  width="320px"
+                  style={imageStyle}
+                  src={data.pageLookup.dateImagePath}
+                />
               </div>
             )}
             <div className={col}>
@@ -212,9 +225,10 @@ const PendingPageData = ({
           <div className="row">
             <div className="col-md-2 page-lookup-heading"> Page No.</div>
             {isMemberShip == 1 && (
-              <div className="col-md-4">
+              <div className="col-md-7">
                 <img
                   style={imageStyle}
+                  width="160px"
                   src={data.pageLookup.pageNumberImagePath}
                 />
               </div>
@@ -231,8 +245,12 @@ const PendingPageData = ({
           <div className="row">
             <div className="col-md-2 page-lookup-heading"> ID.</div>
             {isMemberShip == 1 && (
-              <div className="col-md-4">
-                <img style={imageStyle} src={data.pageLookup.idImagePath} />
+              <div className="col-md-7">
+                <img
+                  width="240px"
+                  style={imageStyle}
+                  src={data.pageLookup.idImagePath}
+                />
               </div>
             )}
             <div className={col}>
