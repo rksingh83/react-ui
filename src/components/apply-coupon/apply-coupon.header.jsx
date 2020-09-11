@@ -64,6 +64,7 @@ const ApplyCouponHeader = ({ startLoader }) => {
                   color="secondary"
                   mt={3}
                   className="ml-2"
+                  size = "small"
                 >
                   Apply Coupon
                 </Button>
