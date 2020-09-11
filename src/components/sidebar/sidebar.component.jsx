@@ -376,6 +376,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
           setShowPop={setShowPop}
           resMgs={setResponseMgs}
           deleteImg={pendingImgDeleteHandler}
+          history = {history}
         />
       )}
 
@@ -441,6 +442,8 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
                 pageData={lookupPageState}
                 isMemberShip={isPrimerUser}
                 pageLookUpHandler={pageLookUpHandler}
+                isRedirectLast = {true}
+               
               ></LoadLookup>
             )}
           </div>

@@ -70,6 +70,7 @@ const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag }) => {
       <div className="row">
         <div className="col-md-12">
           {sharedWithMe == "SHARED" && <SharedHeader history={history} />}
+          {sharedWithMe == "PENDING" && <SharedHeader history={history} />}
           {sharedWithMe == "HOME" && (
             <nav className="navbar navbar-expand-lg navbar-light sec-header-bg">
               <button

@@ -19,6 +19,7 @@ const PendingPageData = ({
   pageLookUpHandler,
   isRedirectLast,
   isMemberShip,
+  
 }) => {
   const col = isMemberShip == 1 ? "col-md-3" : "col-md-10";
   const INPUT_COL = isMemberShip == 1 ? "col-md-3" : "col-md-6";

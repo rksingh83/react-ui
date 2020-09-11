@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { AddCoupon } from "../../service/common";
-const ApplyCouponHeader = ({ startLoader }) => {
+const ApplyCouponHeader = ({ startLoader, leftCoupon }) => {
   const [coupon, setCoupon] = useState("");
   const INPUT_FIELDS = { error: false, message: "" };
   const [isError, setError] = useState(INPUT_FIELDS);
@@ -40,7 +40,7 @@ const ApplyCouponHeader = ({ startLoader }) => {
           </button>
           <div className="col-md-2"></div>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav  text-white">
+            <ul className="navbar-nav  center-item">
               <li className="nav-item">
                 <TextField
                   value={coupon}
@@ -64,10 +64,15 @@ const ApplyCouponHeader = ({ startLoader }) => {
                   color="secondary"
                   mt={3}
                   className="ml-2"
-                  size = "small"
+                  size="small"
                 >
                   Apply Coupon
                 </Button>
+              </li>
+              <li>
+                <span className="ml-3">
+                  Limits <span className="badge badge-info">{leftCoupon}</span>
+                </span>
               </li>
             </ul>
           </div>

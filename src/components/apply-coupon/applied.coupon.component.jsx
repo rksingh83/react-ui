@@ -8,6 +8,7 @@ const Coupon = ({ history }) => {
   const [bookCounts, setBookCounts] = useState([]);
   const [transactions, setTransactions] = useState([]);
   const [startLoader, setStartLoader] = useState(false);
+  const [leftCoupon, setLeftCoupon] = useState(0);
   useEffect(() => {
     getCouponHistory();
   }, []);
@@ -16,11 +17,12 @@ const Coupon = ({ history }) => {
     const response = await GetUserTransactions();
     setTransactions(response.data.data.transactions);
     setBookCounts(response.data.data.booksCount);
-    setStartLoader(false)
+    setStartLoader(false);
+    setLeftCoupon(response.data.pagesLeft)
   };
   return (
     <>
-      <ApplyCouponHeader startLoader ={setStartLoader} />
+      <ApplyCouponHeader leftCoupon ={leftCoupon} startLoader ={setStartLoader} />
       {startLoader && <CustomLoader />}
       <div className="row">
         <SideBar />

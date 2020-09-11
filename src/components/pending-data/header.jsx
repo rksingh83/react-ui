@@ -10,6 +10,7 @@ const PendingHeader = ({
   currentImageId,
   all,
   saveHandler,
+  history,
   ...props
 }) => {
   const uploadImageHandler = async (e) => {
@@ -63,6 +64,16 @@ const PendingHeader = ({
             {all.length > 0 && (
               <button className="btn btn-info " onClick={() => saveHandler()}>
                 Save
+              </button>
+            )}
+          </div>
+          <div>
+            {all.length > 0 && (
+              <button
+                className="btn btn-success"
+                onClick={() => history.push(`/edit/${currentImageId}`)}
+              >
+                Edit
               </button>
             )}
           </div>
