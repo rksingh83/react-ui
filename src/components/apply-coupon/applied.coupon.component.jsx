@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CouponHistory from "./coupon-history.component";
+import ApplyCouponHeader from './apply-coupon.header';
+import SideBar from './sidebar.conponent'
 import { GetUserTransactions } from "../../service/common";
 const Coupon = ({ history }) => {
   const [bookCounts, setBookCounts] = useState([]);
@@ -15,9 +17,9 @@ const Coupon = ({ history }) => {
   };
   return (
     <>
-      <div>SecondaryHeader</div>
+      <ApplyCouponHeader/>
       <div className="row">
-        <div className="col-md-2">SIDEBAR</div>
+        <SideBar/>
         <div className="col-md-10">
           <CouponHistory transactions={transactions} bookCounts={bookCounts} />
         </div>

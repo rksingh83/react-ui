@@ -16,7 +16,6 @@ const CouponHistory = ({ transactions, bookCounts }) => (
           <tr key={index}>
             <td>{transaction.token}</td>
             <td>{getDataTime(transaction.createDateTime)}</td>
-
             <td>{transaction.page}</td>
             <td>{transaction.totalPage}</td>
           </tr>
@@ -24,7 +23,7 @@ const CouponHistory = ({ transactions, bookCounts }) => (
       </DisplayTable>
     </div>
     <div className="col-md-6">
-    <h6>Books Details</h6>
+      <h6>Books Details</h6>
       <DisplayTable heads={["Book Name", "Total Pages", "Latest Upload Date"]}>
         {bookCounts.map((book, index) => (
           <tr key={`${book.bookName}_${index}`}>
