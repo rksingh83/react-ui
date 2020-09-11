@@ -71,7 +71,7 @@ const ApplyCouponHeader = ({ startLoader, leftCoupon }) => {
               </li>
               <li>
                 <span className="ml-3">
-                  Limits <span className="badge badge-info">{leftCoupon}</span>
+                  Total Page Upload Limit <span className="badge badge-info">{leftCoupon}</span>
                 </span>
               </li>
             </ul>
