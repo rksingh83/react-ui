@@ -50,8 +50,8 @@ const ShareFolderModal = ({ show, hide, selected, images, count }) => {
     imageCounter();
   }, [count]);
   const addContactHandler = async (id) => {
-    //const user = await addContact(id);
-    const user = true;
+    const user = await addContact(id);
+  //  const user = true;
     const addedUser = searchedContactList.filter((item) => item.id == id)[0];
     addedUser.requestAlreadySent = true;
 
