@@ -8,7 +8,7 @@ import { addContact, searchContact } from "../../service/sharefiles";
 import DisplayGroupList from "../add-friend/display-group";
 import ListTabs from "../add-friend/tab";
 import SharedListUL from "../modal/show-shared-list-modal";
-const ShareFolderModal = ({ show, hide, selected, images }) => {
+const ShareFolderModal = ({ show, hide, selected, images, count }) => {
   const [contactList, setContactList] = useState([]);
   const [groups, setGroups] = useState([]);
   const [searchUserId, setSearchUserId] = useState("");
@@ -46,6 +46,9 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
     fileCounter();
     setSearchedContactList([]);
   }, [selected]);
+  useEffect(() => {
+    imageCounter();
+  }, [count]);
   const addContactHandler = async (id) => {
     //const user = await addContact(id);
     const user = true;
@@ -100,11 +103,16 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
     getContactRequest();
   }, []);
   const fileCounter = () => {
+    console.log("FILE_COUNTER");
     let count = 0;
     for (let key in selected) {
       if (selected[key]) count++;
     }
-    console.log(count);
+    setFileCounter(count);
+  };
+  const imageCounter = () => {
+    console.log("IMAGE_COUNTER");
+    //console.log(folderList)
     setFileCounter(count);
   };
   return (

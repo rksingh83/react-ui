@@ -193,6 +193,7 @@ const TopHeaderWithBack = ({
             show={shareFolder}
             hide={setShareFolder}
             images={{ updateImages, id }}
+            count={updateImages.length}
           />
           <span className="on-hover" onClick={() => setShareFolder(true)}>
             Share
