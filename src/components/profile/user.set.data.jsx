@@ -3,11 +3,12 @@ import Select from "../boostrapinput/select.component";
 import Input from "../boostrapinput/input.component";
 import { Post, Get } from "../../service/service.setup";
 import EditEmailModal from "../modal/change-email-modal";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 const UserProfileFormData = ({ profile, history }) => {
   const [userData, setProfile] = useState({});
   const [isOpenModal, setIsOpenModal] = useState(false);
-
+const [dob ,setDOB] = useState('')
   const [genderList, setGender] = useState([
     { id: "male", name: "Male" },
     { id: "female", name: "Female" },
@@ -18,27 +19,31 @@ const UserProfileFormData = ({ profile, history }) => {
       const user = await Get("getProfile");
       //date = date.replace(/\//g, '_');
       setProfile(user.data.data.profile[0]);
-    
-    } catch (error) { }
+      setDOB(new Date(user.data.data.profile[0].dob))
+    } catch (error) {}
   }
   const saveDataHandler = async () => {
     try {
-      const user = await Post("/setuserProfile", userData);
+      const request = {...userData ,dob}
+      const user = await Post("/setuserProfile", request);
       if (user.data.code == 200) window.location.reload();
       if (user.data.code == 207) alert(user.data.message);
-    
-    } catch (error) { }
+    } catch (error) {}
   };
   useEffect(() => {
     getProfile();
   }, []);
   const setProfileHandler = (e) => {
+    //console.log(userData);
+    console.log( new Date(userData.dob))
     const { name, value } = e.target;
+    console.log(userData);
     setProfile({ ...userData, [name]: value });
   };
-  const setDobHandler = (e) => {
+  const setDOBHandler = (e) => {
+    console.log(userData);
     //const {value} =(e.target) ;
-    setProfile({ ...userData, dob: e });
+    setDOB(e);
   };
   return (
     <div className=" mt-4">
@@ -70,14 +75,20 @@ const UserProfileFormData = ({ profile, history }) => {
               name="fullname"
               value={userData.fullname}
             ></Input>
-            <Input
+            {/* <Input
               onChange={setProfileHandler}
               type="date"
               label="Date of Birth "
               placeholder="Enter Date of Birth"
               name="dob"
               value={userData.dob}
-            ></Input>
+            ></Input> */}
+            <DatePicker
+              name="date"
+              className="form-control"
+              selected={dob}
+              onChange={setDOBHandler}
+            />
 
             <Select
               onChange={setProfileHandler}
@@ -123,7 +134,6 @@ const UserProfileFormData = ({ profile, history }) => {
               name="phoneNumber"
               value={userData.mobileNumber}
             ></Input>
-
 
             <EditEmailModal
               show={isOpenModal}
