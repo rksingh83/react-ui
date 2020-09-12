@@ -292,6 +292,11 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
 
     setLookupPageState(currentState);
   };
+  const pageLookUpDateHandler = (e) => {
+    const currentState = { ...lookupPageState };
+    currentState.date = e;
+    setLookupPageState(currentState);
+  };
   const saveUpdateData = async () => {
     setShowLoader(true);
     try {
@@ -345,6 +350,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
         tempData[attr] = "";
       }
     }
+    if (tempData.date == "") tempData.date = new Date();
     return tempData;
   };
   return (
@@ -455,6 +461,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
                 isMemberShip={isPrimerUser}
                 pageLookUpHandler={pageLookUpHandler}
                 isRedirectLast={true}
+                pageLookUpDateHandler={pageLookUpDateHandler}
               ></LoadLookup>
             )}
           </div>

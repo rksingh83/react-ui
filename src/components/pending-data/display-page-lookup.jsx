@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Post, Get } from "../../service/service.setup";
 import { ReactComponent as Next } from "../../assets/next-arr.svg";
 import { ReactComponent as Back } from "../../assets/back-arr.svg";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import {
   UserSelect,
   FileSelect,
@@ -19,7 +21,7 @@ const PendingPageData = ({
   pageLookUpHandler,
   isRedirectLast,
   isMemberShip,
-  
+  pageLookUpDateHandler
 }) => {
   const col = isMemberShip == 1 ? "col-md-3" : "col-md-10";
   const INPUT_COL = isMemberShip == 1 ? "col-md-3" : "col-md-6";
@@ -79,6 +81,10 @@ const PendingPageData = ({
       }
     } catch (e) {}
   };
+  const getDataTime = (timeStamp) => {
+    let date = timeStamp.split("T");
+    return `${date[0]}`;
+  };
   return (
     <div className="container-sm mt-4" style={{ maxWidth: "" }}>
       <div className="row"></div>
@@ -121,7 +127,7 @@ const PendingPageData = ({
                 onChange={pageLookUpHandler}
                 value={pageData.title}
                 name="title"
-                mt ={"mt-0"}
+                mt={"mt-0"}
               />
             </div>
           </div>
@@ -136,7 +142,7 @@ const PendingPageData = ({
                 list={data.pageLookup.file}
                 value={pageData.fileId}
                 name="fileId"
-                mt ={"mt-0"}
+                mt={"mt-0"}
               />
             </div>
           </div>
@@ -157,7 +163,7 @@ const PendingPageData = ({
                 list={data.pageLookup.file}
                 value={pageData.fileId}
                 name="tag"
-                mt ={"mt-0"}
+                mt={"mt-0"}
               />
             </div>
           </div>
@@ -203,7 +209,7 @@ const PendingPageData = ({
                 onChange={pageLookUpHandler}
                 list={data.data.profileList}
                 name="shareId"
-                mt ={"mt-0"}
+                mt={"mt-0"}
               />
             </div>
           </div>
@@ -219,12 +225,18 @@ const PendingPageData = ({
               </div>
             )}
             <div className={col}>
-              <Input
+              {/* <Input
                 value={pageData.date}
                 type="date"
                 onChange={pageLookUpHandler}
                 name="date"
-                mt ={"mt-0"}
+                mt={"mt-0"}
+              /> */}
+              <DatePicker
+                name="date"
+                className ="form-control"
+                selected={new Date(pageData.date)}
+                onChange={pageLookUpDateHandler}
               />
             </div>
           </div>
