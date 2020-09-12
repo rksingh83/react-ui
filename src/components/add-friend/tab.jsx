@@ -2,7 +2,7 @@ import React from "react";
 
 const ListTabs = ({ setCurrentTab, currentTab, isHideShare }) => {
   return (
-    <ul className="nav nav-pills nav-justified mb-2">
+    <ul className="nav nav-pills nav-justified mb-2 w-100">
       <li
         className={`  border border-success nav-link pl-2 ${
           currentTab == "CONTACTS" ? "active" : ""

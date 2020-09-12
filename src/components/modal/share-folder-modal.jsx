@@ -14,12 +14,12 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
   const [searchUserId, setSearchUserId] = useState("");
   const [searchedContactList, setSearchedContactList] = useState("");
   const [currentList, setCurrentList] = useState("CONTACTS");
-  
-  const onClose = ()=>{
-    setSearchedContactList([]) ;
+  const [selectedFileCounter, setFileCounter] = useState(0);
+  const onClose = () => {
+    setSearchedContactList([]);
     setSearchUserId("");
     hide(false);
-  }
+  };
   async function getContactRequest() {
     try {
       const contacts = await Get("showUserContactList");
@@ -42,20 +42,23 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
       // setSearchedContactList([]);
     }
   };
-  useEffect(()=>{
-    setSearchedContactList([])
-  },[selected])
+  useEffect(() => {
+    fileCounter();
+    setSearchedContactList([]);
+  }, [selected]);
   const addContactHandler = async (id) => {
     //const user = await addContact(id);
-   const user = true ;
-   const addedUser = (searchedContactList.filter(item=>item.id==id))[0] ;
-   addedUser.requestAlreadySent = true
- 
+    const user = true;
+    const addedUser = searchedContactList.filter((item) => item.id == id)[0];
+    addedUser.requestAlreadySent = true;
+
     if (user) {
-      setSearchedContactList([{
-        ...addedUser,
-        requestAlreadySent: true,
-      }]);
+      setSearchedContactList([
+        {
+          ...addedUser,
+          requestAlreadySent: true,
+        },
+      ]);
     }
   };
   const shareGroupHandler = (id) => {
@@ -80,7 +83,7 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
           active: true,
         };
       }
-    
+
       const request = { imageIds: folderIds, group_id: id, active: true };
 
       const requestData = images && images.id ? imagesRequest : request;
@@ -96,10 +99,22 @@ const ShareFolderModal = ({ show, hide, selected, images }) => {
     getGroups();
     getContactRequest();
   }, []);
+  const fileCounter = () => {
+    let count = 0;
+    for (let key in selected) {
+      if (selected[key]) count++;
+    }
+    console.log(count);
+    setFileCounter(count);
+  };
   return (
     <Modal size="md" show={show} onHide={() => hide(false)} animation={true}>
       <Modal.Header>
-        <ListTabs setCurrentTab={setCurrentList} currentTab={currentList} />
+        <ListTabs
+          isHideShare={selectedFileCounter > 1}
+          setCurrentTab={setCurrentList}
+          currentTab={currentList}
+        />
       </Modal.Header>
       <Modal.Body>
         {currentList == "GROUPS" && (
