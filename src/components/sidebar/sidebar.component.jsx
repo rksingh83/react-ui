@@ -238,8 +238,10 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     setCurrentLookup(response.data && response.data);
     // setLookupPageState(response.data && response.data.pageLookup);
     if (response) {
-      setLookupPageState(response.data.pageLookup);
+      console.log(response.data.pageLookup);
+      setLookupPageState(removeNull(response.data.pageLookup));
       setIsPrimerUser(response.data.user_membership);
+      removeNull(response.data.pageLookup);
     }
     setShowLoader(false);
   };
@@ -335,6 +337,16 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     const res = await GetPageLimits();
     setUserImageUploadLimits(res.data.pagesLeft);
   };
+  // handle null values in input
+  const removeNull = (data) => {
+    const tempData = { ...data };
+    for (let attr in data) {
+      if (tempData[attr] == null && attr != "userList") {
+        tempData[attr] = "";
+      }
+    }
+    return tempData;
+  };
   return (
     <React.Fragment>
       <ShowMessages
@@ -350,7 +362,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
           searchHandler={searchHandler}
           deleteHandler={deleteHandler}
           saveFolder={saveFolder}
-          uploadLimits ={userImageUploadLimits}
+          uploadLimits={userImageUploadLimits}
         />
       )}
       {sharedWithMe == "SHARED" && (
@@ -376,7 +388,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
           setShowPop={setShowPop}
           resMgs={setResponseMgs}
           deleteImg={pendingImgDeleteHandler}
-          history = {history}
+          history={history}
         />
       )}
 
@@ -442,8 +454,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
                 pageData={lookupPageState}
                 isMemberShip={isPrimerUser}
                 pageLookUpHandler={pageLookUpHandler}
-                isRedirectLast = {true}
-               
+                isRedirectLast={true}
               ></LoadLookup>
             )}
           </div>
