@@ -83,6 +83,9 @@ const [dob ,setDOB] = useState('')
               name="dob"
               value={userData.dob}
             ></Input> */}
+            <label>
+              Date of Birth
+            </label>
             <DatePicker
               name="date"
               className="form-control"
