@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Get, Post } from "../../service/service.setup";
+import { ReactComponent as Close } from "../../assets/close.svg";
 import CustomLoader from "../loader/loader";
 const SharedListUL = ({ list, selectedItems }) => {
   const [sharedList, setShareWithList] = useState([]);
   const [isShowLoader, setIsShowLoader] = useState(false);
+  const [folderId, setFolderId] = useState(0);
   useEffect(() => {
     setIsShowLoader(true);
     let fileId = 0;
@@ -13,6 +15,7 @@ const SharedListUL = ({ list, selectedItems }) => {
       }
     }
     getFolders(fileId);
+    setFolderId(fileId);
   }, []);
 
   async function getFolders(fileId) {
@@ -32,6 +35,21 @@ const SharedListUL = ({ list, selectedItems }) => {
       setIsShowLoader(false);
     }
   }
+  const removeFullAccess = async (id) => {
+    const restUser = setShareWithList(
+      sharedList.filter((user) => user.id != id)
+    );
+    if (restUser.length > 0) {
+      setShareWithList(restUser);
+    } else {
+      setShareWithList([{ fullname: "Page is not shared with anyone" }]);
+    }
+    const response = await Post("/removeshareFile", {
+      user_id: id,
+      file_id: folderId,
+    });
+  };
+
   return (
     <ul className="list-group">
       {isShowLoader && (
@@ -42,7 +60,13 @@ const SharedListUL = ({ list, selectedItems }) => {
       {sharedList.map((item, index) => (
         <li className="list-group-item li-contact-list" key={index}>
           <span> {item.fullname}</span>
-          {item.fullaccess && <span>Full Access</span>}
+          {item.fullaccess && (
+            <span>
+              {" "}
+              <Close onClick={() => removeFullAccess(item.id)}></Close>Full
+              Access
+            </span>
+          )}
         </li>
       ))}
     </ul>
