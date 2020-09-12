@@ -71,12 +71,13 @@ const Header = ({ currentUser, hidden }) => {
               </Link>
             </li>
           )}
-          <li className="nav-item">
-            <Link className="option nav-link text-white" to="/coupon">
-              Coupon
-            </Link>
-          </li>
-          
+          {currentUser && (
+            <li className="nav-item">
+              <Link className="option nav-link text-white" to="/coupon">
+                Coupon
+              </Link>
+            </li>
+          )}
           {currentUser ? (
             <li className="nav-item">
               <Link className="option nav-link text-white" to="/logout">

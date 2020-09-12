@@ -3,7 +3,7 @@ import "./user-data.style.scss";
 const UserData = ({ profile }) => {
 
   return (
-    <div className="row">
+    <div className="row mt-4">
       <div className="col-md-12 col-sm-12 col-xs-12">
         <div className="card card-body">
           <div className="row">
