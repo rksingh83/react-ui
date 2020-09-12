@@ -5,6 +5,7 @@ import UserProfileFormData from "./user.set.data";
 import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
 import UpdatePassword from "../modal/change-password-modal";
+import SideBar from './sidebar.conponent';
 const Profile = ({ history }) => {
   const [isShowEdit, setIsShowEdit] = useState(false);
   const [isShowUpdatePasswordModal, setIsShowUpdatePasswordModal] = useState(
@@ -28,11 +29,13 @@ const Profile = ({ history }) => {
   }, []);
 
   return (
-    <div className="mt-4 p-4">
+    <div className="">     
       <div className="row">
-        <div className="col pb-2">
-          <h5 className="edit-heading"> Edit User Details</h5>
-
+      <div className="col-md-12">
+      <nav className="navbar navbar-expand-lg navbar-light sec-header-bg">
+      <div>
+        <div className="edit-heading">
+          <span className="edit-label"> Edit User Details</span>
           <UpdatePassword
             hide={setIsShowUpdatePasswordModal}
             show={isShowUpdatePasswordModal}
@@ -50,7 +53,7 @@ const Profile = ({ history }) => {
             style={{ display: isShowEdit ? "" : "none" }}
           ></Cross>
           <button
-            className="ml-auto btn btn-info"
+            className="ml-auto btn btn-info change-password"
             onClick={() => setIsShowUpdatePasswordModal(true)}
             style ={{float:"right"}}
           >
@@ -58,6 +61,9 @@ const Profile = ({ history }) => {
           </button>
         </div>
       </div>
+      </nav>
+    </div>
+      <SideBar/>
       <div style={{ display: isShowEdit ? "" : "none" }}>
         <UserProfileFormData
           history={history}
@@ -67,6 +73,7 @@ const Profile = ({ history }) => {
       <div style={{ display: isShowEdit ? "none" : "" }} className="">
         <UserData profile={profile}></UserData>
       </div>
+    </div>
     </div>
   );
 };
