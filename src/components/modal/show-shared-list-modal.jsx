@@ -39,7 +39,7 @@ const SharedListUL = ({ list, selectedItems }) => {
     const restUser = setShareWithList(
       sharedList.filter((user) => user.id != id)
     );
-    if (restUser.length > 0) {
+    if (typeof restUser !== 'undefined' && restUser.length > 0) {
       setShareWithList(restUser);
     } else {
       setShareWithList([{ fullname: "Page is not shared with anyone" }]);
