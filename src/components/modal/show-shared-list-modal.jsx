@@ -36,9 +36,7 @@ const SharedListUL = ({ list, selectedItems }) => {
     }
   }
   const removeFullAccess = async (id) => {
-    const restUser = setShareWithList(
-      sharedList.filter((user) => user.id != id)
-    );
+    const restUser = sharedList.filter((user) => user.id != id);
     if (restUser.length > 0) {
       setShareWithList(restUser);
     } else {
@@ -60,12 +58,14 @@ const SharedListUL = ({ list, selectedItems }) => {
       {sharedList.map((item, index) => (
         <li className="list-group-item li-contact-list" key={index}>
           <span> {item.fullname}</span>
-          {item.fullaccess && (
-            <span>
-              {" "}
-              <Close onClick={() => removeFullAccess(item.id)}></Close>Full
-              Access
-            </span>
+
+          {item.fullname != "Page is not shared with anyone" && (
+            <button
+              className="btn btn-danger"
+              onClick={() => removeFullAccess(item.id)}
+            >
+              Remove
+            </button>
           )}
         </li>
       ))}
