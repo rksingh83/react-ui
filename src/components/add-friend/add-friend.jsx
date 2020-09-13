@@ -337,9 +337,9 @@ const AddFriend = ({ history, setContacts, contacts }) => {
           <div className="row">
             <div className="col-md-5 col-sm-12 col-xs-12 ml-3">
               <h5>Friend list</h5>
-              <ul class="list-group">
+              <ul className="list-group">
                 {friendList.map((item, index) => (
-                  <li class="list-group-item" key={index}>
+                  <li className="list-group-item" key={index}>
                     <span> {item.fullname}</span>
                     <span style={{ paddingLeft: "50px" }}>
                       <Yes onClick={() => acceptFriend(item.id)}></Yes>{" "}
@@ -348,7 +348,7 @@ const AddFriend = ({ history, setContacts, contacts }) => {
                   </li>
                 ))}
                 {friendList.length == 0 && (
-                  <li class="list-group-item">No Contact Request.</li>
+                  <li className="list-group-item">No Contact Request.</li>
                 )}
               </ul>
             </div>

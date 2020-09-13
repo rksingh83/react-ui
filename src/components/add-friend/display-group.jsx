@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ReactComponent as Delete } from "../../assets/delete.svg";
 import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import AddContactToGroup from "./manage-group";
 import { AddMemberToGroup, GetGroupMember } from "../../service/group-service";
 import { ReactComponent as Share } from "../../assets/share.svg";
+import Paginate from "../common/paginate";
+import {
+  getStartIndex,
+  getPageCount,
+  PAGE_OFF_SET,
+} from "../common/pagination.config";
 const DisplayGroupList = ({
   groups,
   update,
@@ -18,9 +24,16 @@ const DisplayGroupList = ({
 
   const [openModal, setOpenModal] = useState(false);
   const [memberList, addMember] = useState([]);
+  const [displayGroups, setDisplayGroups] = useState([]);
+  const [currentPagination, setCurrentPagination] = useState(1);
   const [membersInGroup, setMembersInGroup] = useState([]);
+
+  useEffect(() => {
+    const tempGroup = [...groups];
+    console.log(tempGroup);
+    setDisplayGroups(tempGroup.splice(0, PAGE_OFF_SET));
+  }, []);
   const addMemberHandler = (e) => {
-    
     const currentList = memberList;
     if (e.target.checked) {
       currentList.push(e.target.value);
@@ -30,7 +43,7 @@ const DisplayGroupList = ({
         currentList.splice(index, 1);
       }
     }
-  
+
     addMember([...currentList]);
   };
   const setOpenModalHandler = (id) => {
@@ -62,11 +75,26 @@ const DisplayGroupList = ({
     setOpenModal();
     addMember([]);
   };
+  const paginate = (number) => {
+    const allGroups = [...groups];
+    setDisplayGroups(allGroups.splice(getStartIndex(number), PAGE_OFF_SET));
+    setCurrentPagination(number);
+  };
+
+  const groupNextPrev = (type) => {
+    if (type === "NEXT") {
+      if (currentPagination == getPageCount(groups)) return;
+      paginate(currentPagination + 1);
+    } else {
+      if (currentPagination == 1) return;
+      paginate(currentPagination - 1);
+    }
+  };
   return (
     <div className="row">
       <div className="col">
         <ul className="list-group">
-          {groups.map((item, index) => (
+          {displayGroups.map((item, index) => (
             <li className="list-group-item li-contact-list" key={index}>
               <span> {item.groupName}</span>
               {isShare && (
@@ -103,9 +131,15 @@ const DisplayGroupList = ({
             </li>
           ))}
           {groups.length == 0 && (
-            <li class="list-group-item">No Group Created Yet.</li>
+            <li className="list-group-item">No Group Created Yet.</li>
           )}
         </ul>
+        <Paginate
+        setCurrentSelected={paginate}
+        active={currentPagination}
+        count={getPageCount(groups)}
+        NextPrev ={groupNextPrev}
+      />
       </div>
     </div>
   );

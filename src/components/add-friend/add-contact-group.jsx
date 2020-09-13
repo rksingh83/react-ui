@@ -20,7 +20,7 @@ const DisplayContact = ({ profileLists, addMember, isShowCheckedBox }) => {
                   <input
                     onClick={(e) => addMember(e)}
                     type="checkbox"
-                    class="form-check-input"
+                    className="form-check-input"
                     value={item.id}
                     style={checkboxStyle}
                   />
@@ -29,7 +29,7 @@ const DisplayContact = ({ profileLists, addMember, isShowCheckedBox }) => {
             </li>
           ))}
           {profileLists.length == 0 && (
-            <li class="list-group-item">There is no data request</li>
+            <li className="list-group-item">There is no data request</li>
           )}
         </ul>
       </div>
