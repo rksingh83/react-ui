@@ -4,13 +4,17 @@ import ApplyCouponHeader from "./apply-coupon.header";
 import SideBar from "./sidebar.conponent";
 import { GetUserTransactions } from "../../service/common";
 import CustomLoader from "../loader/loader";
+import {
+  getStartIndex,
+  getPageCount,
+  PAGE_OFF_SET,
+} from "../common/pagination.config";
 const Coupon = ({ history }) => {
   const [bookCounts, setBookCounts] = useState([]);
   const [transactions, setTransactions] = useState([]);
 
   const [startLoader, setStartLoader] = useState(false);
   const [leftCoupon, setLeftCoupon] = useState(0);
-  const PAGE_OFF_SET = 5;
   const [transactionCurrentCount, setTransactionCurrentCount] = useState(1);
   const [AllTransactions, setAllTransactions] = useState([]);
   const [AllBooks, setAllBooks] = useState([]);
@@ -29,9 +33,7 @@ const Coupon = ({ history }) => {
     setStartLoader(false);
     setLeftCoupon(response.data.pagesLeft);
   };
-  const getPageCount = (arr) => {
-    return Math.ceil(arr.length / PAGE_OFF_SET);
-  };
+
   const setCurrentSelected = (number) => {
     const allTrx = [...AllTransactions];
     setTransactions(allTrx.splice(getStartIndex(number), PAGE_OFF_SET));
@@ -53,6 +55,7 @@ const Coupon = ({ history }) => {
       setCurrentSelectedBooks(bookPaginationCount - 1);
     }
   };
+  
 
   const transactionNextPrev = (type) => {
     if (type === "NEXT") {
@@ -63,9 +66,7 @@ const Coupon = ({ history }) => {
       setCurrentSelectedBooks(transactionCurrentCount - 1);
     }
   };
-  const getStartIndex = (number) => {
-    return (number - 1) * PAGE_OFF_SET;
-  };
+
   return (
     <>
       <ApplyCouponHeader leftCoupon={leftCoupon} startLoader={setStartLoader} />

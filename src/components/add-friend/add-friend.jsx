@@ -21,9 +21,16 @@ import { connect } from "react-redux";
 import InviteUser from "./invite-friend";
 import CustomLoader from "../loader/loader";
 import ShowMessages from "../common/display-message-modal";
+import {
+  getCardStartIndex as getStartIndex,
+  getCardCount as getPageCount,
+  DISPLAY_CARD_COUNT as PAGE_OFF_SET,
+} from "../common/pagination.config";
 const AddFriend = ({ history, setContacts, contacts }) => {
   const [user, setUser] = useState(null);
   const [userProfile, setUserProfile] = useState([]);
+  const [AllUserProfile, setAllUserProfile] = useState([]);
+  const [AllUserPaginationIndex, setAllUserPaginationIndex] = useState(1);
   const [friendList, setFriendList] = useState([]);
   const [contactList, setContactList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
@@ -34,7 +41,7 @@ const AddFriend = ({ history, setContacts, contacts }) => {
   const [groupDes, setGroupDes] = useState("");
   const [groupId, setGroupId] = useState(0);
   const [inviteContactModal, openInviteContactModal] = useState(false);
-  // Loader and Alert  
+  // Loader and Alert
   const [showPopUp, setShowPop] = useState(false);
   const [responseMgs, setResponseMgs] = useState("");
   const [isShowLoader, setShowLoader] = useState(false);
@@ -94,19 +101,21 @@ const AddFriend = ({ history, setContacts, contacts }) => {
         alert("Please enter Email or User Id");
         return;
       }
-      setShowLoader(true)
+      setShowLoader(true);
       const userFind = await Post("/searchUser", { unique_user_id: user });
-      
+
       if (userFind.data.code == "203") {
         setUser("");
         setResponseMgs(userFind.data.message);
-        setShowPop(true)
+        setShowPop(true);
         setUserProfile([]);
-        setShowLoader(false)
+        setShowLoader(false);
         return;
       }
       setUserProfile(userFind.data.data.profile);
-      setShowLoader(false)
+      setAllUserProfile([...userFind.data.data.profile]);
+      setUserProfile(userFind.data.data.profile.splice(0, PAGE_OFF_SET));
+      setShowLoader(false);
     } catch (e) {
       alert("Something went wrong try latter");
       history.goBack();
@@ -116,7 +125,7 @@ const AddFriend = ({ history, setContacts, contacts }) => {
   const addUserHandler = async (id) => {
     try {
       const userFind = await Post("/addUser", { id: id });
-    
+
       if (userFind.data.code == "200") {
         alert(userFind.data.message);
         window.location.reload();
@@ -172,15 +181,33 @@ const AddFriend = ({ history, setContacts, contacts }) => {
       window.location.reload();
     } catch (error) {}
   }
+
+  // search contact pagination
+  const paginate = (number) => {
+    const allBooks = [...AllUserProfile];
+    setUserProfile(allBooks.splice(getStartIndex(number), PAGE_OFF_SET));
+    setAllUserPaginationIndex(number);
+  };
+
+  const userProfileNextPrev = (type) => {
+    if (type === "NEXT") {
+      if (AllUserPaginationIndex == getPageCount(AllUserProfile)) return;
+      paginate(AllUserPaginationIndex + 1);
+    } else {
+      if (AllUserPaginationIndex == 1) return;
+      paginate(AllUserPaginationIndex - 1);
+    }
+  };
+
   return (
     <>
       <div className="row">
-      <ShowMessages
-        hide={() => setShowPop(false)}
-        message={responseMgs}
-        show={showPopUp}
-      />
-      {isShowLoader && <CustomLoader />}
+        <ShowMessages
+          hide={() => setShowPop(false)}
+          message={responseMgs}
+          show={showPopUp}
+        />
+        {isShowLoader && <CustomLoader />}
         <div className="col-md-12">
           <nav className="navbar navbar-expand-lg navbar-light sec-header-bg">
             <button
@@ -263,7 +290,7 @@ const AddFriend = ({ history, setContacts, contacts }) => {
                 type="text"
                 onChange={(e) => setUser(e.target.value)}
                 placeholder="Search by email or user id"
-                required ={true}
+                required={true}
               ></Input>
             </div>
             <div className="col-md-2 mt-4">
@@ -280,7 +307,7 @@ const AddFriend = ({ history, setContacts, contacts }) => {
               <ListTabs
                 setCurrentTab={setCurrentList}
                 currentTab={currentList}
-                isHideShare ={true}
+                isHideShare={true}
               />
               {currentList == "CONTACTS" && (
                 <ContactList profileList={contactList} />
@@ -299,8 +326,12 @@ const AddFriend = ({ history, setContacts, contacts }) => {
             <ContactsCard
               addFriend={addUserHandler}
               profileLists={userProfile}
+              userCount={getPageCount(AllUserProfile)}
               addFriend={addUserHandler}
               clearList={setUserProfile}
+              currentIndex={AllUserPaginationIndex}
+              paginate ={paginate}
+              userProfileNextPrev ={userProfileNextPrev}
             />
           </div>
           <div className="row">

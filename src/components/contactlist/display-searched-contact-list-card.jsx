@@ -5,7 +5,7 @@ import { Get, Post } from "../../service/service.setup";
 import { ReactComponent as Close } from "../../assets/close.svg";
 import { ReactComponent as Share } from "../../assets/share.svg";
 import { ReactComponent as AddUser } from "../../assets/add-user.svg";
-
+import Paginate from "../common/paginate";
 const ContactsCard = ({
   profileLists,
   isShare,
@@ -14,6 +14,7 @@ const ContactsCard = ({
   images,
   clearList,
   addFriend,
+  ...props
 }) => {
   //http://localhost:9082/shareFile
   // console.log(profileList);
@@ -167,6 +168,16 @@ const ContactsCard = ({
             </div>
           ))}
         </>
+      </div>
+      <div className="row ml-4">
+        {profileLists.length > 0 && (
+          <Paginate
+            setCurrentSelected={props.paginate}
+            active={props.currentIndex}
+            count={props.userCount}
+            NextPrev={props.userProfileNextPrev}
+          />
+        )}
       </div>
     </div>
   );
