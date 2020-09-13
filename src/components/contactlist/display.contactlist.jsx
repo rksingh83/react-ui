@@ -1,10 +1,22 @@
-import React from "react";
+import React ,{useState ,useEffect} from "react";
 
 import { Get, Post } from "../../service/service.setup";
 //import "./user-data.style.scss";
 import { ReactComponent as Close } from "../../assets/close.svg";
 import { ReactComponent as Share } from "../../assets/share.svg";
+import Paginate from "../common/paginate";
+import {
+  getStartIndex,
+  getPageCount,
+  PAGE_OFF_SET,
+} from "../common/pagination.config";
 const ContactList = ({ profileList, isShare, selected, hide, images }) => {
+  const [displayContacts, setDisplayContacts] = useState([]);
+  const [currentPagination, setCurrentPagination] = useState(1);
+  useEffect(() => {
+    const tempContacts = [...profileList];
+    setDisplayContacts(tempContacts.splice(0, PAGE_OFF_SET));
+  }, []);
   //http://localhost:9082/shareFile
   async function shareWith(id) {
     if (!window.confirm("Are You sure you want to Share Folder ?")) return;
@@ -25,7 +37,7 @@ const ContactList = ({ profileList, isShare, selected, hide, images }) => {
           active: true,
         };
       }
-      
+
       const request = { imageIds: folderIds, user_id: id, active: true };
 
       const requestData = images && images.id ? imagesRequest : request;
@@ -48,6 +60,21 @@ const ContactList = ({ profileList, isShare, selected, hide, images }) => {
       window.location.reload();
     } catch (error) {}
   }
+  const paginate = (number) => {
+    const allContacts = [...profileList];
+    setDisplayContacts(allContacts.splice(getStartIndex(number), PAGE_OFF_SET));
+    setCurrentPagination(number);
+  };
+
+  const contactsNextPrev = (type) => {
+    if (type === "NEXT") {
+      if (currentPagination == getPageCount(profileList)) return;
+      paginate(currentPagination + 1);
+    } else {
+      if (currentPagination == 1) return;
+      paginate(currentPagination - 1);
+    }
+  };
   return (
     <div className="row">
       <div className="col">
@@ -68,6 +95,12 @@ const ContactList = ({ profileList, isShare, selected, hide, images }) => {
             <li className="list-group-item">No Contact Found.</li>
           )}
         </ul>
+        <Paginate
+        setCurrentSelected={paginate}
+        active={currentPagination}
+        count={getPageCount(profileList)}
+        NextPrev ={contactsNextPrev}
+      />
       </div>
     </div>
   );
