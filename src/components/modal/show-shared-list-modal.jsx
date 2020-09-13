@@ -20,7 +20,7 @@ const SharedListUL = ({ list, selectedItems }) => {
 
   async function getFolders(fileId) {
     try {
-      const user = await Post("/getFileSharedList", {
+      const user = await Post("/getPageSharedList", {
         fileId,
       });
       if (
