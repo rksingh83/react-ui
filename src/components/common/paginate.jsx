@@ -13,7 +13,7 @@ const Paginate = ({ count, active, setCurrentSelected, ...props }) => {
   }
   return (
     <nav aria-label="Page navigation example">
-      <ul class="pagination">
+      <ul className="pagination">
         <li className="page-item">
           <a className="page-link" onClick={() => props.NextPrev("PREV")}>
             Previous

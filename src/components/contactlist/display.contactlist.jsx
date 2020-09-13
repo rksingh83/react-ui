@@ -65,7 +65,7 @@ const ContactList = ({ profileList, isShare, selected, hide, images }) => {
             </li>
           ))}
           {profileList.length == 0 && (
-            <li class="list-group-item">No Contact Found.</li>
+            <li className="list-group-item">No Contact Found.</li>
           )}
         </ul>
       </div>
