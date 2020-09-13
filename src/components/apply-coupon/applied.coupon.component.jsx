@@ -7,27 +7,84 @@ import CustomLoader from "../loader/loader";
 const Coupon = ({ history }) => {
   const [bookCounts, setBookCounts] = useState([]);
   const [transactions, setTransactions] = useState([]);
+
   const [startLoader, setStartLoader] = useState(false);
   const [leftCoupon, setLeftCoupon] = useState(0);
+  const PAGE_OFF_SET = 5;
+  const [transactionCurrentCount, setTransactionCurrentCount] = useState(1);
+  const [AllTransactions, setAllTransactions] = useState([]);
+  const [AllBooks, setAllBooks] = useState([]);
+  const [bookPaginationCount, setBookPaginationCurrentCount] = useState(1);
   useEffect(() => {
     getCouponHistory();
   }, []);
   const getCouponHistory = async () => {
-    setStartLoader(true)
+    setStartLoader(true);
     const response = await GetUserTransactions();
-    setTransactions(response.data.data.transactions);
-    setBookCounts(response.data.data.booksCount);
+    //setTransactions(response.data.data.transactions);
+    setAllTransactions([...response.data.data.transactions]);
+    setTransactions(response.data.data.transactions.splice(0, PAGE_OFF_SET));
+    setAllBooks([...response.data.data.booksCount]);
+    setBookCounts(response.data.data.booksCount.splice(0, PAGE_OFF_SET));
     setStartLoader(false);
-    setLeftCoupon(response.data.pagesLeft)
+    setLeftCoupon(response.data.pagesLeft);
+  };
+  const getPageCount = (arr) => {
+    return Math.ceil(arr.length / PAGE_OFF_SET);
+  };
+  const setCurrentSelected = (number) => {
+    const allTrx = [...AllTransactions];
+    setTransactions(allTrx.splice(getStartIndex(number), PAGE_OFF_SET));
+    setTransactionCurrentCount(number);
+  };
+  // for books pagination ;
+  const setCurrentSelectedBooks = (number) => {
+    const allBooks = [...AllBooks];
+    setBookCounts(allBooks.splice(getStartIndex(number), PAGE_OFF_SET));
+    setBookPaginationCurrentCount(number);
+  };
+
+  const bookNextPrev = (type) => {
+    if (type === "NEXT") {
+      if (bookPaginationCount == getPageCount(AllBooks)) return;
+      setCurrentSelectedBooks(bookPaginationCount + 1);
+    } else {
+      if (bookPaginationCount == 1) return;
+      setCurrentSelectedBooks(bookPaginationCount - 1);
+    }
+  };
+
+  const transactionNextPrev = (type) => {
+    if (type === "NEXT") {
+      if (transactionCurrentCount == getPageCount(AllTransactions)) return;
+      setCurrentSelectedBooks(transactionCurrentCount + 1);
+    } else {
+      if (transactionCurrentCount == 1) return;
+      setCurrentSelectedBooks(transactionCurrentCount - 1);
+    }
+  };
+  const getStartIndex = (number) => {
+    return (number - 1) * PAGE_OFF_SET;
   };
   return (
     <>
-      <ApplyCouponHeader leftCoupon ={leftCoupon} startLoader ={setStartLoader} />
+      <ApplyCouponHeader leftCoupon={leftCoupon} startLoader={setStartLoader} />
       {startLoader && <CustomLoader />}
       <div className="row">
         <SideBar />
         <div className="col-md-10 mt-4">
-          <CouponHistory transactions={transactions} bookCounts={bookCounts} />
+          <CouponHistory
+            txnCount={getPageCount(AllTransactions)}
+            transactions={transactions}
+            bookCounts={bookCounts}
+            txnCurrentCount={transactionCurrentCount}
+            bookPaginationCount={bookPaginationCount}
+            setCurrentSelected={setCurrentSelected}
+            bookCount={getPageCount(AllBooks)}
+            setCurrentSelectedBooks={setCurrentSelectedBooks}
+            bookNextPrev={bookNextPrev}
+            transactionNextPrev={transactionNextPrev}
+          />
         </div>
       </div>
     </>

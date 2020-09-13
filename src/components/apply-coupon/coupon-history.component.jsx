@@ -1,11 +1,11 @@
 import React from "react";
 import DisplayTable from "./display-table.component";
-
+import Paginate from "../common/paginate";
 const getDataTime = (timeStamp) => {
   let date = timeStamp.split("T");
   return `${date[0]} ${date[1]}`;
 };
-const CouponHistory = ({ transactions, bookCounts }) => (
+const CouponHistory = ({ txnCount, transactions, bookCounts, ...props }) => (
   <div className="row">
     <div className="col-md-6">
       <h6>Coupon Transaction</h6>
@@ -21,9 +21,15 @@ const CouponHistory = ({ transactions, bookCounts }) => (
           </tr>
         ))}
       </DisplayTable>
+      <Paginate
+        setCurrentSelected={props.setCurrentSelected}
+        active={props.txnCurrentCount}
+        count={txnCount}
+        NextPrev ={props.transactionNextPrev}
+      />
     </div>
     <div className="col-md-1 center-item">
-      <div className= "border-custom"></div>
+      <div className="border-custom"></div>
     </div>
     <div className="col-md-5">
       <h6>Books Details</h6>
@@ -36,6 +42,12 @@ const CouponHistory = ({ transactions, bookCounts }) => (
           </tr>
         ))}
       </DisplayTable>
+      <Paginate
+        setCurrentSelected={props.setCurrentSelectedBooks}
+        active={props.bookPaginationCount}
+        count={props.bookCount}
+        NextPrev ={props.bookNextPrev}
+      />
     </div>
   </div>
 );
