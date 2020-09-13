@@ -2,26 +2,33 @@ import React, { useEffect, useState } from "react";
 import { Get, Post } from "../../service/service.setup";
 import { ReactComponent as Close } from "../../assets/close.svg";
 import CustomLoader from "../loader/loader";
-const SharedListUL = ({ list, selectedItems }) => {
+const SharedListUL = ({ list, selectedItems, images }) => {
   const [sharedList, setShareWithList] = useState([]);
   const [isShowLoader, setIsShowLoader] = useState(false);
   const [folderId, setFolderId] = useState(0);
   useEffect(() => {
     setIsShowLoader(true);
-    let fileId = 0;
-    for (let key in selectedItems) {
-      if (selectedItems[key]) {
-        fileId = key;
+    let fileId = (selectedItems == 1 ? images.id : 0);
+    if (selectedItems != 1) {
+      for (let key in selectedItems) {
+        if (selectedItems[key]) {
+          fileId = key;
+        }
       }
     }
-    getFolders(fileId);
+    const imageId = images ? images.updateImages[0].id : 0;
+    console.log(images);
+    console.log(fileId);
+    getFolders(fileId, imageId);
     setFolderId(fileId);
   }, []);
 
-  async function getFolders(fileId) {
+  async function getFolders(fileId, id = false) {
     try {
-      const user = await Post("/getPageSharedList", {
+      const URI = id ? "getPageSharedList" : "getFileSharedList";
+      const user = await Post(`/${URI}`, {
         fileId,
+        id,
       });
       if (
         user.data.code == "200" &&

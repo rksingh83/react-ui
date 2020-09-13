@@ -57,7 +57,7 @@ const DisplayImages = ({
         style={{ display: "flex", flexWrap: "wrap" }}
       >
         {localRender.map((item, index) => (
-          <div className ="image-top-container">
+          <div className ="image-top-container" key ={item.id}>
             <div
               className="image-container"
               onMouseEnter={() =>

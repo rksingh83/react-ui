@@ -51,7 +51,7 @@ const ShareFolderModal = ({ show, hide, selected, images, count }) => {
   }, [count]);
   const addContactHandler = async (id) => {
     const user = await addContact(id);
-  //  const user = true;
+    //  const user = true;
     const addedUser = searchedContactList.filter((item) => item.id == id)[0];
     addedUser.requestAlreadySent = true;
 
@@ -103,7 +103,6 @@ const ShareFolderModal = ({ show, hide, selected, images, count }) => {
     getContactRequest();
   }, []);
   const fileCounter = () => {
-    console.log("FILE_COUNTER");
     let count = 0;
     for (let key in selected) {
       if (selected[key]) count++;
@@ -111,7 +110,6 @@ const ShareFolderModal = ({ show, hide, selected, images, count }) => {
     setFileCounter(count);
   };
   const imageCounter = () => {
-    console.log("IMAGE_COUNTER");
     //console.log(folderList)
     setFileCounter(count);
   };
@@ -169,7 +167,7 @@ const ShareFolderModal = ({ show, hide, selected, images, count }) => {
           ></ContactList>
         )}
         {currentList == "SHARED_LIST" && (
-          <SharedListUL selectedItems={selected} />
+          <SharedListUL images={images} selectedItems={selected} />
         )}
       </Modal.Body>
       <Modal.Footer>
