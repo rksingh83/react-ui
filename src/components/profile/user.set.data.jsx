@@ -35,7 +35,7 @@ const [dob ,setDOB] = useState('')
   }, []);
   const setProfileHandler = (e) => {
     //console.log(userData);
-    console.log( new Date(userData.dob))
+
     const { name, value } = e.target;
     console.log(userData);
     setProfile({ ...userData, [name]: value });

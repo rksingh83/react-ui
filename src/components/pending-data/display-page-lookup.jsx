@@ -21,8 +21,10 @@ const PendingPageData = ({
   pageLookUpHandler,
   isRedirectLast,
   isMemberShip,
-  pageLookUpDateHandler
+  pageLookUpDateHandler,
 }) => {
+  console.log(new Date(pageData.date));
+  console.log(pageData.date);
   const col = isMemberShip == 1 ? "col-md-3" : "col-md-10";
   const INPUT_COL = isMemberShip == 1 ? "col-md-3" : "col-md-6";
   const title_col =
@@ -38,6 +40,7 @@ const PendingPageData = ({
     width: "100%",
     border: "1px solid green",
   };
+
   useEffect(() => {}, [data.pageLookup]);
   const fileTagHandler = (e) => {
     // let folder = data.pageLookup.file.filter(
@@ -234,8 +237,8 @@ const PendingPageData = ({
               /> */}
               <DatePicker
                 name="date"
-                className ="form-control"
-                selected={new Date()}
+                className="form-control"
+                selected={new Date(pageData.date)}
                 onChange={pageLookUpDateHandler}
               />
             </div>
