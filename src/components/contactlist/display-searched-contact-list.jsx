@@ -5,7 +5,7 @@ import { Get, Post } from "../../service/service.setup";
 import { ReactComponent as Close } from "../../assets/close.svg";
 import { ReactComponent as Share } from "../../assets/share.svg";
 import { ReactComponent as AddUser } from "../../assets/add-user.svg";
-
+import Paginate from "../common/paginate";
 const SearchedContactList = ({
   profileLists,
   isShare,
@@ -13,6 +13,7 @@ const SearchedContactList = ({
   hide,
   images,
   addFriend,
+  ...props
 }) => {
   //http://localhost:9082/shareFile
   // console.log(profileList);
@@ -35,7 +36,7 @@ const SearchedContactList = ({
           active: false,
         };
       }
-      
+
       const request = { imageIds: folderIds, user_id: id, active: false };
 
       const requestData = images && images.id ? imagesRequest : request;
@@ -45,7 +46,7 @@ const SearchedContactList = ({
         alert(contacts.data.message);
       }
       hide(false);
-    } catch (error) { }
+    } catch (error) {}
   }
   async function removeContact(id) {
     if (!window.confirm("Are You sure you want to remove ?")) return;
@@ -56,7 +57,7 @@ const SearchedContactList = ({
         alert(contacts.data.message);
       }
       window.location.reload();
-    } catch (error) { }
+    } catch (error) {}
   }
 
   return (
@@ -66,23 +67,27 @@ const SearchedContactList = ({
           {profileLists.map((profileList, index) => (
             <li className="list-group-item li-contact-list" key={index}>
               <span> {profileList.fullname}</span>
-             <span>
-              {profileList &&
-                !profileList.requestAlreadySent &&
-                !profileList.alreadyFriend && (
-                  <AddUser onClick={() => addFriend(profileList.id)}></AddUser>
+              <span>
+                {profileList &&
+                  !profileList.requestAlreadySent &&
+                  !profileList.alreadyFriend && (
+                    <AddUser
+                      onClick={() => addFriend(profileList.id)}
+                    ></AddUser>
+                  )}
+                {profileList.requestAlreadySent && (
+                  <h5 style={{ display: "inline" }}>Requested</h5>
                 )}
-              {profileList.requestAlreadySent && <h5 style ={{display:'inline'}}>Requested</h5>}
-              {profileList && profileList.requestAlreadySent && isShare && (
-                <Share onClick={() => shareWith(profileList.id)}></Share>
-              )}
-              {profileList && profileList.alreadyFriend && isShare && (
-                <Share onClick={() => shareWith(profileList.id)}></Share>
-              )}
+                {profileList && profileList.requestAlreadySent && isShare && (
+                  <Share onClick={() => shareWith(profileList.id)}></Share>
+                )}
+                {profileList && profileList.alreadyFriend && isShare && (
+                  <Share onClick={() => shareWith(profileList.id)}></Share>
+                )}
                 {profileList.requestAlreadySent && (
                   <Close onClick={() => removeContact(profileList.id)}></Close>
                 )}
-              
+
                 {profileList.alreadyFriend && (
                   <Close onClick={() => removeContact(profileList.id)}></Close>
                 )}
@@ -90,6 +95,14 @@ const SearchedContactList = ({
             </li>
           ))}
         </ul>
+        {profileLists.length > 0 && (
+          <Paginate
+            setCurrentSelected={props.setCurrentItems}
+            active={props.currentPaginationCount}
+            count={props.totalCount}
+            NextPrev={props.nextPrev}
+          />
+        )}
       </div>
     </div>
   );

@@ -8,16 +8,28 @@ import { addContact, searchContact } from "../../service/sharefiles";
 import DisplayGroupList from "../add-friend/display-group";
 import ListTabs from "../add-friend/tab";
 import SharedListUL from "../modal/show-shared-list-modal";
+import {
+  getStartIndex,
+  getPageCount,
+  PAGE_OFF_SET,
+} from "../common/pagination.config";
 const ShareFolderModal = ({ show, hide, selected, images, count }) => {
   const [contactList, setContactList] = useState([]);
   const [groups, setGroups] = useState([]);
   const [searchUserId, setSearchUserId] = useState("");
   const [searchedContactList, setSearchedContactList] = useState("");
+  const [AllSearchedContactList, setAllSearchedContactList] = useState("");
+  const [
+    searchedContactPaginationCount,
+    setSearchedContactPaginationCount,
+  ] = useState(1);
   const [currentList, setCurrentList] = useState("CONTACTS");
   const [selectedFileCounter, setFileCounter] = useState(0);
   const onClose = () => {
     setSearchedContactList([]);
     setSearchUserId("");
+    setAllSearchedContactList([]);
+    setSearchedContactPaginationCount([]);
     hide(false);
   };
   async function getContactRequest() {
@@ -37,7 +49,9 @@ const ShareFolderModal = ({ show, hide, selected, images, count }) => {
   const userSearchHandler = async () => {
     try {
       const user = await searchContact(searchUserId);
-      setSearchedContactList(user.data.data.profile);
+      // setSearchedContactList(user.data.data.profile);
+      setAllSearchedContactList([...user.data.data.profile]);
+      setSearchedContactList(user.data.data.profile.splice(0, PAGE_OFF_SET));
     } catch {
       // setSearchedContactList([]);
     }
@@ -113,6 +127,27 @@ const ShareFolderModal = ({ show, hide, selected, images, count }) => {
     //console.log(folderList)
     setFileCounter(count);
   };
+  // pagination
+  const setCurrentSelectedContacts = (number) => {
+    const allContacts = [...AllSearchedContactList];
+    setSearchedContactList(
+      allContacts.splice(getStartIndex(number), PAGE_OFF_SET)
+    );
+    setSearchedContactPaginationCount(number);
+  };
+
+  const searchedContactsNextPrev = (type) => {
+    if (type === "NEXT") {
+      if (
+        searchedContactPaginationCount == getPageCount(AllSearchedContactList)
+      )
+        return;
+      setCurrentSelectedContacts(searchedContactPaginationCount + 1);
+    } else {
+      if (searchedContactPaginationCount == 1) return;
+      setCurrentSelectedContacts(searchedContactPaginationCount - 1);
+    }
+  };
   return (
     <Modal size="md" show={show} onHide={() => hide(false)} animation={true}>
       <Modal.Header>
@@ -155,6 +190,10 @@ const ShareFolderModal = ({ show, hide, selected, images, count }) => {
             selected={selected}
             images={images}
             isShare={true}
+            setCurrentItems={setCurrentSelectedContacts}
+            totalCount={getPageCount(AllSearchedContactList)}
+            currentPaginationCount={searchedContactPaginationCount}
+            nextPrev={searchedContactsNextPrev}
           ></SearchedContactList>
         )}
         {currentList == "CONTACTS" && (
