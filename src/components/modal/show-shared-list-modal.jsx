@@ -2,8 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Get, Post } from "../../service/service.setup";
 import { ReactComponent as Close } from "../../assets/close.svg";
 import CustomLoader from "../loader/loader";
+import Paginate from "../common/paginate";
+import {
+  getStartIndex,
+  getPageCount,
+  PAGE_OFF_SET,
+} from "../common/pagination.config";
 const SharedListUL = ({ list, selectedItems, images }) => {
   const [sharedList, setShareWithList] = useState([]);
+  const [displaySharedList, setDisplaySharedList] = useState([]);
   const [isShowLoader, setIsShowLoader] = useState(false);
   const [folderId, setFolderId] = useState(0);
   useEffect(() => {
@@ -17,8 +24,7 @@ const SharedListUL = ({ list, selectedItems, images }) => {
       }
     }
     const imageId = images ? images.updateImages[0].id : 0;
-    console.log(images);
-    console.log(fileId);
+    
     getFolders(fileId, imageId);
     setFolderId(fileId);
   }, []);
@@ -37,7 +43,8 @@ const SharedListUL = ({ list, selectedItems, images }) => {
         setShareWithList([{ fullname: "Page is not shared with anyone" }]);
       }
       setIsShowLoader(false);
-      setShareWithList(user.data.data.profile);
+      setShareWithList([...user.data.data.profile]);
+      displaySharedList(user.data.data.profile.splice(0, PAGE_OFF_SET));
     } catch (error) {
       setIsShowLoader(false);
     }

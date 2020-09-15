@@ -36,7 +36,7 @@ const DisplayOriginalImage = ({
     shareId: 0,
     title: "",
     description: "",
-    date: "",
+    date: new Date(),
     pendingFolderId: 0,
     imageId: 0,
     pageNumber: 0,
@@ -153,10 +153,21 @@ const DisplayOriginalImage = ({
     setCurrentLookup(response.data && response.data);
     // setLookupPageState(response.data && response.data.pageLookup);
     if (response) {
-      setLookupPageState(response.data.pageLookup);
+      setLookupPageState(removeNull(response.data.pageLookup));
       setIsPrimerUser(response.data.user_membership);
     }
     setShowLoader(false);
+  };
+  const removeNull = (data) => {
+    console.log(data)
+    const tempData = { ...data };
+    for (let attr in data) {
+      if (tempData[attr] == null && attr != "userList") {
+        tempData[attr] = "";
+      }
+    }
+    if (tempData.date == "") tempData.date =  ` ${new Date()}`;
+    return tempData;
   };
   // handle input
   const pageLookUpHandler = (e) => {

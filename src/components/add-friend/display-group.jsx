@@ -30,7 +30,7 @@ const DisplayGroupList = ({
 
   useEffect(() => {
     const tempGroup = [...groups];
-    console.log(tempGroup);
+
     setDisplayGroups(tempGroup.splice(0, PAGE_OFF_SET));
   }, []);
   const addMemberHandler = (e) => {
