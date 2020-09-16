@@ -3,24 +3,21 @@ import React, { useEffect, useState } from "react";
 import { Get, Post } from "../../service/service.setup";
 import "./add-friend.style.scss";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
-import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { ReactComponent as Yes } from "../../assets/yes.svg";
 import { ReactComponent as Close } from "../../assets/close.svg";
 import { Link } from "react-router-dom";
 import Input from "../boostrapinput/input.component";
-import UserData from "../profile/display.user.data";
 import ContactList from "../contactlist/display.contactlist";
-import SearchedContactList from "../contactlist/display-searched-contact-list";
 import ContactsCard from "../contactlist/display-searched-contact-list-card";
 import CreateGroupModal from "./create-group-modal";
 import { GetAllGroups, EditGroup } from "../../service/group-service";
-import ListTabs from "./tab";
 import DisplayGroupList from "./display-group";
 import { setContacts } from "../../redux/contacts/contacts.actions";
 import { connect } from "react-redux";
 import InviteUser from "./invite-friend";
 import CustomLoader from "../loader/loader";
 import ShowMessages from "../common/display-message-modal";
+import LeftSideBar from "./left-sidebar";
 import {
   getCardStartIndex as getStartIndex,
   getCardCount as getPageCount,
@@ -35,7 +32,7 @@ const AddFriend = ({ history, setContacts, contacts }) => {
   const [contactList, setContactList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [currentGroup, setCurrentGroup] = useState({});
-  const [currentList, setCurrentList] = useState("CONTACTS");
+  const [currentList, setCurrentList] = useState("USERS");
   const [allGroups, setGroups] = useState([]);
   const [groupName, setGroupName] = useState("");
   const [groupDes, setGroupDes] = useState("");
@@ -45,19 +42,17 @@ const AddFriend = ({ history, setContacts, contacts }) => {
   const [showPopUp, setShowPop] = useState(false);
   const [responseMgs, setResponseMgs] = useState("");
   const [isShowLoader, setShowLoader] = useState(false);
-  const styleImage = {
-    width: "100%",
-    height: "100%",
-    marginTop: "10px",
-  };
+  const LeftSidebarConfig = [
+    { key: "USERS", value: "Add Users" },
+    { key: "GROUPS", value: "Groups" },
+    { key: "CONTACTS", value: "Contacts" },
+  ];
+
   const crossStyle = {
     width: "4rem",
     height: "2rem",
   };
-  const pencilStyle = {
-    width: "4rem",
-    height: "2rem",
-  };
+
   const getAllGroups = async () => {
     try {
       const res = await GetAllGroups();
@@ -276,13 +271,12 @@ const AddFriend = ({ history, setContacts, contacts }) => {
         </div>
       </div>
       <div className="row">
-        <div className=" custom-pad-li d-none d-sm-block col-md-2 p-0">
-          <Link className="logo-container" to="/">
-            <ul className=" ul-pad list-group left-side-bar">
-              <li className="custom-pad-li list-group-item active">Home</li>
-            </ul>
-          </Link>
-        </div>
+        <LeftSideBar
+          menus={LeftSidebarConfig}
+          currentMenu={currentList}
+          setMenu={setCurrentList}
+        />
+
         <div className="col-md-9 col-xs-12 col-sm-12">
           <div className="row">
             <div className="col-md-4  ml-3 mt-4">
@@ -304,11 +298,6 @@ const AddFriend = ({ history, setContacts, contacts }) => {
               </button>
             </div>
             <div className="col-md-5 mt-4">
-              <ListTabs
-                setCurrentTab={setCurrentList}
-                currentTab={currentList}
-                isHideShare={true}
-              />
               {currentList == "CONTACTS" && (
                 <ContactList profileList={contactList} />
               )}
@@ -330,8 +319,8 @@ const AddFriend = ({ history, setContacts, contacts }) => {
               addFriend={addUserHandler}
               clearList={setUserProfile}
               currentIndex={AllUserPaginationIndex}
-              paginate ={paginate}
-              userProfileNextPrev ={userProfileNextPrev}
+              paginate={paginate}
+              userProfileNextPrev={userProfileNextPrev}
             />
           </div>
           <div className="row">
