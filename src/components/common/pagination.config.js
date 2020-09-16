@@ -1,5 +1,5 @@
 const PAGE_OFF_SET = 5;
-const DISPLAY_CARD_COUNT = 2
+const DISPLAY_CARD_COUNT = 4
 
 const getPageCount = (arr) => {
     return Math.ceil(arr.length / PAGE_OFF_SET);

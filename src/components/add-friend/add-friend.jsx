@@ -3,12 +3,11 @@ import React, { useEffect, useState } from "react";
 import { Get, Post } from "../../service/service.setup";
 import "./add-friend.style.scss";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
-import { ReactComponent as Yes } from "../../assets/yes.svg";
-import { ReactComponent as Close } from "../../assets/close.svg";
+
 import { Link } from "react-router-dom";
 import Input from "../boostrapinput/input.component";
 import ContactList from "../contactlist/display.contactlist";
-import ContactsCard from "../contactlist/display-searched-contact-list-card";
+
 import CreateGroupModal from "./create-group-modal";
 import { GetAllGroups, EditGroup } from "../../service/group-service";
 import DisplayGroupList from "./display-group";
@@ -18,6 +17,8 @@ import InviteUser from "./invite-friend";
 import CustomLoader from "../loader/loader";
 import ShowMessages from "../common/display-message-modal";
 import LeftSideBar from "./left-sidebar";
+
+import Users from "./search-user";
 import {
   getCardStartIndex as getStartIndex,
   getCardCount as getPageCount,
@@ -276,72 +277,35 @@ const AddFriend = ({ history, setContacts, contacts }) => {
           currentMenu={currentList}
           setMenu={setCurrentList}
         />
-
-        <div className="col-md-9 col-xs-12 col-sm-12">
-          <div className="row">
-            <div className="col-md-4  ml-3 mt-4">
-              <Input
-                type="text"
-                onChange={(e) => setUser(e.target.value)}
-                placeholder="Search by email or user id"
-                required={true}
-              ></Input>
-            </div>
-            <div className="col-md-2 mt-4">
-              <button
-                onClick={searchUserHandler}
-                id="searchButton"
-                type="button"
-                className="btn btn-success"
-              >
-                Search
-              </button>
-            </div>
-            <div className="col-md-5 mt-4">
-              {currentList == "CONTACTS" && (
-                <ContactList profileList={contactList} />
-              )}
-              {currentList == "GROUPS" && (
-                <DisplayGroupList
-                  update={editGroupHandler}
-                  groups={allGroups}
-                  updateHandler={updateHandler}
-                  profileLists={contactList}
-                />
-              )}
-            </div>
-          </div>
-          <div className="col-md-6">
-            <ContactsCard
+        <div className="col-md-9">
+          {currentList == "USERS" && (
+            <Users
+              friendList={friendList}
+              rejectFriend={rejectFriend}
+              acceptFriend={acceptFriend}
+              setUser={setUser}
+              searchUserHandler={searchUserHandler}
               addFriend={addUserHandler}
-              profileLists={userProfile}
-              userCount={getPageCount(AllUserProfile)}
-              addFriend={addUserHandler}
-              clearList={setUserProfile}
-              currentIndex={AllUserPaginationIndex}
+              userProfile={userProfile}
+              addUserHandler={addUserHandler}
+              setUserProfile={setUserProfile}
+              AllUserPaginationIndex={AllUserPaginationIndex}
               paginate={paginate}
               userProfileNextPrev={userProfileNextPrev}
+              AllUserProfile={AllUserProfile}
             />
-          </div>
-          <div className="row">
-            <div className="col-md-5 col-sm-12 col-xs-12 ml-3">
-              <h5>Friend list</h5>
-              <ul className="list-group">
-                {friendList.map((item, index) => (
-                  <li className="list-group-item" key={index}>
-                    <span> {item.fullname}</span>
-                    <span style={{ paddingLeft: "50px" }}>
-                      <Yes onClick={() => acceptFriend(item.id)}></Yes>{" "}
-                      <Close onClick={() => rejectFriend(item.id)}></Close>{" "}
-                    </span>
-                  </li>
-                ))}
-                {friendList.length == 0 && (
-                  <li className="list-group-item">No Contact Request.</li>
-                )}
-              </ul>
-            </div>
-          </div>
+          )}
+          {currentList == "GROUPS" && (
+            <DisplayGroupList
+              update={editGroupHandler}
+              groups={allGroups}
+              updateHandler={updateHandler}
+              profileLists={contactList}
+            />
+          )}
+          {currentList == "CONTACTS" && (
+            <ContactList profileList={contactList} />
+          )}
         </div>
       </div>
     </>
