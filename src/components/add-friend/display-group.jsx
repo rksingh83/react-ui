@@ -104,7 +104,7 @@ const DisplayGroupList = ({
               {!isShare && (
                 <span>
                   <button
-                    className="btn btn-success mr-2"
+                    className="btn btn-info mr-2"
                     onClick={() => setOpenModalHandler(item.groupID)}
                   >
                     Manage Group
@@ -135,11 +135,11 @@ const DisplayGroupList = ({
           )}
         </ul>
         <Paginate
-        setCurrentSelected={paginate}
-        active={currentPagination}
-        count={getPageCount(groups)}
-        NextPrev ={groupNextPrev}
-      />
+          setCurrentSelected={paginate}
+          active={currentPagination}
+          count={getPageCount(groups)}
+          NextPrev={groupNextPrev}
+        />
       </div>
     </div>
   );

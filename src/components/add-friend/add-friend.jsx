@@ -222,6 +222,26 @@ const AddFriend = ({ history, setContacts, contacts }) => {
               id="navbarSupportedContent"
             >
               <ul className="navbar-nav ml-auto text-white">
+              {currentList == "GROUPS" && (
+                  <li className="nav-item">
+                    <button
+                      onClick={() => setOpenModal(true)}
+                      className="btn btn-success mr-4"
+                    >
+                      Create New Group
+                    </button>
+                    <CreateGroupModal
+                      getAllGroups={getAllGroups}
+                      hide={onClose}
+                      show={openModal}
+                      groupName={groupName}
+                      groupDes={groupDes}
+                      setDes={setGroupDes}
+                      setName={setGroupName}
+                      groupId={groupId}
+                    />
+                  </li>
+                )}
                 <li className="nav-item">
                   <button
                     onClick={() => openInviteContactModal(true)}
@@ -234,24 +254,7 @@ const AddFriend = ({ history, setContacts, contacts }) => {
                     hide={openInviteContactModal}
                   />
                 </li>
-                <li className="nav-item">
-                  <button
-                    onClick={() => setOpenModal(true)}
-                    className="btn btn-success"
-                  >
-                    Create New Group
-                  </button>
-                  <CreateGroupModal
-                    getAllGroups={getAllGroups}
-                    hide={onClose}
-                    show={openModal}
-                    groupName={groupName}
-                    groupDes={groupDes}
-                    setDes={setGroupDes}
-                    setName={setGroupName}
-                    groupId={groupId}
-                  />
-                </li>
+
                 <li className="nav-item">
                   <Cross
                     onClick={() => history.goBack()}
@@ -295,17 +298,21 @@ const AddFriend = ({ history, setContacts, contacts }) => {
               AllUserProfile={AllUserProfile}
             />
           )}
-          {currentList == "GROUPS" && (
-            <DisplayGroupList
-              update={editGroupHandler}
-              groups={allGroups}
-              updateHandler={updateHandler}
-              profileLists={contactList}
-            />
-          )}
-          {currentList == "CONTACTS" && (
-            <ContactList profileList={contactList} />
-          )}
+          <div className="row mt-4" style={{ justifyContent: "center" }}>
+            <div className="col-md-8">
+              {currentList == "GROUPS" && (
+                <DisplayGroupList
+                  update={editGroupHandler}
+                  groups={allGroups}
+                  updateHandler={updateHandler}
+                  profileLists={contactList}
+                />
+              )}
+              {currentList == "CONTACTS" && (
+                <ContactList profileList={contactList} />
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </>
