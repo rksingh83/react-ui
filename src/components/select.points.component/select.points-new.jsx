@@ -146,11 +146,13 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
       el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
     }
     $("#outerContainer").click(function (e) {
+      console.log(e)
       var offset = $(this).offset();
       var relativeX = e.pageX - offset.left;
       var relativeY = e.pageY - offset.top;
       let temp = {};
       data[e.target.id] = { X: relativeX, Y: relativeY };
+      console.log(data)
       setData({ ...data });
     });
   }, [data]);
@@ -162,36 +164,36 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
     console.log(height, "wid", width);
     let tempData = {};
     const bottomleftx =
-      (imagePoints["bottomleftx"] * IMG.width) / (width * 100) - 20;
+      (imagePoints["bottomleftx"] * IMG.width) / (width * 100) - 7.5;
     const bottomlefty =
-      (imagePoints["bottomlefty"] * IMG.height) / (height * 100) - 20;
+      (imagePoints["bottomlefty"] * IMG.height) / (height * 100) - 7.5;
     setOneStyle({ top: bottomlefty, left: bottomleftx });
-    tempData = { one: { X: bottomleftx + 20, Y: bottomlefty + 20 } };
+    tempData = { one: { X: bottomleftx + 7.5, Y: bottomlefty + 7.5 } };
 
     const bottomrightx =
-      (imagePoints["bottomrightx"] * IMG.width) / (width * 100) - 20;
+      (imagePoints["bottomrightx"] * IMG.width) / (width * 100) - 7.5;
     const bottomrighty =
-      (imagePoints["bottomrighty"] * IMG.height) / (height * 100) - 20;
+      (imagePoints["bottomrighty"] * IMG.height) / (height * 100) - 7.5;
 
     setTwoStyle({ top: bottomrighty, left: bottomrightx });
     tempData = {
       ...tempData,
-      two: { X: bottomrightx + 20, Y: bottomrighty + 20 },
+      two: { X: bottomrightx + 7.5, Y: bottomrighty + 7.5 },
     };
     //TR
     const toprightx =
-      (imagePoints["toprightx"] * IMG.width) / (width * 100) - 20;
+      (imagePoints["toprightx"] * IMG.width) / (width * 100) - 7.5;
     const toprighty =
-      (imagePoints["toprighty"] * IMG.height) / (height * 100) - 20;
+      (imagePoints["toprighty"] * IMG.height) / (height * 100) - 7.5;
 
     setFourStyle({ top: toprighty, left: toprightx });
-    tempData = { ...tempData, four: { X: toprightx + 20, Y: toprighty + 20 } };
+    tempData = { ...tempData, four: { X: toprightx + 7.5, Y: toprighty + 7.5 } };
     //TL
-    const topleftx = (imagePoints["topleftx"] * IMG.width) / (width * 100) - 20;
+    const topleftx = (imagePoints["topleftx"] * IMG.width) / (width * 100) - 7.5;
     const toplefty =
-      (imagePoints["toplefty"] * IMG.height) / (height * 100) - 20;
+      (imagePoints["toplefty"] * IMG.height) / (height * 100) - 7.5;
     setThreeStyle({ top: toplefty, left: topleftx });
-    tempData = { ...tempData, three: { X: topleftx + 20, Y: toplefty + 20 } };
+    tempData = { ...tempData, three: { X: topleftx + 7.5, Y: toplefty + 7.5 } };
     setIsEdit(true);
     setData(tempData);
   };
@@ -201,12 +203,12 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
     const height = IMG.height / 700;
     console.log(height, "wid", width);
     let tempData = {};
-    const bottomleftx = (10 * IMG.width) / (width * 100) - 20;
-    const bottomlefty = (90 * IMG.height) / (height * 100) - 20;
+    const bottomleftx = (10 * IMG.width) / (width * 100) - 7.5;
+    const bottomlefty = (90 * IMG.height) / (height * 100) - 7.5;
     setOneStyle({ top: bottomlefty, left: bottomleftx });
     fourDiv.current.style.top = bottomlefty;
     fourDiv.current.style.left = bottomleftx;
-    tempData = { one: { X: bottomleftx + 20, Y: bottomlefty + 20 } };
+    tempData = { one: { X: bottomleftx + 7.5, Y: bottomlefty + 7.5 } };
 
     const bottomrightx = (90 * IMG.width) / (width * 100) - 20;
     const bottomrighty = (90 * IMG.height) / (height * 100) - 20;
