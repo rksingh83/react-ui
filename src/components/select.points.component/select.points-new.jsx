@@ -15,7 +15,7 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
   var Markers = new Array();
   const [points, setPoints] = useState(0);
   const [reset, setReset] = useState([]);
-  const [src, setSrc] = useState("ww");
+  const [src, setSrc] = useState("");
   const [data, setData] = useState({});
   const TextMAp = { HOME: 0, SHARED: 1, PENDING: 2 };
   const currentIndex = TextMAp[sharedWithMe];
@@ -104,7 +104,6 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
             activeItem.initialX = e.touches[0].clientX - activeItem.xOffset;
             activeItem.initialY = e.touches[0].clientY - activeItem.yOffset;
           } else {
-            console.log("doing something!");
             activeItem.initialX = e.clientX - activeItem.xOffset;
             activeItem.initialY = e.clientY - activeItem.yOffset;
           }
@@ -116,8 +115,6 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
       if (activeItem !== null) {
         activeItem.initialX = activeItem.currentX;
         activeItem.initialY = activeItem.currentY;
-        // console.log("current", e.pageX - activeItem.xOffset);
-        //console.log("current", activeItem.clientX, e);
       }
 
       active = false;
@@ -144,22 +141,13 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
     }
 
     function setTranslate(xPos, yPos, el) {
-      // console.log(xPos , yPos)
       el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
     }
     $("#outerContainer").click(function (e) {
       var offset = $(this).offset();
       var relativeX = e.pageX - offset.left;
-      var relativeY = 2.2 + e.pageY - offset.top;
-      // if (e.target.id == "one" || e.target.id == "two") {
-      //   var relativeY = e.pageY + offset.top+12;
-      // } else {
-      //
-      // }
-  
+      var relativeY = e.pageY - offset.top;  
       let temp = {};
-  
-      //alert("X: " + relativeX + "  Y: " + relativeY);
       data[e.target.id] = { X: relativeX, Y: relativeY };
       setData({ ...data });
     });
@@ -260,46 +248,9 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
     const IMG = document.getElementById("img");
     const width = IMG.width / 700;
     const height = IMG.height / 700;
-    // console.log("HEIGHT", IMG.height);
-    // console.log("HEIGHT", height);
-    // console.log("width", IMG.width);
-    // console.log("width", width);
-    // console.log(data);
-
-    if (
-      !(
-        isPointChanged(data.one, "BL") &&
-        isPointChanged(data.two, "BR") &&
-        isPointChanged(data.three, "TL") &&
-        isPointChanged(data.four, "TR")
-      )
-    ) {
-      return;
-    }
-    allPoints.push(data.one);
-    allPoints.push(data.two);
-    allPoints.push(data.three);
-    allPoints.push(data.four);
-
-    let small = allPoints[0];
-    let topRight = allPoints[0];
-    let bottomRight = allPoints[0];
-    let bottomLeft = allPoints[0];
-    allPoints.forEach((item) => {
-      if (item.X < small.X && item.Y < small.Y) small = item;
-
-      if (item.X > small.X && item.Y < small.Y) topRight = item;
-      if (item.X > small.X && item.Y > small.Y) bottomRight = item;
-      if (item.Y > small.Y && item.X < small.X) bottomLeft = item;
-    });
-    //   console.log("BOT  TOMLEFT", bottomLeft, "BOTTOMR", bottomRight);
-    // console.log("TOPLEFT", small, "TOPRIGHT", topRight);
-
-    //  console.log("WIDTH", width, height);
-
-    const requestPayLoad = {};
+     const requestPayLoad = {};
     console.log(data);
-
+debugger
     requestPayLoad["id"] = match.params.url;
     requestPayLoad["bottomleftx"] = ((data.one.X * width) / IMG.width) * 100;
     requestPayLoad["bottomlefty"] = ((data.one.Y * height) / IMG.height) * 100;
@@ -310,8 +261,6 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
     requestPayLoad["toprightx"] = ((data.four.X * width) / IMG.width) * 100;
     requestPayLoad["toprighty"] = ((data.four.Y * height) / IMG.height) * 100;
     console.log("Points are right here in next line");
-    // console.log(requestPayLoad);
-
     try {
       let res = await Post("/uploadSingleImagePoints", requestPayLoad);
 
@@ -444,28 +393,28 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
                 className={`item one ${isEdit ? "" : "hide-point"}`}
                 style={oneStyle}
               >
-                BL
+                .
               </div>
               <div
                 id="two"
                 className={`item two ${isEdit ? "" : "hide-point"}`}
                 style={twoStyle}
               >
-                BR
+                .
               </div>
               <div
                 id="three"
                 className={`item three ${isEdit ? "" : "hide-point"}`}
                 style={threeStyle}
               >
-                TL
+                .
               </div>
               <div
                 id="four"
                 className={`item four ${isEdit ? "" : "hide-point"}`}
                 style={fourStyle}
               >
-                TR
+                .
               </div>
             </div>
           </div>
