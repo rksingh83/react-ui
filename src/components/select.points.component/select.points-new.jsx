@@ -15,7 +15,7 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
   var Markers = new Array();
   const [points, setPoints] = useState(0);
   const [reset, setReset] = useState([]);
-  const [src, setSrc] = useState("");
+  const [src, setSrc] = useState(" ");
   const [data, setData] = useState({});
   const TextMAp = { HOME: 0, SHARED: 1, PENDING: 2 };
   const currentIndex = TextMAp[sharedWithMe];
@@ -73,6 +73,8 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
       if (img.height > 0 && img.width)
         setCordinates({ height: img.height, width: img.width });
     });
+  }, []);
+  useEffect(() => {
     var container = document.querySelector("#container");
     var activeItem = null;
     // console.log(container);
@@ -146,13 +148,13 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
     $("#outerContainer").click(function (e) {
       var offset = $(this).offset();
       var relativeX = e.pageX - offset.left;
-      var relativeY = e.pageY - offset.top;  
+      var relativeY = e.pageY - offset.top;
       let temp = {};
       data[e.target.id] = { X: relativeX, Y: relativeY };
       setData({ ...data });
     });
   }, [data]);
- 
+
   const displayPoint = () => {
     const IMG = document.getElementById("img");
     const width = IMG.width / 700;
@@ -194,26 +196,20 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
     setData(tempData);
   };
   const renderPoint = () => {
-   
-
     const IMG = document.getElementById("img");
     const width = IMG.width / 700;
     const height = IMG.height / 700;
     console.log(height, "wid", width);
     let tempData = {};
-    const bottomleftx =
-      (10 * IMG.width) / (width * 100) - 20;
-    const bottomlefty =
-      (90 * IMG.height) / (height * 100) - 20;
+    const bottomleftx = (10 * IMG.width) / (width * 100) - 20;
+    const bottomlefty = (90 * IMG.height) / (height * 100) - 20;
     setOneStyle({ top: bottomlefty, left: bottomleftx });
     fourDiv.current.style.top = bottomlefty;
     fourDiv.current.style.left = bottomleftx;
     tempData = { one: { X: bottomleftx + 20, Y: bottomlefty + 20 } };
 
-    const bottomrightx =
-      (90 * IMG.width) / (width * 100) - 20;
-    const bottomrighty =
-      (90 * IMG.height) / (height * 100) - 20;
+    const bottomrightx = (90 * IMG.width) / (width * 100) - 20;
+    const bottomrighty = (90 * IMG.height) / (height * 100) - 20;
 
     setTwoStyle({ top: bottomrighty, left: bottomrightx });
     tempData = {
@@ -221,17 +217,14 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
       two: { X: bottomrightx + 20, Y: bottomrighty + 20 },
     };
     //TR
-    const toprightx =
-      (90 * IMG.width) / (width * 100) - 20;
-    const toprighty =
-      (10 * IMG.height) / (height * 100) - 20;
+    const toprightx = (90 * IMG.width) / (width * 100) - 20;
+    const toprighty = (10 * IMG.height) / (height * 100) - 20;
 
     setFourStyle({ top: toprighty, left: toprightx });
     tempData = { ...tempData, four: { X: toprightx + 20, Y: toprighty + 20 } };
     //TL
     const topleftx = (10 * IMG.width) / (width * 100) - 20;
-    const toplefty =
-      (10 * IMG.height) / (height * 100) - 20;
+    const toplefty = (10 * IMG.height) / (height * 100) - 20;
     setThreeStyle({ top: toplefty, left: topleftx });
     tempData = { ...tempData, three: { X: topleftx + 20, Y: toplefty + 20 } };
     setIsEdit(true);
@@ -248,9 +241,9 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
     const IMG = document.getElementById("img");
     const width = IMG.width / 700;
     const height = IMG.height / 700;
-     const requestPayLoad = {};
+    const requestPayLoad = {};
     console.log(data);
-debugger
+    debugger;
     requestPayLoad["id"] = match.params.url;
     requestPayLoad["bottomleftx"] = ((data.one.X * width) / IMG.width) * 100;
     requestPayLoad["bottomlefty"] = ((data.one.Y * height) / IMG.height) * 100;
@@ -285,19 +278,17 @@ debugger
   useEffect(() => {
     // displayPoint(true);
   }, [cordinates]);
-  const reSetPoint = ()=>{
+  const reSetPoint = () => {
     const IMG = document.getElementById("img");
-    const bottomleftx =
-    (10 * IMG.width) / (IMG.width * 100) ;
-  const bottomlefty =
-    (10* IMG.height) / (IMG.height * 100);
-  //setOneStyle({ top: bottomlefty, left: bottomleftx });
-  fourDiv.current.style.top = "0px";
-  fourDiv.current.style.left = "0px"
-  fourDiv.current.style.top = bottomlefty;
-  fourDiv.current.style.left = bottomleftx;
+    const bottomleftx = (10 * IMG.width) / (IMG.width * 100);
+    const bottomlefty = (10 * IMG.height) / (IMG.height * 100);
+    //setOneStyle({ top: bottomlefty, left: bottomleftx });
+    fourDiv.current.style.top = "0px";
+    fourDiv.current.style.left = "0px";
+    fourDiv.current.style.top = bottomlefty;
+    fourDiv.current.style.left = bottomleftx;
     console.log(fourDiv.current.style);
-  }
+  };
   return (
     <>
       <div className="row">
