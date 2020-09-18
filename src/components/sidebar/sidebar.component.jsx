@@ -171,7 +171,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   const reNameFolderHandler = (name, des, id) => {};
   const updateName = (file, isDeleted = false) => {
     let updated = [];
-
+    console.log("updaing");
     if (isDeleted) {
       let deletedIds = file.filefolderRequest.map((item) => item.id);
       updated = totalFolder.filter((item) => !deletedIds.includes(item.id));
@@ -181,6 +181,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
           item.fileDescription = file.fileDescription;
           item.fileName = file.fileName;
         }
+        setShowLoader(false);
         return item;
       });
     }
@@ -344,14 +345,14 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   };
   // handle null values in input
   const removeNull = (data) => {
-    console.log(data)
+    console.log(data);
     const tempData = { ...data };
     for (let attr in data) {
       if (tempData[attr] == null && attr != "userList") {
         tempData[attr] = "";
       }
     }
-    if (tempData.date == "") tempData.date =  ` ${new Date()}`;
+    if (tempData.date == "") tempData.date = ` ${new Date()}`;
     return tempData;
   };
   return (
