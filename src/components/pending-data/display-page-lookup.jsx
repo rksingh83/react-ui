@@ -167,6 +167,7 @@ const PendingPageData = ({
                 value={pageData.fileId}
                 name="tag"
                 mt={"mt-0"}
+                
               />
             </div>
           </div>

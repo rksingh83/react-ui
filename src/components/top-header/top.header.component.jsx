@@ -291,6 +291,7 @@ const TopHeader = ({
             handleChange={(e) => addFileTag(e.target.value)}
             name="folder"
             type="input"
+            maxlength ={7}
           ></Input>
           <Input
             placeholder="Enter your description"
