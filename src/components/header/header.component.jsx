@@ -38,6 +38,11 @@ const Header = ({ currentUser, hidden }) => {
             <Link className="option nav-link text-white" to="/">
               Home
             </Link>
+            </li>
+            <li className="nav-item">
+            <a className="option nav-link text-white" href ="./app-debug.apk" download >
+              Download
+            </a>
           </li>
           <li className="nav-item">
             <Link className="option nav-link text-white" to="contact-us">
