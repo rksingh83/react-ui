@@ -69,7 +69,7 @@ const Coupon = ({ history }) => {
 
   return (
     <>
-      <ApplyCouponHeader leftCoupon={leftCoupon} startLoader={setStartLoader} />
+      <ApplyCouponHeader getCouponHistory ={getCouponHistory} leftCoupon={leftCoupon} startLoader={setStartLoader} />
       {startLoader && <CustomLoader />}
       <div className="row">
         <SideBar />

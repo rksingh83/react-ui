@@ -182,6 +182,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
           item.fileName = file.fileName;
         }
         setShowLoader(false);
+        window.location.reload();
         return item;
       });
     }
