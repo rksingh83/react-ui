@@ -150,6 +150,7 @@ const AddFriend = ({ history, setContacts, contacts }) => {
     try {
       const list = await Post("/acceptUserAddRequest", { id });
       alert(list.data.message);
+      window.location.reload()
     } catch (error) {}
   }
   async function rejectFriend(id) {
