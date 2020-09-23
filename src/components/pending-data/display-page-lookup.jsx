@@ -150,7 +150,7 @@ const PendingPageData = ({
             </div>
           </div>
           <div className="row">
-            <div className="col-md-2 page-lookup-heading">File Tag</div>
+            <div className="col-md-2 page-lookup-heading">Book Tag</div>
             {isMemberShip == 1 && (
               <div className="col-md-7">
                 <img

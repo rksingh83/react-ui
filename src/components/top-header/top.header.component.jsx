@@ -285,7 +285,7 @@ const TopHeader = ({
             type="input"
           ></Input>
           <Input
-            placeholder="Enter your File Tag"
+            placeholder="Enter your Book Tag"
             label="Tag"
             value={fileTag}
             handleChange={(e) => addFileTag(e.target.value)}
