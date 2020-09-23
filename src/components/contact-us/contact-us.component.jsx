@@ -1,39 +1,26 @@
 import React from "react";
-import { ReactComponent as Delete } from "../../assets/delete.svg";
-import { ReactComponent as Pencil } from "../../assets/edit.svg";
-const DisplayContact = ({ profileLists, addMember, isShowCheckedBox }) => {
-  const checkboxStyle = {
-    height: "1.2rem",
-    width: "3rem",
-    position: "relative",
-  };
-  
-  return (
+import ContactForm from './contact-form';
+const ContactUs = () => (
+  <div className="">
     <div className="row">
-      <div className="col">
-        <ul className="list-group">
-          {profileLists.map((item, index) => (
-            <li className="list-group-item li-contact-list" key={index}>
-              <span> {item.fullname}</span>
-              <span>
-                {isShowCheckedBox && (
-                  <input
-                    onClick={(e) => addMember(e)}
-                    type="checkbox"
-                    className="form-check-input"
-                    value={item.id}
-                    style={checkboxStyle}
-                  />
-                )}
-              </span>
-            </li>
-          ))}
-          {profileLists.length == 0 && (
-            <li className="list-group-item">There is no data request</li>
-          )}
-        </ul>
+      <div className="col-md-12 help">
+        <h1 className="heading-help">My Digi Network</h1>
       </div>
     </div>
-  );
-};
-export default DisplayContact;
+    <div className="row m-0 mt-4">
+      <div className="col-md-6 text-center">
+        <img
+          className="img-help"
+          style={{ height: "150" }}
+          src={require("../../assets/logo.png")}
+        ></img>
+      </div>
+      <div className="col-md-6 item-center">
+      <ContactForm/>
+      </div>
+    </div>
+
+  </div>
+);
+
+export default ContactUs;

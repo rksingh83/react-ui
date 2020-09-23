@@ -42,9 +42,21 @@ const GetUserTransactions = async () => {
 
 }
 
+const SendFeedBack = async (feedback ,name) => {
+  try {
+    const response = await Post("/contactUs", {
+      feedback , name
+    })
+    return response ;
+  } catch (e) {
+    alert("Something went wrong try latter");
+    //history.goBack();
+  }
+}
 export {
   AddCoupon,
   GetPageLimits ,
-  GetUserTransactions
+  GetUserTransactions,
+  SendFeedBack
 
 }
