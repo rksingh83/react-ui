@@ -39,6 +39,11 @@ const Header = ({ currentUser, hidden }) => {
               Home
             </Link>
           </li>
+          <li className="nav-item">
+            <Link className="option nav-link text-white" to="contact-us">
+              Contact Us
+            </Link>
+          </li>
           {currentUser && (
             <li className="nav-item">
               <Link className="option nav-link text-white" to="/add-friend">

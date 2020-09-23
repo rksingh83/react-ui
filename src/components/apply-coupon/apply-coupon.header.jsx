@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { AddCoupon } from "../../service/common";
-const ApplyCouponHeader = ({ startLoader, leftCoupon }) => {
+const ApplyCouponHeader = ({ startLoader, leftCoupon ,getCouponHistory }) => {
   const [coupon, setCoupon] = useState("");
   const INPUT_FIELDS = { error: false, message: "" };
   const [isError, setError] = useState(INPUT_FIELDS);
@@ -17,7 +17,8 @@ const ApplyCouponHeader = ({ startLoader, leftCoupon }) => {
       alert(res.data.message);
     }
     setCoupon("");
-    startLoader(false);
+    getCouponHistory();
+  //  startLoader(false);
   };
   const setCouponInput = (value) => {
     setCoupon(value);
