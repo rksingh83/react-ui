@@ -10,7 +10,7 @@ const CouponHistory = ({ txnCount, transactions, bookCounts, ...props }) => (
     <div className="col-md-6">
       <h6>Coupon Transaction</h6>
       <DisplayTable
-        heads={["Coupon Name", "Date", "Page Credited", "Page Balance"]}
+        heads={["Coupon Name", "Date", "Page Credited", "Cumulative Sum"]}
       >
         {transactions.map((transaction, index) => (
           <tr key={index}>
