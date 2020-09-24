@@ -74,12 +74,12 @@ const UserData = ({ profile }) => {
               </div>
 
             </div>
-            <div className="col-md-6 col-sm-12 col-xs-12">
+            {/* <div className="col-md-6 col-sm-12 col-xs-12">
               <div className="row div-row">
                 <div className="col-4 info-heading">Phone Number</div>
                 <div className="col-4">{profile.mobileNumber}</div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
