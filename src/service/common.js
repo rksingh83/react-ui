@@ -42,12 +42,15 @@ const GetUserTransactions = async () => {
 
 }
 
-const SendFeedBack = async (feedback ,name) => {
+const SendFeedBack = async (feedback, name, email, phone) => {
   try {
     const response = await Post("/contactUs", {
-      feedback , name
+      feedback,
+      name,
+      email,
+      phone
     })
-    return response ;
+    return response;
   } catch (e) {
     alert("Something went wrong try latter");
     //history.goBack();
@@ -55,7 +58,7 @@ const SendFeedBack = async (feedback ,name) => {
 }
 export {
   AddCoupon,
-  GetPageLimits ,
+  GetPageLimits,
   GetUserTransactions,
   SendFeedBack
 
