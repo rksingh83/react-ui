@@ -144,7 +144,7 @@ const DisplayOriginalImage = ({
     });
   }, []);
   useEffect(() => {
-    if (sharedWithMe == "HOME") getCurrentPage();
+    getCurrentPage();
   }, [imageId]);
   // page lookup
   const getCurrentPage = async () => {
@@ -159,21 +159,21 @@ const DisplayOriginalImage = ({
         response.data.user_membership == 2
       ) {
         setIsPrimerUser(1);
-      }else{
-        setIsPrimerUser(0)
+      } else {
+        setIsPrimerUser(0);
       }
     }
     setShowLoader(false);
   };
   const removeNull = (data) => {
-    console.log(data)
+    console.log(data);
     const tempData = { ...data };
     for (let attr in data) {
       if (tempData[attr] == null && attr != "userList") {
         tempData[attr] = "";
       }
     }
-    if (tempData.date == "") tempData.date =  ` ${new Date()}`;
+    if (tempData.date == "") tempData.date = ` ${new Date()}`;
     return tempData;
   };
   // handle input
@@ -244,7 +244,14 @@ const DisplayOriginalImage = ({
         />
       )}
 
-      {sharedWithMe == "SHARED" && <SharedHeader history={history} />}
+      {sharedWithMe == "SHARED" && (
+        <SharedHeader
+          isHideButton={sharedWithMe == "SHARED" ? true : false}
+          next={nextHandler}
+          prev={prevHandler}
+          history={history}
+        />
+      )}
       <div className="row">
         {isShowLoader && <CustomLoader />}
         <div className=" custom-pad-li  col-md-2 p-0">
@@ -262,7 +269,7 @@ const DisplayOriginalImage = ({
           </Link>
         </div>
         <div className="col-md-10">
-          {currentLookup && sharedWithMe == "HOME" && (
+          {currentLookup && (
             <LoadLookup
               data={currentLookup}
               currentImageId={imageId}
@@ -272,17 +279,18 @@ const DisplayOriginalImage = ({
               pageLookUpHandler={pageLookUpHandler}
               isMemberShip={isPrimerUser}
               isRedirectLast={true}
+              isDisabled={sharedWithMe == "SHARED" ? true : false}
             ></LoadLookup>
           )}
 
-          {sharedWithMe == "SHARED" && (
+          {/* {sharedWithMe == "SHARED" && (
             <ImageSlider
               current={match.params.id}
               history={history}
               setImageId={setImageId}
               images={allImages}
             ></ImageSlider>
-          )}
+          )} */}
         </div>
       </div>
     </>

@@ -1,5 +1,6 @@
 import React from "react";
-
+import { ReactComponent as Next } from "../../assets/new-right.svg";
+import { ReactComponent as Back } from "../../assets/new-left.svg";
 const sharedHeader = ({
   history,
   back,
@@ -8,6 +9,7 @@ const sharedHeader = ({
   searchItem,
   setSharedFileSearchHandler,
   setSharedFileSearInput,
+  ...props
 }) => {
   return (
     <div className="row">
@@ -57,6 +59,16 @@ const sharedHeader = ({
           </ul>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ml-auto text-white">
+              <li>
+                {props.isHideButton && (
+                  <Back className="header-svg" onClick={props.prev} />
+                )}
+              </li>
+              <li>
+                {props.isHideButton && (
+                  <Next className="header-svg" onClick={props.next} />
+                )}
+              </li>
               {!back && (
                 <li className="nav-item">
                   <button

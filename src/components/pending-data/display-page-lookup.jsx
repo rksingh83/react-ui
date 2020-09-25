@@ -22,6 +22,7 @@ const PendingPageData = ({
   isRedirectLast,
   isMemberShip,
   pageLookUpDateHandler,
+  isDisabled,
 }) => {
   console.log(new Date(pageData.date));
   console.log(pageData.date);
@@ -131,6 +132,7 @@ const PendingPageData = ({
                 value={pageData.title}
                 name="title"
                 mt={"mt-0"}
+                disabled={isDisabled}
               />
             </div>
           </div>
@@ -146,6 +148,7 @@ const PendingPageData = ({
                 value={pageData.fileId}
                 name="fileId"
                 mt={"mt-0"}
+                disabled={isDisabled}
               />
             </div>
           </div>
@@ -167,7 +170,7 @@ const PendingPageData = ({
                 value={pageData.fileId}
                 name="tag"
                 mt={"mt-0"}
-                
+                disabled={isDisabled}
               />
             </div>
           </div>
@@ -192,31 +195,35 @@ const PendingPageData = ({
                 value={pageData.description}
                 placeholder="Description"
                 name="description"
+                disabled={isDisabled}
               />
             </div>
           </div>
 
-          <div className="row">
-            <div className="col-md-2 page-lookup-heading">Share</div>
-            {isMemberShip == 1 && (
-              <div className="col-md-7">
-                <img
-                  width="440px"
-                  style={imageStyle}
-                  src={data.pageLookup.shareImagePath}
+          {!isDisabled && (
+            <div className="row">
+              <div className="col-md-2 page-lookup-heading">Share</div>
+              {isMemberShip == 1 && (
+                <div className="col-md-7">
+                  <img
+                    width="440px"
+                    style={imageStyle}
+                    src={data.pageLookup.shareImagePath}
+                  />
+                </div>
+              )}
+              <div className={col}>
+                <UserSelect
+                  value={pageData.shareId}
+                  onChange={pageLookUpHandler}
+                  list={data.data.profileList}
+                  name="shareId"
+                  mt={"mt-0"}
+                  disabled={isDisabled}
                 />
               </div>
-            )}
-            <div className={col}>
-              <UserSelect
-                value={pageData.shareId}
-                onChange={pageLookUpHandler}
-                list={data.data.profileList}
-                name="shareId"
-                mt={"mt-0"}
-              />
             </div>
-          </div>
+          )}
           <div className="row">
             <div className="col-md-2 page-lookup-heading">Date</div>
             {isMemberShip == 1 && (
@@ -241,6 +248,7 @@ const PendingPageData = ({
                 className="form-control"
                 selected={new Date(pageData.date)}
                 onChange={pageLookUpDateHandler}
+                disabled={isDisabled}
               />
             </div>
           </div>
@@ -261,6 +269,7 @@ const PendingPageData = ({
                 onChange={pageLookUpHandler}
                 value={pageData.pageNumber}
                 name="pageNumber"
+                disabled={isDisabled}
               />
             </div>
           </div>
@@ -277,6 +286,7 @@ const PendingPageData = ({
             )}
             <div className={col}>
               <Input
+                disabled={isDisabled}
                 onChange={pageLookUpHandler}
                 value={pageData.id}
                 name="id"
