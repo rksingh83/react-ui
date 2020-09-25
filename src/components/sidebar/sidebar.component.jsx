@@ -242,7 +242,14 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     if (response) {
       console.log(response.data.pageLookup);
       setLookupPageState(removeNull(response.data.pageLookup));
-      setIsPrimerUser(response.data.user_membership);
+      if (
+        response.data.user_membership == 1 ||
+        response.data.user_membership == 2
+      ) {
+        setIsPrimerUser(1);
+      } else {
+        setIsPrimerUser(0);
+      }
       removeNull(response.data.pageLookup);
     }
     setShowLoader(false);
