@@ -32,7 +32,7 @@ const ContactForm = () => {
         style={{ resize: "none" }}
         value={feedback}
         onChange={(e) => setFeedBack(e.target.value)}
-        class={`form-control ${isError.feedback ? "is-invalid" : ""}`}
+        className={`form-control ${isError.feedback ? "is-invalid" : ""}`}
         id="exampleFormControlTextarea1"
         rows="3"
       ></textarea>

@@ -12,7 +12,7 @@ const ContactUs = () => (
         <img
           className="img-help"
           style={{ height: "150" }}
-          src={require("../../assets/logo.png")}
+          src={require("../../assets/help-Logo.png")}
         ></img>
       </div>
       <div className="col-md-6 item-center">
