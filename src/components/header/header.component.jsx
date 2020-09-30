@@ -39,7 +39,7 @@ const Header = ({ currentUser, hidden }) => {
               Home
             </Link>
           </li>
-         
+
           {currentUser && (
             <li className="nav-item">
               <Link className="option nav-link text-white" to="/add-friend">
@@ -79,7 +79,7 @@ const Header = ({ currentUser, hidden }) => {
               </Link>
             </li>
           )}
-           <li className="nav-item">
+          <li className="nav-item">
             <a
               className="option nav-link text-white"
               href="./app-debug.apk"
@@ -91,6 +91,11 @@ const Header = ({ currentUser, hidden }) => {
           <li className="nav-item">
             <Link className="option nav-link text-white" to="contact-us">
               Help
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="option nav-link text-white" to="tnc">
+              Terms And Condition
             </Link>
           </li>
           {currentUser ? (
