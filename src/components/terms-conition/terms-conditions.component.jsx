@@ -349,7 +349,7 @@ const TermsAndCondition = () => (
           </li>
         </ol>
         <p>
-          Any use of the Site in violation of the foregoing violates these Terms
+            Any use of the Site in violation of the foregoing violates these Terms
           of Use and may result in, among other things, termination or
           suspension of your rights to use the Site
         </p>
