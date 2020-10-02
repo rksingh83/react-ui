@@ -36,7 +36,7 @@ const DisplayOriginalImage = ({
     shareId: 0,
     title: "",
     description: "",
-    date: new Date(),
+    date: new Date().toISOString().slice(0, 10),
     pendingFolderId: 0,
     imageId: 0,
     pageNumber: 0,
@@ -173,7 +173,8 @@ const DisplayOriginalImage = ({
         tempData[attr] = "";
       }
     }
-    if (tempData.date == "") tempData.date = ` ${new Date()}`;
+    if (tempData.date == "")
+      tempData.date = ` ${new Date().toISOString().slice(0, 10)}`;
     return tempData;
   };
   // handle input
