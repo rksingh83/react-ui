@@ -15,4 +15,4 @@ const Get = (endPoint) => {
   return axios.get(`${BASE_URL}/${endPoint}`);
 };
 
-export { Post, Get };
+export { Post, Get, BASE_URL };

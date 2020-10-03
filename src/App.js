@@ -24,6 +24,7 @@ import AddFriend from "./components/add-friend/add-friend";
 import ContactUs from "./components/contact-us/contact-us.component";
 import Coupon from "./components/apply-coupon/applied.coupon.component";
 import TermsAndCondition from "./components/terms-conition/terms-conditions.component";
+import Notification from './components/common/Notification';
 class App extends React.Component {
   //#endregio
   constructor(props) {
@@ -65,6 +66,7 @@ class App extends React.Component {
           <Route path="/add-friend" component={AddFriend} />{" "}
           <Route path="/contact-us" component={ContactUs} />
           <Route path="/tnc" component={TermsAndCondition} />
+          <Route path ="/notification" component ={Notification}/>
           <Route exact path="/logout" component={LouOut} />
         </Switch>
       </div>

@@ -6,12 +6,10 @@ import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { ReactComponent as FolderCreate } from "../../assets/trade.svg";
 import { ReactComponent as Refresh } from "../../assets/icon.svg";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
-import { ReactComponent as AddFriend } from "../../assets/add.svg";
+
 import { ReactComponent as Share } from "../../assets/teaching.svg";
 import UploadForm from "../upload-image/upload-images";
 import ShareFolderModal from "../modal/share-folder-modal";
-import { Link } from "react-router-dom";
-import SharedListModal from "../modal/show-shared-list-modal";
 import CustomLoader from "../loader/loader";
 import ShowMessages from "../common/display-message-modal";
 import { Post, Get } from "../../service/service.setup";
@@ -291,7 +289,7 @@ const TopHeader = ({
             handleChange={(e) => addFileTag(e.target.value)}
             name="folder"
             type="input"
-            maxlength ={7}
+            maxlength={7}
           ></Input>
           <Input
             placeholder="Enter your description"
