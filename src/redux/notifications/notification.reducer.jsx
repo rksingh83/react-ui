@@ -2,6 +2,7 @@ const INITIAL_STATE = {
   userNotifications: [],
 };
 
+
 const notificationReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "SET_NOTIFICATION":

@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import Login from "./login.component";
 import SignUp from "../signup/singnup.component";
 import Input from "../boostrapinput/input.component";
-import Stomp from "stompjs";
-import SockJS from "sockjs-client";
+
 import { Post, Get } from "../../service/service.setup";
 import { connect } from "react-redux";
 import { setCurrentUser } from "../../redux/user/user.actions";
@@ -13,7 +12,7 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import ShowMessages from "../common/display-message-modal";
 import "./lon.style.scss";
-import { setNotification } from "../../redux/notifications/notification.actions";
+
 const LoginPage = ({
   history,
   setCurrentUser,
@@ -69,27 +68,7 @@ const LoginPage = ({
       }
     });
   };
-  function connect() {
-    var socket = new SockJS(
-      "http://3.7.41.59:9082/mydiginotes/tutorialspoint-websocket"
-    );
-    console.log(socket);
-    const stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
-      // setConnected(true);
-      //console.log("Connected: " + frame);
-      stompClient.subscribe("/topic/greetings", function (greeting) {
-        console.log(JSON.parse(greeting.body));
-        console.log(userNotifications);
-        let currentNotification = [
-          ...userNotifications,
-          JSON.parse(greeting.body).description,
-        ];
-        console.log(currentNotification);
-        setNotifications(currentNotification);
-      });
-    });
-  }
+ 
   return (
     <>
       <div className="row" style={{ justifyContent: "center" }}>
@@ -164,9 +143,7 @@ const LoginPage = ({
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
   setCurrentFile: (currentFile) => dispatch(setCurrentFile(currentFile)),
-  setNotifications: (notification) => dispatch(setNotification(notification)),
+  
 });
-const mapStateToPros = ({ notifications: { userNotifications } }) => ({
-  userNotifications,
-});
-export default connect(mapStateToPros, mapDispatchToProps)(LoginPage);
+
+export default connect(null, mapDispatchToProps)(LoginPage);
