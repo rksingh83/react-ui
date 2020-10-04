@@ -24,7 +24,7 @@ import AddFriend from "./components/add-friend/add-friend";
 import ContactUs from "./components/contact-us/contact-us.component";
 import Coupon from "./components/apply-coupon/applied.coupon.component";
 import TermsAndCondition from "./components/terms-conition/terms-conditions.component";
-import Notification from './components/common/Notification';
+import Notification from './components/common/Notification.jsx';
 class App extends React.Component {
   //#endregio
   constructor(props) {

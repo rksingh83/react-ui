@@ -9,20 +9,28 @@ import "./header.style.scss";
 import "bootstrap/js/src/collapse.js";
 import { connect } from "react-redux";
 import ApplyCoupon from "../modal/apply-coupon";
-import { setNotification } from "../../redux/notifications/notification.actions";
+import {
+  setNotification,
+  setNotificationCount,
+} from "../../redux/notifications/notification.actions";
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
+import { GetUserDetails } from "../../service/common";
 const Header = ({
   currentUser,
   hidden,
   setNotifications,
   userNotifications,
+  userNotificationCount,
+  setNotificationCount,
 }) => {
   const imgStyle = { width: "27px" };
   const isToken = Cookies.get("token");
   const [openApplyCouponModal, setOpenApplyCoupon] = useState(false);
+  const [userId, setUserId] = useState(0);
   useEffect(() => {
     if (currentUser) connect();
+    getUserId();
   }, []);
   function connect() {
     var socket = new SockJS(
@@ -40,11 +48,21 @@ const Header = ({
           ...userNotifications,
           JSON.parse(greeting.body).description,
         ];
-        console.log(currentNotification);
+        console.log(userNotificationCount);
+        if (JSON.parse(greeting.body).description) {
+          updateStateCount(userNotificationCount)
+        }
         setNotifications(currentNotification);
       });
     });
   }
+  const updateStateCount =(currentCount)=>{
+    setNotificationCount(currentCount+1);
+  }
+  const getUserId = async () => {
+    const response = await GetUserDetails();
+    console.log(response.data);
+  };
   return (
     <nav className="navbar navbar-expand-lg navbar-light custom-bg">
       <Link className="logo-container navbar-brand" to="/">
@@ -81,9 +99,9 @@ const Header = ({
           {currentUser && (
             <li className="nav-item">
               <Link className="option nav-link text-white" to="/notification">
-                <i class="fas fa-bell " style ={{fontSize:"25px"}}></i>
+                <i class="fas fa-bell " style={{ fontSize: "25px" }}></i>
                 <span className="badge badge-danger mb-2">
-                  {userNotifications.length}{" "}
+                  {userNotificationCount}{" "}
                 </span>
               </Link>
             </li>
@@ -155,9 +173,11 @@ const Header = ({
 };
 const mapDispatchToProps = (dispatch) => ({
   setNotifications: (notification) => dispatch(setNotification(notification)),
+  setNotificationCount: (count) => dispatch(setNotificationCount(count)),
 });
 const mapStateToPros = ({
   user: { currentUser },
   notifications: { userNotifications },
-}) => ({ currentUser, userNotifications });
+  notificationCount: { userNotificationCount },
+}) => ({ currentUser, userNotifications, userNotificationCount });
 export default connect(mapStateToPros, mapDispatchToProps)(Header);

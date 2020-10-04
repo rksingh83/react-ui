@@ -56,10 +56,19 @@ const SendFeedBack = async (feedback, name, email, phone) => {
     //history.goBack();
   }
 }
+const GetUserDetails = async () => {
+  try {
+    return await Get("getUserProfileByToken");
+  } catch (e) {
+
+  }
+
+}
 export {
   AddCoupon,
   GetPageLimits,
   GetUserTransactions,
-  SendFeedBack
+  SendFeedBack ,
+  GetUserDetails
 
 }

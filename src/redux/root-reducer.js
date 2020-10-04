@@ -4,7 +4,8 @@ import {
 import userRecuder from './user/user.reducer';
 import fileReducer from './file/file.reducer';
 import folderFlagReducer from './shared-folder/folder.reducer';
-import notificationReducer from './notifications/notification.reducer'
+import notificationReducer from './notifications/notification.reducer';
+import notificationCountReducer from './notifications/notification.count.reducer'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import {
   persistReducer
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
   currentFile: fileReducer,
   sharedWithMe: folderFlagReducer,
   contacts: contactsReducer,
-  notifications: notificationReducer
+  notifications: notificationReducer ,
+  notificationCount: notificationCountReducer
 })
 
 export default persistReducer(persistConfig, rootReducer)
