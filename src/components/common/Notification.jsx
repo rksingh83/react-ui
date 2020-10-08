@@ -20,6 +20,7 @@ const Notification = ({
 }) => {
   const [userNotifications, setUserNotification] = useState([]);
   useEffect(() => {
+    refresh() ;
     getAllNotificationsMarkedRead();
     getAlertNotification();
     setNotificationCount(0);
@@ -47,6 +48,9 @@ const Notification = ({
     const response = await getAlertNotifications();
     setUserNotification(response.data.data.alertList);
   };
+  const refresh = ()=>{
+   // window.location.reload();
+  }
   return (
     <>
       <div className="container">

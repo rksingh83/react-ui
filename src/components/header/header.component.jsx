@@ -27,6 +27,15 @@ const Header = ({
   const [userId, setUserId] = useState(0);
   const [counter, setCounter] = useState(0);
   useEffect(() => {
+    if (currentUser) connect(userNotificationCount);
+  });
+  useEffect(() => {
+    console.log("IN STATE COUNTER", userNotificationCount);
+    // if (currentUser) connect();
+    // if(counter>0)
+    //  updateStateCount();
+  }, [counter]);
+  function connect(count) {
     var socket = SockJS(
       "http://3.7.41.59:9082/mydiginotes/tutorialspoint-websocket"
     );
@@ -36,57 +45,26 @@ const Header = ({
       // setConnected(true);
       //console.log("Connected: " + frame);
       stompClient.subscribe("/topic/greetings", function (greeting) {
-        console.log(JSON.parse(greeting.body));
-        console.log(userNotifications);
+
+        console.log(
+          "xxxxxxxxxxxxxxxxxxxxxxCountxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          count
+        );
         let currentNotification = [
           ...userNotifications,
           JSON.parse(greeting.body).description,
         ];
         console.log(userNotificationCount);
         if (JSON.parse(greeting.body).description) {
-          const currentCountState = parseInt(userNotificationCount);
-          setNotificationCount(currentCountState + 1);
+          updateStateCount(count);
         }
         setNotifications(currentNotification);
       });
     });
-  }, []);
-  useEffect(() => {
-    // if (currentUser) connect();
-    // if(counter>0)
-    //  updateStateCount();
-  }, [counter]);
-  function connect() {
-    // var socket = SockJS(
-    //   "http://3.7.41.59:9082/mydiginotes/tutorialspoint-websocket"
-    // );
-    // console.log(socket);
-    // const stompClient = Stomp.over(socket);
-    // stompClient.connect({}, function (frame) {
-    //   // setConnected(true);
-    //   //console.log("Connected: " + frame);
-    //   stompClient.subscribe("/topic/greetings", function (greeting) {
-    //     console.log(JSON.parse(greeting.body));
-    //     console.log(userNotifications);
-    //     let currentNotification = [
-    //       ...userNotifications,
-    //       JSON.parse(greeting.body).description,
-    //     ];
-    //     console.log(userNotificationCount);
-    //     if (JSON.parse(greeting.body).description) {
-    //       updateStateCount();
-    //       console.log("***********************xx************8888");
-    //     }
-    //     setNotifications(currentNotification);
-    //   });
-    // });
   }
-  const updateStateCount = () => {
-    console.log(
-      "xxxxxxxxxxxxxxxxxxxxxxupdateStateCountxxxxxxxxxxxxxxxxxxxxxxxxxx",
-      userNotificationCount
-    );
-    const currentCountState = parseInt(userNotificationCount);
+  const updateStateCount = (count) => {
+  
+    const currentCountState = parseInt(count);
 
     setNotificationCount(currentCountState + 1);
   };
@@ -211,4 +189,4 @@ const mapStateToPros = ({
   notifications: { userNotifications },
   notificationCount: { userNotificationCount },
 }) => ({ currentUser, userNotifications, userNotificationCount });
-export default connect(mapStateToPros, mapDispatchToProps)(Header);
+export default connect(mapStateToPros,mapDispatchToProps )(Header);
