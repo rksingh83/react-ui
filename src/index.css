@@ -211,3 +211,6 @@ padding: 20px;
 .tnc>p{
   font-size: 17px;
 }
+.hand:hover{
+  cursor: pointer;
+}

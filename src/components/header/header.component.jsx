@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ReactComponent as Logo } from "../../assets/crown.svg";
-import { auth } from "../../firebase/firebase.utilis";
 import Cookies from "js-cookie";
 import { ReactComponent as Logout } from "../../assets/exit.svg";
-import { ReactComponent as User } from "../../assets/user.svg";
 import "./header.style.scss";
 import "bootstrap/js/src/collapse.js";
 import { connect } from "react-redux";
-import ApplyCoupon from "../modal/apply-coupon";
+
 import {
   setNotification,
   setNotificationCount,
@@ -28,12 +25,9 @@ const Header = ({
   const isToken = Cookies.get("token");
   const [openApplyCouponModal, setOpenApplyCoupon] = useState(false);
   const [userId, setUserId] = useState(0);
+  const [counter, setCounter] = useState(0);
   useEffect(() => {
-    if (currentUser) connect();
-    getUserId();
-  }, []);
-  function connect() {
-    var socket = new SockJS(
+    var socket = SockJS(
       "http://3.7.41.59:9082/mydiginotes/tutorialspoint-websocket"
     );
     console.log(socket);
@@ -50,15 +44,52 @@ const Header = ({
         ];
         console.log(userNotificationCount);
         if (JSON.parse(greeting.body).description) {
-          updateStateCount(userNotificationCount)
+          const currentCountState = parseInt(userNotificationCount);
+          setNotificationCount(currentCountState + 1);
         }
         setNotifications(currentNotification);
       });
     });
+  }, []);
+  useEffect(() => {
+    // if (currentUser) connect();
+    // if(counter>0)
+    //  updateStateCount();
+  }, [counter]);
+  function connect() {
+    // var socket = SockJS(
+    //   "http://3.7.41.59:9082/mydiginotes/tutorialspoint-websocket"
+    // );
+    // console.log(socket);
+    // const stompClient = Stomp.over(socket);
+    // stompClient.connect({}, function (frame) {
+    //   // setConnected(true);
+    //   //console.log("Connected: " + frame);
+    //   stompClient.subscribe("/topic/greetings", function (greeting) {
+    //     console.log(JSON.parse(greeting.body));
+    //     console.log(userNotifications);
+    //     let currentNotification = [
+    //       ...userNotifications,
+    //       JSON.parse(greeting.body).description,
+    //     ];
+    //     console.log(userNotificationCount);
+    //     if (JSON.parse(greeting.body).description) {
+    //       updateStateCount();
+    //       console.log("***********************xx************8888");
+    //     }
+    //     setNotifications(currentNotification);
+    //   });
+    // });
   }
-  const updateStateCount =(currentCount)=>{
-    setNotificationCount(currentCount+1);
-  }
+  const updateStateCount = () => {
+    console.log(
+      "xxxxxxxxxxxxxxxxxxxxxxupdateStateCountxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      userNotificationCount
+    );
+    const currentCountState = parseInt(userNotificationCount);
+
+    setNotificationCount(currentCountState + 1);
+  };
   const getUserId = async () => {
     const response = await GetUserDetails();
     console.log(response.data);
@@ -101,7 +132,7 @@ const Header = ({
               <Link className="option nav-link text-white" to="/notification">
                 <i class="fas fa-bell " style={{ fontSize: "25px" }}></i>
                 <span className="badge badge-danger mb-2">
-                  {userNotificationCount}{" "}
+                  {userNotificationCount}
                 </span>
               </Link>
             </li>
