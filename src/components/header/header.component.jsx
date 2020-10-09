@@ -104,16 +104,6 @@ const Header = ({
               </Link>
             </li>
           )}
-          {currentUser && (
-            <li className="nav-item">
-              <Link className="option nav-link text-white" to="/notification">
-                <i class="fas fa-bell " style={{ fontSize: "25px" }}></i>
-                <span className="badge badge-danger mb-2">
-                  {userNotificationCount}
-                </span>
-              </Link>
-            </li>
-          )}
           {currentUser ? (
             ""
           ) : (
@@ -165,6 +155,16 @@ const Header = ({
               Terms And Condition
             </Link>
           </li>
+          {currentUser && (
+            <li className="nav-item">
+              <Link className="option nav-link text-white" to="/notification">
+                <i class="fas fa-bell " style={{ fontSize: "25px" }}></i>
+                <span className="badge badge-danger mb-2">
+                  {userNotificationCount}
+                </span>
+              </Link>
+            </li>
+          )}
           {currentUser ? (
             <li className="nav-item">
               <Link className="option nav-link text-white" to="/logout">
