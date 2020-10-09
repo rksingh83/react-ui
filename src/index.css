@@ -214,3 +214,7 @@ padding: 20px;
 .hand:hover{
   cursor: pointer;
 }
+
+.notification-text{
+  color:black;
+}

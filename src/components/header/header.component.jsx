@@ -27,8 +27,9 @@ const Header = ({
   const [userId, setUserId] = useState(0);
   const [counter, setCounter] = useState(0);
   useEffect(() => {
+    console.log(userNotificationCount);
     if (currentUser) connect(userNotificationCount);
-  });
+  }, [userNotificationCount]);
   useEffect(() => {
     console.log("IN STATE COUNTER", userNotificationCount);
     // if (currentUser) connect();
@@ -45,7 +46,6 @@ const Header = ({
       // setConnected(true);
       //console.log("Connected: " + frame);
       stompClient.subscribe("/topic/greetings", function (greeting) {
-
         console.log(
           "xxxxxxxxxxxxxxxxxxxxxxCountxxxxxxxxxxxxxxxxxxxxxxxxxx",
           count
@@ -63,7 +63,6 @@ const Header = ({
     });
   }
   const updateStateCount = (count) => {
-  
     const currentCountState = parseInt(count);
 
     setNotificationCount(currentCountState + 1);
@@ -189,4 +188,4 @@ const mapStateToPros = ({
   notifications: { userNotifications },
   notificationCount: { userNotificationCount },
 }) => ({ currentUser, userNotifications, userNotificationCount });
-export default connect(mapStateToPros,mapDispatchToProps )(Header);
+export default connect(mapStateToPros, mapDispatchToProps)(Header);
