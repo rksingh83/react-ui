@@ -24,7 +24,7 @@ import {
   getCardCount as getPageCount,
   DISPLAY_CARD_COUNT as PAGE_OFF_SET,
 } from "../common/pagination.config";
-const AddFriend = ({ history, setContacts, contacts }) => {
+const AddFriend = ({ history, setContacts, contacts ,match }) => {
   const [user, setUser] = useState(null);
   const [userProfile, setUserProfile] = useState([]);
   const [AllUserProfile, setAllUserProfile] = useState([]);
@@ -33,7 +33,8 @@ const AddFriend = ({ history, setContacts, contacts }) => {
   const [contactList, setContactList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [currentGroup, setCurrentGroup] = useState({});
-  const [currentList, setCurrentList] = useState("USERS");
+  let Screen = match.params.screen?match.params.screen:'USERS'
+  const [currentList, setCurrentList] = useState(Screen);
   const [allGroups, setGroups] = useState([]);
   const [groupName, setGroupName] = useState("");
   const [groupDes, setGroupDes] = useState("");
@@ -55,9 +56,12 @@ const AddFriend = ({ history, setContacts, contacts }) => {
   };
 
   const getAllGroups = async () => {
+    
     try {
       const res = await GetAllGroups();
+    
       if (res.data.code == "200") {
+  
         setGroups(res.data.data.userGroup);
       }
     } catch (e) {}
@@ -275,7 +279,7 @@ const AddFriend = ({ history, setContacts, contacts }) => {
           </nav>
         </div>
       </div>
-      <div className="row">
+      <div className="row m-0">
         <LeftSideBar
           menus={LeftSidebarConfig}
           currentMenu={currentList}

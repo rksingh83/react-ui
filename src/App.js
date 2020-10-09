@@ -63,7 +63,7 @@ class App extends React.Component {
             component={DisplayOriginalImage}
           />{" "}
           <Route path="/last/:id" component={DisplayLastImage} />{" "}
-          <Route path="/add-friend" component={AddFriend} />{" "}
+          <Route path="/add-friend/:screen" component={AddFriend} />{" "}
           <Route path="/contact-us" component={ContactUs} />
           <Route path="/tnc" component={TermsAndCondition} />
           <Route path ="/notification" component ={Notification}/>

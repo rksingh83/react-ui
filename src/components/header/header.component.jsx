@@ -99,7 +99,7 @@ const Header = ({
 
           {currentUser && (
             <li className="nav-item">
-              <Link className="option nav-link text-white" to="/add-friend">
+              <Link className="option nav-link text-white" to="/add-friend/USERS">
                 Contacts
               </Link>
             </li>
@@ -136,7 +136,7 @@ const Header = ({
               </Link>
             </li>
           )}
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <a
               className="option nav-link text-white"
               href="./app-debug.apk"
@@ -144,7 +144,7 @@ const Header = ({
             >
               Download Android APK
             </a>
-          </li>
+          </li> */}
           <li className="nav-item">
             <Link className="option nav-link text-white" to="contact-us">
               Help

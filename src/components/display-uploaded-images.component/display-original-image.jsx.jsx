@@ -221,6 +221,11 @@ const DisplayOriginalImage = ({
       setShowLoader(false);
     }
   };
+  const pageLookUpDateHandler = (e) => {
+    const currentState = { ...lookupPageState };
+    currentState.date = e;
+    setLookupPageState(currentState);
+  };
   return (
     <>
       {isShowLoader && <CustomLoader />}
@@ -280,6 +285,7 @@ const DisplayOriginalImage = ({
               pageLookUpHandler={pageLookUpHandler}
               isMemberShip={isPrimerUser}
               isRedirectLast={true}
+              pageLookUpDateHandler={pageLookUpDateHandler}
               isDisabled={sharedWithMe == "SHARED" ? true : false}
             ></LoadLookup>
           )}

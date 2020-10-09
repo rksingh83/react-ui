@@ -10,8 +10,11 @@ const DisplayNotification = ({ userNotifications, history, setFolderFlag }) => {
         //  history.push("/");
         break;
       case "Add friend":
-        history.push("add-friend");
+        history.push("add-friend/CONTACTS");
         break;
+        case "Add Group":
+         history.push("add-friend/GROUPS");
+          break;
       default:
       // code block
     }
