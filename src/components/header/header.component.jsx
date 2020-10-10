@@ -13,7 +13,7 @@ import {
 } from "../../redux/notifications/notification.actions";
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
-
+import {BASE_URL} from '../../service/service.setup'
 const Header = ({
   currentUser,
   hidden,
@@ -33,7 +33,7 @@ const Header = ({
   useEffect(() => {}, []);
   function connect(count) {
     var socket = SockJS(
-      "http://3.7.41.59:9082/mydiginotes/tutorialspoint-websocket"
+      `${BASE_URL}/tutorialspoint-websocket`
     );
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
