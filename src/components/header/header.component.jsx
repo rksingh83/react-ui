@@ -158,7 +158,7 @@ const Header = ({
           {currentUser && (
             <li className="nav-item">
               <Link className="option nav-link text-white" to="/notification">
-                <i class="fas fa-bell " style={{ fontSize: "25px" }}></i>
+                <i className="fas fa-bell " style={{ fontSize: "25px" }}></i>
                 <span className="badge badge-danger mb-2">
                   {userNotificationCount}
                 </span>
