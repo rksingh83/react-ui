@@ -2,19 +2,29 @@ import React from "react";
 
 const DisplayNotification = ({ userNotifications, history, setFolderFlag }) => {
   const reDirectTo = (type, id) => {
+    console.log(type);
+    if(type === "Add friend")
+       console.log("match")
     switch (type) {
       case "Share Book":
-        // code block
         history.push("/");
         setFolderFlag("SHARED");
-        //  history.push("/");
         break;
       case "Add friend":
+      
         history.push("add-friend/CONTACTS");
         break;
-        case "Add Group":
-         history.push("add-friend/GROUPS");
-          break;
+      case "Add Group":
+        history.push("add-friend/GROUPS");
+        break;
+      case "Edit Folder":
+        history.push("/");
+        setFolderFlag("SHARED");
+        break;
+      case "Share Page":
+        history.push("/");
+        setFolderFlag("SHARED");
+
       default:
       // code block
     }

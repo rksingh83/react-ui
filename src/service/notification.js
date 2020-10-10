@@ -22,8 +22,20 @@ const getAlertNotifications = async () => {
   }
 
 }
+const getUserId = async () => {
+  try {
+    return await Get("getUserProfileByToken");
+  } catch (e) {
+
+  }
+
+}
+
+
+
 
 export {
   getNotifications,
-  getAlertNotifications
+  getAlertNotifications ,
+  getUserId
 }
