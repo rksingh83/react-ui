@@ -5,14 +5,15 @@ import { ReactComponent as Logout } from "../../assets/exit.svg";
 import "./header.style.scss";
 import "bootstrap/js/src/collapse.js";
 import { connect } from "react-redux";
-
+import { getUserId } from "../../service/notification";
+import { ToastContainer, toast } from "react-toastify";
 import {
   setNotification,
   setNotificationCount,
 } from "../../redux/notifications/notification.actions";
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
-import { GetUserDetails } from "../../service/common";
+
 const Header = ({
   currentUser,
   hidden,
@@ -24,39 +25,31 @@ const Header = ({
   const imgStyle = { width: "27px" };
   const isToken = Cookies.get("token");
   const [openApplyCouponModal, setOpenApplyCoupon] = useState(false);
-  const [userId, setUserId] = useState(0);
-  const [counter, setCounter] = useState(0);
+
   useEffect(() => {
     console.log(userNotificationCount);
     if (currentUser) connect(userNotificationCount);
   }, [userNotificationCount]);
-  useEffect(() => {
-    console.log("IN STATE COUNTER", userNotificationCount);
-    // if (currentUser) connect();
-    // if(counter>0)
-    //  updateStateCount();
-  }, [counter]);
+  useEffect(() => {}, []);
   function connect(count) {
     var socket = SockJS(
       "http://3.7.41.59:9082/mydiginotes/tutorialspoint-websocket"
     );
-    console.log(socket);
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
       // setConnected(true);
       //console.log("Connected: " + frame);
       stompClient.subscribe("/topic/greetings", function (greeting) {
-        console.log(
-          "xxxxxxxxxxxxxxxxxxxxxxCountxxxxxxxxxxxxxxxxxxxxxxxxxx",
-          count
-        );
         let currentNotification = [
           ...userNotifications,
           JSON.parse(greeting.body).description,
         ];
-        console.log(userNotificationCount);
-        if (JSON.parse(greeting.body).description) {
+
+        const data = JSON.parse(greeting.body);
+        console.log(currentUser.authentication.id, data.user_id);
+        if (data.description && data.user_id == currentUser.authentication.id) {
           updateStateCount(count);
+         // toast.error(data.description);
         }
         setNotifications(currentNotification);
       });
@@ -67,12 +60,9 @@ const Header = ({
 
     setNotificationCount(currentCountState + 1);
   };
-  const getUserId = async () => {
-    const response = await GetUserDetails();
-    console.log(response.data);
-  };
   return (
     <nav className="navbar navbar-expand-lg navbar-light custom-bg">
+      <ToastContainer />
       <Link className="logo-container navbar-brand" to="/">
         <img style={imgStyle} src={require("../../assets/logo.png")}></img>
 
@@ -99,7 +89,10 @@ const Header = ({
 
           {currentUser && (
             <li className="nav-item">
-              <Link className="option nav-link text-white" to="/add-friend/USERS">
+              <Link
+                className="option nav-link text-white"
+                to="/add-friend/USERS"
+              >
                 Contacts
               </Link>
             </li>
