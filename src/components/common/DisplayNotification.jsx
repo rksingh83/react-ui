@@ -63,9 +63,12 @@ const DisplayNotification = ({ userNotifications, history, setFolderFlag }) => {
 };
 export default DisplayNotification;
 const getTime = (time) => {
+  time = getISTTime(time);
+  var s = new Date(time).toLocaleString(undefined, {
+    timeZone: "Asia/Kolkata",
+  });
   var d1 = new Date(time); // jan,1 2011
   var d2 = new Date(); // now
-
   var diff = d2 - d1,
     sign = diff < 0 ? -1 : 1,
     milliseconds,
@@ -98,4 +101,8 @@ const getTime = (time) => {
   //     seconds + " seconds, ",
   //     milliseconds + " milliseconds."
   //   );
+};
+const getISTTime = (tme) => {
+  let d = new Date(tme);
+  return new Date(d.getTime() + 5.5 * 60 * 60 * 1000);
 };
