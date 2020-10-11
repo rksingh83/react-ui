@@ -45,6 +45,7 @@ const ContactList = ({ profileList, isShare, selected, hide, images }) => {
       const contacts = await Post(`/${URL}`, requestData);
       if (contacts.data.code == "200") {
         alert(contacts.data.message);
+        window.location.reload()
       }
       hide(false);
     } catch (error) {}

@@ -84,7 +84,7 @@ const getTime = (time) => {
   if (days > 0) {
     return `${days} days ago`;
   }
-  if (hours > 5) {
+  if (hours >0) {
     return `${hours} hours ago`;
   }
   if (minutes > 0) {
