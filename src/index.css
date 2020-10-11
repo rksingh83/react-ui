@@ -227,20 +227,28 @@ a {
 }
 
 .flash-message {
-  min-height: 4rem;
+  min-height: 5rem;
   position: absolute;
-  background: #fff;
-  min-width: 30rem;
- 
-}
-.message-container{
+  background: rgb(53, 54, 58);
+  width: 23rem;
+  z-index: 10;
+  bottom: 10%;
+  color: #fff;
+  right: 5px;
+  border-radius: 5px;
   display: flex;
   justify-content: center;
   font-weight: 500;
+
+
+
 }
+
+.message-container {}
+
 .cross-btn {
   position: absolute;
   right: 6px;
   cursor: pointer;
-  color:red
+  color: red
 }
