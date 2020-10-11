@@ -24,7 +24,7 @@ import {
   getCardCount as getPageCount,
   DISPLAY_CARD_COUNT as PAGE_OFF_SET,
 } from "../common/pagination.config";
-const AddFriend = ({ history, setContacts, contacts ,match }) => {
+const AddFriend = ({ history, setContacts, contacts, match }) => {
   const [user, setUser] = useState(null);
   const [userProfile, setUserProfile] = useState([]);
   const [AllUserProfile, setAllUserProfile] = useState([]);
@@ -33,7 +33,7 @@ const AddFriend = ({ history, setContacts, contacts ,match }) => {
   const [contactList, setContactList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [currentGroup, setCurrentGroup] = useState({});
-  let Screen = match.params.screen?match.params.screen:'USERS'
+  let Screen = match.params.screen ? match.params.screen : "USERS";
   const [currentList, setCurrentList] = useState(Screen);
   const [allGroups, setGroups] = useState([]);
   const [groupName, setGroupName] = useState("");
@@ -56,12 +56,10 @@ const AddFriend = ({ history, setContacts, contacts ,match }) => {
   };
 
   const getAllGroups = async () => {
-    
     try {
       const res = await GetAllGroups();
-    
+
       if (res.data.code == "200") {
-  
         setGroups(res.data.data.userGroup);
       }
     } catch (e) {}
@@ -122,13 +120,19 @@ const AddFriend = ({ history, setContacts, contacts ,match }) => {
     }
   };
 
-  const addUserHandler = async (id) => {
+  const addUserHandler = async (id, e) => {
     try {
+    //  console.log((e.innerText = "Requested"));
+     if(e.innerText == 'Cancel'){
+       removeContact(id) ;
+       return true ;
+     }
       const userFind = await Post("/addUser", { id: id });
 
       if (userFind.data.code == "200") {
         alert(userFind.data.message);
-        window.location.reload();
+        //  window.location.reload();
+        (e.innerText = "Cancel")
         return;
       }
       //setUserProfile(userFind.data.data.profile);
@@ -154,7 +158,7 @@ const AddFriend = ({ history, setContacts, contacts ,match }) => {
     try {
       const list = await Post("/acceptUserAddRequest", { id });
       alert(list.data.message);
-      window.location.reload()
+      window.location.reload();
     } catch (error) {}
   }
   async function rejectFriend(id) {
@@ -227,7 +231,7 @@ const AddFriend = ({ history, setContacts, contacts ,match }) => {
               id="navbarSupportedContent"
             >
               <ul className="navbar-nav ml-auto text-white">
-              {currentList == "GROUPS" && (
+                {currentList == "GROUPS" && (
                   <li className="nav-item">
                     <button
                       onClick={() => setOpenModal(true)}

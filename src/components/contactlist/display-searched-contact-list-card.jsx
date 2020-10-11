@@ -128,7 +128,7 @@ const ContactsCard = ({
                       !profileList.alreadyFriend && (
                         <div>
                           <button
-                            onClick={() => addFriend(profileList.id)}
+                            onClick={(e) => addFriend(profileList.id ,e.target)}
                             className="btn btn-success"
                           >
                             Add Friend
