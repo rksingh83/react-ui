@@ -1,7 +1,7 @@
 import React from "react";
 
 const DisplayNotification = ({ userNotifications, history, setFolderFlag }) => {
-  const reDirectTo = (type, id) => {
+  const reDirectTo = (type, id, fileId) => {
     console.log(type);
     switch (type) {
       case "Share Book":
@@ -23,10 +23,14 @@ const DisplayNotification = ({ userNotifications, history, setFolderFlag }) => {
         setFolderFlag("SHARED");
         break;
       case "Share Page":
-        history.push("/");
         setFolderFlag("SHARED");
-
+        history.push(`/original/${id}/${fileId}`);
+        break;
+      case "Edit Page":
+        setFolderFlag("SHARED");
+        history.push(`/original/${id}/${fileId}`);
       default:
+
       // code block
     }
   };
@@ -38,7 +42,13 @@ const DisplayNotification = ({ userNotifications, history, setFolderFlag }) => {
           <li
             key={index}
             className="list-group-item hand"
-            onClick={() => reDirectTo(notification.alert_type)}
+            onClick={() =>
+              reDirectTo(
+                notification.alert_type,
+                notification.redirectId,
+                notification.fileid
+              )
+            }
           >
             <span> {notification.description}</span>
             <br></br>

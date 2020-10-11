@@ -182,39 +182,65 @@ a {
   justify-content: center;
   align-items: center;
   display: flex;
- 
+
 }
-.heading-help{
+
+.heading-help {
   transition: all .5s;
   text-transform: uppercase;
 }
+
 .heading-help:hover {
   transform: skewY(1.5deg) skewX(13deg) scale(1.1);
 }
-.img-help{
-transition: all .3s;
-padding: 20px;
+
+.img-help {
+  transition: all .3s;
+  padding: 20px;
 }
-.img-help:hover{
+
+.img-help:hover {
   transform: scale(1.06) rotate(30deg);
 
 }
-.help-form{
-    display: flex;
-    color: cadetblue;
-    align-items: center;
-    justify-content: center;
-    max-width: 20rem;
-    min-height: 17rem !important;
+
+.help-form {
+  display: flex;
+  color: cadetblue;
+  align-items: center;
+  justify-content: center;
+  max-width: 20rem;
+  min-height: 17rem !important;
 
 }
-.tnc>p{
+
+.tnc>p {
   font-size: 17px;
 }
-.hand:hover{
+
+.hand:hover {
   cursor: pointer;
 }
 
-.notification-text{
-  color:black;
+.notification-text {
+  color: black;
+}
+
+.flash-message {
+  min-height: 4rem;
+  position: absolute;
+  background: #fff;
+  min-width: 30rem;
+ 
+}
+.message-container{
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+}
+.cross-btn {
+  position: absolute;
+  right: 6px;
+  cursor: pointer;
+  color:red
 }

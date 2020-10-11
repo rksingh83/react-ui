@@ -13,7 +13,7 @@ import {
 } from "../../redux/notifications/notification.actions";
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
-import {BASE_URL} from '../../service/service.setup'
+import { BASE_URL } from "../../service/service.setup";
 const Header = ({
   currentUser,
   hidden,
@@ -24,17 +24,19 @@ const Header = ({
 }) => {
   const imgStyle = { width: "27px" };
   const isToken = Cookies.get("token");
-  const [openApplyCouponModal, setOpenApplyCoupon] = useState(false);
-
+  const [flashMessage, setFashMessage] = useState(false);
   useEffect(() => {
     console.log(userNotificationCount);
     if (currentUser) connect(userNotificationCount);
   }, [userNotificationCount]);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFashMessage(false);
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
   function connect(count) {
-    var socket = SockJS(
-      `${BASE_URL}/tutorialspoint-websocket`
-    );
+    var socket = SockJS(`${BASE_URL}/tutorialspoint-websocket`);
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
       // setConnected(true);
@@ -49,7 +51,8 @@ const Header = ({
         console.log(currentUser.authentication.id, data.user_id);
         if (data.description && data.user_id == currentUser.authentication.id) {
           updateStateCount(count);
-         // toast.error(data.description);
+          setFashMessage(data.description);
+          // toast.error(data.description);
         }
         setNotifications(currentNotification);
       });
@@ -62,7 +65,16 @@ const Header = ({
   };
   return (
     <nav className="navbar navbar-expand-lg navbar-light custom-bg">
-      <ToastContainer />
+      {flashMessage && (
+        <div className="flash-message">
+          <div className="message-container">
+            {flashMessage}
+            <span className="cross-btn">
+              <i onClick={() => setFashMessage(false)} class="fas fa-times"></i>
+            </span>
+          </div>
+        </div>
+      )}
       <Link className="logo-container navbar-brand" to="/">
         <img style={imgStyle} src={require("../../assets/logo.png")}></img>
 
