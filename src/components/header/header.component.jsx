@@ -28,7 +28,7 @@ const Header = ({
   useEffect(() => {
     console.log(userNotificationCount);
     if (currentUser) connect(userNotificationCount);
-  }, [userNotificationCount]);
+  }, []);
   useEffect(() => {
     const interval = setInterval(() => {
       setFashMessage(false);
@@ -48,9 +48,10 @@ const Header = ({
         ];
 
         const data = JSON.parse(greeting.body);
-        console.log(currentUser.authentication.id, data.user_id);
+        console.log(currentUser.authentication.id, data.user_id ,data.total_unread_notification);
         if (data.description && data.user_id == currentUser.authentication.id) {
-          updateStateCount(count);
+          updateStateCount(data.total_unread_notification+1);
+          console.log(data)
           setFashMessage(data.description);
           // toast.error(data.description);
         }
@@ -61,7 +62,7 @@ const Header = ({
   const updateStateCount = (count) => {
     const currentCountState = parseInt(count);
 
-    setNotificationCount(currentCountState + 1);
+    setNotificationCount(count);
   };
   return (
     <>
