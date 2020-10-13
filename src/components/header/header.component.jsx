@@ -50,7 +50,7 @@ const Header = ({
         const data = JSON.parse(greeting.body);
         console.log(currentUser.authentication.id, data.user_id ,data.total_unread_notification);
         if (data.description && data.user_id == currentUser.authentication.id) {
-          updateStateCount(data.total_unread_notification+1);
+          updateStateCount(data.total_unread_notification);
           console.log(data)
           setFashMessage(data.description);
           // toast.error(data.description);
