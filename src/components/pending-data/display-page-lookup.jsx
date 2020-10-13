@@ -24,7 +24,7 @@ const PendingPageData = ({
   pageLookUpDateHandler,
   isDisabled,
 }) => {
-  console.log(new Date(pageData.date));
+  console.error(pageData.video_url);
   console.log(pageData.date);
   const col = isMemberShip == 1 ? "col-md-3" : "col-md-10";
   const INPUT_COL = isMemberShip == 1 ? "col-md-3" : "col-md-6";
@@ -91,7 +91,15 @@ const PendingPageData = ({
   };
   return (
     <div className="container-sm mt-4" style={{ maxWidth: "" }}>
-      <div className="row"></div>
+      <div className="row">
+        <div className="col-md-12">
+          {pageData.video_url && (
+            <a className ="btn btn-info my-3" href={pageData.video_url} download>
+              Download
+            </a>
+          )}
+        </div>
+      </div>
 
       <div className="row ">
         <div className="col-md-4">
