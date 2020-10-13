@@ -94,8 +94,8 @@ const PendingPageData = ({
       <div className="row">
         <div className="col-md-12">
           {pageData.video_url && (
-            <a className ="btn btn-info my-3" href={pageData.video_url} download>
-              Download
+            <a className ="btn btn-info my-3" href={pageData.video_url} download >
+              Download Video
             </a>
           )}
         </div>
