@@ -63,7 +63,7 @@ const DisplayNotification = ({ userNotifications, history, setFolderFlag }) => {
 };
 export default DisplayNotification;
 const getTime = (time) => {
-  time = getISTTime(time);
+ // time = getISTTime(time);
   var s = new Date(time).toLocaleString(undefined, {
     timeZone: "Asia/Kolkata",
   });

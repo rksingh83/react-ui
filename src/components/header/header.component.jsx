@@ -32,7 +32,7 @@ const Header = ({
   useEffect(() => {
     const interval = setInterval(() => {
       setFashMessage(false);
-    }, 10000);
+    }, 20000);
     return () => clearInterval(interval);
   }, []);
   function connect(count) {
