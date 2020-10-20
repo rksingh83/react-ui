@@ -49,7 +49,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     shareId: 0,
     title: "",
     description: "",
-    date: new Date().toISOString().slice(0, 10),
+    date: new Date(),
     pendingFolderId: 0,
     imageId: 0,
     pageNumber: 0,
@@ -361,7 +361,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
       }
     }
     if (tempData.date == "")
-      tempData.date = ` ${new Date().toISOString().slice(0, 10)}`;
+      tempData.date =      new Date();
     return tempData;
   };
   return (
