@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useSelector} from "react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { ReactComponent as Logout } from "../../assets/exit.svg";
@@ -23,10 +23,10 @@ const Header = ({
   setNotificationCount,
 }) => {
   const imgStyle = { width: "27px" };
-  const isToken = Cookies.get("token");
   const [flashMessage, setFashMessage] = useState(false);
+  const ROLE =     currentUser && currentUser.authentication.role
+  
   useEffect(() => {
-    console.log(userNotificationCount);
     if (currentUser) connect(userNotificationCount);
   }, []);
   useEffect(() => {
@@ -93,13 +93,13 @@ const Header = ({
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto text-white">
-            <li className="nav-item">
+         {ROLE !="labeller" && <li className="nav-item">
               <Link className="option nav-link text-white" to="/">
                 Home
               </Link>
             </li>
-
-            {currentUser && (
+         }
+            {currentUser && ROLE !="labeller" &&(
               <li className="nav-item">
                 <Link
                   className="option nav-link text-white"
@@ -127,14 +127,14 @@ const Header = ({
                 </Link>
               </li>
             )}
-            {currentUser && (
+            {currentUser && ROLE !="labeller" &&(
               <li className="nav-item">
                 <Link className="option nav-link text-white" to="/profile">
                   Profile
                 </Link>
               </li>
             )}
-            {currentUser && (
+            {currentUser && ROLE !="labeller" && (
               <li className="nav-item">
                 <Link className="option nav-link text-white" to="/coupon">
                   Coupon
