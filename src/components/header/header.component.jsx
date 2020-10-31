@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useSelector} from "react";
+import React, { useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { ReactComponent as Logout } from "../../assets/exit.svg";

@@ -4,9 +4,10 @@ import {
 } from './service.setup';
 
 
-const getAllPendingPageList = async () => {
+const getAllPendingPageList = async (ROLE) => {
   try {
-     const response =  await Get("getAllPendingPageList");
+    const URL = ROLE != 'labeller'?'getAllPendingPageList':'getAllUserImages' ;
+     const response =  await Get(URL);
 
      return response ;
 

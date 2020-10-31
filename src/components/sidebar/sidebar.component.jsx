@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect  } from "react";
+import { useSelector } from 'react-redux'
 import { Post, Get } from "../../service/service.setup";
 import LeftSideBar from "./left.sidebar.compoent";
 import FolderDisplay from "../create-folder/folder-dispaly";
@@ -22,15 +23,18 @@ import {
 
 const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   // RESPONSE MESSAGE POP
+ // pull current user from  redux 
+ const currentUser =  useSelector((state) => state.user.currentUser) ;
+ const ROLE =  currentUser && currentUser.authentication.role
 
-  const totalEle = ["My Books", "Shared Books", "Pending"];
-  const TextMAp = { HOME: 0, SHARED: 1, PENDING: 2 };
+  const totalEle = (ROLE !='labeller') ? ["My Books", "Shared Books", "Pending"]:['All Files']
+  const TextMAp =  (ROLE !='labeller')?{ HOME: 0, SHARED: 1, PENDING: 2 }:{PENDING:0}
   const [totalFolder, setTotalFolder] = useState([]);
   const [selectedFolder, setSelectedFolder] = useState({});
   const [finalCount, setFinalCount] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [LiElement, setLiEl] = useState(totalEle);
-  const currentIndex = TextMAp[sharedWithMe];
+  const currentIndex =  (ROLE !='labeller')?TextMAp[sharedWithMe]:0
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [selectedItemsCount, setSelectedItemsCount] = useState(null);
   const [searchItem, setSearchHandler] = useState("");
@@ -128,7 +132,9 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     }
   };
   const handleActive = (e) => {
-    console.log(e);
+    if(ROLE =='labeller'){
+      return true ;
+    }
     setActiveIndex(LiElement.indexOf(e));
     if (LiElement.indexOf(e) == 0) {
       setFolderFlag("HOME");
@@ -147,6 +153,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     getOwnFile();
     getSharedWithMeFolder();
     getUserImageUploadLimits();
+    (ROLE !='labeller')? setFolderFlag("HOME"):setFolderFlag("PENDING");
   }, []);
   const getOwnFile = () => {
     const requestFile = { filefolderRequest: [] };
@@ -226,7 +233,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
   }, []);
   const getAllPageList = async () => {
     try {
-      const response = await getAllPendingPageList();
+      const response = await getAllPendingPageList(ROLE);
       let imageIds = [];
       response.data.imageInput.forEach((item) => imageIds.push(item.id));
       //  console.log("ALL IMAGES", imageIds);
