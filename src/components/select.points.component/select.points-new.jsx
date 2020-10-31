@@ -11,9 +11,11 @@ import { connect } from "react-redux";
 import $ from "jquery";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import LeftSideBar from "../sidebar/left.sidebar.compoent";
-const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
+import AllFilesSideBar from '../common/AllFilesSideBar'
+const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag ,currentUser }) => {
   var Markers = new Array();
   const [points, setPoints] = useState(0);
+  const ROLE =     currentUser && currentUser.authentication.role
   const [reset, setReset] = useState([]);
   const [src, setSrc] = useState(" ");
   const [data, setData] = useState({});
@@ -354,7 +356,7 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
       <div className="row">
         <div className=" custom-pad-li d-none d-sm-block col-md-2 p-0">
           <Link className="logo-container" to="/">
-            <ul className=" ul-pad list-group left-side-bar">
+          {ROLE !='labeller' ?<ul className=" ul-pad list-group left-side-bar">
               {totalEle.map((item, index) => (
                 <LeftSideBar
                   item={item}
@@ -363,7 +365,7 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
                   changeActive={handleActive}
                 />
               ))}
-            </ul>
+            </ul>:<AllFilesSideBar/>}
           </Link>
         </div>
         <div className="col-md-9 col-xs-12 col-sm-12">
@@ -423,8 +425,8 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag }) => {
 const mapDispatchToProps = (dispatch) => ({
   setFolderFlag: (flag) => dispatch(setFolderFlag(flag)),
 });
-const mapStateToPros = ({ sharedWithMe: { sharedWithMe } }) => ({
-  sharedWithMe,
+const mapStateToPros = ({ sharedWithMe: { sharedWithMe }, user: { currentUser } }) => ({
+  sharedWithMe,currentUser
 });
 
 export default connect(mapStateToPros, mapDispatchToProps)(SelectPoints);

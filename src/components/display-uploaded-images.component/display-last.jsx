@@ -9,9 +9,10 @@ import { connect } from "react-redux";
 import SharedHeader from "../top-header/shared-header";
 import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
-const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag }) => {
+import AllFilesSideBar from '../common/AllFilesSideBar'
+const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag ,currentUser }) => {
   const [imageUrl, setImageUrl] = useState("");
-
+  const ROLE =     currentUser && currentUser.authentication.role
   const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [currentFolderName, setCurrentFolderName] = useState("");
@@ -125,7 +126,7 @@ const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag }) => {
       <div className="row">
         <div className=" custom-pad-li d-none d-sm-block col-md-2 p-0">
           <Link className="logo-container" to="/">
-            <ul className=" ul-pad list-group left-side-bar">
+           {ROLE !='labeller' ? <ul className=" ul-pad list-group left-side-bar">
               {totalEle.map((item, index) => (
                 <LeftSideBar
                   item={item}
@@ -134,7 +135,7 @@ const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag }) => {
                   changeActive={handleActive}
                 />
               ))}
-            </ul>
+            </ul>:<AllFilesSideBar/>}
           </Link>
         </div>
         <div className="col-md-9 col-xs-12 col-sm-12">
@@ -144,8 +145,8 @@ const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag }) => {
     </>
   );
 };
-const mapStateToPros = ({ sharedWithMe: { sharedWithMe } }) => ({
-  sharedWithMe,
+const mapStateToPros = ({ sharedWithMe: { sharedWithMe }, user: { currentUser } }) => ({
+  sharedWithMe,currentUser
 });
 const mapDispatchToProps = (dispatch) => ({
   setFolderFlag: (flag) => dispatch(setFolderFlag(flag)),
