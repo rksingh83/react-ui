@@ -23,6 +23,7 @@ const PendingPageData = ({
   isMemberShip,
   pageLookUpDateHandler,
   isDisabled,
+  ...props
 }) => {
   console.error(pageData.video_url);
   console.log(pageData.date);

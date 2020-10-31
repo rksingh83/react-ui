@@ -49,12 +49,12 @@ const PendingHeader = ({
         ></div>
         <div className="col-md-10 main">
           <div>
-            {all.length > 0 && (
+            {all.length > 0 && props.role !='labeller' &&(
               <UploadForm submitHandler={uploadImageHandler}></UploadForm>
             )}
           </div>
           <div>
-            {all.length > 0 && (
+            {all.length > 0 && props.role !='labeller' &&(
               <button className="btn btn-danger" onClick={props.deleteImg}>
                 Delete
               </button>

@@ -252,3 +252,10 @@ a {
   cursor: pointer;
   color: red
 }
+.row{
+  margin: 0px !important;
+}
+
+.col-md-2 ,.col-md-10 ,.col-md-12{
+  padding: 0px !important;
+}
