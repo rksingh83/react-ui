@@ -259,3 +259,13 @@ a {
 .col-md-2 ,.col-md-10 ,.col-md-12{
   padding: 0px !important;
 }
+.radio{
+  height: 24px !important;
+}
+.radio-span{
+  display: flex;
+}
+
+.set-by-admin{
+  font-weight: 600;
+}

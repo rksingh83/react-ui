@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Post, Get } from "../../service/service.setup";
-import { ReactComponent as Next } from "../../assets/next-arr.svg";
-import { ReactComponent as Back } from "../../assets/back-arr.svg";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {updateByAdmin} from '../../service/pendingData'
 import {
   UserSelect,
   FileSelect,
   FileTagSelect,
 } from "../boostrapinput/pending-select.component";
 import Input from "../boostrapinput/input.component";
-import UploadForm from "../upload-image/upload-images";
+
 const PendingPageData = ({
   data,
   currentImageId,
@@ -25,8 +24,7 @@ const PendingPageData = ({
   isDisabled,
   ...props
 }) => {
-  console.error(pageData.video_url);
-  console.log(pageData.date);
+ 
   const col = isMemberShip == 1 ? "col-md-3" : "col-md-10";
   const INPUT_COL = isMemberShip == 1 ? "col-md-3" : "col-md-6";
   const title_col =
@@ -90,8 +88,20 @@ const PendingPageData = ({
     let date = timeStamp.split("T");
     return `${date[0]}`;
   };
+  const updateByAdminHandler = async(e)=>{
+   await updateByAdmin(e.target.value)
+  }
   return (
     <div className="container-sm mt-4" style={{ maxWidth: "" }}>
+        <div className="row py-3">
+        <div className="col-md-4"><span className ="set-by-admin">Do you want this page to be edited by Admin?</span>  </div>
+        <div className="col-md-1"><span className ="radio-span"> NO
+         <input value = {false}  onChange = {(e)=>updateByAdminHandler(e)} id="male" name="update"  className ="form-control radio" type="radio"/></span></div>
+        <div className="col-md-1">
+       <span  className ="radio-span">YES <input onChange = {(e)=>updateByAdminHandler(e)}  
+       value = {true} id="male" name="update" className ="form-control radio"  type="radio"/></span>
+        </div>
+        </div>
       <div className="row">
         <div className="col-md-12">
           {pageData.video_url && (
