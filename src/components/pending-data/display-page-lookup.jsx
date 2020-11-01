@@ -96,10 +96,10 @@ const PendingPageData = ({
         <div className="row py-3">
         <div className="col-md-4"><span className ="set-by-admin">Do you want this page to be edited by Admin?</span>  </div>
         <div className="col-md-1"><span className ="radio-span"> NO
-         <input value = {false}  onChange = {(e)=>updateByAdminHandler(e)} id="male" name="update"  className ="form-control radio" type="radio"/></span></div>
+         <input value = {false} checked ="checked"  onChange = {(e)=>pageLookUpHandler(e)} id="male" name="admin_updated"  className ="form-control radio" type="radio"/></span></div>
         <div className="col-md-1">
-       <span  className ="radio-span">YES <input onChange = {(e)=>updateByAdminHandler(e)}  
-       value = {true} id="male" name="update" className ="form-control radio"  type="radio"/></span>
+       <span  className ="radio-span">YES <input onChange = {(e)=>pageLookUpHandler(e)}  
+       value = {true} id="male" name="admin_updated"   className ="form-control radio"  type="radio"/></span>
         </div>
         </div>
       <div className="row">
