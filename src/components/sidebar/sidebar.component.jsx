@@ -21,7 +21,7 @@ import {
   getPendingPageById,
 } from "../../service/pendingData";
 
-const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
+const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
   // RESPONSE MESSAGE POP
  // pull current user from  redux 
  const currentUser =  useSelector((state) => state.user.currentUser) ;
@@ -59,6 +59,7 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     pageNumber: 0,
     id: 0,
     segmentation: "",
+    admin_updated :false
   });
   // PENDING COMPONENT
   const [allPendingLIst, setPendingList] = useState([]);
@@ -226,7 +227,8 @@ const SideBar = ({ history, sharedWithMe, setFolderFlag }) => {
     getCurrentPage();
   }, [currentImage]);
   useEffect(() => {
-    setCurrentImage(allPendingLIst[0]);
+    const id = match.params.pageId ;
+    setCurrentImage(id ?id:allPendingLIst[0]);
   }, [allPendingLIst]);
   useEffect(() => {
     getAllPageList();

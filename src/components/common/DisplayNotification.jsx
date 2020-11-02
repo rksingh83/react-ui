@@ -29,6 +29,10 @@ const DisplayNotification = ({ userNotifications, history, setFolderFlag }) => {
       case "Edit Page":
         setFolderFlag("SHARED");
         history.push(`/original/${id}/${fileId}`);
+      case "Upload Page":
+        setFolderFlag("SHARED");
+        history.push(`/sidebar/${id}`);
+        break;
       default:
 
       // code block
@@ -63,7 +67,7 @@ const DisplayNotification = ({ userNotifications, history, setFolderFlag }) => {
 };
 export default DisplayNotification;
 const getTime = (time) => {
- // time = getISTTime(time);
+  // time = getISTTime(time);
   var s = new Date(time).toLocaleString(undefined, {
     timeZone: "Asia/Kolkata",
   });
@@ -84,7 +88,7 @@ const getTime = (time) => {
   if (days > 0) {
     return `${days} days ago`;
   }
-  if (hours >0) {
+  if (hours > 0) {
     return `${hours} hours ago`;
   }
   if (minutes > 0) {

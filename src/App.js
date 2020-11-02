@@ -26,56 +26,91 @@ import Coupon from "./components/apply-coupon/applied.coupon.component";
 import TermsAndCondition from "./components/terms-conition/terms-conditions.component";
 import Notification from './components/common/Notification.jsx';
 class App extends React.Component {
-  //#endregio
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentUser: "",
-    };
-  }
+    //#endregio
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentUser: "",
+        };
+    }
 
-  unsubscribeAuth = null;
+    unsubscribeAuth = null;
 
-  componentDidMount() {}
+    componentDidMount() {}
 
-  render() {
-    return (
-      <div className="App">
-        <Header />
-        <Switch>
-          <Route exact path="/login" component={LoginPage} />>{" "}
-          <Route
-            exact
-            path="/"
-            component={this.props.currentUser ? SideBar : LoginPage}
-          />{" "}
-          <Route exact path="/signup" component={SingnUp} />{" "}
-          <Route exact path="/otp" component={OTP} />{" "}
-          <Route exact path="/verify" component={VerifyOTP} />{" "}
-          <Route exact path="/forgot" component={ForgotPassword} />{" "}
-          <Route exact path="/folder" component={SideBar} />
-          <Route path="/uploadFile/:id" component={UploadFile} />{" "}
-          <Route path="/edit/:url" component={SelectPoints} />{" "}
-          <Route path="/profile" component={Profile} />{" "}
-          <Route path="/coupon" component={Coupon} />{" "}
-          <Route
-            path="/original/:id/:folderId"
-            component={DisplayOriginalImage}
-          />{" "}
-          <Route path="/last/:id" component={DisplayLastImage} />{" "}
-          <Route path="/add-friend/:screen" component={AddFriend} />{" "}
-          <Route path="/contact-us" component={ContactUs} />
-          <Route path="/tnc" component={TermsAndCondition} />
-          <Route path ="/notification" component ={Notification}/>
-          <Route exact path="/logout" component={LouOut} />
-        </Switch>
-      </div>
-    );
-  }
+    render() {
+        return ( <
+            div className = "App" >
+            <
+            Header / >
+            <
+            Switch >
+            <
+            Route exact path = "/login"
+            component = { LoginPage }
+            />>{" "} <
+            Route exact path = "/"
+            component = { this.props.currentUser ? SideBar : LoginPage }
+            />{" "} <
+            Route exact path = "/signup"
+            component = { SingnUp }
+            />{" "} <
+            Route exact path = "/otp"
+            component = { OTP }
+            />{" "} <
+            Route exact path = "/verify"
+            component = { VerifyOTP }
+            />{" "} <
+            Route exact path = "/forgot"
+            component = { ForgotPassword }
+            />{" "} <
+            Route exact path = "/folder"
+            component = { SideBar }
+            /> <
+            Route path = "/uploadFile/:id"
+            component = { UploadFile }
+            />{" "} <
+            Route path = "/edit/:url"
+            component = { SelectPoints }
+            />{" "} <
+            Route path = "/profile"
+            component = { Profile }
+            />{" "} <
+            Route path = "/coupon"
+            component = { Coupon }
+            />{" "} <
+            Route path = "/original/:id/:folderId"
+            component = { DisplayOriginalImage }
+            />{" "} <
+            Route path = "/last/:id"
+            component = { DisplayLastImage }
+            />{" "} <
+            Route path = "/add-friend/:screen"
+            component = { AddFriend }
+            />{" "} <
+            Route path = "/contact-us"
+            component = { ContactUs }
+            /> <
+            Route path = "/tnc"
+            component = { TermsAndCondition }
+            /> <
+            Route path = "/notification"
+            component = { Notification }
+            /> <
+            Route exact path = "/logout"
+            component = { LouOut }
+            /> <
+            Route exact path = "/sidebar/:pageId?"
+            component = { this.props.currentUser ? SideBar : LoginPage }
+            /> <
+            /Switch> <
+            /div>
+        );
+    }
 }
 
 const mapStateToPros = ({ user: { currentUser } }) => ({
-  currentUser,
+    currentUser,
 });
 
 export default connect(mapStateToPros)(App);

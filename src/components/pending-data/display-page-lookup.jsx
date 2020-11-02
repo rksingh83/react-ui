@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Post, Get } from "../../service/service.setup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {updateByAdmin} from '../../service/pendingData'
+import { updateByAdmin } from "../../service/pendingData";
+import { Alert } from "react-bootstrap";
 import {
   UserSelect,
   FileSelect,
@@ -24,7 +25,6 @@ const PendingPageData = ({
   isDisabled,
   ...props
 }) => {
- 
   const col = isMemberShip == 1 ? "col-md-3" : "col-md-10";
   const INPUT_COL = isMemberShip == 1 ? "col-md-3" : "col-md-6";
   const title_col =
@@ -88,24 +88,64 @@ const PendingPageData = ({
     let date = timeStamp.split("T");
     return `${date[0]}`;
   };
-  const updateByAdminHandler = async(e)=>{
-   await updateByAdmin(e.target.value)
+  const updateByAdminHandler = async (e) => {
+    await updateByAdmin(e.target.value);
+  };
+  if (data.code == "207") {
+    return (
+     <div style = {{width:'100%'}} className ="mt-4"><Alert className="m-auto mt-3 text-center" variant="danger">
+        {data.message}
+      </Alert>
+      </div> 
+    );
   }
   return (
     <div className="container-sm mt-4" style={{ maxWidth: "" }}>
-        <div className="row py-3">
-        <div className="col-md-4"><span className ="set-by-admin">Do you want this page to be edited by Admin?</span>  </div>
-        <div className="col-md-1"><span className ="radio-span"> NO
-         <input value = {false} checked ="checked"  onChange = {(e)=>pageLookUpHandler(e)} id="male" name="admin_updated"  className ="form-control radio" type="radio"/></span></div>
+      <div className="row py-3">
+        <div className="col-md-4">
+          <span className="set-by-admin">
+            Do you want this page to be edited by Admin?
+          </span>{" "}
+        </div>
         <div className="col-md-1">
-       <span  className ="radio-span">YES <input onChange = {(e)=>pageLookUpHandler(e)}  
-       value = {true} id="male" name="admin_updated"   className ="form-control radio"  type="radio"/></span>
+          <span className="radio-span">
+            {" "}
+            NO
+            <input
+              value={false}
+              checked="checked"
+              onChange={(e) => pageLookUpHandler(e)}
+              id="male"
+              name="admin_updated"
+              className="form-control radio"
+              type="radio"
+            />
+          </span>
         </div>
+        <div className="col-md-1">
+          <span className="radio-span">
+            YES{" "}
+            <input
+              onChange={(e) => pageLookUpHandler(e)}
+              value={true}
+              id="male"
+              name="admin_updated"
+              className="form-control radio"
+              type="radio"
+            />
+          </span>
         </div>
+      </div>
       <div className="row">
         <div className="col-md-12">
           {pageData.video_url && (
-            <a download="foo.mp4" target="_blank" className ="btn btn-info my-3" href={pageData.video_url} download >
+            <a
+              download="foo.mp4"
+              target="_blank"
+              className="btn btn-info my-3"
+              href={pageData.video_url}
+              download
+            >
               Download Video
             </a>
           )}
