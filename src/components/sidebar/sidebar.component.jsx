@@ -154,7 +154,8 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
     getOwnFile();
     getSharedWithMeFolder();
     getUserImageUploadLimits();
-    (ROLE !='labeller')? setFolderFlag("HOME"):setFolderFlag("PENDING");
+    if(ROLE =='labeller')
+     setFolderFlag("PENDING");
   }, []);
   const getOwnFile = () => {
     const requestFile = { filefolderRequest: [] };

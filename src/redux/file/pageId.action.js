@@ -1,0 +1,1 @@
+export const setCurrentImageId = id => ({ type: 'SET_CURRENT_PAGE_ID', payload: id })
