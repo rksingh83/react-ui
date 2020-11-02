@@ -3,13 +3,14 @@ import { Post, Get } from "../../service/service.setup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { updateByAdmin } from "../../service/pendingData";
-import { Alert } from "react-bootstrap";
+import { Alert ,Button } from "react-bootstrap";
 import {
   UserSelect,
   FileSelect,
   FileTagSelect,
 } from "../boostrapinput/pending-select.component";
 import Input from "../boostrapinput/input.component";
+import { Link } from "react-router-dom";
 
 const PendingPageData = ({
   data,
@@ -91,12 +92,20 @@ const PendingPageData = ({
   const updateByAdminHandler = async (e) => {
     await updateByAdmin(e.target.value);
   };
+  const openAllPagesHandler = () => {
+    history.push("/");
+    window.location.reload();
+  };
   if (data.code == "207") {
     return (
-     <div style = {{width:'100%'}} className ="mt-4"><Alert className="m-auto mt-3 text-center" variant="danger">
-        {data.message}
-      </Alert>
-      </div> 
+      <div style={{ width: "100%" }} className="mt-4">
+        <Button onClick={openAllPagesHandler} className="btn btn-dark my-2 ml-2">
+          Go To All Pages
+        </Button>
+        <Alert className="m-auto mt-3 text-center" variant="danger">
+          {data.message}
+        </Alert>
+      </div>
     );
   }
   return (
@@ -302,13 +311,15 @@ const PendingPageData = ({
                 name="date"
                 mt={"mt-0"}
               /> */}
-             {pageData.date && <DatePicker
-                name="date"
-                className="form-control"
-                selected={new Date(pageData.date)}
-                onChange={pageLookUpDateHandler}
-                disabled={isDisabled}
-              />}
+              {pageData.date && (
+                <DatePicker
+                  name="date"
+                  className="form-control"
+                  selected={new Date(pageData.date)}
+                  onChange={pageLookUpDateHandler}
+                  disabled={isDisabled}
+                />
+              )}
             </div>
           </div>
           <div className="row">
