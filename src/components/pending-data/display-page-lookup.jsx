@@ -302,13 +302,13 @@ const PendingPageData = ({
                 name="date"
                 mt={"mt-0"}
               /> */}
-              <DatePicker
+             {pageData.date && <DatePicker
                 name="date"
                 className="form-control"
                 selected={new Date(pageData.date)}
                 onChange={pageLookUpDateHandler}
                 disabled={isDisabled}
-              />
+              />}
             </div>
           </div>
           <div className="row">
