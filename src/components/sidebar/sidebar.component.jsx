@@ -322,6 +322,10 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
       if (response.data.code == "200") {
         setResponseMgs("Saved Successfully");
         setShowPop(true);
+        if(ROLE =='labeller'){
+          removeSavedImageId();
+          return true;
+        }
         if (response.data.isFileMoved) removeSavedImageId();
       }
       setShowLoader(false);
