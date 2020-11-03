@@ -34,14 +34,11 @@ const [dob ,setDOB] = useState('')
     getProfile();
   }, []);
   const setProfileHandler = (e) => {
-    //console.log(userData);
 
     const { name, value } = e.target;
-    console.log(userData);
     setProfile({ ...userData, [name]: value });
   };
   const setDOBHandler = (e) => {
-    console.log(userData);
     //const {value} =(e.target) ;
     setDOB(e);
   };

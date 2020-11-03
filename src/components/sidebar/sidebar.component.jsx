@@ -180,7 +180,6 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
   const reNameFolderHandler = (name, des, id) => {};
   const updateName = (file, isDeleted = false) => {
     let updated = [];
-    console.log("updaing");
     if (isDeleted) {
       let deletedIds = file.filefolderRequest.map((item) => item.id);
       updated = totalFolder.filter((item) => !deletedIds.includes(item.id));
@@ -239,7 +238,6 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
       const response = await getAllPendingPageList(ROLE);
       let imageIds = [];
       response.data.imageInput.forEach((item) => imageIds.push(item.id));
-      //  console.log("ALL IMAGES", imageIds);
       setPendingFolderId(response.data.pendingFolderId);
       setPendingList(imageIds);
     } catch (e) {}
@@ -250,7 +248,6 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
     setCurrentLookup(response.data && response.data);
     // setLookupPageState(response.data && response.data.pageLookup);
     if (response) {
-      console.log(response.data.pageLookup);
       setLookupPageState(removeNull(response.data.pageLookup));
       if (
         response.data.user_membership == 1 ||
@@ -367,7 +364,6 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
   };
   // handle null values in input
   const removeNull = (data) => {
-    console.log(data);
     const tempData = { ...data };
     for (let attr in data) {
       if (tempData[attr] == null && attr != "userList") {

@@ -27,7 +27,6 @@ const singleImageHeader = ({ history, id, updateImages, ...props }) => {
     //e.name = imageName;
 
     formData.append("files", e,imageName);
-    //console.log(e.name);
     try {
       let res = await Post("/uploadImage", formData, {
         headers: {

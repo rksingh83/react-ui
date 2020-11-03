@@ -30,7 +30,7 @@ const Notification = ({
 
   const getAllNotificationsMarkedRead = async () => {
     const response = await getNotifications();
-    console.log(response);
+
   };
   const getAlertNotification = async () => {
     const response = await getAlertNotifications();

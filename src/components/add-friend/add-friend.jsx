@@ -122,7 +122,6 @@ const AddFriend = ({ history, setContacts, contacts, match }) => {
 
   const addUserHandler = async (id, e) => {
     try {
-    //  console.log((e.innerText = "Requested"));
      if(e.innerText == 'Cancel'){
        removeContact(id) ;
        return true ;

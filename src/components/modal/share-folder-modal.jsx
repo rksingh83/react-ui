@@ -124,7 +124,6 @@ const ShareFolderModal = ({ show, hide, selected, images, count }) => {
     setFileCounter(count);
   };
   const imageCounter = () => {
-    //console.log(folderList)
     setFileCounter(count);
   };
   // pagination

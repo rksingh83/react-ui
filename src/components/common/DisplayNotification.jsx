@@ -2,7 +2,6 @@ import React from "react";
 
 const DisplayNotification = ({ userNotifications, history, setFolderFlag }) => {
   const reDirectTo = (type, id, fileId) => {
-    console.log(type);
     switch (type) {
       case "Share Book":
         history.push("/");

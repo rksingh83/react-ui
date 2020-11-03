@@ -52,7 +52,6 @@ const DisplayOriginalImage = ({
   const [showPopUp, setShowPop] = useState(false);
   const [responseMgs, setResponseMgs] = useState("");
   const handleActive = (e) => {
-    console.log(e);
     setActiveIndex(LiElement.indexOf(e));
     if (LiElement.indexOf(e) == 0) {
       setFolderFlag("HOME");
@@ -166,7 +165,6 @@ const DisplayOriginalImage = ({
     setShowLoader(false);
   };
   const removeNull = (data) => {
-    console.log(data);
     const tempData = { ...data };
     for (let attr in data) {
       if (tempData[attr] == null && attr != "userList") {

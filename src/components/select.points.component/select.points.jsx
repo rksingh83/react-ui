@@ -25,13 +25,11 @@ const SelectPoints = ({ match, history }) => {
       var img = new Image();
       img.src = mapSprite.src;
       setSrc(res.data.imageInput[0].raw_image_small);
-      console.log(mapSprite.height, mapSprite);
     });
 
     // mapSprite.src ='https://mydiginotes.s3.ap-south-1.amazonaws.com/data/518/751/align_img_jpg_1590134938540_jpg.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20200604T090034Z&X-Amz-SignedHeaders=host&X-Amz-Expires=160&X-Amz-Credential=AKIAQ2W5L2TKVNFH6CZY%2F20200604%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Signature=03f41d0450c01589fb55cffa6d4163eb185b1524950905454eba62f4261323a6';
     var canvas = document.getElementById("Canvas");
     var context = canvas.getContext("2d");
-    console.log("hi");
     // Map sprite
     // Create a basic class which will be used to create a marker
     var Marker = function () {
@@ -60,9 +58,7 @@ const SelectPoints = ({ match, history }) => {
 
       // Push our new marker to our Markers array
       //alert((Markers.indexOf(marker)));
-      console.log("markers", Markers);
-      console.log("marker", marker);
-      console.log(Markers.indexOf(marker));
+
       let isExist = false;
       Markers.forEach((item) => {
         if (item.XPos == marker.XPos && item.YPos == marker.YPos) {
@@ -74,7 +70,6 @@ const SelectPoints = ({ match, history }) => {
         alert("Max Four Point Allowed on a image");
         return;
       }
-      //console.log("markers", Markers);
 
       if (!isExist) Markers.push(marker);
 
@@ -146,8 +141,7 @@ const SelectPoints = ({ match, history }) => {
         // Draw position above
         context.fillStyle = "#000";
         const IMG = document.getElementById("img");
-        // console.log(Math.ceil(IMG.width / 700));
-        //  console.log(Math.ceil(IMG.height / 700));
+     
 
         context.fillText(markerText, tempMarker.XPos, tempMarker.YPos);
       }
@@ -166,11 +160,9 @@ const SelectPoints = ({ match, history }) => {
     right: "3rem",
   };
   const updatePoints = async () => {
-    console.log(reset[0]);
     const data = {};
     const allPoints = new Array();
     reset[0].forEach((reset, i) => {
-      console.log(reset, i);
       allPoints.push({ X: reset.XPos, Y: reset.YPos });
     });
     let small = allPoints[0];
@@ -184,8 +176,7 @@ const SelectPoints = ({ match, history }) => {
       if (item.X > small.X && item.Y > small.Y) bottomRight = item;
       if (item.Y > small.Y && item.X < small.X) bottomLeft = item;
     });
-    //   console.log("BOT  TOMLEFT", bottomLeft, "BOTTOMR", bottomRight);
-    // console.log("TOPLEFT", small, "TOPRIGHT", topRight);
+
     const IMG = document.getElementById("img");
     const width = IMG.width / 700;
     const height = IMG.height / 700;
@@ -210,7 +201,6 @@ const SelectPoints = ({ match, history }) => {
       alert(res.data.message);
       history.goBack();
     } catch (err) {
-      console.log(err);
     }
   };
   return (

@@ -20,7 +20,6 @@ const LoginPage = ({
   setNotifications,
   userNotifications,
 }) => {
-  // console.log(props)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPopUp, setShowPop] = useState(false);

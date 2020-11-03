@@ -17,7 +17,6 @@ const ContactsCard = ({
   ...props
 }) => {
   //http://localhost:9082/shareFile
-  // console.log(profileList);
   async function shareWith(id) {
     if (!window.confirm("Are You sure you want to Share Folder ?")) return;
 
