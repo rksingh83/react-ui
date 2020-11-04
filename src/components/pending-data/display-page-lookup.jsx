@@ -321,6 +321,7 @@ const PendingPageData = ({
                   selected={new Date(pageData.date)}
                   onChange={pageLookUpDateHandler}
                   disabled={isDisabled}
+                  dateFormat="dd/MM/yyyy"
                 />
               )}
             </div>
