@@ -2,7 +2,7 @@ import React from "react";
 
 const DisplayNotification = ({ userNotifications, history, setFolderFlag }) => {
   const reDirectTo = (type, id, fileId) => {
-
+    console.log(type ,fileId ,id)
     switch (type) {
       case "Share Book":
         history.push("/");
@@ -27,14 +27,16 @@ const DisplayNotification = ({ userNotifications, history, setFolderFlag }) => {
         history.push(`/original/${id}/${fileId}`);
         break;
       case "Edit Page":
-        setFolderFlag("SHARED");
+        setFolderFlag("HOME");
+        console.log(3111)
         history.push(`/original/${id}/${fileId}`);
+        break
       case "Upload Page":
         setFolderFlag("SHARED");
         history.push(`/sidebar/${id}`);
         break;
         case "Labeller Upload Page":
-          setFolderFlag("SHARED");
+          setFolderFlag("PENDING");
           history.push(`/sidebar/${id}`);
           break;
         
