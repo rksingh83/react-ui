@@ -49,12 +49,12 @@ const PendingHeader = ({
         ></div>
         <div className="col-md-10 main">
           <div>
-            {all.length > 0 && props.role !='labeller' &&(
+            {all.length > 0 && props.role != "labeller" && (
               <UploadForm submitHandler={uploadImageHandler}></UploadForm>
             )}
           </div>
           <div>
-            {all.length > 0 && props.role !='labeller' &&(
+            {all.length > 0 && props.role != "labeller" && (
               <button className="btn btn-danger" onClick={props.deleteImg}>
                 Delete
               </button>
@@ -71,7 +71,12 @@ const PendingHeader = ({
             {all.length > 0 && (
               <button
                 className="btn btn-success"
-                onClick={() => history.push(`/edit/${currentImageId}`)}
+                onClick={() =>
+                  props.redirectAndSaveId(
+                    `/edit/${currentImageId}`,
+                    currentImageId
+                  )
+                }
               >
                 Edit
               </button>
@@ -88,10 +93,18 @@ const PendingHeader = ({
             </span>
           </div>
           <div>
-            <Back className="header-svg" onClick={prev} />
+            {props.role != "labeller" && (
+              <Back className="header-svg" onClick={prev} />
+            )}
           </div>
           <div>
-            <Next className="header-svg" onClick={next} />
+            {props.role === "labeller" ? (
+              <button onClick={next} className="btn btn-dark">
+                Skip
+              </button>
+            ) : (
+              <Next className="header-svg" onClick={next} />
+            )}
           </div>
         </div>
       </div>

@@ -1,5 +1,4 @@
-import React, { useState, useEffect  } from "react";
-import { useSelector } from 'react-redux'
+import React, { useState, useEffect } from "react";
 import { Post, Get } from "../../service/service.setup";
 import LeftSideBar from "./left.sidebar.compoent";
 import FolderDisplay from "../create-folder/folder-dispaly";
@@ -16,25 +15,32 @@ import CustomLoader from "../loader/loader";
 import ShowMessages from "../common/display-message-modal";
 import { getDate } from "../common/utility";
 import { GetPageLimits } from "../../service/common";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentImageId } from "../../redux/file/pageId.action";
 import {
   getAllPendingPageList,
   getPendingPageById,
 } from "../../service/pendingData";
 
-const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
+const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   // RESPONSE MESSAGE POP
- // pull current user from  redux 
- const currentUser =  useSelector((state) => state.user.currentUser) ;
- const ROLE =  currentUser && currentUser.authentication.role
-
-  const totalEle = (ROLE !='labeller') ? ["My Books", "Shared Books", "Pending"]:['All Files']
-  const TextMAp =  (ROLE !='labeller')?{ HOME: 0, SHARED: 1, PENDING: 2 }:{PENDING:0}
+  // pull current user from  redux
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const ROLE = currentUser && currentUser.authentication.role;
+  const dispatch = useDispatch();
+  const savedPageId = useSelector((state) => state.pageId.currentImage);
+  const totalEle =
+    ROLE != "labeller"
+      ? ["My Books", "Shared Books", "Pending"]
+      : ["All Files"];
+  const TextMAp =
+    ROLE != "labeller" ? { HOME: 0, SHARED: 1, PENDING: 2 } : { PENDING: 0 };
   const [totalFolder, setTotalFolder] = useState([]);
   const [selectedFolder, setSelectedFolder] = useState({});
   const [finalCount, setFinalCount] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [LiElement, setLiEl] = useState(totalEle);
-  const currentIndex =  (ROLE !='labeller')?TextMAp[sharedWithMe]:0
+  const currentIndex = ROLE != "labeller" ? TextMAp[sharedWithMe] : 0;
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [selectedItemsCount, setSelectedItemsCount] = useState(null);
   const [searchItem, setSearchHandler] = useState("");
@@ -59,7 +65,7 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
     pageNumber: 0,
     id: 0,
     segmentation: "",
-    admin_updated :false
+    admin_updated: false,
   });
   // PENDING COMPONENT
   const [allPendingLIst, setPendingList] = useState([]);
@@ -133,8 +139,8 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
     }
   };
   const handleActive = (e) => {
-    if(ROLE =='labeller'){
-      return true ;
+    if (ROLE == "labeller") {
+      return true;
     }
     setActiveIndex(LiElement.indexOf(e));
     if (LiElement.indexOf(e) == 0) {
@@ -154,8 +160,7 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
     getOwnFile();
     getSharedWithMeFolder();
     getUserImageUploadLimits();
-    if(ROLE =='labeller')
-     setFolderFlag("PENDING");
+    if (ROLE == "labeller") setFolderFlag("PENDING");
   }, []);
   const getOwnFile = () => {
     const requestFile = { filefolderRequest: [] };
@@ -227,8 +232,8 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
     getCurrentPage();
   }, [currentImage]);
   useEffect(() => {
-    const id = match.params.pageId ;
-    setCurrentImage(id ?id:allPendingLIst[0]);
+    const id = match.params.pageId;
+    setCurrentImage(id ? id : savedPageId ? savedPageId : allPendingLIst[0]);
   }, [allPendingLIst]);
   useEffect(() => {
     getAllPageList();
@@ -245,6 +250,10 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
   const getCurrentPage = async () => {
     setShowLoader(true);
     const response = await getPendingPageById(currentImage);
+    if (!response) {
+      nextHandler();
+      return false;
+    }
     setCurrentLookup(response.data && response.data);
     // setLookupPageState(response.data && response.data.pageLookup);
     if (response) {
@@ -265,17 +274,18 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
     let index = allPendingLIst.indexOf(currentImage);
     if (index == allPendingLIst.length - 1) {
       // alert("This is Last File");
-      setResponseMgs("This is last file");
-      setShowPop(true);
+      allPendingLIst.length>0&&setResponseMgs("This is last file");
+      allPendingLIst.length>0&&setShowPop(true);
 
       return;
     }
+    console.log("INDEX IS", index, currentImage, allPendingLIst);
     setCurrentImage(allPendingLIst[index + 1]);
   };
   const prevHandler = () => {
     let index = allPendingLIst.indexOf(currentImage);
     if (index == 0) {
-      setResponseMgs("This is last file");
+      setResponseMgs("This is first file");
       setShowPop(true);
       return;
     }
@@ -288,7 +298,8 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
     if (index > -1) {
       allList.splice(index, 1);
     }
-
+    // nextHandler();
+    console.log("REMOVING IMG ID");
     setPendingList([...allList]);
   };
   // set lookup form state
@@ -313,6 +324,9 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
     currentState.date = e;
     setLookupPageState(currentState);
   };
+  const clearSavedImageId = () => {
+    dispatch(setCurrentImageId(""));
+  };
   const saveUpdateData = async () => {
     setShowLoader(true);
     try {
@@ -320,8 +334,12 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
       if (response.data.code == "200") {
         setResponseMgs("Saved Successfully");
         setShowPop(true);
-        if(ROLE =='labeller'){
-          removeSavedImageId();
+        clearSavedImageId();
+        dispatch(setCurrentImageId(""));
+        if (ROLE == "labeller") {
+          nextHandler();
+          //   removeSavedImageId();
+          setShowLoader(false);
           return true;
         }
         if (response.data.isFileMoved) removeSavedImageId();
@@ -329,6 +347,7 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
       setShowLoader(false);
     } catch (e) {
       setShowLoader(false);
+      dispatch(setCurrentImageId(""));
     }
   };
   const pendingImgDeleteHandler = async () => {
@@ -370,9 +389,12 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
         tempData[attr] = "";
       }
     }
-    if (tempData.date == "")
-      tempData.date =      new Date();
+    if (tempData.date == "") tempData.date = new Date();
     return tempData;
+  };
+  const redirectAndSaveId = (url, pageId) => {
+    dispatch(setCurrentImageId(pageId));
+    history.push(url);
   };
   return (
     <React.Fragment>
@@ -416,7 +438,8 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
           resMgs={setResponseMgs}
           deleteImg={pendingImgDeleteHandler}
           history={history}
-          role = {ROLE}
+          role={ROLE}
+          redirectAndSaveId={redirectAndSaveId}
         />
       )}
 
@@ -484,7 +507,9 @@ const SideBar = ({match, history, sharedWithMe, setFolderFlag }) => {
                 pageLookUpHandler={pageLookUpHandler}
                 isRedirectLast={true}
                 pageLookUpDateHandler={pageLookUpDateHandler}
-                role = {ROLE}
+                role={ROLE}
+                redirectAndSaveId={redirectAndSaveId}
+                clearSavedImageId = {clearSavedImageId}
               ></LoadLookup>
             )}
           </div>

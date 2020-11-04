@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { updateByAdmin } from "../../service/pendingData";
 import { Alert ,Button } from "react-bootstrap";
+
 import {
   UserSelect,
   FileSelect,
@@ -94,23 +95,24 @@ const PendingPageData = ({
   };
   const openAllPagesHandler = () => {
     history.push("/");
+    props.clearSavedImageId()
     window.location.reload();
   };
-  if (data.code == "207") {
+  if (data.code == "207" ||data.code == "407") {
     return (
       <div style={{ width: "100%" }} className="mt-4">
         <Button onClick={openAllPagesHandler} className="btn btn-dark my-2 ml-2">
           Go To All Pages
         </Button>
         <Alert className="m-auto mt-3 text-center" variant="danger">
-          {data.message}
+          {data.message||" This page unavailable"}
         </Alert>
       </div>
     );
   }
   return (
     <div className="container-sm mt-4" style={{ maxWidth: "" }}>
-      <div className="row py-3">
+   {props.role != 'labeller' &&   <div className="row py-3">
         <div className="col-md-4">
           <span className="set-by-admin">
             Do you want this page to be edited by Admin?
@@ -145,6 +147,7 @@ const PendingPageData = ({
           </span>
         </div>
       </div>
+}
       <div className="row">
         <div className="col-md-12">
           {pageData.video_url && (
@@ -165,7 +168,7 @@ const PendingPageData = ({
         <div className="col-md-4">
           {isRedirectLast && (
             <img
-              onClick={() => history.push(`/last/${currentImageId}`)}
+              onClick={() => props.redirectAndSaveId(`/last/${currentImageId}`,currentImageId)}
               style={tmnImageStyle}
               src={data.pageLookup.cloudImagePath}
               className="hover"
@@ -173,7 +176,7 @@ const PendingPageData = ({
           )}
           {!isRedirectLast && (
             <img
-              onClick={() => history.push(`/edit/${currentImageId}`)}
+              onClick={() => props.redirectAndSaveId(`/edit/${currentImageId}`,currentImageId)}
               style={tmnImageStyle}
               src={data.pageLookup.cloudImagePath}
               className="hover"
@@ -274,7 +277,7 @@ const PendingPageData = ({
               {isMemberShip == 1 && (
                 <div className="col-md-7">
                   <img
-                    width="440px"
+                    width="100%"
                     style={imageStyle}
                     src={data.pageLookup.shareImagePath}
                   />
