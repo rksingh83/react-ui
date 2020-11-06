@@ -1,5 +1,6 @@
 import React from "react";
 import { ReactComponent as Photo } from "../../assets/photo.svg";
+import Retake from '../../assets/retake.png';
 const UploadForm = ({ submitHandler, isUpload }) => {
   const style = isUpload
     ? { width: "95px", height: "30px" }
@@ -11,8 +12,8 @@ const UploadForm = ({ submitHandler, isUpload }) => {
         {isUpload && <Photo style={{ height: "35px", marginBottom: "10px" }} />}
         {isUpload && <span className="on-hover">Upload</span>}
         {!isUpload && (
-          <label className="btn btn-success" style={{ margin: "0px" }}>
-            Retake
+          <label className="" style={{ margin: "0px" }}>
+             <img className  = 'icon-image'  src={Retake}  alt="fireSpot"/>
           </label>
         )}
         <input
