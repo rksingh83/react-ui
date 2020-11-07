@@ -2,6 +2,9 @@ import React from "react";
 import { ReactComponent as Next } from "../../assets/new-right.svg";
 import { ReactComponent as Back } from "../../assets/new-left.svg";
 import UploadForm from "../upload-image/upload-images";
+import Save from "../../assets/save.png";
+import Left from "../../assets/left.png";
+import Right from "../../assets/right.png";
 import { Post, Get } from "../../service/service.setup";
 const PendingHeader = ({
   prev,
@@ -62,9 +65,12 @@ const PendingHeader = ({
           </div>
           <div>
             {all.length > 0 && (
-              <button className="btn btn-info " onClick={() => saveHandler()}>
-                Save
-              </button>
+              <img
+                onClick={() => saveHandler()}
+                className="icon-image"
+                src={Save}
+                alt="fireSpot"
+              />
             )}
           </div>
           <div>
@@ -94,7 +100,12 @@ const PendingHeader = ({
           </div>
           <div>
             {props.role != "labeller" && (
-              <Back className="header-svg" onClick={prev} />
+              <img
+              onClick={prev} 
+              className="icon-image"
+              src={Left}
+              alt="fireSpot"
+            />
             )}
           </div>
           <div>
@@ -103,7 +114,13 @@ const PendingHeader = ({
                 Skip
               </button>
             ) : (
-              <Next className="header-svg" onClick={next} />
+              // <Next className="header-svg" onClick={next} />
+              <img
+              onClick={next} 
+              className="icon-image"
+              src={Right}
+              alt="fireSpot"
+            />
             )}
           </div>
         </div>
