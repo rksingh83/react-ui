@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { ReactComponent as Delete } from "../../assets/delete.svg";
-import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { Post } from "../../service/service.setup";
 import LoadLookup from "../pending-data/display-page-lookup";
 import { getPendingPageById } from "../../service/pendingData";
-import { ReactComponent as Next } from "../../assets/new-right.svg";
-import { ReactComponent as Back } from "../../assets/new-left.svg";
 import UploadForm from "../upload-image/upload-images";
 import "./top.header.style.scss";
+import { BackButton, Left, Right, Save } from "../common/pNGButtons";
 const TopSingleHeader = ({
   images,
   imageId,
@@ -125,21 +123,24 @@ const TopSingleHeader = ({
                 <Delete className="single-header-svg" onClick={deleteHandler} />{" "}
               </li>
               <li>
-                <Back className="header-svg" onClick={prev} />
+                {/* <Back className="header-svg" onClick={prev} /> */}
+                <Left handler={prev} />
               </li>
               <li>
-                <Next className="header-svg" onClick={next} />
+                {/* <Next className="header-svg" onClick={next} /> */}
+                <Right handler={next} />
               </li>
               <li>
                 <UploadForm submitHandler={uploadImageHandler}></UploadForm>
               </li>
               <li>
-                <button
+                {/* <button
                   className="btn btn-info ml-2 mr-2"
                   onClick={() => pageSaveHandler()}
                 >
                   Save
-                </button>
+                </button> */}
+                <Save handler={pageSaveHandler} />
               </li>
               <li>
                 <button
@@ -150,12 +151,13 @@ const TopSingleHeader = ({
                 </button>
               </li>
               <li className="nav-item">
-                <button
+                {/* <button
                   className="btn btn-success"
                   onClick={() => history.goBack()}
                 >
                   Back
-                </button>
+                </button> */}
+                <BackButton handler={history.goBack} />
               </li>
             </ul>
           </div>

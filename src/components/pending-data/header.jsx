@@ -6,6 +6,7 @@ import Save from "../../assets/save.png";
 import Left from "../../assets/left.png";
 import Right from "../../assets/right.png";
 import { Post, Get } from "../../service/service.setup";
+import {EditBtn} from '../common/pNGButtons'
 const PendingHeader = ({
   prev,
   next,
@@ -75,17 +76,22 @@ const PendingHeader = ({
           </div>
           <div>
             {all.length > 0 && (
-              <button
-                className="btn btn-success"
-                onClick={() =>
-                  props.redirectAndSaveId(
-                    `/edit/${currentImageId}`,
-                    currentImageId
-                  )
-                }
-              >
-                Edit
-              </button>
+              // <button
+              //   className="btn btn-success"
+              //   onClick={() =>
+              //     props.redirectAndSaveId(
+              //       `/edit/${currentImageId}`,
+              //       currentImageId
+              //     )
+              //   }
+              // >
+              //   Edit
+              // </button>
+              <EditBtn handler = {() =>
+                    props.redirectAndSaveId(
+                      `/edit/${currentImageId}`,
+                      currentImageId
+                    )} />
             )}
           </div>
           <div>

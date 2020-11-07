@@ -1,6 +1,7 @@
 import React from "react";
-import { ReactComponent as Next } from "../../assets/new-right.svg";
-import { ReactComponent as Back } from "../../assets/new-left.svg";
+// import { ReactComponent as Next } from "../../assets/new-right.svg";
+// import { ReactComponent as Back } from "../../assets/new-left.svg";
+import {BackButton ,Left ,Right} from '../common/pNGButtons';
 const sharedHeader = ({
   history,
   back,
@@ -61,22 +62,23 @@ const sharedHeader = ({
             <ul className="navbar-nav ml-auto text-white">
               <li>
                 {props.isHideButton && (
-                  <Back className="header-svg" onClick={props.prev} />
+                  <Left className="header-svg" handler={props.prev} />
                 )}
               </li>
               <li>
                 {props.isHideButton && (
-                  <Next className="header-svg" onClick={props.next} />
+                  <Right  handler={props.next} />
                 )}
               </li>
               {!back && (
                 <li className="nav-item">
-                  <button
+                  {/* <button
                     className="btn btn-success"
                     onClick={() => history.goBack()}
                   >
                     Back
-                  </button>
+                  </button> */}
+                  <BackButton handler ={history.goBack}/>
                 </li>
               )}
             </ul>

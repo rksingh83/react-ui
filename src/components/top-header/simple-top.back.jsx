@@ -11,6 +11,7 @@ import { ReactComponent as Share } from "../../assets/teaching.svg";
 import { ReactComponent as FolderSvg } from "../../assets/folder-name.svg";
 import ShareFolderModal from "../modal/share-folder-modal";
 import { getPendingPageById } from "../../service/pendingData";
+import { BackButton } from "../common/pNGButtons";
 const TopHeaderWithBack = ({
   history,
   id,
@@ -202,12 +203,13 @@ const TopHeaderWithBack = ({
       </div>
 
       <div className=" ml-auto col-md-1 sec-header-item col-text-style">
-        <button
+        {/* <button
           onClick={() => history.goBack()}
           className="btn btn-success float-right"
         >
           Back
-        </button>
+        </button> */}
+        <BackButton handler={history.goBack} />
       </div>
     </div>
   );
