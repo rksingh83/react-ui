@@ -128,7 +128,7 @@ const TopHeaderWithBack = ({
       </div>
       <div className="col-md-1 ml-2 sec-header-item" style={columnMinWidth}>
         <span className="badge badge-info p-2">
-          My Books <span>{currentFolder}</span>
+          <span>{currentFolder}</span>
         </span>
       </div>
       <div

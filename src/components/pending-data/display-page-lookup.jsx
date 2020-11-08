@@ -112,42 +112,7 @@ const PendingPageData = ({
   }
   return (
     <div className="container-sm mt-4" style={{ maxWidth: "" }}>
-   {props.role != 'labeller' &&   <div className="row py-3">
-        <div className="col-md-4">
-          <span className="set-by-admin">
-            Do you want this page to be edited by Admin?
-          </span>{" "}
-        </div>
-        <div className="col-md-1">
-          <span className="radio-span">
-            {" "}
-            NO
-            <input
-              value={false}
-              checked="checked"
-              onChange={(e) => pageLookUpHandler(e)}
-              id="male"
-              name="admin_updated"
-              className="form-control radio"
-              type="radio"
-            />
-          </span>
-        </div>
-        <div className="col-md-1">
-          <span className="radio-span">
-            YES{" "}
-            <input
-              onChange={(e) => pageLookUpHandler(e)}
-              value={true}
-              id="male"
-              name="admin_updated"
-              className="form-control radio"
-              type="radio"
-            />
-          </span>
-        </div>
-      </div>
-}
+
       <div className="row">
         <div className="col-md-12">
           {pageData.video_url && (
@@ -185,17 +150,7 @@ const PendingPageData = ({
         </div>
         <div className="col-md-8">
           <div className="row">
-            <div className={title_col}>File Title</div>
-            {isMemberShip == 1 && (
-              <div className="col-md-7">
-                <img
-                  style={imageStyle}
-                  width="320px"
-                  src={data.pageLookup.segmentationImagePath}
-                  className="img-height"
-                />
-              </div>
-            )}
+            <div className={title_col}>Page Title</div>
             <div className={col}>
               <Input
                 type="text"
@@ -206,12 +161,23 @@ const PendingPageData = ({
                 disabled={isDisabled}
               />
             </div>
+            {isMemberShip == 1 && (
+              <div className="col-md-7">
+                <img
+                  style={imageStyle}
+                  width="320px"
+                  src={data.pageLookup.segmentationImagePath}
+                  className="img-height"
+                />
+              </div>
+            )}
+
           </div>
           <div className="row">
-            <div className={title_col}>File Name</div>
-            {isMemberShip == 1 && (
+            <div className={title_col}>Book Name</div>
+            {/* {isMemberShip == 1 && (
               <div className="col-md-7 page-lookup-heading"></div>
-            )}
+            )} */}
             <div className={col}>
               <FileSelect
                 onChange={pageLookUpHandler}
@@ -225,15 +191,6 @@ const PendingPageData = ({
           </div>
           <div className="row">
             <div className="col-md-2 page-lookup-heading">Book Tag</div>
-            {isMemberShip == 1 && (
-              <div className="col-md-7">
-                <img
-                  width="240px"
-                  style={imageStyle}
-                  src={data.pageLookup.fileTagImagPath}
-                />
-              </div>
-            )}
             <div className={col}>
               <FileTagSelect
                 onChange={pageLookUpHandler}
@@ -244,6 +201,16 @@ const PendingPageData = ({
                 disabled={isDisabled}
               />
             </div>
+            {isMemberShip == 1 && (
+              <div className="col-md-7">
+                <img
+                  width="240px"
+                  style={imageStyle}
+                  src={data.pageLookup.fileTagImagPath}
+                />
+              </div>
+            )}
+
           </div>
           {/* <div className="row">
             <div className="col-md-2 page-lookup-heading">Title</div>
@@ -257,6 +224,101 @@ const PendingPageData = ({
               />
             </div>
           </div> */}
+
+
+          {!isDisabled && (
+            <div className="row">
+              <div className="col-md-2 page-lookup-heading">Share</div>
+              <div className={col}>
+                <UserSelect
+                  value={pageData.shareId}
+                  onChange={pageLookUpHandler}
+                  list={data.data.profileList}
+                  name="shareId"
+                  mt={"mt-0"}
+                  disabled={isDisabled}
+                />
+              </div>
+              {isMemberShip == 1 && (
+                <div className="col-md-7">
+                  <img
+                    width="100%"
+                    style={imageStyle}
+                    src={data.pageLookup.shareImagePath}
+                  />
+                </div>
+              )}
+
+            </div>
+          )}
+          <div className="row">
+            <div className="col-md-2 page-lookup-heading">Date</div>
+            <div className={col}>
+              {pageData.date && (
+                <DatePicker
+                  name="date"
+                  className="form-control"
+                  selected={new Date(pageData.date)}
+                  onChange={pageLookUpDateHandler}
+                  disabled={isDisabled}
+                  dateFormat="dd/MM/yyyy"
+                />
+              )}
+            </div>
+            {isMemberShip == 1 && (
+              <div className="col-md-7">
+                <img
+                  width="320px"
+                  style={imageStyle}
+                  src={data.pageLookup.dateImagePath}
+                />
+              </div>
+            )}
+
+          </div>
+          <div className="row">
+            <div className="col-md-2 page-lookup-heading"> Page No.</div>
+            <div className={col}>
+              <Input
+                type="text"
+                onChange={pageLookUpHandler}
+                value={pageData.pageNumber}
+                name="pageNumber"
+                disabled={isDisabled}
+              />
+            </div>
+            {isMemberShip == 1 && (
+              <div className="col-md-7">
+                <img
+                  style={imageStyle}
+                  width="160px"
+                  src={data.pageLookup.pageNumberImagePath}
+                />
+              </div>
+            )}
+
+          </div>
+          <div className="row">
+            <div className="col-md-2 page-lookup-heading"> ID.</div>
+            <div className={col}>
+              <Input
+                disabled={isDisabled}
+                onChange={pageLookUpHandler}
+                value={pageData.id}
+                name="id"
+                type="text"
+              />
+            </div>
+            {isMemberShip == 1 && (
+              <div className="col-md-7">
+                <img
+                  width="240px"
+                  style={imageStyle}
+                  src={data.pageLookup.idImagePath}
+                />
+              </div>
+            )}
+          </div>
           <div className="row">
             <div className="col-md-2 page-lookup-heading">Description</div>
             <div className="col-md-10">
@@ -270,106 +332,45 @@ const PendingPageData = ({
               />
             </div>
           </div>
-
-          {!isDisabled && (
-            <div className="row">
-              <div className="col-md-2 page-lookup-heading">Share</div>
-              {isMemberShip == 1 && (
-                <div className="col-md-7">
-                  <img
-                    width="100%"
-                    style={imageStyle}
-                    src={data.pageLookup.shareImagePath}
-                  />
-                </div>
-              )}
-              <div className={col}>
-                <UserSelect
-                  value={pageData.shareId}
-                  onChange={pageLookUpHandler}
-                  list={data.data.profileList}
-                  name="shareId"
-                  mt={"mt-0"}
-                  disabled={isDisabled}
-                />
-              </div>
-            </div>
-          )}
-          <div className="row">
-            <div className="col-md-2 page-lookup-heading">Date</div>
-            {isMemberShip == 1 && (
-              <div className="col-md-7">
-                <img
-                  width="320px"
-                  style={imageStyle}
-                  src={data.pageLookup.dateImagePath}
-                />
-              </div>
-            )}
-            <div className={col}>
-              {/* <Input
-                value={pageData.date}
-                type="date"
-                onChange={pageLookUpHandler}
-                name="date"
-                mt={"mt-0"}
-              /> */}
-              {pageData.date && (
-                <DatePicker
-                  name="date"
-                  className="form-control"
-                  selected={new Date(pageData.date)}
-                  onChange={pageLookUpDateHandler}
-                  disabled={isDisabled}
-                  dateFormat="dd/MM/yyyy"
-                />
-              )}
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-2 page-lookup-heading"> Page No.</div>
-            {isMemberShip == 1 && (
-              <div className="col-md-7">
-                <img
-                  style={imageStyle}
-                  width="160px"
-                  src={data.pageLookup.pageNumberImagePath}
-                />
-              </div>
-            )}
-            <div className={col}>
-              <Input
-                type="text"
-                onChange={pageLookUpHandler}
-                value={pageData.pageNumber}
-                name="pageNumber"
-                disabled={isDisabled}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-2 page-lookup-heading"> ID.</div>
-            {isMemberShip == 1 && (
-              <div className="col-md-7">
-                <img
-                  width="240px"
-                  style={imageStyle}
-                  src={data.pageLookup.idImagePath}
-                />
-              </div>
-            )}
-            <div className={col}>
-              <Input
-                disabled={isDisabled}
-                onChange={pageLookUpHandler}
-                value={pageData.id}
-                name="id"
-                type="text"
-              />
-            </div>
-          </div>
+          
         </div>
       </div>
+      {props.role != 'labeller' &&   <div className="row py-3">
+        <div className="col-md-4">
+          <span className="set-by-admin">
+            Do you want this page to be edited by Admin?
+          </span>{" "}
+        </div>
+        <div className="col-md-1">
+          <span className="radio-span">
+            {" "}
+            NO
+            <input
+              value={false}
+              checked="checked"
+              onChange={(e) => pageLookUpHandler(e)}
+              id="male"
+              name="admin_updated"
+              className="form-control radio"
+              type="radio"
+            />
+          </span>
+        </div>
+        <div className="col-md-1">
+          <span className="radio-span">
+            YES{" "}
+            <input
+              onChange={(e) => pageLookUpHandler(e)}
+              value={true}
+              id="male"
+              name="admin_updated"
+              className="form-control radio"
+              type="radio"
+            />
+          </span>
+        </div>
+      </div>
+}
     </div>
   );
 };
