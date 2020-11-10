@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { ReactComponent as Cross } from "../../assets/cross.svg";
-import { Post, Get } from "../../service/service.setup";
+import { Post } from "../../service/service.setup";
 import { ReactComponent as Photo } from "../../assets/photo.svg";
 import "./top.header.style.scss";
-import WebCamModel from "../web-cam.component/web-cam-modal";
-import { EditBtn } from "../common/pNGButtons";
 import { ReactComponent as Delete } from "../../assets/delete.svg";
 
 import { ReactComponent as Share } from "../../assets/teaching.svg";
-import { ReactComponent as FolderSvg } from "../../assets/folder-name.svg";
 import ShareFolderModal from "../modal/share-folder-modal";
 import { getPendingPageById } from "../../service/pendingData";
-import { BackButton } from "../common/pNGButtons";
+import { BackButton, EditBtn, CancelButton } from "../common/pNGButtons";
 const TopHeaderWithBack = ({
   history,
   id,
@@ -118,6 +114,9 @@ const TopHeaderWithBack = ({
     const pageId = updateImages[0].id;
     history.push(`/original/${pageId}/${id}`);
   };
+  const refreshPageHandler = () => {
+    window.location.reload();
+  };
   return (
     <div className="row secondary-header single-header" style={topRowStyle}>
       <div className="col-md-2  sec-header-item">
@@ -171,7 +170,7 @@ const TopHeaderWithBack = ({
       </div>
 
       <div
-        className="col-md-2 sec-header-item col-text-style"
+        className="col-md-1 sec-header-item col-text-style"
         style={columnMinWidth}
       >
         <div
@@ -204,8 +203,16 @@ const TopHeaderWithBack = ({
             Share
           </span>
         </div>
-        </div>
-        <div className="col-md-1 sec-header-item col-text-style">
+      </div>
+
+      <div className="col-md-1 sec-header-item col-text-style">
+        {updateImages && updateImages.length > 0 && (
+          <div>
+            <CancelButton handler={refreshPageHandler} />
+          </div>
+        )}
+      </div>
+      <div className="col-md-1 sec-header-item col-text-style">
         {updateImages && updateImages.length == 1 && (
           <div>
             <EditBtn handler={editPageHandler} />

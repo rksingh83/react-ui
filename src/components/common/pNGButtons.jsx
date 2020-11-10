@@ -4,6 +4,7 @@ import LeftSrc from "../../assets/left.png";
 import RightSrc from "../../assets/right.png";
 import save from "../../assets/save.png";
 import edit from "../../assets/edit.png";
+import cancelSrc from "../../assets/close.png";
 const BackButton = ({ handler }) => {
   return (
     <>
@@ -53,6 +54,18 @@ const Right = ({ handler }) => {
   );
 };
 
+const CancelButton = ({ handler }) => {
+  return (
+    <>
+      <img
+        onClick={handler}
+        className="icon-image"
+        src={cancelSrc}
+        alt="fireSpot"
+      />
+    </>
+  );
+};
 const EditBtn = ({ handler }) => {
   return (
     <>
@@ -60,4 +73,4 @@ const EditBtn = ({ handler }) => {
     </>
   );
 };
-export { BackButton, Left, Right, EditBtn ,Save};
+export { BackButton, Left, Right, EditBtn, Save, CancelButton };
