@@ -12,6 +12,7 @@ import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import AllFilesSideBar from '../common/AllFilesSideBar'
 const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag ,currentUser }) => {
   const [imageUrl, setImageUrl] = useState("");
+  const [imageTitle , setImageTitle] = useState("");
   const ROLE =     currentUser && currentUser.authentication.role
   const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
   const [activeIndex, setActiveIndex] = useState(currentIndex);
@@ -30,6 +31,8 @@ const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag ,current
 
       setCurrentFolderName(res.data.imageInput[0].fileName);
       setImageUrl(res.data.imageInput[0].raw_image_org);
+      setImageTitle(res.data.imageInput[0].title);
+      
     });
   }, []);
   const handleActive = (e) => {
@@ -139,6 +142,7 @@ const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag ,current
           </Link>
         </div>
         <div className="col-md-9 col-xs-12 col-sm-12">
+          <p>{imageTitle}</p>
           <img style={styleImage} src={`${imageUrl}`}></img>
         </div>
       </div>

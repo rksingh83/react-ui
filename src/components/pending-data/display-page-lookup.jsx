@@ -3,7 +3,7 @@ import { Post, Get } from "../../service/service.setup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { updateByAdmin } from "../../service/pendingData";
-import { Alert ,Button } from "react-bootstrap";
+import { Alert, Button } from "react-bootstrap";
 
 import {
   UserSelect,
@@ -95,24 +95,26 @@ const PendingPageData = ({
   };
   const openAllPagesHandler = () => {
     history.push("/");
-    props.clearSavedImageId()
+    props.clearSavedImageId();
     window.location.reload();
   };
-  if (data.code == "207" ||data.code == "407") {
+  if (data.code == "207" || data.code == "407") {
     return (
       <div style={{ width: "100%" }} className="mt-4">
-        <Button onClick={openAllPagesHandler} className="btn btn-dark my-2 ml-2">
+        <Button
+          onClick={openAllPagesHandler}
+          className="btn btn-dark my-2 ml-2"
+        >
           Go To All Pages
         </Button>
         <Alert className="m-auto mt-3 text-center" variant="danger">
-          {data.message||" This page unavailable"}
+          {data.message || " This page unavailable"}
         </Alert>
       </div>
     );
   }
   return (
     <div className="container-sm mt-4" style={{ maxWidth: "" }}>
-
       <div className="row">
         <div className="col-md-12">
           {pageData.video_url && (
@@ -133,7 +135,14 @@ const PendingPageData = ({
         <div className="col-md-4">
           {isRedirectLast && (
             <img
-              onClick={() => props.redirectAndSaveId(`/last/${currentImageId}`,currentImageId)}
+              onClick={() =>
+                props.redirectAndSaveId
+                  ? props.redirectAndSaveId(
+                      `/last/${currentImageId}`,
+                      currentImageId
+                    )
+                  : history.push(`/last/${currentImageId}`)
+              }
               style={tmnImageStyle}
               src={data.pageLookup.cloudImagePath}
               className="hover"
@@ -141,7 +150,14 @@ const PendingPageData = ({
           )}
           {!isRedirectLast && (
             <img
-              onClick={() => props.redirectAndSaveId(`/edit/${currentImageId}`,currentImageId)}
+              onClick={() =>
+                props.redirectAndSaveId
+                  ? props.redirectAndSaveId(
+                      `/edit/${currentImageId}`,
+                      currentImageId
+                    )
+                  : history.push(`/edit/${currentImageId}`)
+              }
               style={tmnImageStyle}
               src={data.pageLookup.cloudImagePath}
               className="hover"
@@ -171,7 +187,6 @@ const PendingPageData = ({
                 />
               </div>
             )}
-
           </div>
           <div className="row">
             <div className={title_col}>Book Name</div>
@@ -210,7 +225,6 @@ const PendingPageData = ({
                 />
               </div>
             )}
-
           </div>
           {/* <div className="row">
             <div className="col-md-2 page-lookup-heading">Title</div>
@@ -224,7 +238,6 @@ const PendingPageData = ({
               />
             </div>
           </div> */}
-
 
           {!isDisabled && (
             <div className="row">
@@ -248,7 +261,6 @@ const PendingPageData = ({
                   />
                 </div>
               )}
-
             </div>
           )}
           <div className="row">
@@ -274,7 +286,6 @@ const PendingPageData = ({
                 />
               </div>
             )}
-
           </div>
           <div className="row">
             <div className="col-md-2 page-lookup-heading"> Page No.</div>
@@ -296,7 +307,6 @@ const PendingPageData = ({
                 />
               </div>
             )}
-
           </div>
           <div className="row">
             <div className="col-md-2 page-lookup-heading"> ID.</div>
@@ -332,45 +342,45 @@ const PendingPageData = ({
               />
             </div>
           </div>
-          
         </div>
       </div>
-      {props.role != 'labeller' &&   <div className="row py-3">
-        <div className="col-md-4">
-          <span className="set-by-admin">
-            Do you want this page to be edited by Admin?
-          </span>{" "}
+      {props.role != "labeller" && (
+        <div className="row py-3">
+          <div className="col-md-4">
+            <span className="set-by-admin">
+              Do you want this page to be edited by Admin?
+            </span>{" "}
+          </div>
+          <div className="col-md-1">
+            <span className="radio-span">
+              {" "}
+              NO
+              <input
+                value={false}
+                checked="checked"
+                onChange={(e) => pageLookUpHandler(e)}
+                id="male"
+                name="admin_updated"
+                className="form-control radio"
+                type="radio"
+              />
+            </span>
+          </div>
+          <div className="col-md-1">
+            <span className="radio-span">
+              YES{" "}
+              <input
+                onChange={(e) => pageLookUpHandler(e)}
+                value={true}
+                id="male"
+                name="admin_updated"
+                className="form-control radio"
+                type="radio"
+              />
+            </span>
+          </div>
         </div>
-        <div className="col-md-1">
-          <span className="radio-span">
-            {" "}
-            NO
-            <input
-              value={false}
-              checked="checked"
-              onChange={(e) => pageLookUpHandler(e)}
-              id="male"
-              name="admin_updated"
-              className="form-control radio"
-              type="radio"
-            />
-          </span>
-        </div>
-        <div className="col-md-1">
-          <span className="radio-span">
-            YES{" "}
-            <input
-              onChange={(e) => pageLookUpHandler(e)}
-              value={true}
-              id="male"
-              name="admin_updated"
-              className="form-control radio"
-              type="radio"
-            />
-          </span>
-        </div>
-      </div>
-}
+      )}
     </div>
   );
 };

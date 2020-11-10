@@ -4,7 +4,7 @@ import { Post, Get } from "../../service/service.setup";
 import { ReactComponent as Photo } from "../../assets/photo.svg";
 import "./top.header.style.scss";
 import WebCamModel from "../web-cam.component/web-cam-modal";
-
+import { EditBtn } from "../common/pNGButtons";
 import { ReactComponent as Delete } from "../../assets/delete.svg";
 
 import { ReactComponent as Share } from "../../assets/teaching.svg";
@@ -114,6 +114,10 @@ const TopHeaderWithBack = ({
     setCurrentLookup(response.data && response.data);
     setIsShow(true);
   };
+  const editPageHandler = () => {
+    const pageId = updateImages[0].id;
+    history.push(`/original/${pageId}/${id}`);
+  };
   return (
     <div className="row secondary-header single-header" style={topRowStyle}>
       <div className="col-md-2  sec-header-item">
@@ -200,6 +204,13 @@ const TopHeaderWithBack = ({
             Share
           </span>
         </div>
+        </div>
+        <div className="col-md-1 sec-header-item col-text-style">
+        {updateImages && updateImages.length == 1 && (
+          <div>
+            <EditBtn handler={editPageHandler} />
+          </div>
+        )}
       </div>
 
       <div className=" ml-auto col-md-1 sec-header-item col-text-style">
