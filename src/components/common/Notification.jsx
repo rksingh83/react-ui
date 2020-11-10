@@ -4,6 +4,12 @@ import SockJS from "sockjs-client";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import SideBar from "../apply-coupon/sidebar.conponent";
 import DisplayNotification from "./DisplayNotification";
+import Paginate from "../common/paginate";
+import {
+  getNotificationsIndex as getStartIndex,
+  getNotificationCount as getPageCount,
+  NOTIFICATION_OFF_SET as PAGE_OFF_SET
+} from "../common/pagination.config";
 import {
   setNotification,
   setNotificationCount,
@@ -21,6 +27,8 @@ const Notification = ({
   history,
 }) => {
   const [userNotifications, setUserNotification] = useState([]);
+  const [displayUserNotifications, setDisplayUserNotification] = useState([]);
+  const [currentPagination, setCurrentPagination] = useState(1);
   useEffect(() => {
     refresh();
     getAllNotificationsMarkedRead();
@@ -30,14 +38,32 @@ const Notification = ({
 
   const getAllNotificationsMarkedRead = async () => {
     const response = await getNotifications();
-
   };
   const getAlertNotification = async () => {
     const response = await getAlertNotifications();
     setUserNotification(response.data.data.alertList);
+    const tempGroup = [...response.data.data.alertList];
+    setDisplayUserNotification(tempGroup.splice(0, PAGE_OFF_SET));
   };
   const refresh = () => {
     // window.location.reload();
+  };
+  const paginate = (number) => {
+    const allNotifications = [...userNotifications];
+    setDisplayUserNotification(
+      allNotifications.splice(getStartIndex(number), PAGE_OFF_SET)
+    );
+    setCurrentPagination(number);
+  };
+
+  const groupNextPrev = (type) => {
+    if (type === "NEXT") {
+      if (currentPagination == getPageCount(userNotifications)) return;
+      paginate(currentPagination + 1);
+    } else {
+      if (currentPagination == 1) return;
+      paginate(currentPagination - 1);
+    }
   };
   return (
     <>
@@ -51,12 +77,29 @@ const Notification = ({
       </div>
       <div className="row m-0">
         <SideBar />
-        <div className="col-md-10" style ={{display:'flex',justifyContent:'center'}}>
+        <div
+          className="col-md-10"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <DisplayNotification
             history={history}
-            userNotifications={userNotifications}
-            setFolderFlag ={setFolderFlag}
+            userNotifications={displayUserNotifications}
+            setFolderFlag={setFolderFlag}
           />
+          <Paginate
+            setCurrentSelected={paginate}
+            active={currentPagination}
+            count={getPageCount(userNotifications)}
+            NextPrev={groupNextPrev}
+          />
+        </div>
+        <div className="row">
+          <div className="col-md-10"></div>
         </div>
       </div>
     </>
