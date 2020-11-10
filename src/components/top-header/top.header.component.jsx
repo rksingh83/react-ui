@@ -14,6 +14,7 @@ import CustomLoader from "../loader/loader";
 import ShowMessages from "../common/display-message-modal";
 import { Post, Get } from "../../service/service.setup";
 import "./top.header.style.scss";
+import { Save, CancelButton, EditBtn } from "../common/pNGButtons";
 const TopHeader = ({
   saveFolder,
   fillAllDataHandler,
@@ -144,7 +145,12 @@ const TopHeader = ({
       }
     } catch (err) {}
   };
-
+const closeHandler = () =>{
+  setShow(false);
+}
+const editHandler = () =>{
+  reNameFolder(false)
+}
   return (
     <div className="row secondary-header single-header" style={topRowStyle}>
       {isShowLoader && <CustomLoader />}
@@ -233,7 +239,7 @@ const TopHeader = ({
             }`}
             style={columnMinWidth}
           >
-            <Pencil onClick={() => reNameFolder(false)} />{" "}
+            <EditBtn handler ={editHandler} />
             <span
               className="on-hover"
               onClick={() => showContactListModal(false)}
@@ -306,20 +312,14 @@ const TopHeader = ({
           ></Input>
         </Modal.Body>
         <Modal.Footer>
-          <button
+          <CancelButton
             className="btn-danger btn"
             variant="secondary"
-            onClick={() => setShow(false)}
+            handler={closeHandler}
           >
             Close
-          </button>
-          <button
-            className="btn btn-success"
-            variant="primary"
-            onClick={saveHandler}
-          >
-            Save Changes
-          </button>
+          </CancelButton>
+          <Save handler={saveHandler}>Save Changes</Save>
         </Modal.Footer>
       </Modal>
     </div>

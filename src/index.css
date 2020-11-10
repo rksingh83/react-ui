@@ -271,3 +271,7 @@
                 margin: 0 8px;
                 cursor: pointer;
             }
+            
+            .header-secondary {
+                min-height: 50px;
+            }

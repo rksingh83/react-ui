@@ -6,7 +6,7 @@ import Save from "../../assets/save.png";
 import Left from "../../assets/left.png";
 import Right from "../../assets/right.png";
 import { Post, Get } from "../../service/service.setup";
-import {EditBtn} from '../common/pNGButtons'
+import {EditBtn} from '../common/pNGButtons' 
 const PendingHeader = ({
   prev,
   next,
@@ -17,6 +17,7 @@ const PendingHeader = ({
   history,
   ...props
 }) => {
+  const isNone = (props.role === 'labeller')?"none":"" ;
   const uploadImageHandler = async (e) => {
     //  e.preventDefault();
     props.toggleLoader(true);
@@ -24,7 +25,7 @@ const PendingHeader = ({
     var d = new Date();
     let imageName = d.getTime();
     imageName = `jpg_${imageName}.jpg`;
-
+   
     formData.append("files", e, imageName);
     try {
       let res = await Post("/reUploadImage", formData, {
@@ -94,7 +95,7 @@ const PendingHeader = ({
                     )} />
             )}
           </div>
-          <div>
+         <div style ={{display:isNone}}>
             <span className="info"> Total Pending </span>
             <span className="badge badge-info">{all.length}</span>
           </div>
