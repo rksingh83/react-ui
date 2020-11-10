@@ -43,7 +43,10 @@ const PendingPageData = ({
     border: "1px solid green",
   };
 
-  useEffect(() => {}, [data.pageLookup]);
+  useEffect(() => {
+    console.log(pageData.admin_updated) ;
+    console.log(pageData)
+  }, [data.pageLookup]);
   const fileTagHandler = (e) => {
     // let folder = data.pageLookup.file.filter(
     //   (item) => item.id == e.target.value
@@ -353,11 +356,11 @@ const PendingPageData = ({
           </div>
           <div className="col-md-1">
             <span className="radio-span">
-              {" "}
+             
               NO
               <input
                 value={false}
-                checked="checked"
+                checked= {!Boolean(pageData.admin_updated)}
                 onChange={(e) => pageLookUpHandler(e)}
                 id="male"
                 name="admin_updated"
@@ -368,7 +371,7 @@ const PendingPageData = ({
           </div>
           <div className="col-md-1">
             <span className="radio-span">
-              YES{" "}
+              YES
               <input
                 onChange={(e) => pageLookUpHandler(e)}
                 value={true}
@@ -376,6 +379,7 @@ const PendingPageData = ({
                 name="admin_updated"
                 className="form-control radio"
                 type="radio"
+                checked= {Boolean(pageData.admin_updated)}
               />
             </span>
           </div>
