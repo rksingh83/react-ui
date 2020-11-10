@@ -6,6 +6,7 @@ import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
 import UpdatePassword from "../modal/change-password-modal";
 import SideBar from "./sidebar.conponent";
+import { EditBtn } from "../common/pNGButtons";
 const Profile = ({ history }) => {
   const [isShowEdit, setIsShowEdit] = useState(false);
   const [isShowUpdatePasswordModal, setIsShowUpdatePasswordModal] = useState(
@@ -27,7 +28,9 @@ const Profile = ({ history }) => {
   useEffect(() => {
     getProfile();
   }, []);
-
+const editHandler = () =>{
+  setIsShowEdit(true)
+}
   return (
     <div className="">
       <div className="row">
@@ -41,12 +44,10 @@ const Profile = ({ history }) => {
                   show={isShowUpdatePasswordModal}
                   email={profile.email}
                 />
-                <Pencil
-                  onClick={() => setIsShowEdit(true)}
-                  className="svg-styling"
-                  style={{ display: isShowEdit ? "none" : "" }}
-                ></Pencil>
-
+                {!isShowEdit &&<EditBtn
+                  handler={editHandler}
+                ></EditBtn>
+                }
                 <Cross
                   className="svg-styling"
                   onClick={() => setIsShowEdit(false)}

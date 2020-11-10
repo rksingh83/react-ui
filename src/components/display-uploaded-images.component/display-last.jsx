@@ -9,7 +9,8 @@ import { connect } from "react-redux";
 import SharedHeader from "../top-header/shared-header";
 import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
-import AllFilesSideBar from '../common/AllFilesSideBar'
+import AllFilesSideBar from '../common/AllFilesSideBar' ;
+import { BackButton  ,EditBtn} from "../common/pNGButtons";
 const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag ,currentUser }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [imageTitle , setImageTitle] = useState("");
@@ -101,10 +102,10 @@ const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag ,current
                 </ul>
                 <ul className="navbar-nav ml-auto text-white">
                   <li className="nav-item">
-                    <Pencil
-                      onClick={() => history.push(`/edit/${match.params.id}`)}
+                    <EditBtn
+                      handler={history.push(`/edit/${match.params.id}`)}
                       style={pencilStyle}
-                    ></Pencil>
+                    ></EditBtn>
                   </li>
                   <li className="nav-item">
                     <Cross

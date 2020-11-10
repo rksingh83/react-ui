@@ -17,7 +17,7 @@ import InviteUser from "./invite-friend";
 import CustomLoader from "../loader/loader";
 import ShowMessages from "../common/display-message-modal";
 import LeftSideBar from "./left-sidebar";
-
+import { BackButton } from "../common/pNGButtons";
 import Users from "./search-user";
 import {
   getCardStartIndex as getStartIndex,
@@ -122,16 +122,16 @@ const AddFriend = ({ history, setContacts, contacts, match }) => {
 
   const addUserHandler = async (id, e) => {
     try {
-     if(e.innerText == 'Cancel'){
-       removeContact(id) ;
-       return true ;
-     }
+      if (e.innerText == "Cancel") {
+        removeContact(id);
+        return true;
+      }
       const userFind = await Post("/addUser", { id: id });
 
       if (userFind.data.code == "200") {
         alert(userFind.data.message);
         //  window.location.reload();
-        (e.innerText = "Cancel")
+        e.innerText = "Cancel";
         return;
       }
       //setUserProfile(userFind.data.data.profile);
@@ -270,12 +270,10 @@ const AddFriend = ({ history, setContacts, contacts, match }) => {
                   ></Cross>
                 </li>
                 <li className="nav-item">
-                  <button
+                  <BackButton
                     className="btn btn-success"
-                    onClick={() => history.goBack()}
-                  >
-                    Back
-                  </button>
+                    handler={history.goBack}
+                  ></BackButton>
                 </li>
               </ul>
             </div>

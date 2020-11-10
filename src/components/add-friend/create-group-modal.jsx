@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import TextField from "@material-ui/core/TextField";
-import MaterialInput from "../forminput/materialInput";
+import { CancelButton } from "../common/pNGButtons";
 import { CreateGroup, EditGroup } from "../../service/group-service";
 const CreateGroupModal = ({
   show,
@@ -36,16 +36,13 @@ const CreateGroupModal = ({
       getAllGroups();
     }
   };
+  const closeHandler = () => {
+    hide(false);
+  };
   return (
     <Modal size="md" show={show} onHide={() => hide(false)} animation={true}>
       <Modal.Header>
-        <button
-          className="btn-danger btn"
-          variant="secondary"
-          onClick={() => hide(false)}
-        >
-          Close
-        </button>
+        <CancelButton handler={closeHandler}></CancelButton>
         <button
           className="btn-info btn"
           variant="secondary"
@@ -75,13 +72,7 @@ const CreateGroupModal = ({
         />
       </Modal.Body>
       <Modal.Footer>
-        <button
-          className="btn-danger btn"
-          variant="secondary"
-          onClick={() => hide(false)}
-        >
-          Close
-        </button>
+        <CancelButton handler={closeHandler}></CancelButton>
       </Modal.Footer>
     </Modal>
   );

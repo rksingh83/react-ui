@@ -5,6 +5,7 @@ import AddContactToGroup from "./manage-group";
 import { AddMemberToGroup, GetGroupMember } from "../../service/group-service";
 import { ReactComponent as Share } from "../../assets/share.svg";
 import Paginate from "../common/paginate";
+import edit from "../../assets/edit.png";
 import {
   getStartIndex,
   getPageCount,
@@ -121,9 +122,11 @@ const DisplayGroupList = ({
                     onClick={() => update({ deleted: true, id: item.groupID })}
                     style={svgStyle}
                   />
-                  <Pencil
+                  <img
                     onClick={() => updateHandler(item.groupID)}
-                    style={svgStyle}
+                    className="icon-image"
+                    src={edit}
+                    alt="fireSpot"
                   />
                 </span>
               )}

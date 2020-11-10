@@ -144,7 +144,7 @@ const TopHeaderWithBack = ({
           onSubmit={submitHandler}
         >
           <label className="input-label">
-            <Photo style={{ height: "35px", marginBottom: "3px" }} />
+            <Photo style={{width:'30px !important', height: "35px", marginBottom: "3px" }} />
             <span>Upload</span>
             <input
               className="input-file"

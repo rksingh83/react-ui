@@ -11,11 +11,18 @@ import { connect } from "react-redux";
 import $ from "jquery";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import LeftSideBar from "../sidebar/left.sidebar.compoent";
-import AllFilesSideBar from '../common/AllFilesSideBar'
-const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag ,currentUser }) => {
+import AllFilesSideBar from "../common/AllFilesSideBar";
+import { BackButton, Save } from "../common/pNGButtons";
+const SelectPoints = ({
+  match,
+  history,
+  sharedWithMe,
+  setFolderFlag,
+  currentUser,
+}) => {
   var Markers = new Array();
   const [points, setPoints] = useState(0);
-  const ROLE =     currentUser && currentUser.authentication.role
+  const ROLE = currentUser && currentUser.authentication.role;
   const [reset, setReset] = useState([]);
   const [src, setSrc] = useState(" ");
   const [data, setData] = useState({});
@@ -148,13 +155,13 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag ,currentUser
       el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
     }
     $("#outerContainer").click(function (e) {
-      console.log(e)
+      console.log(e);
       var offset = $(this).offset();
       var relativeX = e.pageX - offset.left;
       var relativeY = e.pageY - offset.top;
       let temp = {};
       data[e.target.id] = { X: relativeX, Y: relativeY };
-      console.log(data)
+      console.log(data);
       setData({ ...data });
     });
   }, [data]);
@@ -189,9 +196,13 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag ,currentUser
       (imagePoints["toprighty"] * IMG.height) / (height * 100) - 7.5;
 
     setFourStyle({ top: toprighty, left: toprightx });
-    tempData = { ...tempData, four: { X: toprightx + 7.5, Y: toprighty + 7.5 } };
+    tempData = {
+      ...tempData,
+      four: { X: toprightx + 7.5, Y: toprighty + 7.5 },
+    };
     //TL
-    const topleftx = (imagePoints["topleftx"] * IMG.width) / (width * 100) - 7.5;
+    const topleftx =
+      (imagePoints["topleftx"] * IMG.width) / (width * 100) - 7.5;
     const toplefty =
       (imagePoints["toplefty"] * IMG.height) / (height * 100) - 7.5;
     setThreeStyle({ top: toplefty, left: topleftx });
@@ -336,17 +347,10 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag ,currentUser
                   </button>
                 </li>
                 <li className="nav-item">
-                  <button className=" mr-2 btn btn-success" onClick={save}>
-                    Save
-                  </button>
+                  <Save handler={save}></Save>
                 </li>
                 <li className="nav-item">
-                  <button
-                    className="btn btn-success"
-                    onClick={() => history.goBack()}
-                  >
-                    Back
-                  </button>
+                  <BackButton handler={history.goBack}></BackButton>
                 </li>
               </ul>
             </div>
@@ -356,16 +360,20 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag ,currentUser
       <div className="row">
         <div className=" custom-pad-li d-none d-sm-block col-md-2 p-0">
           <Link className="logo-container" to="/">
-          {ROLE !='labeller' ?<ul className=" ul-pad list-group left-side-bar">
-              {totalEle.map((item, index) => (
-                <LeftSideBar
-                  item={item}
-                  key={index}
-                  isActive={activeIndex == index ? true : false}
-                  changeActive={handleActive}
-                />
-              ))}
-            </ul>:<AllFilesSideBar/>}
+            {ROLE != "labeller" ? (
+              <ul className=" ul-pad list-group left-side-bar">
+                {totalEle.map((item, index) => (
+                  <LeftSideBar
+                    item={item}
+                    key={index}
+                    isActive={activeIndex == index ? true : false}
+                    changeActive={handleActive}
+                  />
+                ))}
+              </ul>
+            ) : (
+              <AllFilesSideBar />
+            )}
           </Link>
         </div>
         <div className="col-md-9 col-xs-12 col-sm-12">
@@ -425,8 +433,12 @@ const SelectPoints = ({ match, history, sharedWithMe, setFolderFlag ,currentUser
 const mapDispatchToProps = (dispatch) => ({
   setFolderFlag: (flag) => dispatch(setFolderFlag(flag)),
 });
-const mapStateToPros = ({ sharedWithMe: { sharedWithMe }, user: { currentUser } }) => ({
-  sharedWithMe,currentUser
+const mapStateToPros = ({
+  sharedWithMe: { sharedWithMe },
+  user: { currentUser },
+}) => ({
+  sharedWithMe,
+  currentUser,
 });
 
 export default connect(mapStateToPros, mapDispatchToProps)(SelectPoints);

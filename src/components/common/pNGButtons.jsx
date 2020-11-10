@@ -5,6 +5,7 @@ import RightSrc from "../../assets/right.png";
 import save from "../../assets/save.png";
 import edit from "../../assets/edit.png";
 import cancelSrc from "../../assets/close.png";
+import { ReactComponent as Cross } from "../../assets/cross.svg";
 const BackButton = ({ handler }) => {
   return (
     <>
@@ -57,7 +58,7 @@ const Right = ({ handler }) => {
 const CancelButton = ({ handler }) => {
   return (
     <>
-      <img
+      <Cross
         onClick={handler}
         className="icon-image"
         src={cancelSrc}
