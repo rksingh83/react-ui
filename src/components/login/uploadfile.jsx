@@ -15,7 +15,7 @@ import Paginate from "../common/paginate";
 import {
   getNotificationsIndex as getStartIndex,
   getNotificationCount as getPageCount,
-  NOTIFICATION_OFF_SET as PAGE_OFF_SET
+  NOTIFICATION_OFF_SET as PAGE_OFF_SET,
 } from "../common/pagination.config";
 
 const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
@@ -42,14 +42,14 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
     height: "90vh",
   };
   const paginationStyle = {
-    position :"absolute" ,
-    bottom:"14%",
-    left:"40%"
+    position: "absolute",
+    bottom: "14%",
+    left: "40%",
   };
   const searchImageHandler = (e) => {
     setSearchImage(e.target.value);
     setFilteredImages(
-      paginateImages.filter((item) => {
+      images.filter((item) => {
         if (item.title) {
           return item.title
             .toLowerCase()
@@ -138,9 +138,7 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
   };
   const paginate = (number) => {
     const allImages = [...images];
-    setPaginateImages(
-      allImages.splice(getStartIndex(number), PAGE_OFF_SET)
-    );
+    setPaginateImages(allImages.splice(getStartIndex(number), PAGE_OFF_SET));
     setCurrentPagination(number);
   };
 
@@ -203,15 +201,14 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
             filteredImages={filteredImages}
             searchInput={searchImage}
           />
-        <Paginate
-        elStyle ={paginationStyle}
+          <Paginate
+            elStyle={paginationStyle}
             setCurrentSelected={paginate}
             active={currentPagination}
             count={getPageCount(images)}
             NextPrev={groupNextPrev}
           />
         </div>
-      
       </div>
     </>
   );
