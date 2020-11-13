@@ -12,7 +12,7 @@ const Paginate = ({elStyle, count, active, setCurrentSelected, ...props  }) => {
     );
   }
   return (
-    <nav aria-label="Page navigation example" style={{ ...elStyle ,marginTop: "1rem" }}>
+    <nav aria-label="Page navigation example" style={{ marginTop: "1rem" }}>
       <ul className="pagination">
         <li className="page-item">
           <a className="page-link" onClick={() => props.NextPrev("PREV")}>
