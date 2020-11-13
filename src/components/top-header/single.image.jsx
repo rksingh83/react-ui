@@ -49,7 +49,7 @@ const singleImageHeader = ({ history, id, updateImages, ...props }) => {
     background: "rgba(0, 0, 0, 0.125)",
   };
   const deleteHandler = () => {
-    if (!window.confirm("Are You sure you want to delete ?")) return;
+    if (!window.confirm("Are you sure you want to delete ?")) return;
     const requestPayload = {
       imageInput: updateImages.filter((item) => (item.delete = 1)),
     };

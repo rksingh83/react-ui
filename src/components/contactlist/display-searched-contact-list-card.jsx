@@ -18,7 +18,7 @@ const ContactsCard = ({
 }) => {
   //http://localhost:9082/shareFile
   async function shareWith(id) {
-    if (!window.confirm("Are You sure you want to Share Folder ?")) return;
+    if (!window.confirm("Are you sure you want to Share Folder ?")) return;
 
     try {
       const folderIds = [];
@@ -49,7 +49,7 @@ const ContactsCard = ({
     } catch (error) {}
   }
   async function removeContact(id) {
-    if (!window.confirm("Are You sure you want to remove ?")) return;
+    if (!window.confirm("Are you sure you want to remove ?")) return;
 
     try {
       const contacts = await Post(`/removeContact`, { id });

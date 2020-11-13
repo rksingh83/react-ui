@@ -82,7 +82,7 @@ const ShareFolderModal = ({ show, hide, selected, images, count }) => {
     shareWith(id);
   };
   async function shareWith(id) {
-    if (!window.confirm("Are You sure you want to Share Folder ?")) return;
+    if (!window.confirm("Are you sure you want to Share Folder ?")) return;
 
     try {
       const folderIds = [];

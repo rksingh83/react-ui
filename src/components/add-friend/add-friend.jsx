@@ -68,7 +68,7 @@ const AddFriend = ({ history, setContacts, contacts, match }) => {
   const editGroupHandler = async (data) => {
     try {
       if (data.deleted) {
-        if (!window.confirm("Are You sure you want to remove ?")) return;
+        if (!window.confirm("Are you sure you want to remove ?")) return;
       }
       const res = await EditGroup(data);
       if (res.data.code == "200") {
@@ -172,7 +172,7 @@ const AddFriend = ({ history, setContacts, contacts, match }) => {
     getAllGroups();
   }, []);
   async function removeContact(exist = undefined) {
-    if (!window.confirm("Are You sure you want to remove ?")) return;
+    if (!window.confirm("Are you sure you want to remove ?")) return;
 
     try {
       const URL = exist ? "cancelUserAddRequest" : "removeContact";
