@@ -59,7 +59,7 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
     );
   };
 
-  const totalEle = ["My Books", "Shared Books", "Pending"];
+  const totalEle = ["My Books", "Shared Books", "Default Page"];
   const [LiElement, setLiEl] = useState(totalEle);
   const handleActive = (e) => {
     setActiveIndex(LiElement.indexOf(e));

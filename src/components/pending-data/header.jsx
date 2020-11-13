@@ -96,7 +96,7 @@ const PendingHeader = ({
             )}
           </div>
          <div style ={{display:isNone}}>
-            <span className="info"> Total Pending </span>
+            <span className="info"> Total Default Page </span>
             <span className="badge badge-info">{all.length}</span>
           </div>
           <div>
