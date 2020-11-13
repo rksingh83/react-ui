@@ -168,29 +168,7 @@ const PendingPageData = ({
           )}
         </div>
         <div className="col-md-8">
-          <div className="row">
-            <div className={title_col}>Page Title</div>
-            <div className={col}>
-              <Input
-                type="text"
-                onChange={pageLookUpHandler}
-                value={pageData.title}
-                name="title"
-                mt={"mt-0"}
-                disabled={isDisabled}
-              />
-            </div>
-            {isMemberShip == 1 && (
-              <div className="col-md-7">
-                <img
-                  style={imageStyle}
-                  width="320px"
-                  src={data.pageLookup.segmentationImagePath}
-                  className="img-height"
-                />
-              </div>
-            )}
-          </div>
+          
           <div className="row">
             <div className={title_col}>Book Name</div>
             {/* {isMemberShip == 1 && (
@@ -241,7 +219,29 @@ const PendingPageData = ({
               />
             </div>
           </div> */}
-
+<div className="row">
+            <div className={title_col}>Page Title</div>
+            <div className={col}>
+              <Input
+                type="text"
+                onChange={pageLookUpHandler}
+                value={pageData.title}
+                name="title"
+                mt={"mt-0"}
+                disabled={isDisabled}
+              />
+            </div>
+            {isMemberShip == 1 && (
+              <div className="col-md-7">
+                <img
+                  style={imageStyle}
+                  width="320px"
+                  src={data.pageLookup.segmentationImagePath}
+                  className="img-height"
+                />
+              </div>
+            )}
+          </div>
           {!isDisabled && (
             <div className="row">
               <div className="col-md-2 page-lookup-heading">Share</div>
@@ -266,6 +266,7 @@ const PendingPageData = ({
               )}
             </div>
           )}
+
           <div className="row">
             <div className="col-md-2 page-lookup-heading">Date</div>
             <div className={col}>
