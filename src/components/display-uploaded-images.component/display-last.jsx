@@ -9,12 +9,18 @@ import { connect } from "react-redux";
 import SharedHeader from "../top-header/shared-header";
 import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
-import AllFilesSideBar from '../common/AllFilesSideBar' ;
-import { BackButton  ,EditBtn} from "../common/pNGButtons";
-const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag ,currentUser }) => {
+import AllFilesSideBar from "../common/AllFilesSideBar";
+import { BackButton, EditBtn } from "../common/pNGButtons";
+const DisplayLastImage = ({
+  match,
+  history,
+  sharedWithMe,
+  setFolderFlag,
+  currentUser,
+}) => {
   const [imageUrl, setImageUrl] = useState("");
-  const [imageTitle , setImageTitle] = useState("");
-  const ROLE =     currentUser && currentUser.authentication.role
+  const [imageTitle, setImageTitle] = useState("");
+  const ROLE = currentUser && currentUser.authentication.role;
   const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [currentFolderName, setCurrentFolderName] = useState("");
@@ -33,7 +39,6 @@ const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag ,current
       setCurrentFolderName(res.data.imageInput[0].fileName);
       setImageUrl(res.data.imageInput[0].raw_image_org);
       setImageTitle(res.data.imageInput[0].title);
-      
     });
   }, []);
   const handleActive = (e) => {
@@ -60,7 +65,6 @@ const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag ,current
     height: "2rem",
   };
   const pencilStyle = {
-    width: "4rem",
     height: "2rem",
   };
   const download = (src) => {
@@ -69,6 +73,9 @@ const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag ,current
     element.href = URL.createObjectURL(file);
     element.download = "image.jpg";
     element.click();
+  };
+  const editHandler = () => {
+    history.push(`/edit/${match.params.id}`);
   };
   return (
     <>
@@ -103,7 +110,7 @@ const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag ,current
                 <ul className="navbar-nav ml-auto text-white">
                   <li className="nav-item">
                     <EditBtn
-                      handler={history.push(`/edit/${match.params.id}`)}
+                      onClick={editHandler}
                       style={pencilStyle}
                     ></EditBtn>
                   </li>
@@ -114,12 +121,9 @@ const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag ,current
                     ></Cross>
                   </li>
                   <li className="nav-item">
-                    <button
-                      className="btn btn-success"
-                      onClick={() => history.goBack()}
-                    >
+                    <BackButton handler={history.goBack}>
                       Back
-                    </button>
+                    </BackButton>
                   </li>
                 </ul>
               </div>
@@ -130,16 +134,20 @@ const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag ,current
       <div className="row">
         <div className=" custom-pad-li d-none d-sm-block col-md-2 p-0">
           <Link className="logo-container" to="/">
-           {ROLE !='labeller' ? <ul className=" ul-pad list-group left-side-bar">
-              {totalEle.map((item, index) => (
-                <LeftSideBar
-                  item={item}
-                  key={index}
-                  isActive={activeIndex == index ? true : false}
-                  changeActive={handleActive}
-                />
-              ))}
-            </ul>:<AllFilesSideBar/>}
+            {ROLE != "labeller" ? (
+              <ul className=" ul-pad list-group left-side-bar">
+                {totalEle.map((item, index) => (
+                  <LeftSideBar
+                    item={item}
+                    key={index}
+                    isActive={activeIndex == index ? true : false}
+                    changeActive={handleActive}
+                  />
+                ))}
+              </ul>
+            ) : (
+              <AllFilesSideBar />
+            )}
           </Link>
         </div>
         <div className="col-md-9 col-xs-12 col-sm-12">
@@ -150,8 +158,12 @@ const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag ,current
     </>
   );
 };
-const mapStateToPros = ({ sharedWithMe: { sharedWithMe }, user: { currentUser } }) => ({
-  sharedWithMe,currentUser
+const mapStateToPros = ({
+  sharedWithMe: { sharedWithMe },
+  user: { currentUser },
+}) => ({
+  sharedWithMe,
+  currentUser,
 });
 const mapDispatchToProps = (dispatch) => ({
   setFolderFlag: (flag) => dispatch(setFolderFlag(flag)),

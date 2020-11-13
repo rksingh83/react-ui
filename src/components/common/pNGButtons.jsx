@@ -67,10 +67,10 @@ const CancelButton = ({ handler }) => {
     </>
   );
 };
-const EditBtn = ({ handler }) => {
+const EditBtn = ({ handler ,...props }) => {
   return (
     <>
-      <img onClick={handler} className="icon-image" src={edit} alt="fireSpot" />
+      <img onClick={handler} {...props} className="icon-image" src={edit} alt="fireSpot" />
     </>
   );
 };
