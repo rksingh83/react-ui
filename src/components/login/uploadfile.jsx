@@ -11,10 +11,18 @@ import SharedHeader from "../top-header/shared-header";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import { Link } from "react-router-dom";
 import CustomLoader from "../loader/loader";
+import Paginate from "../common/paginate";
+import {
+  getNotificationsIndex as getStartIndex,
+  getNotificationCount as getPageCount,
+  NOTIFICATION_OFF_SET as PAGE_OFF_SET
+} from "../common/pagination.config";
+
 const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const [file, setFile] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState([]);
+  const [paginateImages, setPaginateImages] = useState([]);
   const [currentFolderName, setCurrentFolderName] = useState("");
   const [imageDescription, setImagesDescription] = useState("Hi");
   const [pageNumber, setPageNumber] = useState("");
@@ -27,15 +35,21 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const [filteredImages, setFilteredImages] = useState("");
   const [searchImage, setSearchImage] = useState("");
   const [isShowLoader, setShowLoader] = useState(false);
+  const [currentPagination, setCurrentPagination] = useState(1);
 
   const sideBarStyle = {
     border: "1px solid rgba(0, 0, 0, 0.125)",
     height: "90vh",
   };
+  const paginationStyle = {
+    position :"absolute" ,
+    bottom:"14%",
+    left:"40%"
+  };
   const searchImageHandler = (e) => {
     setSearchImage(e.target.value);
     setFilteredImages(
-      images.filter((item) => {
+      paginateImages.filter((item) => {
         if (item.title) {
           return item.title
             .toLowerCase()
@@ -88,6 +102,8 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
         history.push("/logout");
       }
       setImages(images.data.imageInput);
+      const temp = [...images.data.imageInput];
+      setPaginateImages(temp.splice(0, PAGE_OFF_SET));
 
       setCurrentFolderName(images.data.fileName);
       setIsLoading(false);
@@ -107,6 +123,8 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
         history.push("/logout");
       }
       setImages(images.data.imageInput);
+      const temp = [...images.data.imageInput];
+      setPaginateImages(temp.splice(0, PAGE_OFF_SET));
 
       setCurrentFolderName(images.data.fileName);
       setIsLoading(false);
@@ -117,6 +135,23 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
   }
   const updateHandler = (list) => {
     setImagesUpdate(list);
+  };
+  const paginate = (number) => {
+    const allImages = [...images];
+    setPaginateImages(
+      allImages.splice(getStartIndex(number), PAGE_OFF_SET)
+    );
+    setCurrentPagination(number);
+  };
+
+  const groupNextPrev = (type) => {
+    if (type === "NEXT") {
+      if (currentPagination == getPageCount(images)) return;
+      paginate(currentPagination + 1);
+    } else {
+      if (currentPagination == 1) return;
+      paginate(currentPagination - 1);
+    }
   };
   return (
     <>
@@ -161,14 +196,22 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
             history={history}
             onHove={showContentHandler}
             onLeave={hideContentHandler}
-            images={images}
+            images={paginateImages}
             folderId={folderId}
             updateHandler={updateHandler}
             isLoading={isLoading}
             filteredImages={filteredImages}
             searchInput={searchImage}
           />
+        <Paginate
+        elStyle ={paginationStyle}
+            setCurrentSelected={paginate}
+            active={currentPagination}
+            count={getPageCount(images)}
+            NextPrev={groupNextPrev}
+          />
         </div>
+      
       </div>
     </>
   );
