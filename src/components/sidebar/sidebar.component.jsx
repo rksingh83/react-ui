@@ -31,7 +31,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const savedPageId = useSelector((state) => state.pageId.currentImage);
   const totalEle =
     ROLE != "labeller"
-      ? ["My Books", "Shared Books", "Pending"]
+      ? ["My Books", "Shared Books", "Default Page"]
       : ["All Files"];
   const TextMAp =
     ROLE != "labeller" ? { HOME: 0, SHARED: 1, PENDING: 2 } : { PENDING: 0 };

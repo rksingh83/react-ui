@@ -44,7 +44,7 @@ const DisplayOriginalImage = ({
     segmentation: "",
   });
   const [isPrimerUser, setIsPrimerUser] = useState("");
-  const totalEle = ["My Books", "Shared Books", "Pending"];
+  const totalEle = ["My Books", "Shared Books", "Default Page"];
   const [LiElement, setLiEl] = useState(totalEle);
   const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
   const [activeIndex, setActiveIndex] = useState(currentIndex);

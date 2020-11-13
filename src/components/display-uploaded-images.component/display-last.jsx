@@ -18,7 +18,7 @@ const DisplayLastImage = ({ match, history, sharedWithMe, setFolderFlag ,current
   const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [currentFolderName, setCurrentFolderName] = useState("");
-  const totalEle = ["My Books", "Shared Books", "Pending"];
+  const totalEle = ["My Books", "Shared Books", "Default Page"];
   const [LiElement, setLiEl] = useState(totalEle);
   useEffect(() => {
     const requestFile = { ids: [match.params.id], imagetype: "_align.jpg" };
