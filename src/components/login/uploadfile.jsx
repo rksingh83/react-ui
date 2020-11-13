@@ -201,13 +201,15 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
             filteredImages={filteredImages}
             searchInput={searchImage}
           />
-          <Paginate
-            elStyle={paginationStyle}
-            setCurrentSelected={paginate}
-            active={currentPagination}
-            count={getPageCount(images)}
-            NextPrev={groupNextPrev}
-          />
+          {images.length > 0 && (
+            <Paginate
+              elStyle={paginationStyle}
+              setCurrentSelected={paginate}
+              active={currentPagination}
+              count={getPageCount(images)}
+              NextPrev={groupNextPrev}
+            />
+          )}
         </div>
       </div>
     </>
