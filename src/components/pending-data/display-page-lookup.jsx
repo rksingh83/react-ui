@@ -27,6 +27,7 @@ const PendingPageData = ({
   isDisabled,
   ...props
 }) => {
+  console.log((pageData.admin_updated)) ;
   const col = isMemberShip == 1 ? "col-md-3" : "col-md-10";
   const INPUT_COL = isMemberShip == 1 ? "col-md-3" : "col-md-6";
   const title_col =
@@ -44,7 +45,7 @@ const PendingPageData = ({
   };
 
   useEffect(() => {
-    console.log(pageData.admin_updated) ;
+  
     console.log(pageData)
   }, [data.pageLookup]);
   const fileTagHandler = (e) => {
@@ -347,7 +348,7 @@ const PendingPageData = ({
           </div>
         </div>
       </div>
-      {props.role != "labeller" && (
+      {props.role != "labeller" && !isDisabled &&(
         <div className="row py-3">
           <div className="col-md-4">
             <span className="set-by-admin">
@@ -359,8 +360,8 @@ const PendingPageData = ({
              
               NO
               <input
-                value={false}
-                checked= {!Boolean(pageData.admin_updated)}
+                value={0}
+                checked= {!Number(pageData.admin_updated)}
                 onChange={(e) => pageLookUpHandler(e)}
                 id="male"
                 name="admin_updated"
@@ -374,12 +375,12 @@ const PendingPageData = ({
               YES
               <input
                 onChange={(e) => pageLookUpHandler(e)}
-                value={true}
+                value={1}
                 id="male"
                 name="admin_updated"
                 className="form-control radio"
                 type="radio"
-                checked= {Boolean(pageData.admin_updated)}
+                checked= {Number(pageData.admin_updated)}
               />
             </span>
           </div>

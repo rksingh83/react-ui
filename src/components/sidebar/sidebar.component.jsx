@@ -330,7 +330,9 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const saveUpdateData = async () => {
     setShowLoader(true);
     try {
-      const response = await Post("/savePageLookup", lookupPageState);
+      const request =  {...lookupPageState ,
+        admin_updated:lookupPageState.admin_updated ==1?true:false}
+      const response = await Post("/savePageLookup", request);
       if (response.data.code == "200") {
         setResponseMgs("Saved Successfully");
         setShowPop(true);

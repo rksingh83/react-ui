@@ -12,7 +12,7 @@ import $ from "jquery";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import AllFilesSideBar from "../common/AllFilesSideBar";
-import { BackButton, Save } from "../common/pNGButtons";
+import { BackButton, EditBtn, Save } from "../common/pNGButtons";
 const SelectPoints = ({
   match,
   history,
@@ -304,6 +304,9 @@ const SelectPoints = ({
     fourDiv.current.style.left = bottomleftx;
     console.log(fourDiv.current.style);
   };
+  const clickHandler = () =>{
+    displayPoint(true)
+  }
   return (
     <>
       <div className="row">
@@ -338,13 +341,12 @@ const SelectPoints = ({
                   />
                 </li>
                 <li className="nav-item">
-                  <button
+                  <EditBtn
                     ref={EditButton}
+                    handler = {clickHandler}
                     className=" mr-2 btn btn-success"
-                    onClick={() => displayPoint(true)}
-                  >
-                    Edit Points
-                  </button>
+                   
+                  ></EditBtn>
                 </li>
                 <li className="nav-item">
                   <Save handler={save}></Save>
