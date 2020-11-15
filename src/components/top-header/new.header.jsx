@@ -43,7 +43,7 @@ const TopSingleHeader = ({
     }
   };
   const deleteHandler = () => {
-    if (!window.confirm("Are You sure you want to delete ?")) return;
+    if (!window.confirm("Are you sure you want to delete ?")) return;
     const updateImages = images.filter((item) => item.id == imageId);
 
     const requestPayload = {

@@ -353,7 +353,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     }
   };
   const pendingImgDeleteHandler = async () => {
-    if (!window.confirm("Are You sure you want to delete ?")) return;
+    if (!window.confirm("Are you sure you want to delete ?")) return;
     setShowLoader(true);
     const requestPayload = {
       imageInput: [
