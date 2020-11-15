@@ -13,6 +13,7 @@ const TopHeaderWithBack = ({
   id,
   currentFolder,
   updateImages,
+  setShowLoader ,
   ...props
 }) => {
   const [file, setFile] = useState("");
@@ -53,7 +54,7 @@ const TopHeaderWithBack = ({
   };
   const submitHandler = async (e) => {
     //  e.preventDefault();
-
+    setShowLoader(true)
     const formData = new FormData();
     var d = new Date();
     let imageName = d.getTime();
@@ -70,11 +71,15 @@ const TopHeaderWithBack = ({
       });
       if (res.status == 200) {
         alert(res.data.message);
+        setShowLoader(false)
         window.location.reload();
       } else {
+        setShowLoader(false)
         alert("Something went wrong try later");
       }
-    } catch (err) {}
+    } catch (err) {
+      setShowLoader(false)
+    }
   };
   const topRowStyle = {
     background: "rgba(0, 0, 0, 0.125)",

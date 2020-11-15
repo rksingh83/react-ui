@@ -163,6 +163,7 @@ const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
           currentFolder={currentFolderName}
           searchImageHandler={searchImageHandler}
           imageSearchInput={searchImage}
+          setShowLoader ={setShowLoader}
         />
       )}
       {sharedWithMe == "SHARED" && <SharedHeader history={history} />}

@@ -1,60 +1,60 @@
 {
-  "name": "ec",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.30",
-    "@fortawesome/free-solid-svg-icons": "^5.14.0",
-    "@fortawesome/react-fontawesome": "^0.1.11",
-    "@material-ui/core": "^4.11.0",
-    "axios": "^0.19.2",
-    "bootstrap": "^4.5.2",
-    "firebase": "^6.6.2",
-    "jquery": "^3.5.1",
-    "js-cookie": "^2.2.1",
-    "material-ui": "^0.20.2",
-    "moment": "^2.29.0",
-    "npm-sass": "^2.3.0",
-    "react": "^16.13.1",
-    "react-bootstrap": "^1.3.0",
-    "react-datepicker": "^3.1.3",
-    "react-dom": "^16.13.1",
-    "react-download-link": "^2.3.0",
-    "react-dropzone": "^11.2.0",
-    "react-loader-spinner": "^3.1.14",
-    "react-modal": "^3.11.2",
-    "react-redux": "^7.2.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "3.0.1",
-    "react-toastify": "^6.0.8",
-    "react-webcam": "^5.2.0",
-    "reactjs-popup": "^1.5.0",
-    "redux": "^4.0.5",
-    "redux-logger": "^3.0.6",
-    "redux-persist": "^6.0.0",
-    "reselect": "^4.0.0",
-    "stompjs": "^2.3.3"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "proxy": "http://3.7.41.59:9082/mydiginotes",
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+    "name": "ec",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^1.2.30",
+        "@fortawesome/free-solid-svg-icons": "^5.14.0",
+        "@fortawesome/react-fontawesome": "^0.1.11",
+        "@material-ui/core": "^4.11.0",
+        "axios": "^0.19.2",
+        "bootstrap": "^4.5.2",
+        "firebase": "^6.6.2",
+        "jquery": "^3.5.1",
+        "js-cookie": "^2.2.1",
+        "material-ui": "^0.20.2",
+        "moment": "^2.29.0",
+        "npm-sass": "^2.3.0",
+        "react": "^16.13.1",
+        "react-bootstrap": "^1.3.0",
+        "react-datepicker": "^3.1.3",
+        "react-dom": "^16.13.1",
+        "react-download-link": "^2.3.0",
+        "react-dropzone": "^11.2.0",
+        "react-loader-spinner": "^3.1.14",
+        "react-modal": "^3.11.2",
+        "react-redux": "^7.2.1",
+        "react-router-dom": "^5.2.0",
+        "react-scripts": "3.0.1",
+        "react-toastify": "^6.0.8",
+        "react-webcam": "^5.2.0",
+        "reactjs-popup": "^1.5.0",
+        "redux": "^4.0.5",
+        "redux-logger": "^3.0.6",
+        "redux-persist": "^6.0.0",
+        "reselect": "^4.0.0",
+        "stompjs": "^2.3.3"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "proxy": "http://3.7.41.59:9082/mydiginotes",
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
 }
