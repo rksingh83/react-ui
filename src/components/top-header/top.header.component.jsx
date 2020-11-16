@@ -6,7 +6,7 @@ import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { ReactComponent as FolderCreate } from "../../assets/trade.svg";
 import { ReactComponent as Refresh } from "../../assets/icon.svg";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
-
+import CustomToolTip from '../common/CustomToolTip'
 import { ReactComponent as Share } from "../../assets/teaching.svg";
 import UploadForm from "../upload-image/upload-images";
 import ShareFolderModal from "../modal/share-folder-modal";
@@ -145,12 +145,12 @@ const TopHeader = ({
       }
     } catch (err) {}
   };
-const closeHandler = () =>{
-  setShow(false);
-}
-const editHandler = () =>{
-  reNameFolder(false)
-}
+  const closeHandler = () => {
+    setShow(false);
+  };
+  const editHandler = () => {
+    reNameFolder(false);
+  };
   return (
     <div className="row secondary-header single-header" style={topRowStyle}>
       {isShowLoader && <CustomLoader />}
@@ -174,7 +174,9 @@ const editHandler = () =>{
             ></input>
           </div>
           <div className="col-md-1 sec-header-item col-text-style">
+          <CustomToolTip text ="Upload Image">
             <UploadForm isUpload={true} submitHandler={fileUploadHandler} />
+            </CustomToolTip>
           </div>
           {totalItem == 0 && props.uploadLimits < 10 && (
             <div className="col-md-1 sec-header-item col-text-style item-center">
@@ -188,22 +190,24 @@ const editHandler = () =>{
             style={columnMinWidth}
             className="col-md-1 sec-header-item col-text-style"
           >
-            <Refresh
-              style={{ marginLeft: "2rem" }}
-              onClick={() => setShow(true)}
-            />{" "}
-            <span className="on-hover" onClick={() => setShow(true)}>
-              Create Book
-            </span>
+            <span className="on-hover" onClick={() => setShow(true)}></span>
+            <CustomToolTip text="Create Book">
+              <Refresh
+                style={{ marginLeft: "2rem" }}
+                onClick={() => setShow(true)}
+              />
+            </CustomToolTip>
           </div>
           <div
             style={columnMinWidth}
             className="col-md-1 col-text-style sec-header-item"
           >
-            <FolderCreate onClick={() => window.location.reload()} />{" "}
-            <span className="on-hover" onClick={() => window.location.reload()}>
+             <CustomToolTip text ="Refresh">
+            <FolderCreate onClick={() => window.location.reload()} />
+            </CustomToolTip>
+            {/* <span className="on-hover" onClick={() => window.location.reload()}>
               Refresh
-            </span>
+            </span> */}
           </div>
           <div
             className={`  col-md-1  col-text-style ${
@@ -211,15 +215,16 @@ const editHandler = () =>{
             }`}
             style={columnMinWidth}
           >
-            <Share onClick={() => setShareFolder(true)} />{" "}
+             <CustomToolTip text="Share">
+            <Share onClick={() => setShareFolder(true)} /></CustomToolTip>
             <ShareFolderModal
               selected={selectedItems}
               show={shareFolder}
               hide={setShareFolder}
             />
-            <span className="on-hover" onClick={() => setShareFolder(true)}>
+            {/* <span className="on-hover" onClick={() => setShareFolder(true)}>
               Share
-            </span>
+            </span> */}
           </div>
           <div
             className={`  col-md-1  col-text-style ${
@@ -227,10 +232,12 @@ const editHandler = () =>{
             }`}
             style={columnMinWidth}
           >
-            <Delete onClick={() => reNameFolder(true)} />{" "}
-            <span className="on-hover" onClick={() => reNameFolder(true)}>
+               <CustomToolTip text="Delete">
+            <Delete onClick={() => reNameFolder(true)} />
+            </CustomToolTip>
+            {/* <span className="on-hover" onClick={() => reNameFolder(true)}>
               Delete
-            </span>
+            </span> */}
           </div>
 
           <div
@@ -239,13 +246,15 @@ const editHandler = () =>{
             }`}
             style={columnMinWidth}
           >
-            <EditBtn handler ={editHandler} />
-            <span
+              <CustomToolTip text="Edit">
+            <EditBtn handler={editHandler} />
+            </CustomToolTip>
+            {/* <span
               className="on-hover"
               onClick={() => showContactListModal(false)}
             >
               Edit
-            </span>
+            </span> */}
             {/* <button
               onClick={showContactListModal}
               className="btn btn-secondary ml-2"
@@ -268,10 +277,12 @@ const editHandler = () =>{
             >
               <span className="count badge badge-info mr-1">{totalItem} </span>{" "}
               <span style={{ padding: "0 10px" }}> Selected</span>
+              <CustomToolTip text ="Clear All">
               <Cross
                 className="ml-1"
                 onClick={() => window.location.reload()}
               ></Cross>
+              </CustomToolTip>
             </div>
           </div>
         </div>

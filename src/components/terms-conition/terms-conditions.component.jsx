@@ -6,7 +6,7 @@ const TermsAndCondition = () => (
   <div className="">
     <SecondaryHeader />
     <div className="row">
-    Book Name
+    <SideBar/>
       <div className=" pl-4 col-md-10 tnc">
         <h4 className="text-center">
           PLEASE READ THESE TERMS AND CONDITIONS CAREFULLY

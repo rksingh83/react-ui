@@ -6,7 +6,7 @@ import Save from "../../assets/save.png";
 import Left from "../../assets/left.png";
 import Right from "../../assets/right.png";
 import { Post, Get } from "../../service/service.setup";
-import {EditBtn} from '../common/pNGButtons' 
+import { EditBtn } from "../common/pNGButtons";
 const PendingHeader = ({
   prev,
   next,
@@ -17,7 +17,7 @@ const PendingHeader = ({
   history,
   ...props
 }) => {
-  const isNone = (props.role === 'labeller')?"none":"" ;
+  const isNone = props.role === "labeller" ? "none" : "";
   const uploadImageHandler = async (e) => {
     //  e.preventDefault();
     props.toggleLoader(true);
@@ -25,7 +25,7 @@ const PendingHeader = ({
     var d = new Date();
     let imageName = d.getTime();
     imageName = `jpg_${imageName}.jpg`;
-   
+
     formData.append("files", e, imageName);
     try {
       let res = await Post("/reUploadImage", formData, {
@@ -88,14 +88,17 @@ const PendingHeader = ({
               // >
               //   Edit
               // </button>
-              <EditBtn handler = {() =>
-                    props.redirectAndSaveId(
-                      `/edit/${currentImageId}`,
-                      currentImageId
-                    )} />
+              <EditBtn
+                handler={() =>
+                  props.redirectAndSaveId(
+                    `/edit/${currentImageId}`,
+                    currentImageId
+                  )
+                }
+              />
             )}
           </div>
-         <div style ={{display:isNone}}>
+          <div style={{ display: isNone }}>
             <span className="info"> Total Default Page </span>
             <span className="badge badge-info">{all.length}</span>
           </div>
@@ -105,16 +108,18 @@ const PendingHeader = ({
               {all.indexOf(currentImageId) + 1}
             </span>
           </div>
-          <div>
-            {props.role != "labeller" && (
+
+          {props.role != "labeller" && (
+            <div>
               <img
-              onClick={prev} 
-              className="icon-image"
-              src={Left}
-              alt="fireSpot"
-            />
-            )}
-          </div>
+                onClick={prev}
+                className="icon-image"
+                src={Left}
+                alt="fireSpot"
+              />{" "}
+            </div>
+          )}
+
           <div>
             {props.role === "labeller" ? (
               <button onClick={next} className="btn btn-dark">
@@ -123,11 +128,11 @@ const PendingHeader = ({
             ) : (
               // <Next className="header-svg" onClick={next} />
               <img
-              onClick={next} 
-              className="icon-image"
-              src={Right}
-              alt="fireSpot"
-            />
+                onClick={next}
+                className="icon-image"
+                src={Right}
+                alt="fireSpot"
+              />
             )}
           </div>
         </div>
