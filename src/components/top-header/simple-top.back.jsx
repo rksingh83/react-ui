@@ -8,12 +8,13 @@ import { ReactComponent as Share } from "../../assets/teaching.svg";
 import ShareFolderModal from "../modal/share-folder-modal";
 import { getPendingPageById } from "../../service/pendingData";
 import { BackButton, EditBtn, CancelButton } from "../common/pNGButtons";
+import CustomToolTip from "../common/CustomToolTip";
 const TopHeaderWithBack = ({
   history,
   id,
   currentFolder,
   updateImages,
-  setShowLoader ,
+  setShowLoader,
   ...props
 }) => {
   const [file, setFile] = useState("");
@@ -54,7 +55,7 @@ const TopHeaderWithBack = ({
   };
   const submitHandler = async (e) => {
     //  e.preventDefault();
-    setShowLoader(true)
+    setShowLoader(true);
     const formData = new FormData();
     var d = new Date();
     let imageName = d.getTime();
@@ -71,14 +72,14 @@ const TopHeaderWithBack = ({
       });
       if (res.status == 200) {
         alert(res.data.message);
-        setShowLoader(false)
+        setShowLoader(false);
         window.location.reload();
       } else {
-        setShowLoader(false)
+        setShowLoader(false);
         alert("Something went wrong try later");
       }
     } catch (err) {
-      setShowLoader(false)
+      setShowLoader(false);
     }
   };
   const topRowStyle = {
@@ -149,7 +150,13 @@ const TopHeaderWithBack = ({
           onSubmit={submitHandler}
         >
           <label className="input-label">
-            <Photo style={{width:'30px !important', height: "35px", marginBottom: "3px" }} />
+            <Photo
+              style={{
+                width: "30px !important",
+                height: "35px",
+                marginBottom: "3px",
+              }}
+            />
             <span>Upload</span>
             <input
               className="input-file"
@@ -183,8 +190,9 @@ const TopHeaderWithBack = ({
             display: updateImages && updateImages.length > 0 ? "" : "none",
           }}
         >
-          <Delete onClick={deleteHandler} className="header-icon" />
-          Delete
+          <CustomToolTip text="Delete Image">
+            <Delete onClick={deleteHandler} className="header-icon" />
+          </CustomToolTip>
         </div>
       </div>
       <div
@@ -196,7 +204,9 @@ const TopHeaderWithBack = ({
             display: updateImages && updateImages.length > 0 ? "" : "none",
           }}
         >
-          <Share onClick={() => setShareFolder(true)} />{" "}
+          <CustomToolTip text="Share Image">
+            <Share onClick={() => setShareFolder(true)} />
+          </CustomToolTip>
           <ShareFolderModal
             selected={1}
             show={shareFolder}
@@ -204,9 +214,9 @@ const TopHeaderWithBack = ({
             images={{ updateImages, id }}
             count={updateImages.length}
           />
-          <span className="on-hover" onClick={() => setShareFolder(true)}>
+          {/* <span className="on-hover" onClick={() => setShareFolder(true)}>
             Share
-          </span>
+          </span> */}
         </div>
       </div>
 
@@ -220,7 +230,9 @@ const TopHeaderWithBack = ({
       <div className="col-md-1 sec-header-item col-text-style">
         {updateImages && updateImages.length == 1 && (
           <div>
-            <EditBtn handler={editPageHandler} />
+            <CustomToolTip text="Edit Image">
+              <EditBtn handler={editPageHandler} />
+            </CustomToolTip>
           </div>
         )}
       </div>
@@ -232,7 +244,9 @@ const TopHeaderWithBack = ({
         >
           Back
         </button> */}
-        <BackButton handler={history.goBack} />
+        <CustomToolTip text="Go Back">
+          <BackButton handler={history.goBack} />
+        </CustomToolTip>
       </div>
     </div>
   );
