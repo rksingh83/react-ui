@@ -35,7 +35,7 @@ const DisplayNotification = ({ userNotifications, history, setFolderFlag }) => {
         setFolderFlag("SHARED");
         history.push(`/sidebar/${id}`);
         break;
-        case "Labeller Upload Page":
+        case "Admin Upload Page":
           setFolderFlag("PENDING");
           history.push(`/sidebar/${id}`);
           break;
