@@ -67,7 +67,7 @@ const PendingHeader = ({
 
           {all.length > 0 && props.role != "labeller" && (
             <CustomToolTip text="Delete Image">
-              <button className="btn btn-danger" onClick={props.deleteImg}>
+              <button className="btn btn-danger mr-2" onClick={props.deleteImg}>
                 Delete
               </button>
             </CustomToolTip>
@@ -75,7 +75,7 @@ const PendingHeader = ({
 
           {all.length > 0 && (
             <CustomToolTip text="Save Image">
-              <SaveBtn />
+              <SaveBtn  />
             </CustomToolTip>
           )}
 
@@ -103,14 +103,6 @@ const PendingHeader = ({
             </CustomToolTip>
           )}
 
-          <span className="info"> Total Default Page </span>
-          <span className="badge badge-info">{all.length}</span>
-
-          <span className="info">Current</span>
-          <span className="badge badge-info">
-            {all.indexOf(currentImageId) + 1}
-          </span>
-
           {props.role != "labeller" && (
             <CustomToolTip text="Previous">
               <LeftButton handler={prev} />
@@ -128,6 +120,17 @@ const PendingHeader = ({
               <RightButton handler={next} />
             </CustomToolTip>
           )}
+          {props.role != "labeller" && (
+            <span className="info"> Total Default Page </span>
+          )}
+          {props.role != "labeller" && (
+            <span className="badge badge-info">{all.length}</span>
+          )}
+
+          <span className="info ml-2">Current</span>
+          <span className="badge badge-info">
+            {all.indexOf(currentImageId) + 1}
+          </span>
         </div>
       </div>
     </main>
