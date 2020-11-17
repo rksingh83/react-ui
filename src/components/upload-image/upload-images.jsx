@@ -11,11 +11,10 @@ const UploadForm = ({ submitHandler, isUpload, ...props }) => {
       <div style={{ position: "relative" }}>
         {isUpload && (
           <Photo
-            style={{ width: "25", height: "35px", marginBottom: "10px" }}
+            style={{ width: "35", height: "35px", marginBottom: "10px" }}
             {...props}
           />
         )}
-        {isUpload && <span className="on-hover">Upload</span>}
         {!isUpload && (
           <label className="" style={{ margin: "0px" }}>
             <img

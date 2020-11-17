@@ -58,87 +58,76 @@ const PendingHeader = ({
           className="col-md-2"
           style={{ background: "rgba(0, 0, 0, 0.125)", minHeight: "3rem" }}
         ></div>
-        <div className="col-md-10 main">
-          <div>
-            {all.length > 0 && props.role != "labeller" && (
-              <CustomToolTip text="Retake Image">
-                <UploadForm submitHandler={uploadImageHandler}></UploadForm>
-              </CustomToolTip>
-            )}
-          </div>
-          <div>
-            {all.length > 0 && props.role != "labeller" && (
-             <CustomToolTip text="Delete Image">
-             <button className="btn btn-danger" onClick={props.deleteImg}>
-                Delete
-              </button>
-              </CustomToolTip>
-            )}
-          </div>
-          <div>
-            {all.length > 0 && (
-              <CustomToolTip text="Save Image">
-                <SaveBtn />
-              </CustomToolTip>
-            )}
-          </div>
-          <div>
-            {all.length > 0 && (
-              // <button
-              //   className="btn btn-success"
-              //   onClick={() =>
-              //     props.redirectAndSaveId(
-              //       `/edit/${currentImageId}`,
-              //       currentImageId
-              //     )
-              //   }
-              // >
-              //   Edit
-              // </button>
-              <CustomToolTip text="Edit">
-                <EditBtn
-                  handler={() =>
-                    props.redirectAndSaveId(
-                      `/edit/${currentImageId}`,
-                      currentImageId
-                    )
-                  }
-                />
-              </CustomToolTip>
-            )}
-          </div>
-          <div style={{ display: isNone }}>
-            <span className="info"> Total Default Page </span>
-            <span className="badge badge-info">{all.length}</span>
-          </div>
-          <div>
-            <span className="info">Current</span>
-            <span className="badge badge-info">
-              {all.indexOf(currentImageId) + 1}
-            </span>
-          </div>
-
-          {props.role != "labeller" && (
-            <div>
-              <CustomToolTip text="Previous">
-                <LeftButton handler={prev} />
-              </CustomToolTip>
-            </div>
+        <div className="col-md-10 main-pending-page-header">
+          {all.length > 0 && props.role != "labeller" && (
+            <CustomToolTip text="Retake Image">
+              <UploadForm submitHandler={uploadImageHandler}></UploadForm>
+            </CustomToolTip>
           )}
 
-          <div>
-            {props.role === "labeller" ? (
-              <button onClick={next} className="btn btn-dark">
-                Skip
+          {all.length > 0 && props.role != "labeller" && (
+            <CustomToolTip text="Delete Image">
+              <button className="btn btn-danger" onClick={props.deleteImg}>
+                Delete
               </button>
-            ) : (
-              // <Next className="header-svg" onClick={next} />
+            </CustomToolTip>
+          )}
 
-              <CustomToolTip text="Next">
-                <RightButton handler={next} />
-              </CustomToolTip>
-            )}
-          </div>
+          {all.length > 0 && (
+            <CustomToolTip text="Save Image">
+              <SaveBtn />
+            </CustomToolTip>
+          )}
+
+          {all.length > 0 && (
+            // <button
+            //   className="btn btn-success"
+            //   onClick={() =>
+            //     props.redirectAndSaveId(
+            //       `/edit/${currentImageId}`,
+            //       currentImageId
+            //     )
+            //   }
+            // >
+            //   Edit
+            // </button>
+            <CustomToolTip text="Edit">
+              <EditBtn
+                handler={() =>
+                  props.redirectAndSaveId(
+                    `/edit/${currentImageId}`,
+                    currentImageId
+                  )
+                }
+              />
+            </CustomToolTip>
+          )}
+
+          <span className="info"> Total Default Page </span>
+          <span className="badge badge-info">{all.length}</span>
+
+          <span className="info">Current</span>
+          <span className="badge badge-info">
+            {all.indexOf(currentImageId) + 1}
+          </span>
+
+          {props.role != "labeller" && (
+            <CustomToolTip text="Previous">
+              <LeftButton handler={prev} />
+            </CustomToolTip>
+          )}
+
+          {props.role === "labeller" ? (
+            <button onClick={next} className="btn btn-dark">
+              Skip
+            </button>
+          ) : (
+            // <Next className="header-svg" onClick={next} />
+
+            <CustomToolTip text="Next">
+              <RightButton handler={next} />
+            </CustomToolTip>
+          )}
         </div>
       </div>
     </main>
