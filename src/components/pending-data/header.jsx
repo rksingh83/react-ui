@@ -6,7 +6,13 @@ import Save from "../../assets/save.png";
 import Left from "../../assets/left.png";
 import Right from "../../assets/right.png";
 import { Post, Get } from "../../service/service.setup";
-import { EditBtn } from "../common/pNGButtons";
+import {
+  EditBtn,
+  Save as SaveBtn,
+  Right as RightButton,
+  Left as LeftButton,
+} from "../common/pNGButtons";
+import CustomToolTip from "../common/CustomToolTip";
 const PendingHeader = ({
   prev,
   next,
@@ -55,24 +61,25 @@ const PendingHeader = ({
         <div className="col-md-10 main">
           <div>
             {all.length > 0 && props.role != "labeller" && (
-              <UploadForm submitHandler={uploadImageHandler}></UploadForm>
+              <CustomToolTip text="Retake Image">
+                <UploadForm submitHandler={uploadImageHandler}></UploadForm>
+              </CustomToolTip>
             )}
           </div>
           <div>
             {all.length > 0 && props.role != "labeller" && (
-              <button className="btn btn-danger" onClick={props.deleteImg}>
+             <CustomToolTip text="Delete Image">
+             <button className="btn btn-danger" onClick={props.deleteImg}>
                 Delete
               </button>
+              </CustomToolTip>
             )}
           </div>
           <div>
             {all.length > 0 && (
-              <img
-                onClick={() => saveHandler()}
-                className="icon-image"
-                src={Save}
-                alt="fireSpot"
-              />
+              <CustomToolTip text="Save Image">
+                <SaveBtn />
+              </CustomToolTip>
             )}
           </div>
           <div>
@@ -88,14 +95,16 @@ const PendingHeader = ({
               // >
               //   Edit
               // </button>
-              <EditBtn
-                handler={() =>
-                  props.redirectAndSaveId(
-                    `/edit/${currentImageId}`,
-                    currentImageId
-                  )
-                }
-              />
+              <CustomToolTip text="Edit">
+                <EditBtn
+                  handler={() =>
+                    props.redirectAndSaveId(
+                      `/edit/${currentImageId}`,
+                      currentImageId
+                    )
+                  }
+                />
+              </CustomToolTip>
             )}
           </div>
           <div style={{ display: isNone }}>
@@ -111,12 +120,9 @@ const PendingHeader = ({
 
           {props.role != "labeller" && (
             <div>
-              <img
-                onClick={prev}
-                className="icon-image"
-                src={Left}
-                alt="fireSpot"
-              />{" "}
+              <CustomToolTip text="Previous">
+                <LeftButton handler={prev} />
+              </CustomToolTip>
             </div>
           )}
 
@@ -127,12 +133,10 @@ const PendingHeader = ({
               </button>
             ) : (
               // <Next className="header-svg" onClick={next} />
-              <img
-                onClick={next}
-                className="icon-image"
-                src={Right}
-                alt="fireSpot"
-              />
+
+              <CustomToolTip text="Next">
+                <RightButton handler={next} />
+              </CustomToolTip>
             )}
           </div>
         </div>

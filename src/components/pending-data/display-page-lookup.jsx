@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { updateByAdmin } from "../../service/pendingData";
 import { Alert, Button } from "react-bootstrap";
-
+import CustomToolTip from "../common/CustomToolTip";
 import {
   UserSelect,
   FileSelect,

@@ -6,11 +6,12 @@ import save from "../../assets/save.png";
 import edit from "../../assets/edit.png";
 import cancelSrc from "../../assets/close.png";
 import { ReactComponent as Cross } from "../../assets/cross.svg";
-const BackButton = ({ handler }) => {
+const BackButton = ({ handler ,...props }) => {
   return (
     <>
       <img
         onClick={handler}
+        {...props}
         className="icon-image float-right"
         src={BackSrc}
         alt="fireSpot"
@@ -18,11 +19,12 @@ const BackButton = ({ handler }) => {
     </>
   );
 };
-const Save = ({ handler }) => {
+const Save = ({ handler ,...props }) => {
   return (
     <>
       <img
         onClick={handler}
+        {...props}
         className="icon-image float-right"
         src={save}
         alt="fireSpot"
@@ -30,11 +32,12 @@ const Save = ({ handler }) => {
     </>
   );
 };
-const Left = ({ handler }) => {
+const Left = ({ handler  ,...props}) => {
   return (
     <>
       <img
         onClick={handler}
+        {...props}
         className="icon-image"
         src={LeftSrc}
         alt="fireSpot"
@@ -42,11 +45,12 @@ const Left = ({ handler }) => {
     </>
   );
 };
-const Right = ({ handler }) => {
+const Right = ({ handler ,...props }) => {
   return (
     <>
       <img
         onClick={handler}
+        {...props}
         className="icon-image"
         src={RightSrc}
         alt="fireSpot"
