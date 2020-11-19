@@ -3,8 +3,8 @@ import { ReactComponent as Photo } from "../../assets/photo.svg";
 import Retake from "../../assets/retake.png";
 const UploadForm = ({ submitHandler, isUpload, ...props }) => {
   const style = isUpload
-    ? { width: "95px", height: "30px" }
-    : { width: "76px", height: "44px", overflow: "hidden" };
+    ? { width: "35px", height: "30px" }
+    : { width: "36px", height: "44px", overflow: "hidden" };
 
   return (
     <form className="" onSubmit={submitHandler}>

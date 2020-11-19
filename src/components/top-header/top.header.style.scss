@@ -24,11 +24,9 @@ svg {
     font-size: 1rem;
     font-weight: 500;
     transition: all .3s;
-
-    &:hover {
-        transform: translateY(-1px) scale(1.1);
-    }
-
+    // &:hover {
+    //     transform: translateY(-1px) scale(1.1);
+    // }
 }
 
 .secondary-header {}
@@ -64,13 +62,13 @@ input-img {
 .sec-header-item {
     display: flex;
     align-items: center;
-
 }
 
 .min-height {
     min-height: 3.36rem;
 }
-.item-center{
+
+.item-center {
     display: flex;
     justify-items: center;
 }

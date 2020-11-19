@@ -38,7 +38,7 @@ const TopHeader = ({
   const [showPopUp, setShowPop] = useState(false);
   const [responseMgs, setResponseMgs] = useState("");
   const columnMinWidth = {
-    minWidth: "12.5%",
+    minWidth: "6.5%",
     boxSizing: "border-box",
     justifyContent: "center",
     alignItems: "center",
@@ -173,13 +173,13 @@ const TopHeader = ({
               className="custom-input"
             ></input>
           </div>
-          <div className="col-md-1 sec-header-item col-text-style">
+          <div className="col-md-10 sec-header-item col-text-style">
           <CustomToolTip text ="Upload Image">
             <UploadForm isUpload={true} submitHandler={fileUploadHandler} />
             </CustomToolTip>
-          </div>
+          
           {totalItem == 0 && props.uploadLimits < 10 && (
-            <div className="col-md-1 sec-header-item col-text-style item-center">
+            <div className=" sec-header-item col-text-style item-center">
               <span>
                 Limits{" "}
                 <span className="badge badge-info">{props.uploadLimits}</span>
@@ -188,7 +188,7 @@ const TopHeader = ({
           )}
           <div
             style={columnMinWidth}
-            className="col-md-1 sec-header-item col-text-style"
+            className=" sec-header-item col-text-style"
           >
             <span className="on-hover" onClick={() => setShow(true)}></span>
             <CustomToolTip text="Create Book">
@@ -200,7 +200,7 @@ const TopHeader = ({
           </div>
           <div
             style={columnMinWidth}
-            className="col-md-1 col-text-style sec-header-item"
+            className=" col-text-style sec-header-item"
           >
              <CustomToolTip text ="Refresh">
             <FolderCreate onClick={() => window.location.reload()} />
@@ -210,7 +210,7 @@ const TopHeader = ({
             </span> */}
           </div>
           <div
-            className={`  col-md-1  col-text-style ${
+            className={`    col-text-style ${
               totalItem == 0 ? "hideCount" : "sec-header-item"
             }`}
             style={columnMinWidth}
@@ -227,7 +227,7 @@ const TopHeader = ({
             </span> */}
           </div>
           <div
-            className={`  col-md-1  col-text-style ${
+            className={`    col-text-style ${
               totalItem == 0 ? "hideCount" : "sec-header-item"
             }`}
             style={columnMinWidth}
@@ -241,7 +241,7 @@ const TopHeader = ({
           </div>
 
           <div
-            className={`  col-md-1 col-text-style ${
+            className={`   col-text-style ${
               totalItem > 1 || totalItem == 0 ? "hideCount" : "sec-header-item"
             }`}
             style={columnMinWidth}
@@ -269,7 +269,7 @@ const TopHeader = ({
             ></SharedListModal> */}
           </div>
 
-          <div style={columnMinWidth} className="col-md-1  sec-header-item ">
+          <div style={columnMinWidth} className="  sec-header-item ">
             <div
               className={` col-text-style ${
                 totalItem == 0 ? "hideCount" : "sec-header-item"
@@ -284,6 +284,7 @@ const TopHeader = ({
               ></Cross>
               </CustomToolTip>
             </div>
+          </div>
           </div>
         </div>
       </div>
@@ -305,7 +306,7 @@ const TopHeader = ({
             handleChange={(e) => addFileTag(e.target.value)}
             name="folder"
             type="input"
-            maxlength={7}
+
           ></Input>
           <Input
             placeholder="Enter your description"
@@ -330,7 +331,7 @@ const TopHeader = ({
           >
             Close
           </CancelButton>
-          <Save handler={saveHandler}>Save Changes</Save>
+          <Save handler={saveHandler}/>
         </Modal.Footer>
       </Modal>
     </div>
