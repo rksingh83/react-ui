@@ -23,7 +23,7 @@ const ShareFolderModal = ({ show, hide, selected, images, count }) => {
     searchedContactPaginationCount,
     setSearchedContactPaginationCount,
   ] = useState(1);
-  const [currentList, setCurrentList] = useState("CONTACTS");
+  const [currentList, setCurrentList] = useState("SHARED_LIST");
   const [selectedFileCounter, setFileCounter] = useState(0);
   const onClose = () => {
     setSearchedContactList([]);

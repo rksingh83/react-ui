@@ -1,10 +1,7 @@
 import React from "react";
-import { ReactComponent as Next } from "../../assets/new-right.svg";
+import { ReactComponent as DeleteButton } from "../../assets/delete.svg";
 import { ReactComponent as Back } from "../../assets/new-left.svg";
 import UploadForm from "../upload-image/upload-images";
-import Save from "../../assets/save.png";
-import Left from "../../assets/left.png";
-import Right from "../../assets/right.png";
 import { Post, Get } from "../../service/service.setup";
 import {
   EditBtn,
@@ -67,9 +64,9 @@ const PendingHeader = ({
 
           {all.length > 0 && props.role != "labeller" && (
             <CustomToolTip text="Delete Image">
-              <button className="btn btn-danger mr-2" onClick={props.deleteImg}>
-                Delete
-              </button>
+              <DeleteButton className=" mr-2" onClick={props.deleteImg}>
+              
+              </DeleteButton>
             </CustomToolTip>
           )}
 

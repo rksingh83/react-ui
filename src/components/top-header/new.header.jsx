@@ -6,7 +6,7 @@ import LoadLookup from "../pending-data/display-page-lookup";
 import { getPendingPageById } from "../../service/pendingData";
 import UploadForm from "../upload-image/upload-images";
 import "./top.header.style.scss";
-import { BackButton, Left, Right, Save } from "../common/pNGButtons";
+import { BackButton, Left, Right, Save, EditBtn } from "../common/pNGButtons";
 const TopSingleHeader = ({
   images,
   imageId,
@@ -97,71 +97,26 @@ const TopSingleHeader = ({
       props.toggleLoader(false);
     }
   };
+  const editButtonHandler = () => {
+    history.push(`/edit/${imageId}`);
+  };
   return (
-    <div className="row">
-      <div className="col-md-12">
-        <nav className="navbar navbar-expand-lg navbar-light sec-header-bg single-header">
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav mr-auto text-white">
-              <li className="nav-item single-header-li">
-                <span className="badge badge-info p-2">{currentFolder}</span>
-              </li>
-            </ul>
-            <ul className="navbar-nav ml-auto text-white">
-              <li className="nav-item single-header-li">
-                <Delete className="single-header-svg" onClick={deleteHandler} />{" "}
-              </li>
-              <li>
-                {/* <Back className="header-svg" onClick={prev} /> */}
-                <Left handler={prev} />
-              </li>
-              <li>
-                {/* <Next className="header-svg" onClick={next} /> */}
-                <Right handler={next} />
-              </li>
-              <li>
-                <UploadForm submitHandler={uploadImageHandler}></UploadForm>
-              </li>
-              <li>
-                {/* <button
-                  className="btn btn-info ml-2 mr-2"
-                  onClick={() => pageSaveHandler()}
-                >
-                  Save
-                </button> */}
-                <Save handler={pageSaveHandler} />
-              </li>
-              <li>
-                <button
-                  className="btn btn-info ml-2 mr-2"
-                  onClick={() => history.push(`/edit/${imageId}`)}
-                >
-                  Edit Points
-                </button>
-              </li>
-              <li className="nav-item">
-                {/* <button
-                  className="btn btn-success"
-                  onClick={() => history.goBack()}
-                >
-                  Back
-                </button> */}
-                <BackButton handler={history.goBack} />
-              </li>
-            </ul>
-          </div>
-        </nav>
+    <>
+      <div className="row">
+        <div
+          className="col-md-2"
+          style={{ background: "rgba(0, 0, 0, 0.125)", minHeight: "3rem" }}
+        ></div>
+        <div className="col-md-10 main-pending-page-header">
+          <span className="badge badge-info p-2">{currentFolder}</span>
+          <Delete className="single-header-svg" onClick={deleteHandler} />{" "}
+          <Left handler={prev} />
+          <Right handler={next} />
+          <UploadForm submitHandler={uploadImageHandler}></UploadForm>
+          <Save handler={pageSaveHandler} />
+          <EditBtn handler={editButtonHandler}></EditBtn>
+          <BackButton handler={history.goBack} />
+        </div>
       </div>
       <Modal
         size="lg"
@@ -197,7 +152,7 @@ const TopSingleHeader = ({
           </button>
         </Modal.Footer>
       </Modal>
-    </div>
+    </>
   );
 };
 export default TopSingleHeader;
