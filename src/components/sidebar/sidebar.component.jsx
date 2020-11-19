@@ -32,7 +32,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const totalEle =
     ROLE != "labeller"
       ? ["My Books", "Shared Books", "Default Page"]
-      : ["All Files"];
+      : ["All Pages"];
   const TextMAp =
     ROLE != "labeller" ? { HOME: 0, SHARED: 1, PENDING: 2 } : { PENDING: 0 };
   const [totalFolder, setTotalFolder] = useState([]);
