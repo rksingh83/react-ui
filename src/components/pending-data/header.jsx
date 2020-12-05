@@ -72,7 +72,7 @@ const PendingHeader = ({
 
           {all.length > 0 && (
             <CustomToolTip text="Save Image">
-              <SaveBtn  />
+              <SaveBtn handler ={saveHandler} />
             </CustomToolTip>
           )}
 
