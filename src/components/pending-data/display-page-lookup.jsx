@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { updateByAdmin } from "../../service/pendingData";
 import { Alert, Button } from "react-bootstrap";
 import CustomToolTip from "../common/CustomToolTip";
+import { sendPageLookupInvitation } from "../../service/common";
 import {
   UserSelect,
   FileSelect,
@@ -27,7 +28,7 @@ const PendingPageData = ({
   isDisabled,
   ...props
 }) => {
-  console.log((pageData.admin_updated)) ;
+  console.log(pageData.admin_updated);
   const col = isMemberShip == 1 ? "col-md-3" : "col-md-10";
   const INPUT_COL = isMemberShip == 1 ? "col-md-3" : "col-md-6";
   const title_col =
@@ -43,10 +44,9 @@ const PendingPageData = ({
     width: "100%",
     border: "1px solid green",
   };
-
+  const [phoneNumber, setPhoneNumber] = useState(0);
   useEffect(() => {
-  
-    console.log(pageData)
+    console.log(pageData);
   }, [data.pageLookup]);
   const fileTagHandler = (e) => {
     // let folder = data.pageLookup.file.filter(
@@ -117,6 +117,27 @@ const PendingPageData = ({
       </div>
     );
   }
+  const sendInvitation = async () => {
+    props.startLoader(true);
+    const request = {
+      phoneNumber,
+      imageIds: [data.pageLookup.imageId],
+      file_id: data.pageLookup.fileId,
+      user_id: data.data.profileList[0].id,
+    };
+    try {
+      const response = await sendPageLookupInvitation(request);
+      console.log(response.data);
+      if (response.data.code == "403") {
+        alert(response.data.error);
+      }else{
+        alert(response.data.error);
+      }
+      props.startLoader(false);
+    } catch (error) {
+      props.startLoader(false);
+    }
+  };
   return (
     <div className="container-sm mt-4" style={{ maxWidth: "" }}>
       <div className="row">
@@ -169,7 +190,6 @@ const PendingPageData = ({
           )}
         </div>
         <div className="col-md-8">
-          
           <div className="row">
             <div className={title_col}>Book Name</div>
             {/* {isMemberShip == 1 && (
@@ -220,7 +240,7 @@ const PendingPageData = ({
               />
             </div>
           </div> */}
-<div className="row">
+          <div className="row">
             <div className={title_col}>Page Title</div>
             <div className={col}>
               <Input
@@ -293,6 +313,26 @@ const PendingPageData = ({
             )}
           </div>
           <div className="row">
+            <div className="col-md-2 page-lookup-heading"></div>
+            <div
+              className={col}
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              <Button onClick={sendInvitation} className="btn btn-info">
+                Send Invite
+              </Button>
+            </div>
+            {isMemberShip == 1 && (
+              <div className="col-md-7">
+                <Input
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  type="text"
+                  placeholder="Enter Email or Phone"
+                />
+              </div>
+            )}
+          </div>
+          <div className="row">
             <div className="col-md-2 page-lookup-heading"> Page No.</div>
             <div className={col}>
               <Input
@@ -349,7 +389,7 @@ const PendingPageData = ({
           </div>
         </div>
       </div>
-      {props.role != "labeller" && !isDisabled &&(
+      {props.role != "labeller" && !isDisabled && (
         <div className="row py-3">
           <div className="col-md-4">
             <span className="set-by-admin">
@@ -358,11 +398,10 @@ const PendingPageData = ({
           </div>
           <div className="col-md-1">
             <span className="radio-span">
-             
               NO
               <input
                 value={0}
-                checked= {!Number(pageData.admin_updated)}
+                checked={!Number(pageData.admin_updated)}
                 onChange={(e) => pageLookUpHandler(e)}
                 id="male"
                 name="admin_updated"
@@ -381,7 +420,7 @@ const PendingPageData = ({
                 name="admin_updated"
                 className="form-control radio"
                 type="radio"
-                checked= {Number(pageData.admin_updated)}
+                checked={Number(pageData.admin_updated)}
               />
             </span>
           </div>

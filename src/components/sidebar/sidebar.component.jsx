@@ -274,8 +274,8 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     let index = allPendingLIst.indexOf(currentImage);
     if (index == allPendingLIst.length - 1) {
       // alert("This is Last File");
-      allPendingLIst.length>0&&setResponseMgs("This is last file");
-      allPendingLIst.length>0&&setShowPop(true);
+      allPendingLIst.length > 0 && setResponseMgs("This is last file");
+      allPendingLIst.length > 0 && setShowPop(true);
 
       return;
     }
@@ -330,8 +330,10 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const saveUpdateData = async () => {
     setShowLoader(true);
     try {
-      const request =  {...lookupPageState ,
-        admin_updated:lookupPageState.admin_updated ==1?true:false}
+      const request = {
+        ...lookupPageState,
+        admin_updated: lookupPageState.admin_updated == 1 ? true : false,
+      };
       const response = await Post("/savePageLookup", request);
       if (response.data.code == "200") {
         setResponseMgs("Saved Successfully");
@@ -511,7 +513,8 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
                 pageLookUpDateHandler={pageLookUpDateHandler}
                 role={ROLE}
                 redirectAndSaveId={redirectAndSaveId}
-                clearSavedImageId = {clearSavedImageId}
+                clearSavedImageId={clearSavedImageId}
+                startLoader={setShowLoader}
               ></LoadLookup>
             )}
           </div>
