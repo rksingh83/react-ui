@@ -123,7 +123,7 @@ const PendingPageData = ({
       phoneNumber,
       imageIds: [data.pageLookup.imageId],
       file_id: data.pageLookup.fileId,
-      user_id: data.data.profileList[0].id,
+      user_id: data.pageLookup.user_id,
     };
     try {
       const response = await sendPageLookupInvitation(request);
@@ -319,7 +319,7 @@ const PendingPageData = ({
               style={{ display: "flex", alignItems: "center" }}
             >
               <Button onClick={sendInvitation} className="btn btn-info">
-                Send Invite
+                Invite and Share
               </Button>
             </div>
             {isMemberShip == 1 && (
