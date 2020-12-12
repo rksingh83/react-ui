@@ -175,6 +175,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
         setTotalFolder(res.data.filefolderRequest);
       }
     });
+    setShowLoader(false);
   };
   const pushName = (name) => {
     setTotalFolder([...totalFolder, name]);
@@ -225,6 +226,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     try {
       const folders = await Get("getAllSharedFiles");
       setSharedWithMeFolder(folders.data.filefolderRequest);
+      setShowLoader(false);
     } catch (error) {}
   }
   // pending
