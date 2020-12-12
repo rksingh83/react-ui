@@ -206,7 +206,7 @@ export const ForgotPassword = ({ history }) => {
                     handleChange={(e) => setPassword(e.target.value)}
                     name="otp"
                     required
-                    type="input"
+                    type="password"
                   ></Input>
                 </div>
                 <div className={`${isDisplaySavePass ? "" : "hideInput"}`}>
