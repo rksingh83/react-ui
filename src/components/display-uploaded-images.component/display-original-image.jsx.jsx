@@ -287,6 +287,9 @@ const DisplayOriginalImage = ({
               isRedirectLast={true}
               pageLookUpDateHandler={pageLookUpDateHandler}
               isDisabled={sharedWithMe == "SHARED" ? true : false}
+              startLoader={setShowLoader}
+              setResponseMgs={setResponseMgs}
+              setShowPop={setShowPop}
             ></LoadLookup>
           )}
 

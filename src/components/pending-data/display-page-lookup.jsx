@@ -129,9 +129,12 @@ const PendingPageData = ({
       const response = await sendPageLookupInvitation(request);
       console.log(response.data);
       if (response.data.code == "403") {
-        alert(response.data.error);
+      
+        props.setResponseMgs(response.data.error);
+        props.setShowPop(true)
       }else{
-        alert(response.data.error);
+        props.setResponseMgs(response.data.error);
+        props.setShowPop(true)
       }
       props.startLoader(false);
     } catch (error) {

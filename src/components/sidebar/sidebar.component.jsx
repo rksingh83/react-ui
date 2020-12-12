@@ -517,6 +517,8 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
                 redirectAndSaveId={redirectAndSaveId}
                 clearSavedImageId={clearSavedImageId}
                 startLoader={setShowLoader}
+                setResponseMgs={setResponseMgs}
+                setShowPop={setShowPop}
               ></LoadLookup>
             )}
           </div>
