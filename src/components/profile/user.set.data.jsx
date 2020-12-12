@@ -126,14 +126,14 @@ const [dob ,setDOB] = useState('')
               value={userData.country}
             ></Input>
 
-            {/* <Input
+            <Input
               onChange={setProfileHandler}
               type="text"
               label="Phone Number"
               placeholder="Enter Your Mobile Number "
               name="phoneNumber"
               value={userData.mobileNumber}
-            ></Input> */}
+            ></Input>
 
             <EditEmailModal
               show={isOpenModal}
