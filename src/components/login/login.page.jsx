@@ -54,7 +54,8 @@ const LoginPage = ({
               //  let data =  (res.data.filefolderRequest).map(item=>item.fileName)
               setCurrentFile(res.data.filefolderRequest);
               connect();
-              history.push("/folder");
+              window.location.reload()
+            //  history.push("/folder");
             }
           });
         }
