@@ -122,7 +122,7 @@ const DisplayLastImage = ({
                   </li>
                   <li className="nav-item">
                     <BackButton handler={history.goBack}>
-                      Back
+      
                     </BackButton>
                   </li>
                 </ul>
