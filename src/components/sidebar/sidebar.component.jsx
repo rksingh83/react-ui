@@ -329,12 +329,13 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const clearSavedImageId = () => {
     dispatch(setCurrentImageId(""));
   };
-  const saveUpdateData = async () => {
+  const saveUpdateData = async (saveWithoutNotificationValue = false) => {
     setShowLoader(true);
     try {
       const request = {
         ...lookupPageState,
         admin_updated: lookupPageState.admin_updated == 1 ? true : false,
+        saveWithoutNotification:saveWithoutNotificationValue
       };
       const response = await Post("/savePageLookup", request);
       if (response.data.code == "200") {

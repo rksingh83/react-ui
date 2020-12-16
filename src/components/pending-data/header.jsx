@@ -48,6 +48,9 @@ const PendingHeader = ({
       }
     } catch (err) {}
   };
+  const saveWithNotification = ()=>{
+    saveHandler(false)
+  }
   return (
     <main className="">
       <div className="row">
@@ -61,7 +64,10 @@ const PendingHeader = ({
               <UploadForm submitHandler={uploadImageHandler}></UploadForm>
             </CustomToolTip>
           )}
-
+          {props.role === "labeller" &&
+            <button onClick= {()=>saveHandler(true)} className="btn btn-info">
+              SaveWithoutNotification
+            </button>}
           {all.length > 0 && props.role != "labeller" && (
             <CustomToolTip text="Delete Image">
               <DeleteButton className=" mr-2" onClick={props.deleteImg}>
@@ -72,7 +78,7 @@ const PendingHeader = ({
 
           {all.length > 0 && (
             <CustomToolTip text="Save Image">
-              <SaveBtn handler ={saveHandler} />
+              <SaveBtn handler ={saveWithNotification} />
             </CustomToolTip>
           )}
 
@@ -128,6 +134,7 @@ const PendingHeader = ({
           <span className="badge badge-info">
             {all.indexOf(currentImageId) + 1}
           </span>
+         
         </div>
       </div>
     </main>
