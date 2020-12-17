@@ -1,283 +1,291 @@
-            body {
-                margin: 0;
-                font-family: "Lato", sans-serif;
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-                padding: 20px 60px;
-            }
-            
-            code {
-                font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-            }
-            
-            a {
-                text-decoration: none;
-                color: black;
-            }
-            
-            * {
-                box-sizing: border-box;
-            }
-            
-            #root {}
-            
-            .bg-custom {
-                background: #f16136 !important;
-                border-radius: 5px !important;
-                border: 3px solid #00a859 !important;
-                color: #fff !important;
-            }
-            
-            .list-group {
-                color: black !important;
-            }
-            
-            .on-hover:hover {
-                cursor: pointer;
-            }
-            
-            @media screen and (max-width: 600px) {
-                .mainDiv {
-                    width: 44%;
-                }
-            }
-            
-            @media screen and (max-width: 1080px) and (min-width: 601px) {
-                .mainDiv {
-                    width: 20%;
-                }
-            }
-            
-            .ul-pad {}
-            
-            .hide-point {
-                display: none !important;
-            }
-            
-            .single-header-svg {
-                height: 30px !important;
-            }
-            
-            .single-header-li {
-                display: flex;
-                align-items: center !important;
-            }
-            
-            .li-contact-list {
-                display: flex !important;
-                justify-content: space-between !important;
-                align-items: center !important;
-            }
-            
-            .item-center {
-                display: flex !important;
-                justify-content: center !important;
-                align-items: center !important;
-            }
-            
-            .contact-cards-top {
-                display: flex !important;
-                flex-wrap: wrap !important;
-            }
-            
-            .contact-card-li {
-                display: flex !important;
-            }
-            
-            .contact-div {
-                width: 48%;
-            }
-            
-            .label-card {
-                font-weight: 600;
-                font-size: 17px;
-            }
-            
-            .label-card::after {
-                content: ":";
-                color: green;
-            }
-            
-            #pending {
-                background-Image: url("");
-                background-size: 'cover';
-                background-position: 'center';
-                background-size: 100% !important;
-            }
-            
-            .segmentation {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            
-            .img-height {
-                height: 60%;
-            }
-            
-            .info {
-                font-size: 16px;
-                font-weight: 600;
-                padding-right: 10px;
-                color: #0078d4
-            }
-            
-            .share-search {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-            
-            .list-group {
-                font-size: 14px;
-                color: #0078d4 !important;
-                font-weight: 500;
-            }
-            
-            .message {
-                color: #000 !important;
-                font-weight: 500 !important;
-            }
-            
-            .message-body {
-                display: flex;
-                flex-direction: column;
-                min-height: 9rem;
-                justify-content: space-around;
-                align-items: center;
-            }
-            
-            .ok-button {
-                width: 4rem;
-            }
-            
-            .verticalLine {
-                border-left: thick solid #0000004a;
-            }
-            
-            .border-custom {
-                border-left: 1px solid #00000020;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            .center-item {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            
-            .my-theme-btn {
-                background: #0078d4
-            }
-            
-            .help {
-                background: linear-gradient(to right bottom, rgba(126, 213, 111, 0.815), rgba(40, 180, 133, 0.801));
-                min-height: 10rem;
-                justify-content: center;
-                align-items: center;
-                display: flex;
-            }
-            
-            .heading-help {
-                transition: all .5s;
-                text-transform: uppercase;
-            }
-            
-            .heading-help:hover {
-                transform: skewY(1.5deg) skewX(13deg) scale(1.1);
-            }
-            
-            .img-help {
-                transition: all .3s;
-                padding: 20px;
-            }
-            
-            .img-help:hover {
-                transform: scale(1.06) rotate(30deg);
-            }
-            
-            .help-form {
-                display: flex;
-                color: cadetblue;
-                align-items: center;
-                justify-content: center;
-                max-width: 20rem;
-                min-height: 17rem !important;
-            }
-            
-            .tnc>p {
-                font-size: 17px;
-            }
-            
-            .hand:hover {
-                cursor: pointer;
-            }
-            
-            .notification-text {
-                color: black;
-            }
-            
-            .flash-message {
-                min-height: 5rem;
-                position: absolute;
-                background: rgb(53, 54, 58);
-                width: 23rem;
-                z-index: 10;
-                bottom: 10%;
-                color: #fff;
-                right: 5px;
-                border-radius: 5px;
-                display: flex;
-                justify-content: center;
-                font-weight: 500;
-            }
-            
-            .message-container {}
-            
-            .cross-btn {
-                position: absolute;
-                right: 6px;
-                cursor: pointer;
-                color: red
-            }
-            
-            .row {
-                margin: 0px !important;
-            }
-            
-            .col-md-2,
-            .col-md-10,
-            .col-md-12 {
-                padding: 0px !important;
-            }
-            
-            .radio {
-                height: 24px !important;
-            }
-            
-            .radio-span {
-                display: flex;
-            }
-            
-            .set-by-admin {
-                font-weight: 600;
-            }
-            
-            .icon-image {
-                height: 40px;
-                margin: 0 8px;
-                cursor: pointer;
-            }
-            
-            .header-secondary {
-                min-height: 50px;
-            }
-            
-            .main-pending-page-header {
-                display: flex;
-                align-items: center;
-                background: rgba(0, 0, 0, 0.125);
-            }
+                        body {
+                            margin: 0;
+                            font-family: "Lato", sans-serif;
+                            -webkit-font-smoothing: antialiased;
+                            -moz-osx-font-smoothing: grayscale;
+                            padding: 20px 60px;
+                        }
+                        
+                        code {
+                            font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+                        }
+                        
+                        a {
+                            text-decoration: none;
+                            color: black;
+                        }
+                        
+                        * {
+                            box-sizing: border-box;
+                        }
+                        
+                        #root {}
+                        
+                        .bg-custom {
+                            background: #f16136 !important;
+                            border-radius: 5px !important;
+                            border: 3px solid #00a859 !important;
+                            color: #fff !important;
+                        }
+                        
+                        .list-group {
+                            color: black !important;
+                        }
+                        
+                        .on-hover:hover {
+                            cursor: pointer;
+                        }
+                        
+                        @media screen and (max-width: 600px) {
+                            .mainDiv {
+                                width: 44%;
+                            }
+                        }
+                        
+                        @media screen and (max-width: 1080px) and (min-width: 601px) {
+                            .mainDiv {
+                                width: 20%;
+                            }
+                        }
+                        
+                        .ul-pad {}
+                        
+                        .hide-point {
+                            display: none !important;
+                        }
+                        
+                        .single-header-svg {
+                            height: 30px !important;
+                        }
+                        
+                        .single-header-li {
+                            display: flex;
+                            align-items: center !important;
+                        }
+                        
+                        .li-contact-list {
+                            display: flex !important;
+                            justify-content: space-between !important;
+                            align-items: center !important;
+                        }
+                        
+                        .item-center {
+                            display: flex !important;
+                            justify-content: center !important;
+                            align-items: center !important;
+                        }
+                        
+                        .contact-cards-top {
+                            display: flex !important;
+                            flex-wrap: wrap !important;
+                        }
+                        
+                        .contact-card-li {
+                            display: flex !important;
+                        }
+                        
+                        .contact-div {
+                            width: 48%;
+                        }
+                        
+                        .label-card {
+                            font-weight: 600;
+                            font-size: 17px;
+                        }
+                        
+                        .label-card::after {
+                            content: ":";
+                            color: green;
+                        }
+                        
+                        #pending {
+                            background-Image: url("");
+                            background-size: 'cover';
+                            background-position: 'center';
+                            background-size: 100% !important;
+                        }
+                        
+                        .segmentation {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                        
+                        .img-height {
+                            height: 60%;
+                        }
+                        
+                        .info {
+                            font-size: 16px;
+                            font-weight: 600;
+                            padding-right: 10px;
+                            color: #0078d4
+                        }
+                        
+                        .share-search {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                        }
+                        
+                        .list-group {
+                            font-size: 14px;
+                            color: #0078d4 !important;
+                            font-weight: 500;
+                        }
+                        
+                        .message {
+                            color: #000 !important;
+                            font-weight: 500 !important;
+                        }
+                        
+                        .message-body {
+                            display: flex;
+                            flex-direction: column;
+                            min-height: 9rem;
+                            justify-content: space-around;
+                            align-items: center;
+                        }
+                        
+                        .ok-button {
+                            width: 4rem;
+                        }
+                        
+                        .verticalLine {
+                            border-left: thick solid #0000004a;
+                        }
+                        
+                        .border-custom {
+                            border-left: 1px solid #00000020;
+                            height: 100%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        
+                        .center-item {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                        
+                        .my-theme-btn {
+                            background: #0078d4
+                        }
+                        
+                        .help {
+                            background: linear-gradient(to right bottom, rgba(126, 213, 111, 0.815), rgba(40, 180, 133, 0.801));
+                            min-height: 10rem;
+                            justify-content: center;
+                            align-items: center;
+                            display: flex;
+                        }
+                        
+                        .heading-help {
+                            transition: all .5s;
+                            text-transform: uppercase;
+                        }
+                        
+                        .heading-help:hover {
+                            transform: skewY(1.5deg) skewX(13deg) scale(1.1);
+                        }
+                        
+                        .img-help {
+                            transition: all .3s;
+                            padding: 20px;
+                        }
+                        
+                        .img-help:hover {
+                            transform: scale(1.06) rotate(30deg);
+                        }
+                        
+                        .help-form {
+                            display: flex;
+                            color: cadetblue;
+                            align-items: center;
+                            justify-content: center;
+                            max-width: 20rem;
+                            min-height: 17rem !important;
+                        }
+                        
+                        .tnc>p {
+                            font-size: 17px;
+                        }
+                        
+                        .hand:hover {
+                            cursor: pointer;
+                        }
+                        
+                        .notification-text {
+                            color: black;
+                        }
+                        
+                        .flash-message {
+                            min-height: 5rem;
+                            position: absolute;
+                            background: rgb(53, 54, 58);
+                            width: 23rem;
+                            z-index: 10;
+                            bottom: 10%;
+                            color: #fff;
+                            right: 5px;
+                            border-radius: 5px;
+                            display: flex;
+                            justify-content: center;
+                            font-weight: 500;
+                        }
+                        
+                        .message-container {}
+                        
+                        .cross-btn {
+                            position: absolute;
+                            right: 6px;
+                            cursor: pointer;
+                            color: red
+                        }
+                        
+                        .row {
+                            margin: 0px !important;
+                        }
+                        
+                        .col-md-2,
+                        .col-md-10,
+                        .col-md-12 {
+                            padding: 0px !important;
+                        }
+                        
+                        .radio {
+                            height: 24px !important;
+                        }
+                        
+                        .radio-span {
+                            display: flex;
+                        }
+                        
+                        .set-by-admin {
+                            font-weight: 600;
+                        }
+                        
+                        .icon-image {
+                            height: 40px;
+                            margin: 0 8px;
+                            cursor: pointer;
+                        }
+                        
+                        .header-secondary {
+                            min-height: 50px;
+                        }
+                        
+                        .main-pending-page-header {
+                            display: flex;
+                            align-items: center;
+                            background: rgba(0, 0, 0, 0.125);
+                        }
+                        
+                        .searchable-input-arrow-inner svg {
+                            width: 23px !important;
+                        }
+                        
+                        .searchable {
+                            margin: 10px
+                        }
