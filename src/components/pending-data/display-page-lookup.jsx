@@ -6,6 +6,8 @@ import { updateByAdmin } from "../../service/pendingData";
 import { Alert, Button } from "react-bootstrap";
 import CustomToolTip from "../common/CustomToolTip";
 import { sendPageLookupInvitation } from "../../service/common";
+
+import Searchable from "react-searchable-dropdown";
 import {
   UserSelect,
   FileSelect,
@@ -28,7 +30,8 @@ const PendingPageData = ({
   isDisabled,
   ...props
 }) => {
-  console.log(pageData.admin_updated);
+  const [shareName, setShareName] = useState("");
+  console.log(pageData);
   const col = isMemberShip == 1 ? "col-md-3" : "col-md-10";
   const INPUT_COL = isMemberShip == 1 ? "col-md-3" : "col-md-6";
   const title_col =
@@ -129,12 +132,11 @@ const PendingPageData = ({
       const response = await sendPageLookupInvitation(request);
       console.log(response.data);
       if (response.data.code == "403") {
-      
         props.setResponseMgs(response.data.error);
-        props.setShowPop(true)
-      }else{
+        props.setShowPop(true);
+      } else {
         props.setResponseMgs(response.data.error);
-        props.setShowPop(true)
+        props.setShowPop(true);
       }
       props.startLoader(false);
     } catch (error) {
@@ -270,14 +272,43 @@ const PendingPageData = ({
             <div className="row">
               <div className="col-md-2 page-lookup-heading">Share</div>
               <div className={col}>
-                <UserSelect
+               
+              {parseInt(pageData.shareId)>0 &&<Searchable
+                  placeholder="Search" // by default "Search"
+                  notFoundText="No result found" // by default "No result found"
+                  options={createDropDown(
+                    data.data.profileList,
+                    parseInt(pageData.shareId)
+                  )}
+                  onSelect={pageLookUpHandler}
+                  name="shareId"
+                  value={
+                    parseInt(pageData.shareId) ? parseInt(pageData.shareId) : ""
+                  }
+                  listMaxHeight={200} //by default 140
+                />}
+                {parseInt(pageData.shareId)<=0 &&<Searchable
+                  placeholder="Search" // by default "Search"
+                  notFoundText="No result found" // by default "No result found"
+                  options={createDropDown(
+                    data.data.profileList,
+                    parseInt(pageData.shareId)
+                  )}
+                  onSelect={pageLookUpHandler}
+                  name="shareId"
+                  value={
+                    parseInt(pageData.shareId) ? parseInt(pageData.shareId) : ""
+                  }
+                  listMaxHeight={200} //by default 140
+                />}
+                {/* <UserSelect
                   value={pageData.shareId}
                   onChange={pageLookUpHandler}
                   list={data.data.profileList}
                   name="shareId"
                   mt={"mt-0"}
                   disabled={isDisabled}
-                />
+                /> */}
               </div>
               {isMemberShip == 1 && (
                 <div className="col-md-7">
@@ -431,5 +462,11 @@ const PendingPageData = ({
       )}
     </div>
   );
+};
+const createDropDown = (data, id) => {
+  const result = [];
+  console.log(id);
+  data.map((item) => result.push({ label: item.fullname, value: item.id }));
+  return result;
 };
 export default PendingPageData;
