@@ -66,6 +66,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     id: 0,
     segmentation: "",
     admin_updated: false,
+    isMyDigiNetworkPage:false
   });
   // PENDING COMPONENT
   const [allPendingLIst, setPendingList] = useState([]);
@@ -335,6 +336,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
       const request = {
         ...lookupPageState,
         admin_updated: lookupPageState.admin_updated == 1 ? true : false,
+        isMyDigiNetworkPage: lookupPageState.isMyDigiNetworkPage == 1 ? true : false,
         saveWithoutNotification:saveWithoutNotificationValue
       };
       const response = await Post("/savePageLookup", request);

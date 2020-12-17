@@ -272,35 +272,42 @@ const PendingPageData = ({
             <div className="row">
               <div className="col-md-2 page-lookup-heading">Share</div>
               <div className={col}>
-               
-              {parseInt(pageData.shareId)>0 &&<Searchable
-                  placeholder="Search" // by default "Search"
-                  notFoundText="No result found" // by default "No result found"
-                  options={createDropDown(
-                    data.data.profileList,
-                    parseInt(pageData.shareId)
-                  )}
-                  onSelect={pageLookUpHandler}
-                  name="shareId"
-                  value={
-                    parseInt(pageData.shareId) ? parseInt(pageData.shareId) : ""
-                  }
-                  listMaxHeight={200} //by default 140
-                />}
-                {parseInt(pageData.shareId)<=0 &&<Searchable
-                  placeholder="Search" // by default "Search"
-                  notFoundText="No result found" // by default "No result found"
-                  options={createDropDown(
-                    data.data.profileList,
-                    parseInt(pageData.shareId)
-                  )}
-                  onSelect={pageLookUpHandler}
-                  name="shareId"
-                  value={
-                    parseInt(pageData.shareId) ? parseInt(pageData.shareId) : ""
-                  }
-                  listMaxHeight={200} //by default 140
-                />}
+                {parseInt(pageData.shareId) > 0 && (
+                  <Searchable
+                    placeholder="Search" // by default "Search"
+                    notFoundText="No result found" // by default "No result found"
+                    options={createDropDown(
+                      data.data.profileList,
+                      parseInt(pageData.shareId)
+                    )}
+                    onSelect={pageLookUpHandler}
+                    name="shareId"
+                    value={
+                      parseInt(pageData.shareId)
+                        ? parseInt(pageData.shareId)
+                        : ""
+                    }
+                    listMaxHeight={200} //by default 140
+                  />
+                )}
+                {parseInt(pageData.shareId) <= 0 && (
+                  <Searchable
+                    placeholder="Search" // by default "Search"
+                    notFoundText="No result found" // by default "No result found"
+                    options={createDropDown(
+                      data.data.profileList,
+                      parseInt(pageData.shareId)
+                    )}
+                    onSelect={pageLookUpHandler}
+                    name="shareId"
+                    value={
+                      parseInt(pageData.shareId)
+                        ? parseInt(pageData.shareId)
+                        : ""
+                    }
+                    listMaxHeight={200} //by default 140
+                  />
+                )}
                 {/* <UserSelect
                   value={pageData.shareId}
                   onChange={pageLookUpHandler}
@@ -455,6 +462,41 @@ const PendingPageData = ({
                 className="form-control radio"
                 type="radio"
                 checked={Number(pageData.admin_updated)}
+              />
+            </span>
+          </div>
+        </div>
+      )}
+      {props.role === "labeller" && (
+        <div className="row py-3">
+          <div className="col-md-4">
+            <span className="set-by-admin">isMyDigiNetworkPage?</span>{" "}
+          </div>
+          <div className="col-md-1">
+            <span className="radio-span">
+              NO
+              <input
+                value={0}
+                checked={!Number(pageData.isMyDigiNetworkPage)}
+                onChange={(e) => pageLookUpHandler(e)}
+                id="male"
+                name="isMyDigiNetworkPage"
+                className="form-control radio"
+                type="radio"
+              />
+            </span>
+          </div>
+          <div className="col-md-1">
+            <span className="radio-span">
+              YES
+              <input
+                onChange={(e) => pageLookUpHandler(e)}
+                value={1}
+                id="male"
+                name="isMyDigiNetworkPage"
+                className="form-control radio"
+                type="radio"
+                checked={Number(pageData.isMyDigiNetworkPage)}
               />
             </span>
           </div>
