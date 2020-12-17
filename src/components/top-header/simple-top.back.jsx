@@ -3,7 +3,7 @@ import { Post } from "../../service/service.setup";
 import { ReactComponent as Photo } from "../../assets/photo.svg";
 import "./top.header.style.scss";
 import { ReactComponent as Delete } from "../../assets/delete.svg";
-
+import WebCamModel from "../web-cam.component/web-cam-modal";
 import { ReactComponent as Share } from "../../assets/teaching.svg";
 import ShareFolderModal from "../modal/share-folder-modal";
 import { getPendingPageById } from "../../service/pendingData";
@@ -172,13 +172,18 @@ const TopHeaderWithBack = ({
             value="Upload"
           /> */}
         </form>
-        {/* <button
-          className="btn-success ml-4 btn d-none"
+        <button
+          className="btn-success ml-4 btn"
           onClick={() => setShowModel(true)}
         >
           Open WebCam
         </button>
-        <WebCamModel id={id} hide={setShowModel} show={showModel} /> */}
+        <WebCamModel
+          setShowLoader={setShowLoader}
+          id={id}
+          hide={setShowModel}
+          show={showModel}
+        />
       </div>
 
       <div

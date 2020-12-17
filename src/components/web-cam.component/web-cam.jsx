@@ -1,6 +1,7 @@
 import React from "react";
 import Webcam from "react-webcam";
 import { Post, Get } from "../../service/service.setup";
+import CustomLoader from "../loader/loader";
 const videoConstraints = {
   width: 720,
   height: 720,
@@ -39,11 +40,12 @@ function blobToFile(theBlob, fileName) {
   theBlob.name = fileName;
   return theBlob;
 }
-const WebcamCapture = ({ id }) => {
+const WebcamCapture = ({ id  }) => {
   const webcamRef = React.useRef(null);
   const [imgSrc, setImgSrc] = React.useState(null);
   const [file, setFile] = React.useState(null);
-
+  const [isLoading, setIsLoading] = React.useState(false);
+  
   const capture = React.useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
     
@@ -52,7 +54,7 @@ const WebcamCapture = ({ id }) => {
     setImgSrc(imageSrc);
   }, [webcamRef, setImgSrc]);
   const upload = async () => {
-    
+   
      (new File([file], "name.png"));
     const formData = new FormData();
     var d = new Date();
@@ -61,6 +63,7 @@ const WebcamCapture = ({ id }) => {
     formData.append("files", new File([file],imageName));
     
     try {
+      setIsLoading(true)
       let res = await Post("/uploadImage", formData, {
         headers: {
           fileId: id,
@@ -68,14 +71,16 @@ const WebcamCapture = ({ id }) => {
         },
       });
       alert(res.data.message);
-      window.location.reload()
+      setIsLoading(false)
+      window.location.reload();
     } catch (err) {
-    
+      setIsLoading(false)
     }
   };
   return (
     <div>
       <div>
+      {isLoading && <CustomLoader />}
         <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
         <button className="btn-success btn" onClick={capture}>
           Capture photo
