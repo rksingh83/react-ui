@@ -307,8 +307,8 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   // set lookup form state
   const pageLookUpHandler = (e) => {
     const currentState = { ...lookupPageState };
-
-    const { name, value } = e.target;
+     
+    const { name, value } = e.target?e.target:{name:"shareId", ...e};
     if (name == "fileId" || name == "tag") {
       let folder = currentState.file.filter((item) => item.id == value);
       let tag = folder.length > 0 ? folder[0].fileTag : "";
