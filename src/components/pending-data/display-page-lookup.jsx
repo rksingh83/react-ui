@@ -364,21 +364,21 @@ const PendingPageData = ({
           </div>
           <div className="row">
             <div className="col-md-2 page-lookup-heading"></div>
-            <div
-              className={col}
-              style={{ display: "flex", alignItems: "center" }}
-            >
-              <Button onClick={sendInvitation} className="btn btn-info">
-                Invite and Share
-              </Button>
+            <div className="col-md-7">
+              <Input
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                type="text"
+                placeholder="Enter Email or Phone"
+              />
             </div>
             {isMemberShip == 1 && (
-              <div className="col-md-7">
-                <Input
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  type="text"
-                  placeholder="Enter Email or Phone"
-                />
+              <div
+                className={col}
+                style={{ display: "flex", alignItems: "center" }}
+              >
+                <Button onClick={sendInvitation} className="btn btn-info">
+                  Invite and Share
+                </Button>
               </div>
             )}
           </div>

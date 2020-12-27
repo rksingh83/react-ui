@@ -289,3 +289,16 @@
                         .searchable {
                             margin: 10px
                         }
+                        
+                        .searchable-input-arrow {
+                            display: none !important;
+                        }
+                        
+                        .searchable-input {
+                            background: none !important;
+                            border: 1px solid rgba(0, 0, 0, 0.125) !important;
+                        }
+                        
+                        .searchable-list {
+                            background: #0078d4 !important;
+                        }

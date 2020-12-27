@@ -3,11 +3,13 @@ import Select from "../boostrapinput/select.component";
 import Input from "../boostrapinput/input.component";
 import { Post, Get } from "../../service/service.setup";
 import EditEmailModal from "../modal/change-email-modal";
+import EditPhoneModal from '../modal/change-phone-modal'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 const UserProfileFormData = ({ profile, history }) => {
   const [userData, setProfile] = useState({});
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenPhoneModal, setIsOpenPhoneModal] = useState(false);
 const [dob ,setDOB] = useState('')
   const [genderList, setGender] = useState([
     { id: "male", name: "Male" },
@@ -126,15 +128,35 @@ const [dob ,setDOB] = useState('')
               value={userData.country}
             ></Input>
 
-            <Input
+            {/* <Input
               onChange={setProfileHandler}
               type="text"
               label="Phone Number"
               placeholder="Enter Your Mobile Number "
               name="phoneNumber"
               value={userData.mobileNumber}
+            ></Input> */}
+             <EditPhoneModal
+              show={isOpenPhoneModal}
+              hide={setIsOpenPhoneModal}
+              history={history}
+            ></EditPhoneModal>
+                 <Input
+              onChange={setProfileHandler}
+              type="text"
+              label="Phone"
+              placeholder="Phone"
+              value={userData.mobileNumber}
+              name="email"
+              disabled={true}
             ></Input>
 
+            <button
+              onClick={() => setIsOpenPhoneModal(true)}
+              className="btn btn-primary mb-2"
+            >
+              Change Phone
+            </button>
             <EditEmailModal
               show={isOpenModal}
               hide={setIsOpenModal}
