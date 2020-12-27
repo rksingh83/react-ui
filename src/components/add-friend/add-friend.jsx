@@ -255,7 +255,7 @@ const AddFriend = ({ history, setContacts, contacts, match }) => {
                     onClick={() => openInviteContactModal(true)}
                     className="btn btn-success mr-4"
                   >
-                    Invite User
+                    Invite and Add
                   </button>
                   <InviteUser
                     show={inviteContactModal}

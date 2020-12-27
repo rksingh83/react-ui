@@ -28,7 +28,7 @@ const InviteUser = ({ show, hide }) => {
           variant="secondary"
           onClick={() => sendEmail(email)}
         >
-          Send Invite Email
+          Invite and Add
         </button>
       </Modal.Header>
       <Modal.Body>
@@ -36,7 +36,7 @@ const InviteUser = ({ show, hide }) => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           id="outlined-basic"
-          label="User Email"
+          label="Enter Email or Phone Number"
           fullWidth
           variant="outlined"
           mb={5}
