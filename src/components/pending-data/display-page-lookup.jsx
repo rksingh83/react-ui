@@ -271,7 +271,7 @@ const PendingPageData = ({
           {!isDisabled && (
             <div className="row">
               <div className="col-md-2 page-lookup-heading">Share</div>
-              <div className= 'col-md-10'>
+              <div className="col-md-10">
                 {isMemberShip == 1 && (
                   <div className="col-md-7">
                     <img
@@ -290,7 +290,7 @@ const PendingPageData = ({
               <div className="col-md-10">
                 {parseInt(pageData.shareId) > 0 && (
                   <Searchable
-                  className ="m-2"
+                    className="m-2"
                     placeholder="Search" // by default "Search"
                     notFoundText="No result found" // by default "No result found"
                     options={createDropDown(
@@ -307,26 +307,25 @@ const PendingPageData = ({
                     listMaxHeight={200} //by default 140
                   />
                 )}
-                {pageData.shareId <= 0 ||
-                  (pageData.shareId === undefined && (
-                    <Searchable
-                    className ="m-2"
-                      placeholder="Search" // by default "Search"
-                      notFoundText="No result found" // by default "No result found"
-                      options={createDropDown(
-                        data.data.profileList,
-                        parseInt(pageData.shareId)
-                      )}
-                      onSelect={pageLookUpHandler}
-                      name="shareId"
-                      value={
-                        parseInt(pageData.shareId)
-                          ? parseInt(pageData.shareId)
-                          : ""
-                      }
-                      listMaxHeight={200} //by default 140
-                    />
-                  ))}
+                {(pageData.shareId <= 0 || pageData.shareId === undefined) && (
+                  <Searchable
+                    className="m-2"
+                    placeholder="Search" // by default "Search"
+                    notFoundText="No result found" // by default "No result found"
+                    options={createDropDown(
+                      data.data.profileList,
+                      parseInt(pageData.shareId)
+                    )}
+                    onSelect={pageLookUpHandler}
+                    name="shareId"
+                    value={
+                      parseInt(pageData.shareId)
+                        ? parseInt(pageData.shareId)
+                        : ""
+                    }
+                    listMaxHeight={200} //by default 140
+                  />
+                )}
                 {/* <UserSelect
                   value={pageData.shareId}
                   onChange={pageLookUpHandler}
@@ -521,7 +520,9 @@ const createDropDown = (data, id) => {
 
   data.map((item) =>
     result.push({
-      label: `${item.fullname} ${item.email} ${item.mobileNumber?item.mobileNumber:''}`,
+      label: `${item.fullname} ${item.email} ${
+        item.mobileNumber ? item.mobileNumber : ""
+      }`,
       value: item.id,
     })
   );

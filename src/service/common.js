@@ -1,13 +1,9 @@
-import {
-    Post,
-    Get
-} from './service.setup';
-
+import { Post, Get } from "./service.setup";
 
 const AddCoupon = async(token) => {
     try {
         const response = await Post("/validateBookCoupon", {
-            token
+            token,
         });
 
         if (response.data.code == "203") {
@@ -23,24 +19,17 @@ const AddCoupon = async(token) => {
         alert("Something went wrong try latter");
         //history.goBack();
     }
-
-}
+};
 const GetPageLimits = async() => {
     try {
         return await Get("getUserPageLimit");
-    } catch (e) {
-
-    }
-
-}
+    } catch (e) {}
+};
 const GetUserTransactions = async() => {
     try {
         return await Get("getUserTransactionList");
-    } catch (e) {
-
-    }
-
-}
+    } catch (e) {}
+};
 
 const SendFeedBack = async(feedback, name, email, phone) => {
     try {
@@ -48,36 +37,39 @@ const SendFeedBack = async(feedback, name, email, phone) => {
             feedback,
             name,
             email,
-            phone
-        })
+            phone,
+        });
         return response;
     } catch (e) {
         alert("Something went wrong try latter");
         //history.goBack();
     }
-}
+};
 const GetUserDetails = async() => {
     try {
         return await Get("getUserProfileByToken");
-    } catch (e) {
-
-    }
-
-}
+    } catch (e) {}
+};
 const sendPageLookupInvitation = async(request) => {
     try {
         return await Post("/scriptAccount", request);
-    } catch (e) {
+    } catch (e) {}
+};
+const getSharedWithList = async(id, fileId) => {
+    try {
+        return await Post("/getPageSharedList", {
+            fileId,
+            id,
+        });
+    } catch (error) {}
+};
 
-    }
-
-}
 export {
     AddCoupon,
     GetPageLimits,
     GetUserTransactions,
     SendFeedBack,
     GetUserDetails,
-    sendPageLookupInvitation
-
-}
+    sendPageLookupInvitation,
+    getSharedWithList,
+};
