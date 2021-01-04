@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { ReactComponent as Logout } from "../../assets/exit.svg";
+import Avatar from "../../assets/avatar.png";
 import "./header.style.scss";
 import "bootstrap/js/src/collapse.js";
 import { connect } from "react-redux";
 import { getUserId } from "../../service/notification";
 import { ToastContainer, toast } from "react-toastify";
+import { Post, Get } from "../../service/service.setup";
 import {
   setNotification,
   setNotificationCount,
@@ -26,11 +28,21 @@ const Header = ({
 }) => {
   const imgStyle = { width: "27px" };
   const [flashMessage, setFashMessage] = useState(false);
+  const [profileImage, setProfileImage] = useState("");
   const ROLE = currentUser && currentUser.authentication.role;
 
   useEffect(() => {
     if (currentUser) connect(userNotificationCount);
   }, []);
+  const getProfileImage = async () => {
+    const { data } = await Get("getProfilePicture");
+
+    setProfileImage(data.profilePictureImage);
+  };
+  useEffect(() => {
+    getProfileImage();
+  }, [profileImage]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setFashMessage(false);
@@ -62,6 +74,28 @@ const Header = ({
     const currentCountState = parseInt(count);
 
     setNotificationCount(count);
+  };
+  const uploadImageHandler = async (e) => {
+    //  e.preventDefault();
+    const formData = new FormData();
+    var d = new Date();
+    let imageName = d.getTime();
+    imageName = `jpg_${imageName}.jpg`;
+
+    formData.append("files", e, imageName);
+    try {
+      let res = await Post("/uploadProfileImage", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (res.status == 200) {
+        alert(res.data.message);
+        getProfileImage()
+      } else {
+        alert("Something went wrong try later");
+      }
+    } catch (err) {}
   };
   return (
     <>
@@ -187,27 +221,32 @@ const Header = ({
                   height="50px"
                   width="50px"
                   roundedCircle
-                  src={`https://picsum.photos/id/237/200/300`}
+                  src={profileImage ? profileImage : Avatar}
+                  alt="Profile"
                 />
               }
             >
-             <div className ="pl-4 container-profile-uploader">
+              <div className="pl-4 container-profile-uploader">
                 <Image
                   height="75px"
                   width="70px"
                   roundedCircle
-                  src={`https://picsum.photos/id/237/200/300`}
+                  src={profileImage ? profileImage : Avatar}
+                  alt="Profile"
                 />
-                <label className ="profile-image-uploader" htmlFor="upload-button">
-                <i class="fas fa-camera"></i>
+                <label
+                  className="profile-image-uploader"
+                  htmlFor="upload-button"
+                >
+                  <i class="fas fa-camera"></i>
                 </label>
                 <input
                   type="file"
                   id="upload-button"
                   style={{ display: "none" }}
+                  onChange={(e) => uploadImageHandler(e.target.files[0])}
                 />
-
-</div>
+              </div>
               {currentUser && ROLE != "labeller" && (
                 <NavDropdown.Item>
                   <LinkContainer className="p-0" to="profile">
