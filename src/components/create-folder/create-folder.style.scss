@@ -6,23 +6,19 @@
     display: none;
     box-shadow: 0 5px 8px rgba(0, 0, 0, .5);
     border-radius: 5px;
-
 }
 
-.active {
+.active-cus {
     display: block;
     border: 1px solid #28a745;
 }
 
 .mainDiv:hover {
-
     & .hoverDiv {
         display: block;
     }
-
     transform:scale(1.1)
 }
-
 
 .mainDiv {
     min-width: 18%;
@@ -58,7 +54,6 @@
 
 .mainDiv:hover .tick {
     display: block;
-
 }
 
 .ticked {
@@ -75,5 +70,4 @@
     font-size: 18px;
     color: green;
     transition: ease;
-
 }

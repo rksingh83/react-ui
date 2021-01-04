@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { ReactComponent as Logout } from "../../assets/exit.svg";
@@ -14,6 +14,8 @@ import {
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
 import { BASE_URL } from "../../service/service.setup";
+import { NavDropdown, Image, Nav } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 const Header = ({
   currentUser,
   hidden,
@@ -24,8 +26,8 @@ const Header = ({
 }) => {
   const imgStyle = { width: "27px" };
   const [flashMessage, setFashMessage] = useState(false);
-  const ROLE =     currentUser && currentUser.authentication.role
-  
+  const ROLE = currentUser && currentUser.authentication.role;
+
   useEffect(() => {
     if (currentUser) connect(userNotificationCount);
   }, []);
@@ -90,13 +92,14 @@ const Header = ({
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto text-white">
-         {ROLE !="labeller" && <li className="nav-item">
-              <Link className="option nav-link text-white" to="/">
-                Home
-              </Link>
-            </li>
-         }
-            {currentUser && ROLE !="labeller" &&(
+            {ROLE != "labeller" && (
+              <li className="nav-item">
+                <Link className="option nav-link text-white" to="/">
+                  Home
+                </Link>
+              </li>
+            )}
+            {/* {currentUser && ROLE != "labeller" && (
               <li className="nav-item">
                 <Link
                   className="option nav-link text-white"
@@ -105,7 +108,7 @@ const Header = ({
                   Contacts
                 </Link>
               </li>
-            )}
+            )} */}
             {currentUser ? (
               ""
             ) : (
@@ -124,20 +127,20 @@ const Header = ({
                 </Link>
               </li>
             )}
-            {currentUser && ROLE !="labeller" &&(
+            {/* {currentUser && ROLE != "labeller" && (
               <li className="nav-item">
                 <Link className="option nav-link text-white" to="/profile">
                   Profile
                 </Link>
               </li>
             )}
-            {currentUser && ROLE !="labeller" && (
+            {currentUser && ROLE != "labeller" && (
               <li className="nav-item">
                 <Link className="option nav-link text-white" to="/coupon">
                   Coupon
                 </Link>
               </li>
-            )}
+            )} */}
             {/* <li className="nav-item">
             <a
               className="option nav-link text-white"
@@ -167,7 +170,7 @@ const Header = ({
                 </Link>
               </li>
             )}
-            {currentUser ? (
+            {/* {currentUser ? (
               <li className="nav-item">
                 <Link className="option nav-link text-white" to="/logout">
                   <Logout style={{ height: "28px" }} />
@@ -175,8 +178,60 @@ const Header = ({
               </li>
             ) : (
               ""
-            )}
+            )} */}
           </ul>
+          {currentUser && (
+            <NavDropdown
+              title={
+                <Image
+                  height="50px"
+                  width="50px"
+                  roundedCircle
+                  src={`https://picsum.photos/id/237/200/300`}
+                />
+              }
+            >
+             <div className ="pl-4 container-profile-uploader">
+                <Image
+                  height="75px"
+                  width="70px"
+                  roundedCircle
+                  src={`https://picsum.photos/id/237/200/300`}
+                />
+                <label className ="profile-image-uploader" htmlFor="upload-button">
+                <i class="fas fa-camera"></i>
+                </label>
+                <input
+                  type="file"
+                  id="upload-button"
+                  style={{ display: "none" }}
+                />
+
+</div>
+              {currentUser && ROLE != "labeller" && (
+                <NavDropdown.Item>
+                  <LinkContainer className="p-0" to="profile">
+                    <Nav.Link>Profile</Nav.Link>
+                  </LinkContainer>
+                </NavDropdown.Item>
+              )}
+              {currentUser && ROLE != "labeller" && (
+                <NavDropdown.Item>
+                  <LinkContainer className="p-0" to="/coupon">
+                    <Nav.Link>Coupon</Nav.Link>
+                  </LinkContainer>
+                </NavDropdown.Item>
+              )}
+
+              <NavDropdown.Item>
+                <LinkContainer className="p-0" to="/logout">
+                  <Nav.Link>
+                    <Logout style={{ height: "28px" }} />
+                  </Nav.Link>
+                </LinkContainer>
+              </NavDropdown.Item>
+            </NavDropdown>
+          )}
         </div>
       </nav>
     </>

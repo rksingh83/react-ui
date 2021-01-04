@@ -32,7 +32,7 @@ const DisplayImages = ({
       if (!e.target.parentElement.parentElement.classList.contains("bold")) {
         e.target.parentElement.parentElement.classList = "bold tick";
         e.target.parentElement.parentElement.nextElementSibling.classList =
-          "editIcon active";
+          "editIcon active-cus";
         //  images.filter(item=>item.id = id)
         const newArr = imagesList.concat(
           images.filter((item) => item.id == id)
