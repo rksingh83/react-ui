@@ -20,11 +20,7 @@ const DisplayImages = ({
   const [imagesList, setImagesList] = useState([]);
   let localRender = searchInput == "" ? images : filteredImages;
   if (isLoading) {
-    return (
-      <div className="loader-display">
-        <GetLoader />
-      </div>
-    );
+    return <div className="loader-display"></div>;
   } else {
     const toggleEl = (id, e) => {
       //const toggleValue = !displayClass;
@@ -57,7 +53,7 @@ const DisplayImages = ({
         style={{ display: "flex", flexWrap: "wrap" }}
       >
         {localRender.map((item, index) => (
-          <div className ="image-top-container" key ={item.id}>
+          <div className="image-top-container" key={item.id}>
             <div
               className="image-container"
               onMouseEnter={() =>

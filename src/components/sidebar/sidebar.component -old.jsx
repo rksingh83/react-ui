@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Post, Get } from "../../service/service.setup";
-import { ListGroup } from "react-bootstrap";
 import LeftSideBar from "./left.sidebar.compoent";
 import FolderDisplay from "../create-folder/folder-dispaly";
 import TopHeader from "../top-header/top.header.component";
@@ -18,12 +17,10 @@ import { getDate } from "../common/utility";
 import { GetPageLimits } from "../../service/common";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentImageId } from "../../redux/file/pageId.action";
-import SideBarBooks from "../SideBooks/SideBarBooks";
 import {
   getAllPendingPageList,
   getPendingPageById,
 } from "../../service/pendingData";
-import UploadFile from "../login/uploadfile";
 
 const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   // RESPONSE MESSAGE POP
@@ -69,12 +66,10 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     id: 0,
     segmentation: "",
     admin_updated: false,
-    isMyDigiNetworkPage: false,
+    isMyDigiNetworkPage:false
   });
   // PENDING COMPONENT
   const [allPendingLIst, setPendingList] = useState([]);
-  const [allBooks, setAllBooks] = useState([]);
-  const [currentFolderId, setCurrentFolderId] = useState(0);
   const [currentImage, setCurrentImage] = useState("");
   const [currentLookup, setCurrentLookup] = useState(false);
   const [pendingFolderId, setPendingFolderId] = useState("");
@@ -90,7 +85,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const searchHandler = (e) => {
     setSearchHandler(e.target.value);
     setFilteredFolder(
-      allBooks.filter((item) =>
+      totalFolder.filter((item) =>
         item.fileName.toLowerCase().includes(e.target.value.toLowerCase())
       )
     );
@@ -313,8 +308,8 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   // set lookup form state
   const pageLookUpHandler = (e) => {
     const currentState = { ...lookupPageState };
-
-    const { name, value } = e.target ? e.target : { name: "shareId", ...e };
+     
+    const { name, value } = e.target?e.target:{name:"shareId", ...e};
     console.log(value);
     if (name == "fileId" || name == "tag") {
       let folder = currentState.file.filter((item) => item.id == value);
@@ -342,9 +337,8 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
       const request = {
         ...lookupPageState,
         admin_updated: lookupPageState.admin_updated == 1 ? true : false,
-        isMyDigiNetworkPage:
-          lookupPageState.isMyDigiNetworkPage == 1 ? true : false,
-        saveWithoutNotification: saveWithoutNotificationValue,
+        isMyDigiNetworkPage: lookupPageState.isMyDigiNetworkPage == 1 ? true : false,
+        saveWithoutNotification:saveWithoutNotificationValue
       };
       const response = await Post("/savePageLookup", request);
       if (response.data.code == "200") {
@@ -412,21 +406,6 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     dispatch(setCurrentImageId(pageId));
     history.push(url);
   };
-
-  const getAllFolders = async () => {
-    const requestFile = { filefolderRequest: [] };
-    const { data } = await Post("/getMyAndSharedFiles", requestFile);
-    console.log(data.filefolderRequest[0].id);
-    setAllBooks(data.filefolderRequest);
-    setCurrentFolderId(data.filefolderRequest[0].id);
-  };
-  useEffect(() => {
-    getAllFolders();
-  }, []);
-  const setDirId = (id) => {
-    setCurrentFolderId(id);
-    setFolderFlag("HOME");
-  };
   return (
     <React.Fragment>
       <ShowMessages
@@ -475,38 +454,57 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
       )}
 
       <div className="row">
-        <div className="col-md-3 custom-pad-li d-none d-sm-block p-1">
-          <SideBarBooks
-            setCurrentFolderId={setDirId}
-            searchItem={searchItem}
-            allBooks={allBooks}
-            filteredBooks ={filteredFolder}
-          />
-          <ListGroup>
-            <ListGroup.Item onClick={() => setFolderFlag("PENDING")}>
-              Default Pages
-            </ListGroup.Item>
-          </ListGroup>
+        <div className="col-md-3 custom-pad-li d-none d-sm-block">
+          <ul className="list-group ul-pad" style={sideBarStyle}>
+            {LiElement.map((item, index) => (
+              <LeftSideBar
+                item={item}
+                key={index}
+                isActive={activeIndex == index ? true : false}
+                changeActive={handleActive}
+              />
+            ))}
+            <DisplayImageDescription
+              isShowNumber={false}
+              date={date}
+              iSDisplayDiv={iSDisplayDiv}
+              imageDescription={description}
+            />
+          </ul>
         </div>
         <div className="col-md-9">
           <div className="row">
             {isShowLoader && <CustomLoader />}
-            {currentFolderId > 0 && sharedWithMe == "HOME" && (
-              // <FolderDisplay
-              //   isLoading={isLoading}
-              //   selectedFolderCount={selectedFolderCountHandler}
-              //   reNameFolder={reNameFolderHandler}
-              //   displayValue={false}
-              //   folders={totalFolder}
-              //   searchItem={searchItem}
-              //   history={history}
-              //   ToggleDescription={ToggleDescription}
-              //   onLeave={hideDescriptionHandler}
-              //   filteredFolder={filteredFolder}
-              // />
-              <UploadFile dirId={currentFolderId} history={history} />
+            {sharedWithMe == "HOME" && (
+              <FolderDisplay
+                isLoading={isLoading}
+                selectedFolderCount={selectedFolderCountHandler}
+                reNameFolder={reNameFolderHandler}
+                displayValue={false}
+                folders={totalFolder}
+                searchItem={searchItem}
+                history={history}
+                ToggleDescription={ToggleDescription}
+                onLeave={hideDescriptionHandler}
+                filteredFolder={filteredFolder}
+              />
             )}
-
+            {sharedWithMe == "SHARED" && (
+              <FolderDisplay
+                isLoading={isLoading}
+                selectedFolderCount={selectedFolderCountHandler}
+                reNameFolder={reNameFolderHandler}
+                displayValue={false}
+                folders={sharedWithMeFolder}
+                searchItem={sharedSearchItem}
+                history={history}
+                ToggleDescription={ToggleDescription}
+                onLeave={hideDescriptionHandler}
+                filteredFolder={sharedFilteredFolder}
+                isShare={true}
+                sharedFileSearchInput={sharedFileSearchInput}
+              />
+            )}
             {sharedWithMe == "PENDING" && currentLookup && (
               <LoadLookup
                 data={currentLookup}

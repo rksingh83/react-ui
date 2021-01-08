@@ -18,7 +18,7 @@ import {
   NOTIFICATION_OFF_SET as PAGE_OFF_SET,
 } from "../common/pagination.config";
 
-const UploadFile = ({ dirId, history, sharedWithMe, setFolderFlag }) => {
+const UploadFile = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const [file, setFile] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState([]);
@@ -30,7 +30,7 @@ const UploadFile = ({ dirId, history, sharedWithMe, setFolderFlag }) => {
   const [iSDisplayDiv, setIsDisplayDiv] = useState(false);
   const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
   const [activeIndex, setActiveIndex] = useState(currentIndex);
-  const [folderId, setFolderId] = useState(dirId);
+  const [folderId, setFolderId] = useState(match.params.id);
   const [imagesUpdate, setImagesUpdate] = useState([]);
   const [filteredImages, setFilteredImages] = useState("");
   const [searchImage, setSearchImage] = useState("");
@@ -91,11 +91,11 @@ const UploadFile = ({ dirId, history, sharedWithMe, setFolderFlag }) => {
     } else {
       getSharedWithMeImage();
     }
-  }, [dirId]);
+  }, []);
   async function getSharedWithMeImage() {
     setShowLoader(true);
     try {
-      const request = { fileId: dirId, allPageAcess: true };
+      const request = { fileId: match.params.id, allPageAcess: true };
       const images = await Post("/getAllSharedFileImages", request);
       if (images.data.code == 201) {
         alert(images.data.error);
@@ -116,9 +116,8 @@ const UploadFile = ({ dirId, history, sharedWithMe, setFolderFlag }) => {
     setShowLoader(true);
     try {
       setIsLoading(true);
-      const requestFile = { id: dirId };
+      const requestFile = { id: match.params.id };
       const images = await Post("/getAllFileImages", requestFile);
-
       if (images.data.code == 201) {
         alert(images.data.error);
         history.push("/logout");
@@ -154,8 +153,43 @@ const UploadFile = ({ dirId, history, sharedWithMe, setFolderFlag }) => {
   };
   return (
     <>
+      {sharedWithMe == "HOME" && (
+        <TopHeaderWithBack
+          id={match.params.id}
+          updateImages={imagesUpdate}
+          history={history}
+          images={images}
+          setImages={setImages}
+          currentFolder={currentFolderName}
+          searchImageHandler={searchImageHandler}
+          imageSearchInput={searchImage}
+          setShowLoader ={setShowLoader}
+        />
+      )}
+      {sharedWithMe == "SHARED" && <SharedHeader history={history} />}
       <div className="row">
-        <div className="col-md-12">
+        <div className="col-md-2 custom-pad-li  d-none d-sm-block">
+          <Link className="logo-container" to="/">
+            <ul className="list-group ul-pad" style={sideBarStyle}>
+              {totalEle.map((item, index) => (
+                <LeftSideBar
+                  item={item}
+                  key={index}
+                  isActive={activeIndex == index ? true : false}
+                  changeActive={handleActive}
+                />
+              ))}
+              {/* <DisplayImageDescription
+                pageNumber={pageNumber}
+                iSDisplayDiv={iSDisplayDiv}
+                isShowNumber={true}
+                date={date}
+                imageDescription={imageDescription}
+              /> */}
+            </ul>
+          </Link>
+        </div>
+        <div className="col-md-10">
           {isShowLoader && <CustomLoader />}
           <DisplayImages
             history={history}

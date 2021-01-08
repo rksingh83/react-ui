@@ -41,7 +41,7 @@ const Header = ({
   };
   useEffect(() => {
     getProfileImage();
-  }, [profileImage]);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -103,7 +103,7 @@ const Header = ({
         <div className="flash-message">
           <span className="p-3">{flashMessage} </span>
           <span className="cross-btn">
-            <i onClick={() => setFashMessage(false)} class="fas fa-times"></i>
+            <i onClick={() => setFashMessage(false)} className="fas fa-times"></i>
           </span>
         </div>
       )}
@@ -238,7 +238,7 @@ const Header = ({
                   className="profile-image-uploader"
                   htmlFor="upload-button"
                 >
-                  <i class="fas fa-camera"></i>
+                  <i className="fas fa-camera"></i>
                 </label>
                 <input
                   type="file"
