@@ -13,7 +13,7 @@ const SideBarBooks = ({
   return (
     <ListGroup style={{ maxHeight: "30rem", overflowY: "scroll" }}>
       {books.map((book) => (
-        <ListGroup.Item className="p-1">
+        <ListGroup.Item className="p-1" key ={book.id}>
           <Row>
             <Col md={2}>
               <Image

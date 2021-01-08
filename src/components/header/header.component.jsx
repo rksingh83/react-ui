@@ -91,7 +91,7 @@ const Header = ({
       });
       if (res.status == 200) {
         alert(res.data.message);
-        getProfileImage()
+        getProfileImage();
       } else {
         alert("Something went wrong try later");
       }
@@ -103,7 +103,10 @@ const Header = ({
         <div className="flash-message">
           <span className="p-3">{flashMessage} </span>
           <span className="cross-btn">
-            <i onClick={() => setFashMessage(false)} className="fas fa-times"></i>
+            <i
+              onClick={() => setFashMessage(false)}
+              className="fas fa-times"
+            ></i>
           </span>
         </div>
       )}
@@ -217,22 +220,20 @@ const Header = ({
           {currentUser && (
             <NavDropdown
               title={
-                <Image
-                  height="50px"
-                  width="50px"
-                  roundedCircle
-                  src={profileImage ? profileImage : Avatar}
-                  alt="Profile"
-                />
+                <i
+                  style={{ fontSize: "20px", color: "white" }}
+                  class="fas fa-bars"
+                ></i>
               }
             >
-              <div className="pl-4 container-profile-uploader">
+              <div className="pl-4  pr-4 container-profile-uploader">
                 <Image
-                  height="75px"
+                  height="70px"
                   width="70px"
                   roundedCircle
                   src={profileImage ? profileImage : Avatar}
                   alt="Profile"
+                  className="profile-image"
                 />
                 <label
                   className="profile-image-uploader"
@@ -246,6 +247,8 @@ const Header = ({
                   style={{ display: "none" }}
                   onChange={(e) => uploadImageHandler(e.target.files[0])}
                 />
+                <h6 className ="m-0">Johan Doe</h6>
+                <p>testemailEmail.com</p>
               </div>
               {currentUser && ROLE != "labeller" && (
                 <NavDropdown.Item>

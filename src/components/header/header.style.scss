@@ -40,16 +40,33 @@
 
 .profile-image-uploader {
     position: absolute;
-    top: 50%;
-    font-size: 26px;
+    top: 35%;
+    left: 46%;
+    font-size: 20px;
     cursor: pointer;
 }
 
 .container-profile-uploader {
     position: relative;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    padding-bottom: 2px
 }
 
 .main-container-profile {
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
     padding-bottom: 5px;
+}
+
+.profile-image {
+    border: 2px solid #0078d4;
+}
+
+.dropdown-toggle::after {
+    border: none !important
+}
+
+.main-container-profile,
+h6,
+p {
+    color: #0078d4 !important;
 }
