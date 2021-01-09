@@ -97,7 +97,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     const { data } = await Post("/getMyAndSharedFiles", requestFile);
     console.log(data.filefolderRequest[0].id);
     setAllBooks(data.filefolderRequest);
-    setIsSharedFolder(data.filefolderRequest[0].sharedImageflg)
+    setIsSharedFolder(data.filefolderRequest[0].sharedImageflg);
     setCurrentFolderId(data.filefolderRequest[0].id);
   };
   const saveFolder = (fileName, fileTag, fileDescription, id) => {
@@ -351,11 +351,11 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   };
 
   useEffect(() => {
+    if(ROLE !='labeller')
     getAllFolders();
   }, []);
-  const setDirId = (id ,flagValue) => {
-
-   setIsSharedFolder(flagValue)
+  const setDirId = (id, flagValue) => {
+    setIsSharedFolder(flagValue);
     setCurrentFolderId(id);
     setFolderFlag("HOME");
   };
@@ -410,7 +410,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
             </ListGroup.Item>
           </ListGroup>
         </div>
-        <div className="col-md-7">
+        <div className= {(ROLE != 'labeller')?'col-md-6':'col-md-9'}>
           <div className="row">
             {isShowLoader && <CustomLoader />}
             {currentFolderId > 0 && sharedWithMe == "HOME" && (
@@ -426,7 +426,11 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
               //   onLeave={hideDescriptionHandler}
               //   filteredFolder={filteredFolder}
               // />
-              <UploadFile isSharedFolder ={isSharedFolder} dirId={currentFolderId} history={history} />
+              <UploadFile
+                isSharedFolder={isSharedFolder}
+                dirId={currentFolderId}
+                history={history}
+              />
             )}
 
             {sharedWithMe == "PENDING" && currentLookup && (
@@ -450,11 +454,12 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
               ></LoadLookup>
             )}
           </div>
-        
         </div>
-        <div className ="col-md-2 bg-dark">
-            <RightSharedPeopleList bookId ={currentFolderId}/>
+        {ROLE != "labeller" && (
+          <div className="col-md-3 bg-dark">
+            <RightSharedPeopleList isSharedFolder ={isSharedFolder} bookId={currentFolderId} />
           </div>
+        )}
       </div>
     </React.Fragment>
   );

@@ -11,7 +11,7 @@ const SideBarBooks = ({
 }) => {
   books = searchItem == "" ? allBooks : filteredBooks;
   return (
-    <ListGroup style={{ maxHeight: "30rem", overflowY: "scroll" }}>
+    <ListGroup style={{ maxHeight: "36rem", overflowY: "auto" }}>
       {books.map((book) => (
         <ListGroup.Item className="p-1" key ={book.id}>
           <Row>
