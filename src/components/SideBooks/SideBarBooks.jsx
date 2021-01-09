@@ -18,7 +18,7 @@ const SideBarBooks = ({
             <Col md={2}>
               <Image
                 style={{ cursor: "pointer" }}
-                onClick={() => setCurrentFolderId(book.id)}
+                onClick={() => setCurrentFolderId(book.id ,book.sharedImageflg)}
                 fluid
                 src={BookSrc}
               />
@@ -29,7 +29,8 @@ const SideBarBooks = ({
               >
                 <span
                   style={{ cursor: "pointer" }}
-                  onClick={() => setCurrentFolderId(book.id)}
+                  onClick={() => setCurrentFolderId(book.id ,book.sharedImageflg)}
+        
                 >
                   <span className="pl-2">
                     {book.fileName}

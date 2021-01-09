@@ -230,10 +230,10 @@ const Header = ({
                 <Image
                   height="70px"
                   width="70px"
+                  className="profile-image"
                   roundedCircle
                   src={profileImage ? profileImage : Avatar}
                   alt="Profile"
-                  className="profile-image"
                 />
                 <label
                   className="profile-image-uploader"
@@ -247,13 +247,20 @@ const Header = ({
                   style={{ display: "none" }}
                   onChange={(e) => uploadImageHandler(e.target.files[0])}
                 />
-                <h6 className ="m-0">Johan Doe</h6>
+                <h6 className="m-0">Johan Doe</h6>
                 <p>testemailEmail.com</p>
               </div>
               {currentUser && ROLE != "labeller" && (
                 <NavDropdown.Item>
                   <LinkContainer className="p-0" to="profile">
                     <Nav.Link>Profile</Nav.Link>
+                  </LinkContainer>
+                </NavDropdown.Item>
+              )}
+              {currentUser && ROLE != "labeller" && (
+                <NavDropdown.Item>
+                  <LinkContainer className="p-0" to="/add-friend/USERS">
+                    <Nav.Link>Contacts</Nav.Link>
                   </LinkContainer>
                 </NavDropdown.Item>
               )}

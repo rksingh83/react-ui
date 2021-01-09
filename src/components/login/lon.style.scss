@@ -1,16 +1,23 @@
-.login{
-width: 60vw;
-display: flex;
-justify-content: space-between;
+.login {
+    width: 60vw;
+    display: flex;
+    justify-content: space-between;
 }
-.buttons{
-  display: flex;
-  justify-content: space-between;
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
 }
-.empty-folder{
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+.empty-folder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.display-image-pagination {
+    position: absolute;
+    bottom: -10px;
 }

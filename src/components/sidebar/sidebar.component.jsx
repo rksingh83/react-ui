@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Post, Get } from "../../service/service.setup";
 import { ListGroup } from "react-bootstrap";
-import LeftSideBar from "./left.sidebar.compoent";
-import FolderDisplay from "../create-folder/folder-dispaly";
+
 import TopHeader from "../top-header/top.header.component";
-import DisplayImageDescription from "../display-discription/display-discription";
+
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
-import PendingPageData from "../pending-data/pending-list";
+
 import { connect } from "react-redux";
 import SharedHeader from "../top-header/shared-header";
 // PENDING IMPORT
@@ -24,6 +23,7 @@ import {
   getPendingPageById,
 } from "../../service/pendingData";
 import UploadFile from "../login/uploadfile";
+import RightSharedPeopleList from "../right-side-bar/RightSharedPeopleList";
 
 const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   // RESPONSE MESSAGE POP
@@ -42,7 +42,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const [selectedFolder, setSelectedFolder] = useState({});
   const [finalCount, setFinalCount] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [LiElement, setLiEl] = useState(totalEle);
+  const [isSharedFolder, setIsSharedFolder] = useState(false);
   const currentIndex = ROLE != "labeller" ? TextMAp[sharedWithMe] : 0;
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [selectedItemsCount, setSelectedItemsCount] = useState(null);
@@ -83,10 +83,6 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const [responseMgs, setResponseMgs] = useState("");
   const [userImageUploadLimits, setUserImageUploadLimits] = useState(0);
 
-  const sideBarStyle = {
-    border: "1px solid rgba(0, 0, 0, 0.125)",
-    height: "90vh",
-  };
   const searchHandler = (e) => {
     setSearchHandler(e.target.value);
     setFilteredFolder(
@@ -96,27 +92,13 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     );
   };
 
-  //
-  const sharedSearchHandler = (e) => {
-    setSharedSearchHandler(e.target.value);
-    setSharedFilteredFolder(
-      sharedWithMeFolder.filter((item) =>
-        item.owner.toLowerCase().includes(e.target.value.toLowerCase())
-      )
-    );
-  };
-  // shared File Search Handler
-  const sharedFileSearchHandler = (e) => {
-    let searchOn =
-      sharedFilteredFolder.length == 0
-        ? sharedWithMeFolder
-        : sharedFilteredFolder;
-    setSharedFileSearch(e.target.value);
-    setSharedFilteredFolder(
-      searchOn.filter((item) =>
-        item.fileName.toLowerCase().includes(e.target.value.toLowerCase())
-      )
-    );
+  const getAllFolders = async () => {
+    const requestFile = { filefolderRequest: [] };
+    const { data } = await Post("/getMyAndSharedFiles", requestFile);
+    console.log(data.filefolderRequest[0].id);
+    setAllBooks(data.filefolderRequest);
+    setIsSharedFolder(data.filefolderRequest[0].sharedImageflg)
+    setCurrentFolderId(data.filefolderRequest[0].id);
   };
   const saveFolder = (fileName, fileTag, fileDescription, id) => {
     setShowLoader(true);
@@ -136,53 +118,22 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
         if (res.data.code == "213") {
           setResponseMgs(res.data.message);
           setShowPop(true);
+          getAllFolders();
           setShowLoader(false);
           return false;
         }
+        getAllFolders();
         pushName(res.data.filefolderRequest[0]);
         setShowLoader(false);
       });
     }
   };
-  const handleActive = (e) => {
-    if (ROLE == "labeller") {
-      return true;
-    }
-    setActiveIndex(LiElement.indexOf(e));
-    if (LiElement.indexOf(e) == 0) {
-      setFolderFlag("HOME");
-    }
-    if (LiElement.indexOf(e) == 1) {
-      setFolderFlag("SHARED");
-    }
-    if (LiElement.indexOf(e) == 2) {
-      setFolderFlag("PENDING");
-    }
-    // setSharedWithMe(!sharedWithMe);
-    setLiEl(totalEle);
-  };
 
   useEffect(() => {
-    getOwnFile();
-    getSharedWithMeFolder();
     getUserImageUploadLimits();
     if (ROLE == "labeller") setFolderFlag("PENDING");
   }, []);
-  const getOwnFile = () => {
-    const requestFile = { filefolderRequest: [] };
-    Post("/getAllFiles", requestFile).then((res) => {
-      if (res.data.code == 201) {
-        // alert(res.data.error);
-        setResponseMgs(res.data.error);
-        setShowPop(true);
-        history.push("/logout");
-      }
-      if (res.data.filefolderRequest) {
-        setTotalFolder(res.data.filefolderRequest);
-      }
-    });
-    setShowLoader(false);
-  };
+
   const pushName = (name) => {
     setTotalFolder([...totalFolder, name]);
 
@@ -220,21 +171,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
       updateName(folderList, true)
     );
   };
-  const ToggleDescription = (description, date) => {
-    setIsDisplayDiv(true);
-    setDescription(description);
-    setDate(date);
-  };
-  const hideDescriptionHandler = (flag) => {
-    setIsDisplayDiv(flag);
-  };
-  async function getSharedWithMeFolder() {
-    try {
-      const folders = await Get("getAllSharedFiles");
-      setSharedWithMeFolder(folders.data.filefolderRequest);
-      setShowLoader(false);
-    } catch (error) {}
-  }
+
   // pending
   useEffect(() => {
     getCurrentPage();
@@ -413,17 +350,12 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     history.push(url);
   };
 
-  const getAllFolders = async () => {
-    const requestFile = { filefolderRequest: [] };
-    const { data } = await Post("/getMyAndSharedFiles", requestFile);
-    console.log(data.filefolderRequest[0].id);
-    setAllBooks(data.filefolderRequest);
-    setCurrentFolderId(data.filefolderRequest[0].id);
-  };
   useEffect(() => {
     getAllFolders();
   }, []);
-  const setDirId = (id) => {
+  const setDirId = (id ,flagValue) => {
+
+   setIsSharedFolder(flagValue)
     setCurrentFolderId(id);
     setFolderFlag("HOME");
   };
@@ -445,17 +377,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
           uploadLimits={userImageUploadLimits}
         />
       )}
-      {sharedWithMe == "SHARED" && (
-        <SharedHeader
-          totalFolders={totalFolder}
-          selectedItems={selectedFolder}
-          searchItem={sharedSearchItem}
-          searchHandler={sharedSearchHandler}
-          setSharedFileSearchHandler={sharedFileSearchHandler}
-          sharedFileSearchInput={sharedFileSearchInput}
-          back={true}
-        />
-      )}
+
       {sharedWithMe == "PENDING" && (
         <PendingHeader
           currentImageId={currentImage}
@@ -480,7 +402,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
             setCurrentFolderId={setDirId}
             searchItem={searchItem}
             allBooks={allBooks}
-            filteredBooks ={filteredFolder}
+            filteredBooks={filteredFolder}
           />
           <ListGroup>
             <ListGroup.Item onClick={() => setFolderFlag("PENDING")}>
@@ -488,7 +410,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
             </ListGroup.Item>
           </ListGroup>
         </div>
-        <div className="col-md-9">
+        <div className="col-md-7">
           <div className="row">
             {isShowLoader && <CustomLoader />}
             {currentFolderId > 0 && sharedWithMe == "HOME" && (
@@ -504,7 +426,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
               //   onLeave={hideDescriptionHandler}
               //   filteredFolder={filteredFolder}
               // />
-              <UploadFile dirId={currentFolderId} history={history} />
+              <UploadFile isSharedFolder ={isSharedFolder} dirId={currentFolderId} history={history} />
             )}
 
             {sharedWithMe == "PENDING" && currentLookup && (
@@ -528,7 +450,11 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
               ></LoadLookup>
             )}
           </div>
+        
         </div>
+        <div className ="col-md-2 bg-dark">
+            <RightSharedPeopleList bookId ={currentFolderId}/>
+          </div>
       </div>
     </React.Fragment>
   );

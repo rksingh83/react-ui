@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Input from "../boostrapinput/input.component";
+
+import BookSrc from "../../assets/download.png";
+import { Image, Row, Col } from "react-bootstrap";
 import { ReactComponent as Delete } from "../../assets/delete.svg";
 import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { ReactComponent as FolderCreate } from "../../assets/trade.svg";
@@ -162,23 +165,31 @@ const TopHeader = ({
 
       <div className="col-md-12">
         <div className="row min-height">
-          <div className="col-md-3  sec-header-item">
-            <input
-              placeholder="Search anything.."
-              value={searchItem}
-              onChange={searchHandler}
-              onBlur={fillAllDataHandler}
-              name="search"
-              type="input"
-              className="custom-input"
-            ></input>
-            <span className="on-hover" onClick={() => setShow(true)}></span>
-            <CustomToolTip text="Create Book">
-              <Refresh
-                style={{ marginLeft: "2rem" }}
-                onClick={() => setShow(true)}
-              />
-            </CustomToolTip>
+          <div className="col-md-3  pl-1 sec-header-item">
+            <Row>
+              <Col md={10}>
+                <input
+                  placeholder="Search anything.."
+                  value={searchItem}
+                  onChange={searchHandler}
+                  onBlur={fillAllDataHandler}
+                  name="search"
+                  type="input"
+                  className="custom-input mt-1"
+                ></input>
+              </Col>
+              <Col md={2}>
+                <span className="on-hover" onClick={() => setShow(true)}></span>
+                <CustomToolTip text="Create Book">
+                  <Image
+                    style={{ marginLeft: ".3rem" }}
+                    onClick={() => setShow(true)}
+                    src={BookSrc}
+                    fluid
+                  />
+                </CustomToolTip>
+              </Col>
+            </Row>
           </div>
           <div className="col-md-9 sec-header-item col-text-style">
             <CustomToolTip text="Upload Image">

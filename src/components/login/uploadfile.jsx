@@ -18,7 +18,7 @@ import {
   NOTIFICATION_OFF_SET as PAGE_OFF_SET,
 } from "../common/pagination.config";
 
-const UploadFile = ({ dirId, history, sharedWithMe, setFolderFlag }) => {
+const UploadFile = ({ dirId, history, sharedWithMe, setFolderFlag ,isSharedFolder }) => {
   const [file, setFile] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState([]);
@@ -86,7 +86,8 @@ const UploadFile = ({ dirId, history, sharedWithMe, setFolderFlag }) => {
     setIsDisplayDiv(flag);
   };
   useEffect(() => {
-    if (sharedWithMe == "HOME") {
+    console.log(isSharedFolder)
+    if (!isSharedFolder) {
       getOwnImage();
     } else {
       getSharedWithMeImage();
@@ -154,31 +155,29 @@ const UploadFile = ({ dirId, history, sharedWithMe, setFolderFlag }) => {
   };
   return (
     <>
-      <div className="row">
-        <div className="col-md-12">
-          {isShowLoader && <CustomLoader />}
-          <DisplayImages
-            history={history}
-            onHove={showContentHandler}
-            onLeave={hideContentHandler}
-            images={paginateImages}
-            folderId={folderId}
-            updateHandler={updateHandler}
-            isLoading={isLoading}
-            filteredImages={filteredImages}
-            searchInput={searchImage}
-          />
-          {images.length > 0 && (
-            <Paginate
-              elStyle={paginationStyle}
-              setCurrentSelected={paginate}
-              active={currentPagination}
-              count={getPageCount(images)}
-              NextPrev={groupNextPrev}
-            />
-          )}
-        </div>
-      </div>
+      {isShowLoader && <CustomLoader />}
+      <DisplayImages
+        history={history}
+        onHove={showContentHandler}
+        onLeave={hideContentHandler}
+        images={paginateImages}
+        folderId={folderId}
+        updateHandler={updateHandler}
+        isLoading={isLoading}
+        filteredImages={filteredImages}
+        searchInput={searchImage}
+        isShowLoader={isShowLoader}
+      />
+      {images.length > 0 && (
+        <Paginate
+          cls ="display-image-pagination"
+          elStyle={paginationStyle}
+          setCurrentSelected={paginate}
+          active={currentPagination}
+          count={getPageCount(images)}
+          NextPrev={groupNextPrev}
+        />
+      )}
     </>
   );
 };
