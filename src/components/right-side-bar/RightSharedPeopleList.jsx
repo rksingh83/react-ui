@@ -6,7 +6,7 @@ import ContactList from "./ContactList";
 
 import UserGroupList from "./UserGroupList";
 import ListTabs from "../add-friend/tab";
-const RightSharedPeopleList = ({ bookId, isSharedFolder }) => {
+const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
   const [shareList, setShareList] = useState([]);
   const [contactList, setContactList] = useState([]);
   const [userGroups, setUserGroups] = useState([]);
@@ -88,7 +88,7 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder }) => {
           message="This book is not shared with any one"
           contactList={shareList}
           cancel={true}
-          removeContact ={removeContact}
+          removeContact={removeContact}
         />
       </Row>
       <hr />

@@ -17,7 +17,6 @@ import { Link } from "react-router-dom";
 import CustomLoader from "../loader/loader";
 import ShowMessages from "../common/display-message-modal";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
-import RightSharedPeopleList from "../right-side-bar/RightSharedPeopleList";
 const DisplayOriginalImage = ({
   match,
   history,
@@ -71,6 +70,7 @@ const DisplayOriginalImage = ({
     height: "90vh",
   };
   const nextHandler = () => {
+    console.log(allPendingLIst)
     let index = allPendingLIst.indexOf(parseInt(imageId));
     if (index == allPendingLIst.length - 1) {
       setResponseMgs("You've reached last image in the file ");
@@ -172,14 +172,15 @@ const DisplayOriginalImage = ({
         tempData[attr] = "";
       }
     }
-    if (tempData.date == "") tempData.date = new Date();
+    if (tempData.date == "")
+      tempData.date = new Date();
     return tempData;
   };
   // handle input
   const pageLookUpHandler = (e) => {
     const currentState = { ...lookupPageState };
 
-    const { name, value } = e.target ? e.target : { name: "shareId", ...e };
+    const { name, value } = e.target?e.target:{name:"shareId", ...e};
     if (name == "fileId" || name == "tag") {
       let folder = currentState.file.filter((item) => item.id == value);
       let tag = folder.length > 0 ? folder[0].fileTag : "";
@@ -206,10 +207,8 @@ const DisplayOriginalImage = ({
   const saveUpdateData = async () => {
     setShowLoader(true);
     try {
-      const request = {
-        ...lookupPageState,
-        admin_updated: lookupPageState.admin_updated == 1 ? true : false,
-      };
+      const request =  {...lookupPageState ,
+        admin_updated:lookupPageState.admin_updated ==1?true:false}
       const response = await Post("/savePageLookup", request);
 
       if (response.data.code == "200") {
@@ -262,8 +261,21 @@ const DisplayOriginalImage = ({
       )}
       <div className="row">
         {isShowLoader && <CustomLoader />}
-
-        <div className="col-md-9">
+        <div className=" custom-pad-li  col-md-2 p-0">
+          <Link className="logo-container" to="/">
+            <ul className=" ul-pad list-group" style={sideBarStyle}>
+              {totalEle.map((item, index) => (
+                <LeftSideBar
+                  item={item}
+                  key={index}
+                  isActive={activeIndex == index ? true : false}
+                  changeActive={handleActive}
+                />
+              ))}
+            </ul>
+          </Link>
+        </div>
+        <div className="col-md-10">
           {currentLookup && (
             <LoadLookup
               data={currentLookup}
@@ -290,9 +302,6 @@ const DisplayOriginalImage = ({
               images={allImages}
             ></ImageSlider>
           )} */}
-        </div>
-        <div className="col-md-3 bg-dark">
-          <RightSharedPeopleList pageId ={imageId} bookId={match.params.folderId} />
         </div>
       </div>
     </>

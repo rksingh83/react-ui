@@ -20,6 +20,7 @@ import {
 
 const UploadFile = ({ dirId, history, sharedWithMe, setFolderFlag ,isSharedFolder }) => {
   const [file, setFile] = useState("");
+  console.log("DIR" ,dirId)
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState([]);
   const [paginateImages, setPaginateImages] = useState([]);
@@ -161,7 +162,7 @@ const UploadFile = ({ dirId, history, sharedWithMe, setFolderFlag ,isSharedFolde
         onHove={showContentHandler}
         onLeave={hideContentHandler}
         images={paginateImages}
-        folderId={folderId}
+        folderId={dirId}
         updateHandler={updateHandler}
         isLoading={isLoading}
         filteredImages={filteredImages}
