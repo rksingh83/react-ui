@@ -25,43 +25,29 @@ const UploadFile = ({
   setFolderFlag,
   isSharedFolder,
   images,
+  filteredImages,
+  searchImage,
+  paginateImages,
+  groupNextPrev,
+  paginate,
+  currentPagination,
 }) => {
-  
   const [isLoading, setIsLoading] = useState(false);
-  const [paginateImages, setPaginateImages] = useState([]);
+
   const [date, setDate] = useState("");
   const [iSDisplayDiv, setIsDisplayDiv] = useState(false);
   const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [imagesUpdate, setImagesUpdate] = useState([]);
-  const [filteredImages, setFilteredImages] = useState("");
-  const [searchImage, setSearchImage] = useState("");
-  const [isShowLoader, setShowLoader] = useState(false);
-  const [currentPagination, setCurrentPagination] = useState(1);
 
- 
+  const [isShowLoader, setShowLoader] = useState(false);
+
   const paginationStyle = {
     position: "absolute",
     bottom: "14%",
     left: "40%",
   };
-  const searchImageHandler = (e) => {
-    setSearchImage(e.target.value);
-    setFilteredImages(
-      images.filter((item) => {
-        if (item.title) {
-          return item.title
-            .toLowerCase()
-            .includes(e.target.value.toLowerCase());
-        }
-      })
-    );
-  };
 
-useEffect(()=>{
-paginate(images.length)
-},[images])
-  
   const hideContentHandler = (flag) => {
     setIsDisplayDiv(flag);
   };
@@ -69,21 +55,7 @@ paginate(images.length)
   const updateHandler = (list) => {
     setImagesUpdate(list);
   };
-  const paginate = (number) => {
-    const allImages = [...images];
-    setPaginateImages(allImages.splice(getStartIndex(number), PAGE_OFF_SET));
-    setCurrentPagination(number);
-  };
 
-  const groupNextPrev = (type) => {
-    if (type === "NEXT") {
-      if (currentPagination == getPageCount(images)) return;
-      paginate(currentPagination + 1);
-    } else {
-      if (currentPagination == 1) return;
-      paginate(currentPagination - 1);
-    }
-  };
   return (
     <>
       {isShowLoader && <CustomLoader />}

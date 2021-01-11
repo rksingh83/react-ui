@@ -192,50 +192,111 @@ const TopHeader = ({
             </Row>
           </div>
           <div className="col-md-9 sec-header-item col-text-style">
-            <Col md={12}>
-              <Row>
-              <Col md={3}>
-                  <input
-                    placeholder="Search anything.."
-                    value={props.searchImage}
-                    onChange={props.searchImageHandler}
-                    onBlur={fillAllDataHandler}
-                    name="search"
-                    type="input"
-                    className="custom-input mt-1"
-                  ></input>
-                </Col>
-                <Col md={1}>
-                  <CustomToolTip text="Upload Image">
-                    <UploadForm
-                      isUpload={true}
-                      submitHandler={fileUploadHandler}
-                    />
-                  </CustomToolTip>
-                </Col>
+            <CustomToolTip text="Upload Image">
+              <UploadForm isUpload={true} submitHandler={fileUploadHandler} />
+            </CustomToolTip>
 
-                {totalItem == 0 && props.uploadLimits < 10 && (
-                  <Col md={1}>
-                    <div className=" sec-header-item col-text-style item-center">
-                      <span>
-                        Limits{" "}
-                        <span className="badge badge-info">
-                          {props.uploadLimits}
-                        </span>
-                      </span>
-                    </div>
-                  </Col>
-                )}
+            {totalItem == 0 && props.uploadLimits < 10 && (
+              <div className=" sec-header-item col-text-style item-center">
+                <span>
+                  Limits{" "}
+                  <span className="badge badge-info">{props.uploadLimits}</span>
+                </span>
+              </div>
+            )}
 
-                <Col md={1}>
-                  <CustomToolTip text="Refresh">
-                    <FolderCreate onClick={() => window.location.reload()} />
-                  </CustomToolTip>
-                </Col>
-               
-              
-            </Row>
-            </Col>
+            <div
+              style={columnMinWidth}
+              className=" col-text-style sec-header-item"
+            >
+              <CustomToolTip text="Refresh">
+                <FolderCreate onClick={() => window.location.reload()} />
+              </CustomToolTip>
+              {/* <span className="on-hover" onClick={() => window.location.reload()}>
+              Refresh
+            </span> */}
+            </div>
+            <div
+              className={`    col-text-style ${
+                totalItem == 0 ? "hideCount" : "sec-header-item"
+              }`}
+              style={columnMinWidth}
+            >
+              <CustomToolTip text="Share">
+                <Share onClick={() => setShareFolder(true)} />
+              </CustomToolTip>
+              <ShareFolderModal
+                selected={selectedItems}
+                show={shareFolder}
+                hide={setShareFolder}
+              />
+              {/* <span className="on-hover" onClick={() => setShareFolder(true)}>
+              Share
+            </span> */}
+            </div>
+            <div
+              className={`    col-text-style ${
+                totalItem == 0 ? "hideCount" : "sec-header-item"
+              }`}
+              style={columnMinWidth}
+            >
+              <CustomToolTip text="Delete">
+                <Delete onClick={() => reNameFolder(true)} />
+              </CustomToolTip>
+              {/* <span className="on-hover" onClick={() => reNameFolder(true)}>
+              Delete
+            </span> */}
+            </div>
+
+            <div
+              className={`   col-text-style ${
+                totalItem > 1 || totalItem == 0
+                  ? "hideCount"
+                  : "sec-header-item"
+              }`}
+              style={columnMinWidth}
+            >
+              <CustomToolTip text="Edit">
+                <EditBtn handler={editHandler} />
+              </CustomToolTip>
+              {/* <span
+              className="on-hover"
+              onClick={() => showContactListModal(false)}
+            >
+              Edit
+            </span> */}
+              {/* <button
+              onClick={showContactListModal}
+              className="btn btn-secondary ml-2"
+            >
+              Shared List
+            </button>
+            <SharedListModal
+              hide={setSharedListPop}
+              show={isOpenPop}
+              folderId={folderId}
+              list={shareWithList}
+            ></SharedListModal> */}
+            </div>
+
+            <div style={columnMinWidth} className="  sec-header-item ">
+              <div
+                className={` col-text-style ${
+                  totalItem == 0 ? "hideCount" : "sec-header-item"
+                }`}
+              >
+                <span className="count badge badge-info mr-1">
+                  {totalItem}{" "}
+                </span>{" "}
+                <span style={{ padding: "0 10px" }}> Selected</span>
+                <CustomToolTip text="Clear All">
+                  <Cross
+                    className="ml-1"
+                    onClick={() => window.location.reload()}
+                  ></Cross>
+                </CustomToolTip>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -8,22 +8,25 @@ import "./create-image.style.scss";
 const DisplayImages = ({
   images,
   folderId,
-  isLoading,
+
   onLeave,
-  onHove,
   history,
   updateHandler,
   filteredImages,
   searchInput,
   isShowLoader,
-  isSharedFolder
+  isSharedFolder,
 }) => {
   const [isEditShow, setIsEditShow] = useState(false);
   const [imagesList, setImagesList] = useState([]);
 
   let localRender = searchInput == "" ? images : filteredImages;
   if (!isShowLoader && images.length === 0) {
-    return <div className="col-md-12 loader-display mt-4"><h5 className ="mt-4"> This book is empty</h5></div>;
+    return (
+      <div className="col-md-12 loader-display mt-4">
+        <h5 className="mt-4"> This book is empty</h5>
+      </div>
+    );
   } else {
     const toggleEl = (id, e) => {
       //const toggleValue = !displayClass;

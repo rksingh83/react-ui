@@ -67,6 +67,8 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const [currentPagination, setCurrentPagination] = useState(1);
   const [images, setImages] = useState([]);
   const [currentFolderName, setCurrentFolderName] = useState("");
+  const [searchImage, setSearchImage] = useState("");
+  const [filteredImages, setFilteredImages] = useState("");
   const [lookupPageState, setLookupPageState] = useState({
     fileId: 0,
     shareId: 0,
@@ -183,7 +185,6 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     );
   };
   useEffect(() => {
-
     if (!isSharedFolder) {
       console.log("calling isSharedFolder");
       getOwnImage();
@@ -249,6 +250,18 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
       if (currentPagination == 1) return;
       paginate(currentPagination - 1);
     }
+  };
+  const searchImageHandler = (e) => {
+    setSearchImage(e.target.value);
+    setFilteredImages(
+      images.filter((item) => {
+        if (item.title) {
+          return item.title
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase());
+        }
+      })
+    );
   };
 
   // pending
@@ -453,28 +466,12 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
           totalFolders={totalFolder}
           selectedItems={selectedFolder}
           searchItem={searchItem}
+          searchImage={searchImage}
+          searchImageHandler={searchImageHandler}
           searchHandler={searchHandler}
           deleteHandler={deleteHandler}
           saveFolder={saveFolder}
           uploadLimits={userImageUploadLimits}
-        />
-      )}
-
-      {sharedWithMe === "PENDING" && (
-        <PendingHeader
-          currentImageId={currentImage}
-          pendingFolderId={pendingFolderId}
-          next={nextHandler}
-          prev={prevHandler}
-          all={allPendingLIst}
-          saveHandler={saveUpdateData}
-          toggleLoader={setShowLoader}
-          setShowPop={setShowPop}
-          resMgs={setResponseMgs}
-          deleteImg={pendingImgDeleteHandler}
-          history={history}
-          role={ROLE}
-          redirectAndSaveId={redirectAndSaveId}
         />
       )}
 
@@ -513,6 +510,12 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
                 dirId={currentFolderId}
                 history={history}
                 images={images}
+                filteredImages={filteredImages}
+                searchImage={searchImage}
+                paginateImages={paginateImages}
+                groupNextPrev={groupNextPrev}
+                paginate ={paginate} 
+                currentPagination ={currentPagination}
               />
             )}
 
