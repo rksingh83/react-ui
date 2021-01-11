@@ -4,7 +4,14 @@ import { ReactComponent as Close } from "../../assets/close.svg";
 import { Row, Col, Image } from "react-bootstrap";
 import Avatar from "../../assets/avatar.png";
 
-const ContactList = ({ contactList, message, cancel, shareHandler ,removeContact }) => {
+const ContactList = ({
+  isSharedFolder,
+  contactList,
+  message,
+  cancel,
+  shareHandler,
+  removeContact,
+}) => {
   if (contactList.length === 0) {
     return <Col className="text-white"> {message}</Col>;
   }
@@ -32,16 +39,18 @@ const ContactList = ({ contactList, message, cancel, shareHandler ,removeContact
                 <p>Owner</p>
               </span>
             </Col>
-            <Col md={1}>
-              {cancel ? (
-                <Close onClick ={()=>removeContact(item.id)}/>
-              ) : (
-                <Share
-                  onClick={() => shareHandler({ user_id: item.id })}
-                  user_id
-                />
-              )}
-            </Col>
+            {!isSharedFolder && (
+              <Col md={1}>
+                {cancel ? (
+                  <Close onClick={() => removeContact(item.id)} />
+                ) : (
+                  <Share
+                    onClick={() => shareHandler({ user_id: item.id })}
+                    user_id
+                  />
+                )}
+              </Col>
+            )}
           </Row>
         </Col>
       ))}

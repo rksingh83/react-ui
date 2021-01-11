@@ -292,7 +292,11 @@ const DisplayOriginalImage = ({
           )} */}
         </div>
         <div className="col-md-3 bg-dark">
-          <RightSharedPeopleList pageId ={imageId} bookId={match.params.folderId} />
+          <RightSharedPeopleList
+            isSharedFolder={sharedWithMe === "SHARED" ? true : false}
+            pageId={imageId}
+            bookId={match.params.folderId}
+          />
         </div>
       </div>
     </>

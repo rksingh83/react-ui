@@ -351,13 +351,16 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   };
 
   useEffect(() => {
-    if(ROLE !='labeller')
-    getAllFolders();
+    if (ROLE != "labeller") getAllFolders();
   }, []);
   const setDirId = (id, flagValue) => {
     setIsSharedFolder(flagValue);
     setCurrentFolderId(id);
-    setFolderFlag("HOME");
+    if (flagValue) {
+      setFolderFlag("SHARED");
+    } else {
+      setFolderFlag("HOME");
+    }
   };
   return (
     <React.Fragment>
@@ -366,7 +369,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
         message={responseMgs}
         show={showPopUp}
       />
-      {sharedWithMe == "HOME" && (
+      {sharedWithMe != "PENDING" && (
         <TopHeader
           totalFolders={totalFolder}
           selectedItems={selectedFolder}
@@ -378,7 +381,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
         />
       )}
 
-      {sharedWithMe == "PENDING" && (
+      {sharedWithMe === "PENDING" && (
         <PendingHeader
           currentImageId={currentImage}
           pendingFolderId={pendingFolderId}
@@ -410,10 +413,10 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
             </ListGroup.Item>
           </ListGroup>
         </div>
-        <div className= {(ROLE != 'labeller')?'col-md-6':'col-md-9'}>
+        <div className={ROLE != "labeller" ? "col-md-6" : "col-md-9"}>
           <div className="row">
             {isShowLoader && <CustomLoader />}
-            {currentFolderId > 0 && sharedWithMe == "HOME" && (
+            {currentFolderId > 0 && sharedWithMe != "PENDING" && (
               // <FolderDisplay
               //   isLoading={isLoading}
               //   selectedFolderCount={selectedFolderCountHandler}
@@ -455,9 +458,12 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
             )}
           </div>
         </div>
-        {ROLE != "labeller" &&  sharedWithMe == "HOME" &&(
+        {ROLE != "labeller" && sharedWithMe != "PENDING" && (
           <div className="col-md-3 bg-dark">
-            <RightSharedPeopleList isSharedFolder ={isSharedFolder} bookId={currentFolderId} />
+            <RightSharedPeopleList
+              isSharedFolder={isSharedFolder}
+              bookId={currentFolderId}
+            />
           </div>
         )}
       </div>

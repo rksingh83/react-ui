@@ -16,6 +16,7 @@ const DisplayImages = ({
   filteredImages,
   searchInput,
   isShowLoader,
+  isSharedFolder
 }) => {
   const [isEditShow, setIsEditShow] = useState(false);
   const [imagesList, setImagesList] = useState([]);

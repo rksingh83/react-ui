@@ -168,6 +168,7 @@ const UploadFile = ({ dirId, history, sharedWithMe, setFolderFlag ,isSharedFolde
         filteredImages={filteredImages}
         searchInput={searchImage}
         isShowLoader={isShowLoader}
+        isSharedFolder ={isSharedFolder}
       />
       {images.length > 0 && (
         <Paginate

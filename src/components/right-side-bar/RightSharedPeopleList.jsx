@@ -112,6 +112,7 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
             message="Your contact list is empty"
             contactList={contactList}
             shareHandler={shareHandler}
+            isSharedFolder={isSharedFolder}
           />
         )}
       </Row>
