@@ -18,13 +18,18 @@ import { GetPageLimits } from "../../service/common";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentImageId } from "../../redux/file/pageId.action";
 import SideBarBooks from "../SideBooks/SideBarBooks";
+
 import {
   getAllPendingPageList,
   getPendingPageById,
 } from "../../service/pendingData";
 import UploadFile from "../login/uploadfile";
 import RightSharedPeopleList from "../right-side-bar/RightSharedPeopleList";
-
+import {
+  getNotificationsIndex as getStartIndex,
+  getNotificationCount as getPageCount,
+  NOTIFICATION_OFF_SET as PAGE_OFF_SET,
+} from "../common/pagination.config";
 const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   // RESPONSE MESSAGE POP
   // pull current user from  redux
@@ -52,11 +57,16 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const [iSDisplayDiv, setIsDisplayDiv] = useState(false);
   const [date, setDate] = useState("");
   // const [sharedWithMe, setSharedWithMe] = useState(true);
-  const [sharedWithMeFolder, setSharedWithMeFolder] = useState([]);
+
   const [sharedSearchItem, setSharedSearchHandler] = useState("");
   const [sharedFilteredFolder, setSharedFilteredFolder] = useState("");
   const [sharedFileSearchInput, setSharedFileSearch] = useState("");
   const [isPrimerUser, setIsPrimerUser] = useState("");
+  // pages
+  const [paginateImages, setPaginateImages] = useState([]);
+  const [currentPagination, setCurrentPagination] = useState(1);
+  const [images, setImages] = useState([]);
+  const [currentFolderName, setCurrentFolderName] = useState("");
   const [lookupPageState, setLookupPageState] = useState({
     fileId: 0,
     shareId: 0,
@@ -99,6 +109,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     setAllBooks(data.filefolderRequest);
     setIsSharedFolder(data.filefolderRequest[0].sharedImageflg);
     setCurrentFolderId(data.filefolderRequest[0].id);
+    setShowLoader(false);
   };
   const saveFolder = (fileName, fileTag, fileDescription, id) => {
     setShowLoader(true);
@@ -170,6 +181,74 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     Post("/updateFileFolder", folderList).then((res) =>
       updateName(folderList, true)
     );
+  };
+  useEffect(() => {
+
+    if (!isSharedFolder) {
+      console.log("calling isSharedFolder");
+      getOwnImage();
+    } else {
+      console.log("calling iamges");
+      getSharedWithMeImage();
+    }
+  }, [currentFolderId]);
+  async function getSharedWithMeImage() {
+    setShowLoader(true);
+    try {
+      const request = { fileId: currentFolderId, allPageAcess: true };
+      const images = await Post("/getAllSharedFileImages", request);
+      if (images.data.code == 201) {
+        alert(images.data.error);
+        history.push("/logout");
+      }
+      setImages(images.data.imageInput);
+      const temp = [...images.data.imageInput];
+      setPaginateImages(temp.splice(0, PAGE_OFF_SET));
+
+      setCurrentFolderName(images.data.fileName);
+      setIsLoading(false);
+      setShowLoader(false);
+    } catch (error) {
+      setShowLoader(false);
+    }
+  }
+  async function getOwnImage() {
+    setShowLoader(true);
+    try {
+      setIsLoading(true);
+      const requestFile = { id: currentFolderId };
+      const images = await Post("/getAllFileImages", requestFile);
+
+      if (images.data.code == 201) {
+        alert(images.data.error);
+        history.push("/logout");
+      }
+      setImages(images.data.imageInput);
+      const temp = [...images.data.imageInput];
+      setPaginateImages(temp.splice(0, PAGE_OFF_SET));
+
+      setCurrentFolderName(images.data.fileName);
+      setIsLoading(false);
+      setShowLoader(false);
+    } catch (error) {
+      setShowLoader(false);
+    }
+  }
+
+  const paginate = (number) => {
+    const allImages = [...images];
+    setPaginateImages(allImages.splice(getStartIndex(number), PAGE_OFF_SET));
+    setCurrentPagination(number);
+  };
+
+  const groupNextPrev = (type) => {
+    if (type === "NEXT") {
+      if (currentPagination == getPageCount(images)) return;
+      paginate(currentPagination + 1);
+    } else {
+      if (currentPagination == 1) return;
+      paginate(currentPagination - 1);
+    }
   };
 
   // pending
@@ -353,7 +432,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   useEffect(() => {
     if (ROLE != "labeller") getAllFolders();
   }, []);
-  const setDirId = (id, flagValue) => {
+  const setcurrentFolderId = (id, flagValue) => {
     setIsSharedFolder(flagValue);
     setCurrentFolderId(id);
     if (flagValue) {
@@ -369,7 +448,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
         message={responseMgs}
         show={showPopUp}
       />
-      {sharedWithMe != "PENDING" && (
+      {sharedWithMe !== "PENDING" && (
         <TopHeader
           totalFolders={totalFolder}
           selectedItems={selectedFolder}
@@ -402,7 +481,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
       <div className="row">
         <div className="col-md-3 custom-pad-li d-none d-sm-block p-1">
           <SideBarBooks
-            setCurrentFolderId={setDirId}
+            setCurrentFolderId={setcurrentFolderId}
             searchItem={searchItem}
             allBooks={allBooks}
             filteredBooks={filteredFolder}
@@ -433,10 +512,11 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
                 isSharedFolder={isSharedFolder}
                 dirId={currentFolderId}
                 history={history}
+                images={images}
               />
             )}
 
-            {sharedWithMe == "PENDING" && currentLookup && (
+            {sharedWithMe === "PENDING" && currentLookup && (
               <LoadLookup
                 data={currentLookup}
                 currentImageId={currentImage}
@@ -458,7 +538,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
             )}
           </div>
         </div>
-        {ROLE != "labeller" && sharedWithMe != "PENDING" && (
+        {ROLE != "labeller" && sharedWithMe !== "PENDING" && (
           <div className="col-md-3 bg-dark">
             <RightSharedPeopleList
               isSharedFolder={isSharedFolder}

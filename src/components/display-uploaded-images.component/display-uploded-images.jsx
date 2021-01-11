@@ -59,13 +59,6 @@ const DisplayImages = ({
           <div className="image-top-container" key={item.id}>
             <div
               className="image-container"
-              onMouseEnter={() =>
-                onHove(
-                  item.pageNumber,
-                  item.description,
-                  item.ff_local_datetime
-                )
-              }
               onMouseLeave={() => onLeave(false)}
               key={index}
             >

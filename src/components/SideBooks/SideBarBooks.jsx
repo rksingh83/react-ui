@@ -7,18 +7,25 @@ const SideBarBooks = ({
   allBooks,
   filteredBooks,
   setCurrentFolderId,
-  searchItem
+  searchItem,
 }) => {
   books = searchItem == "" ? allBooks : filteredBooks;
   return (
-    <ListGroup style={{ maxHeight: "36rem", overflowY: "auto" }}>
+    <ListGroup
+      style={{
+        maxHeight: "36rem",
+        minHeight: "36rem",
+        overflowY: "auto",
+        border: "1px solid rgba(0, 0, 0, 0.125)",
+      }}
+    >
       {books.map((book) => (
-        <ListGroup.Item className="p-1" key ={book.id}>
+        <ListGroup.Item className="p-1" key={book.id}>
           <Row>
             <Col md={2}>
               <Image
                 style={{ cursor: "pointer" }}
-                onClick={() => setCurrentFolderId(book.id ,book.sharedImageflg)}
+                onClick={() => setCurrentFolderId(book.id, book.sharedImageflg)}
                 fluid
                 src={BookSrc}
               />
@@ -29,8 +36,9 @@ const SideBarBooks = ({
               >
                 <span
                   style={{ cursor: "pointer" }}
-                  onClick={() => setCurrentFolderId(book.id ,book.sharedImageflg)}
-        
+                  onClick={() =>
+                    setCurrentFolderId(book.id, book.sharedImageflg)
+                  }
                 >
                   <span className="pl-2">
                     {book.fileName}
