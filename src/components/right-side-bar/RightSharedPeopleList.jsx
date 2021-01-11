@@ -13,7 +13,7 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
   const [currentTab, setCurrentTab] = useState("CONTACTS");
 
   useEffect(() => {
-    getFolders(bookId);
+    getFolders(bookId ,pageId);
   }, [bookId]);
   async function removeContact(id) {
     if (!window.confirm("Are you sure you want to remove ?")) return;
@@ -23,7 +23,7 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
       if (contacts.data.code == "200") {
         alert(contacts.data.message);
       }
-      getFolders(bookId);
+      getFolders(bookId ,pageId);
     } catch (error) {}
   }
   const shareHandler = (id) => {
@@ -43,7 +43,7 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
       const { data } = await Post(`/${URL}`, request);
       if (data.code == "200") {
         alert(data.message);
-        if (user_id) getFolders(bookId);
+        if (user_id) getFolders(bookId ,pageId);
       }
     } catch (error) {}
   }
@@ -52,10 +52,10 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
   }, []);
   async function getFolders(fileId, id = false) {
     try {
+      const request = { fileId };
+      if (id) request[id] = id;
       const URI = id ? "getPageSharedList" : "getFileSharedList";
-      const user = await Post(`/${URI}`, {
-        fileId,
-      });
+      const user = await Post(`/${URI}`, request);
       if (
         user.data.code == "200" &&
         user.data.message == "Page is not shared with anyone."
@@ -85,7 +85,7 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
     <>
       <Row style={{ maxHeight: "30rem", overflowY: "auto" }}>
         <ContactList
-          message="This book is not shared with any one"
+          message={`This ${pageId?'page':'book'} is not shared with any one`}
           contactList={shareList}
           cancel={true}
           removeContact={removeContact}

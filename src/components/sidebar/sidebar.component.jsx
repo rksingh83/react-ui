@@ -455,7 +455,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
             )}
           </div>
         </div>
-        {ROLE != "labeller" && (
+        {ROLE != "labeller" &&  sharedWithMe == "HOME" &&(
           <div className="col-md-3 bg-dark">
             <RightSharedPeopleList isSharedFolder ={isSharedFolder} bookId={currentFolderId} />
           </div>
