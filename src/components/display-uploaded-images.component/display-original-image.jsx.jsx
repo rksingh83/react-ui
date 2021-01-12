@@ -56,9 +56,9 @@ const DisplayOriginalImage = ({
   const [showPopUp, setShowPop] = useState(false);
   const [responseMgs, setResponseMgs] = useState("");
 
-  const setFolderIdHandler = (id , flag )=>{
-    history.push('/?id=1')
-  }
+  const setFolderIdHandler = (id, flag) => {
+    history.push("/?id=1");
+  };
   const nextHandler = () => {
     let index = allPendingLIst.indexOf(parseInt(imageId));
     if (index == allPendingLIst.length - 1) {
@@ -251,7 +251,11 @@ const DisplayOriginalImage = ({
       <div className="row">
         {isShowLoader && <CustomLoader />}
         <div className="col-md-3">
-          <SideBarBooks setCurrentFolderId ={setFolderIdHandler} searchItem={searchItem} allBooks={allBooks} />
+          <SideBarBooks
+            setCurrentFolderId={setFolderIdHandler}
+            searchItem={searchItem}
+            allBooks={allBooks}
+          />
         </div>
         <div className="col-md-6">
           {currentLookup && (

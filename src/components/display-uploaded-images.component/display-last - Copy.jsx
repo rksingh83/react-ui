@@ -11,9 +11,6 @@ import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import AllFilesSideBar from "../common/AllFilesSideBar";
 import { BackButton, EditBtn } from "../common/pNGButtons";
-import RightSharedPeopleList from "../right-side-bar/RightSharedPeopleList";
-import SideBarBooks from "../SideBooks/SideBarBooks";
-import { useDispatch, useSelector } from "react-redux";
 const DisplayLastImage = ({
   match,
   history,
@@ -23,13 +20,12 @@ const DisplayLastImage = ({
 }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [imageTitle, setImageTitle] = useState("");
-  const allBooks = useSelector((state) => state.userBooks.books);
-  const currentFolderId = useSelector((state) => state.userBooks.currentBookId);
-  const [searchItem, setSearchHandler] = useState("");
- 
-
+  const ROLE = currentUser && currentUser.authentication.role;
+  const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
+  const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [currentFolderName, setCurrentFolderName] = useState("");
-
+  const totalEle = ["My Books", "Shared Books", "Default Page"];
+  const [LiElement, setLiEl] = useState(totalEle);
   useEffect(() => {
     const requestFile = { ids: [match.params.id], imagetype: "_align.jpg" };
     const IMAGE_ORIGINAL_URL =
@@ -45,7 +41,20 @@ const DisplayLastImage = ({
       setImageTitle(res.data.imageInput[0].title);
     });
   }, []);
-
+  const handleActive = (e) => {
+    setActiveIndex(LiElement.indexOf(e));
+    if (LiElement.indexOf(e) == 0) {
+      setFolderFlag("HOME");
+    }
+    if (LiElement.indexOf(e) == 1) {
+      setFolderFlag("SHARED");
+    }
+    if (LiElement.indexOf(e) == 2) {
+      setFolderFlag("PENDING");
+    }
+    // setSharedWithMe(!sharedWithMe);
+    setLiEl(totalEle);
+  };
   const styleImage = {
     width: "100%",
     height: "100%",
@@ -67,9 +76,6 @@ const DisplayLastImage = ({
   };
   const editHandler = () => {
     history.push(`/edit/${match.params.id}`);
-  };
-  const setFolderIdHandler = (id, flag) => {
-    history.push("/?id=1");
   };
   return (
     <>
@@ -115,7 +121,9 @@ const DisplayLastImage = ({
                     ></Cross>
                   </li>
                   <li className="nav-item">
-                    <BackButton handler={history.goBack}></BackButton>
+                    <BackButton handler={history.goBack}>
+      
+                    </BackButton>
                   </li>
                 </ul>
               </div>
@@ -124,23 +132,27 @@ const DisplayLastImage = ({
         </div>
       </div>
       <div className="row">
-        <div className="col-md-3">
-          <SideBarBooks
-            setCurrentFolderId={setFolderIdHandler}
-            searchItem={searchItem}
-            allBooks={allBooks}
-          />
+        <div className=" custom-pad-li d-none d-sm-block col-md-2 p-0">
+          <Link className="logo-container" to="/">
+            {ROLE != "labeller" ? (
+              <ul className=" ul-pad list-group left-side-bar">
+                {totalEle.map((item, index) => (
+                  <LeftSideBar
+                    item={item}
+                    key={index}
+                    isActive={activeIndex == index ? true : false}
+                    changeActive={handleActive}
+                  />
+                ))}
+              </ul>
+            ) : (
+              <AllFilesSideBar />
+            )}
+          </Link>
         </div>
-        <div className="col-md-6 col-xs-12 col-sm-12">
+        <div className="col-md-9 col-xs-12 col-sm-12">
           <p>{imageTitle}</p>
           <img style={styleImage} src={`${imageUrl}`}></img>
-        </div>
-        <div className="col-md-3 bg-dark">
-          <RightSharedPeopleList
-            isSharedFolder={sharedWithMe === "SHARED" ? true : false}
-            pageId={match.params.id}
-            bookId={currentFolderId}
-          />
         </div>
       </div>
     </>
