@@ -7,7 +7,7 @@ import TopHeader from "../top-header/top.header.component";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 
 import { connect } from "react-redux";
-import SharedHeader from "../top-header/shared-header";
+
 // PENDING IMPORT
 import PendingHeader from "../pending-data/header";
 import LoadLookup from "../pending-data/display-page-lookup";
@@ -18,7 +18,6 @@ import { GetPageLimits } from "../../service/common";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentImageId } from "../../redux/file/pageId.action";
 import SideBarBooks from "../SideBooks/SideBarBooks";
-
 import {
   getAllPendingPageList,
   getPendingPageById,
@@ -30,6 +29,7 @@ import {
   getNotificationCount as getPageCount,
   NOTIFICATION_OFF_SET as PAGE_OFF_SET,
 } from "../common/pagination.config";
+
 const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   // RESPONSE MESSAGE POP
   // pull current user from  redux
@@ -37,31 +37,19 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const ROLE = currentUser && currentUser.authentication.role;
   const dispatch = useDispatch();
   const savedPageId = useSelector((state) => state.pageId.currentImage);
-  const totalEle =
-    ROLE != "labeller"
-      ? ["My Books", "Shared Books", "Default Page"]
-      : ["All Pages"];
-  const TextMAp =
-    ROLE != "labeller" ? { HOME: 0, SHARED: 1, PENDING: 2 } : { PENDING: 0 };
+
   const [totalFolder, setTotalFolder] = useState([]);
   const [selectedFolder, setSelectedFolder] = useState({});
-  const [finalCount, setFinalCount] = useState({});
+  const [isPrimerUser, setIsPrimerUser] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSharedFolder, setIsSharedFolder] = useState(false);
-  const currentIndex = ROLE != "labeller" ? TextMAp[sharedWithMe] : 0;
-  const [activeIndex, setActiveIndex] = useState(currentIndex);
-  const [selectedItemsCount, setSelectedItemsCount] = useState(null);
+
   const [searchItem, setSearchHandler] = useState("");
   const [filteredFolder, setFilteredFolder] = useState("");
   const [description, setDescription] = useState("");
-  const [iSDisplayDiv, setIsDisplayDiv] = useState(false);
-  const [date, setDate] = useState("");
-  // const [sharedWithMe, setSharedWithMe] = useState(true);
 
-  const [sharedSearchItem, setSharedSearchHandler] = useState("");
-  const [sharedFilteredFolder, setSharedFilteredFolder] = useState("");
-  const [sharedFileSearchInput, setSharedFileSearch] = useState("");
-  const [isPrimerUser, setIsPrimerUser] = useState("");
+  const [date, setDate] = useState("");
+
   // pages
   const [paginateImages, setPaginateImages] = useState([]);
   const [currentPagination, setCurrentPagination] = useState(1);
@@ -155,24 +143,8 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   };
   const reNameFolderHandler = (name, des, id) => {};
   const updateName = (file, isDeleted = false) => {
-    let updated = [];
-    if (isDeleted) {
-      let deletedIds = file.filefolderRequest.map((item) => item.id);
-      updated = totalFolder.filter((item) => !deletedIds.includes(item.id));
-    } else {
-      updated = totalFolder.map((item) => {
-        if (file.id == item.id) {
-          item.fileDescription = file.fileDescription;
-          item.fileName = file.fileName;
-        }
-        setShowLoader(false);
-        window.location.reload();
-        return item;
-      });
-    }
-    setTotalFolder(updated);
-    setIsLoading(false);
-    setSelectedFolder({});
+    setShowLoader(false);
+    getAllFolders();
   };
   const selectedFolderCountHandler = (id, value) => {
     let tempObj = {};
@@ -463,7 +435,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
       />
       {sharedWithMe !== "PENDING" && (
         <TopHeader
-          totalFolders={totalFolder}
+          totalFolders={allBooks}
           selectedItems={selectedFolder}
           searchItem={searchItem}
           searchImage={searchImage}
@@ -472,6 +444,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
           deleteHandler={deleteHandler}
           saveFolder={saveFolder}
           uploadLimits={userImageUploadLimits}
+          bookId={currentFolderId}
         />
       )}
 
@@ -493,18 +466,6 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
           <div className="row">
             {isShowLoader && <CustomLoader />}
             {currentFolderId > 0 && sharedWithMe != "PENDING" && (
-              // <FolderDisplay
-              //   isLoading={isLoading}
-              //   selectedFolderCount={selectedFolderCountHandler}
-              //   reNameFolder={reNameFolderHandler}
-              //   displayValue={false}
-              //   folders={totalFolder}
-              //   searchItem={searchItem}
-              //   history={history}
-              //   ToggleDescription={ToggleDescription}
-              //   onLeave={hideDescriptionHandler}
-              //   filteredFolder={filteredFolder}
-              // />
               <UploadFile
                 isSharedFolder={isSharedFolder}
                 dirId={currentFolderId}
@@ -514,8 +475,8 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
                 searchImage={searchImage}
                 paginateImages={paginateImages}
                 groupNextPrev={groupNextPrev}
-                paginate ={paginate} 
-                currentPagination ={currentPagination}
+                paginate={paginate}
+                currentPagination={currentPagination}
               />
             )}
 

@@ -26,6 +26,7 @@ const TopHeader = ({
   deleteHandler,
   searchItem,
   searchHandler,
+  bookId,
   ...props
 }) => {
   const [show, setShow] = useState(false);
@@ -78,6 +79,7 @@ const TopHeader = ({
       alert("Please Enter Required Field");
       return false;
     }
+    console.log("calling save");
     saveFolder(fileName, fileTag, fileDescription, id);
     addName("");
     addDisc("");
@@ -93,31 +95,28 @@ const TopHeader = ({
     if (selectedItems[key]) totalItem++;
   }
   const reNameFolder = (isDelete) => {
+
     let deletedArr = [];
     let restArr = [];
     const deleted = 1;
-    for (let key in selectedItems) {
-      if (selectedItems[key]) {
-        deletedArr.push({
-          ...totalFolders.filter((item) => item.id == key)[0],
-          deleted,
-        });
-      } else {
-        restArr.push({ ...totalFolders.filter((item) => item.id == key)[0] });
-      }
-    }
+    deletedArr = [totalFolders.find((item) => item.id === bookId)];
 
     setId(deletedArr[0].id);
     addDisc(deletedArr[0].fileDescription);
     addName(deletedArr[0].fileName);
     addFileTag(deletedArr[0].file_tag);
+    if(isDelete)
+    if (!window.confirm(`Are you sure you want to delete ${deletedArr[0].fileName} book ?`)) return;
     if (!isDelete) setShow(true);
     const requestFile = {
       filefolderRequest: deletedArr,
     };
-    if (isDelete) deleteFolders(requestFile, restArr);
+    if (isDelete) deleteFolders({
+      filefolderRequest:[{...deletedArr[0], deleted:true}],
+    }, restArr);
   };
   const deleteFolders = (requestFile, restArr) => {
+    console.log(requestFile)
     deleteHandler(requestFile, restArr);
   };
   const fileUploadHandler = async (e) => {
@@ -194,7 +193,7 @@ const TopHeader = ({
           <div className="col-md-9 sec-header-item col-text-style">
             <Col md={12}>
               <Row>
-              <Col md={3}>
+                <Col md={3}>
                   <input
                     placeholder="Search anything.."
                     value={props.searchImage}
@@ -232,9 +231,17 @@ const TopHeader = ({
                     <FolderCreate onClick={() => window.location.reload()} />
                   </CustomToolTip>
                 </Col>
-               
-              
-            </Row>
+                <Col md={1}>
+                  <CustomToolTip text="Edit">
+                    <EditBtn handler={editHandler} />
+                  </CustomToolTip>
+                </Col>
+                <Col md={1}>
+                  <CustomToolTip text="Delete">
+                    <Delete onClick={() => reNameFolder(true)} />
+                  </CustomToolTip>
+                </Col>
+              </Row>
             </Col>
           </div>
         </div>

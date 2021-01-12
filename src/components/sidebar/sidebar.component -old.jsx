@@ -114,7 +114,9 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     );
   };
   const saveFolder = (fileName, fileTag, fileDescription, id) => {
+    alert(id)
     setShowLoader(true);
+    console.log(id)
     const dateCreated = "123";
     const requestFile = {
       filefolderRequest: [
@@ -123,7 +125,9 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     };
 
     if (id) {
-      Post("/updateFileFolder", requestFile).then((res) =>
+      console.log("xxxxxxxxxxxxxx")
+      Post("/updateFileFolderr", requestFile).then((res) =>
+      
         updateName(res.data.filefolderRequest[0])
       );
     } else {
@@ -186,20 +190,8 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   };
   const reNameFolderHandler = (name, des, id) => {};
   const updateName = (file, isDeleted = false) => {
-    let updated = [];
-    if (isDeleted) {
-      let deletedIds = file.filefolderRequest.map((item) => item.id);
-      updated = totalFolder.filter((item) => !deletedIds.includes(item.id));
-    } else {
-      updated = totalFolder.map((item) => {
-        if (file.id == item.id) {
-          item.fileDescription = file.fileDescription;
-          item.fileName = file.fileName;
-        }
-        setShowLoader(false);
-        window.location.reload();
-        return item;
-      });
+    setShowLoader(false);
+
     }
     setTotalFolder(updated);
     setIsLoading(false);
@@ -211,6 +203,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     setSelectedFolder({ ...selectedFolder, ...tempObj });
   };
   const deleteHandler = (folderList, resArr) => {
+    
     Post("/updateFileFolder", folderList).then((res) =>
       updateName(folderList, true)
     );
