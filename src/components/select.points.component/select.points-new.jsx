@@ -13,6 +13,9 @@ import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import AllFilesSideBar from "../common/AllFilesSideBar";
 import { BackButton, EditBtn, Save } from "../common/pNGButtons";
+import SideBarBooks from "../SideBooks/SideBarBooks";
+import { useDispatch, useSelector } from "react-redux";
+import RightSharedPeopleList from "../right-side-bar/RightSharedPeopleList";
 const SelectPoints = ({
   match,
   history,
@@ -20,6 +23,9 @@ const SelectPoints = ({
   setFolderFlag,
   currentUser,
 }) => {
+  const allBooks = useSelector((state) => state.userBooks.books);
+  const currentFolderId = useSelector((state) => state.userBooks.currentBookId);
+  const [searchItem, setSearchHandler] = useState("");
   var Markers = new Array();
   const [points, setPoints] = useState(0);
   const ROLE = currentUser && currentUser.authentication.role;
@@ -306,6 +312,9 @@ const SelectPoints = ({
   const clickHandler = () => {
     displayPoint(true);
   };
+  const setFolderIdHandler = (id, flag) => {
+    history.push("/?id=1");
+  };
   return (
     <>
       <div className="row">
@@ -358,25 +367,14 @@ const SelectPoints = ({
         </div>
       </div>
       <div className="row">
-        <div className=" custom-pad-li d-none d-sm-block col-md-2 p-0">
-          <Link className="logo-container" to="/">
-            {ROLE != "labeller" ? (
-              <ul className=" ul-pad list-group left-side-bar">
-                {totalEle.map((item, index) => (
-                  <LeftSideBar
-                    item={item}
-                    key={index}
-                    isActive={activeIndex == index ? true : false}
-                    changeActive={handleActive}
-                  />
-                ))}
-              </ul>
-            ) : (
-              <AllFilesSideBar />
-            )}
-          </Link>
+        <div className=" custom-pad-li d-none d-sm-block col-md-3 p-0">
+        <SideBarBooks
+            setCurrentFolderId={setFolderIdHandler}
+            searchItem={searchItem}
+            allBooks={allBooks}
+          />
         </div>
-        <div className="col-md-9 col-xs-12 col-sm-12">
+        <div className="col-md-6 col-xs-12 col-sm-12">
           <div
             style={{ width: 700, height: 700, margin: "auto" }}
             id="outerContainer"
@@ -425,6 +423,13 @@ const SelectPoints = ({
           <div style={{ display: "none" }}>
             <img id="img" src={src}></img>
           </div>
+        </div>
+        <div className="col-md-3 bg-dark">
+          <RightSharedPeopleList
+            isSharedFolder={sharedWithMe === "SHARED" ? true : false}
+            pageId={match.params.id}
+            bookId={currentFolderId}
+          />
         </div>
       </div>
     </>

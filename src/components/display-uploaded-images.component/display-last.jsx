@@ -7,9 +7,9 @@ import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import SharedHeader from "../top-header/shared-header";
-import LeftSideBar from "../sidebar/left.sidebar.compoent";
+
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
-import AllFilesSideBar from "../common/AllFilesSideBar";
+
 import { BackButton, EditBtn } from "../common/pNGButtons";
 import RightSharedPeopleList from "../right-side-bar/RightSharedPeopleList";
 import SideBarBooks from "../SideBooks/SideBarBooks";
@@ -26,7 +26,6 @@ const DisplayLastImage = ({
   const allBooks = useSelector((state) => state.userBooks.books);
   const currentFolderId = useSelector((state) => state.userBooks.currentBookId);
   const [searchItem, setSearchHandler] = useState("");
- 
 
   const [currentFolderName, setCurrentFolderName] = useState("");
 

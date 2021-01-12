@@ -72,3 +72,9 @@ input-img {
     display: flex;
     justify-items: center;
 }
+
+.top-header-icons {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row-reverse;
+}

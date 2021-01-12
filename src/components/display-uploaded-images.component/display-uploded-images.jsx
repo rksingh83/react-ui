@@ -77,11 +77,20 @@ const DisplayImages = ({
                 onClick={() => history.push(`/original/${item.id}/${folderId}`)}
               ></img>
             </div>
-            {item.title && <span className="img-title">{item.title}</span>}
+            {item.title && (
+              <span className="img-title">
+                {item.title}({item.pageNumber})(
+                {grtDate(item.updatedTimeMillisecond)})
+              </span>
+            )}
           </div>
         ))}
       </div>
     );
   }
 };
+function grtDate(time) {
+  var date = new Date(time);
+  return date.toLocaleDateString();;
+}
 export default DisplayImages;

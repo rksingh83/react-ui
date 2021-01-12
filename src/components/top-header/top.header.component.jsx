@@ -212,17 +212,29 @@ const TopHeader = ({
                     className="custom-input mt-1"
                   ></input>
                 </Col>
-                <Col md={1}>
+                <Col className="top-header-icons" md={9}>
+                  {totalFolders.length && (
+                    <CustomToolTip text="Edit book">
+                      <EditBtn handler={editHandler} />
+                    </CustomToolTip>
+                  )}
+                  {totalFolders.length && (
+                    <CustomToolTip text="Delete Book">
+                      <Delete onClick={() => reNameFolder(true)} />
+                    </CustomToolTip>
+                  )}
+
+                  <CustomToolTip text="Refresh">
+                    <FolderCreate className ="pl-2 pr-2" onClick={() => window.location.reload()} />
+                  </CustomToolTip>
+
                   <CustomToolTip text="Upload Image">
                     <UploadForm
                       isUpload={true}
                       submitHandler={fileUploadHandler}
                     />
                   </CustomToolTip>
-                </Col>
-
-                {totalItem == 0 && props.uploadLimits < 10 && (
-                  <Col md={1}>
+                  {totalItem == 0 && props.uploadLimits < 10 && (
                     <div className=" sec-header-item col-text-style item-center">
                       <span>
                         Limits{" "}
@@ -231,28 +243,8 @@ const TopHeader = ({
                         </span>
                       </span>
                     </div>
-                  </Col>
-                )}
-
-                <Col md={1}>
-                  <CustomToolTip text="Refresh">
-                    <FolderCreate onClick={() => window.location.reload()} />
-                  </CustomToolTip>
+                  )}
                 </Col>
-                {totalFolders.length && (
-                  <Col md={1}>
-                    <CustomToolTip text="Edit book">
-                      <EditBtn handler={editHandler} />
-                    </CustomToolTip>
-                  </Col>
-                )}
-                {totalFolders.length && (
-                  <Col md={1}>
-                    <CustomToolTip text="Delete Book">
-                      <Delete onClick={() => reNameFolder(true)} />
-                    </CustomToolTip>
-                  </Col>
-                )}
               </Row>
             </Col>
           </div>
