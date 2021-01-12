@@ -72,10 +72,10 @@ const PendingHeader = ({
       </ImageSharedListModal>
       <div className="row">
         <div
-          className="col-md-2"
+          className="col-md-3"
           style={{ background: "rgba(0, 0, 0, 0.125)", minHeight: "3rem" }}
         ></div>
-        <div className="col-md-10 main-pending-page-header">
+        <div className="col-md-9 pl-0 main-pending-page-header">
           {all.length > 0 && props.role != "labeller" && (
             <CustomToolTip text="Retake Image">
               <UploadForm submitHandler={uploadImageHandler}></UploadForm>

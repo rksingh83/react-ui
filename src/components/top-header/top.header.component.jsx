@@ -79,7 +79,7 @@ const TopHeader = ({
       alert("Please Enter Required Field");
       return false;
     }
-    console.log("calling save");
+
     saveFolder(fileName, fileTag, fileDescription, id);
     addName("");
     addDisc("");
@@ -95,7 +95,6 @@ const TopHeader = ({
     if (selectedItems[key]) totalItem++;
   }
   const reNameFolder = (isDelete) => {
-
     let deletedArr = [];
     let restArr = [];
     const deleted = 1;
@@ -105,18 +104,27 @@ const TopHeader = ({
     addDisc(deletedArr[0].fileDescription);
     addName(deletedArr[0].fileName);
     addFileTag(deletedArr[0].file_tag);
-    if(isDelete)
-    if (!window.confirm(`Are you sure you want to delete ${deletedArr[0].fileName} book ?`)) return;
+    if (isDelete)
+      if (
+        !window.confirm(
+          `Are you sure you want to delete ${deletedArr[0].fileName} book ?`
+        )
+      )
+        return;
     if (!isDelete) setShow(true);
     const requestFile = {
       filefolderRequest: deletedArr,
     };
-    if (isDelete) deleteFolders({
-      filefolderRequest:[{...deletedArr[0], deleted:true}],
-    }, restArr);
+    if (isDelete)
+      deleteFolders(
+        {
+          filefolderRequest: [{ ...deletedArr[0], deleted: true }],
+        },
+        restArr
+      );
   };
   const deleteFolders = (requestFile, restArr) => {
-    console.log(requestFile)
+    console.log(requestFile);
     deleteHandler(requestFile, restArr);
   };
   const fileUploadHandler = async (e) => {
@@ -231,16 +239,20 @@ const TopHeader = ({
                     <FolderCreate onClick={() => window.location.reload()} />
                   </CustomToolTip>
                 </Col>
-                <Col md={1}>
-                  <CustomToolTip text="Edit">
-                    <EditBtn handler={editHandler} />
-                  </CustomToolTip>
-                </Col>
-                <Col md={1}>
-                  <CustomToolTip text="Delete">
-                    <Delete onClick={() => reNameFolder(true)} />
-                  </CustomToolTip>
-                </Col>
+                {totalFolders.length && (
+                  <Col md={1}>
+                    <CustomToolTip text="Edit book">
+                      <EditBtn handler={editHandler} />
+                    </CustomToolTip>
+                  </Col>
+                )}
+                {totalFolders.length && (
+                  <Col md={1}>
+                    <CustomToolTip text="Delete Book">
+                      <Delete onClick={() => reNameFolder(true)} />
+                    </CustomToolTip>
+                  </Col>
+                )}
               </Row>
             </Col>
           </div>

@@ -114,10 +114,10 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     );
   };
   const saveFolder = (fileName, fileTag, fileDescription, id) => {
-    alert(id)
+
     setShowLoader(true);
-    console.log(id)
-    const dateCreated = "123";
+   
+    const dateCreated = null;
     const requestFile = {
       filefolderRequest: [
         { file_tag: fileTag, fileName, fileDescription, dateCreated, id },
@@ -125,7 +125,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     };
 
     if (id) {
-      console.log("xxxxxxxxxxxxxx")
+
       Post("/updateFileFolderr", requestFile).then((res) =>
       
         updateName(res.data.filefolderRequest[0])
@@ -275,7 +275,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
 
       return;
     }
-    console.log("INDEX IS", index, currentImage, allPendingLIst);
+
     setCurrentImage(allPendingLIst[index + 1]);
   };
   const prevHandler = () => {
@@ -295,7 +295,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
       allList.splice(index, 1);
     }
     // nextHandler();
-    console.log("REMOVING IMG ID");
+
     setPendingList([...allList]);
   };
   // set lookup form state
@@ -303,7 +303,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     const currentState = { ...lookupPageState };
      
     const { name, value } = e.target?e.target:{name:"shareId", ...e};
-    console.log(value);
+    
     if (name == "fileId" || name == "tag") {
       let folder = currentState.file.filter((item) => item.id == value);
       let tag = folder.length > 0 ? folder[0].fileTag : "";

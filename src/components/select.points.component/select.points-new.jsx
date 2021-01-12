@@ -155,13 +155,12 @@ const SelectPoints = ({
       el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
     }
     $("#outerContainer").click(function (e) {
-      console.log(e);
       var offset = $(this).offset();
       var relativeX = e.pageX - offset.left;
       var relativeY = e.pageY - offset.top;
       let temp = {};
       data[e.target.id] = { X: relativeX, Y: relativeY };
-      console.log(data);
+
       setData({ ...data });
     });
   }, [data]);
@@ -268,7 +267,7 @@ const SelectPoints = ({
     requestPayLoad["toplefty"] = ((data.three.Y * height) / IMG.height) * 100;
     requestPayLoad["toprightx"] = ((data.four.X * width) / IMG.width) * 100;
     requestPayLoad["toprighty"] = ((data.four.Y * height) / IMG.height) * 100;
-    console.log("Points are right here in next line");
+
     try {
       let res = await Post("/uploadSingleImagePoints", requestPayLoad);
 
@@ -304,9 +303,9 @@ const SelectPoints = ({
     fourDiv.current.style.left = bottomleftx;
     console.log(fourDiv.current.style);
   };
-  const clickHandler = () =>{
-    displayPoint(true)
-  }
+  const clickHandler = () => {
+    displayPoint(true);
+  };
   return (
     <>
       <div className="row">
@@ -343,9 +342,8 @@ const SelectPoints = ({
                 <li className="nav-item">
                   <EditBtn
                     ref={EditButton}
-                    handler = {clickHandler}
+                    handler={clickHandler}
                     className=" mr-2 btn btn-success"
-                   
                   ></EditBtn>
                 </li>
                 <li className="nav-item">

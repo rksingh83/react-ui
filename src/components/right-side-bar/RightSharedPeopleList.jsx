@@ -14,7 +14,7 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
 
   useEffect(() => {
     getFolders(bookId ,pageId);
-  }, [bookId]);
+  }, [bookId ,pageId]);
   async function removeContact(id) {
     if (!window.confirm("Are you sure you want to remove ?")) return;
 
@@ -49,11 +49,11 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
   }
   useEffect(() => {
     getContactRequest();
-  }, []);
+  },  [bookId ,pageId]);
   async function getFolders(fileId, id = false) {
     try {
       const request = { fileId };
-      if (id) request[id] = id;
+      if (id) request['id'] = id;
       const URI = id ? "getPageSharedList" : "getFileSharedList";
       const user = await Post(`/${URI}`, request);
       if (

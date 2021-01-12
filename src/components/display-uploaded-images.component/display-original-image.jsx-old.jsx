@@ -70,7 +70,6 @@ const DisplayOriginalImage = ({
     height: "90vh",
   };
   const nextHandler = () => {
-    console.log(allPendingLIst)
     let index = allPendingLIst.indexOf(parseInt(imageId));
     if (index == allPendingLIst.length - 1) {
       setResponseMgs("You've reached last image in the file ");
@@ -172,15 +171,14 @@ const DisplayOriginalImage = ({
         tempData[attr] = "";
       }
     }
-    if (tempData.date == "")
-      tempData.date = new Date();
+    if (tempData.date == "") tempData.date = new Date();
     return tempData;
   };
   // handle input
   const pageLookUpHandler = (e) => {
     const currentState = { ...lookupPageState };
 
-    const { name, value } = e.target?e.target:{name:"shareId", ...e};
+    const { name, value } = e.target ? e.target : { name: "shareId", ...e };
     if (name == "fileId" || name == "tag") {
       let folder = currentState.file.filter((item) => item.id == value);
       let tag = folder.length > 0 ? folder[0].fileTag : "";
@@ -207,8 +205,10 @@ const DisplayOriginalImage = ({
   const saveUpdateData = async () => {
     setShowLoader(true);
     try {
-      const request =  {...lookupPageState ,
-        admin_updated:lookupPageState.admin_updated ==1?true:false}
+      const request = {
+        ...lookupPageState,
+        admin_updated: lookupPageState.admin_updated == 1 ? true : false,
+      };
       const response = await Post("/savePageLookup", request);
 
       if (response.data.code == "200") {

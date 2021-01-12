@@ -95,7 +95,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   const getAllFolders = async () => {
     const requestFile = { filefolderRequest: [] };
     const { data } = await Post("/getMyAndSharedFiles", requestFile);
-    console.log(data.filefolderRequest[0].id);
+
     setAllBooks(data.filefolderRequest);
     setIsSharedFolder(data.filefolderRequest[0].sharedImageflg);
     setCurrentFolderId(data.filefolderRequest[0].id);
@@ -288,7 +288,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
 
       return;
     }
-    console.log("INDEX IS", index, currentImage, allPendingLIst);
+
     setCurrentImage(allPendingLIst[index + 1]);
   };
   const prevHandler = () => {
@@ -426,6 +426,12 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
       setFolderFlag("HOME");
     }
   };
+  const setDefaultFolderId = () => {
+    setFolderFlag("PENDING")
+    setCurrentFolderId(pendingFolderId);
+    setIsSharedFolder(false);
+  }
+  
   return (
     <React.Fragment>
       <ShowMessages
@@ -447,6 +453,23 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
           bookId={currentFolderId}
         />
       )}
+      {sharedWithMe == "PENDING" && (
+        <PendingHeader
+          currentImageId={currentImage}
+          pendingFolderId={pendingFolderId}
+          next={nextHandler}
+          prev={prevHandler}
+          all={allPendingLIst}
+          saveHandler={saveUpdateData}
+          toggleLoader={setShowLoader}
+          setShowPop={setShowPop}
+          resMgs={setResponseMgs}
+          deleteImg={pendingImgDeleteHandler}
+          history={history}
+          role={ROLE}
+          redirectAndSaveId={redirectAndSaveId}
+        />
+      )}
 
       <div className="row">
         <div className="col-md-3 custom-pad-li d-none d-sm-block p-1">
@@ -457,7 +480,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
             filteredBooks={filteredFolder}
           />
           <ListGroup>
-            <ListGroup.Item onClick={() => setFolderFlag("PENDING")}>
+            <ListGroup.Item onClick={setDefaultFolderId}>
               Default Pages
             </ListGroup.Item>
           </ListGroup>
@@ -502,11 +525,12 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
             )}
           </div>
         </div>
-        {ROLE != "labeller" && sharedWithMe !== "PENDING" && (
+        {ROLE != "labeller" && (
           <div className="col-md-3 bg-dark">
             <RightSharedPeopleList
               isSharedFolder={isSharedFolder}
               bookId={currentFolderId}
+              pageId={sharedWithMe === "PENDING" ? currentImage : null}
             />
           </div>
         )}
