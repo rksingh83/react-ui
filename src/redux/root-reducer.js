@@ -12,6 +12,7 @@ import {
 } from 'redux-persist'
 import contactsReducer from './contacts/contact.reducer'
 import currentImageReducer from './file/pageId.reducer';
+import allBooksReducer from './all-books/allBooks.reducer';
 
 
 const persistConfig = {
@@ -30,7 +31,8 @@ const rootReducer = combineReducers({
     contacts: contactsReducer,
     notifications: notificationReducer,
     notificationCount: notificationCountReducer,
-    pageId: currentImageReducer
+    pageId: currentImageReducer,
+    userBooks: allBooksReducer
 })
 
 export default persistReducer(persistConfig, rootReducer)
