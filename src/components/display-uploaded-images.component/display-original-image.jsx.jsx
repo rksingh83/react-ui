@@ -18,6 +18,8 @@ import CustomLoader from "../loader/loader";
 import ShowMessages from "../common/display-message-modal";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import RightSharedPeopleList from "../right-side-bar/RightSharedPeopleList";
+import { useDispatch, useSelector } from "react-redux";
+import SideBarBooks from "../SideBooks/SideBarBooks";
 const DisplayOriginalImage = ({
   match,
   history,
@@ -25,8 +27,9 @@ const DisplayOriginalImage = ({
   setFolderFlag,
 }) => {
   const [imageUrl, setImageUrl] = useState("");
+  const [searchItem, setSearchHandler] = useState("");
   const [imageId, setImageId] = useState(match.params.id);
-
+  const allBooks = useSelector((state) => state.userBooks.books);
   const [allImages, setAllImages] = useState([]);
   const [currentFolderName, setCurrentFolderName] = useState("");
   const [currentLookup, setCurrentLookup] = useState(false);
@@ -46,30 +49,16 @@ const DisplayOriginalImage = ({
   });
   const [isPrimerUser, setIsPrimerUser] = useState("");
   const totalEle = ["My Books", "Shared Books", "Default Page"];
-  const [LiElement, setLiEl] = useState(totalEle);
+
   const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
-  const [activeIndex, setActiveIndex] = useState(currentIndex);
+
   // loader and alert box
   const [showPopUp, setShowPop] = useState(false);
   const [responseMgs, setResponseMgs] = useState("");
-  const handleActive = (e) => {
-    setActiveIndex(LiElement.indexOf(e));
-    if (LiElement.indexOf(e) == 0) {
-      setFolderFlag("HOME");
-    }
-    if (LiElement.indexOf(e) == 1) {
-      setFolderFlag("SHARED");
-    }
-    if (LiElement.indexOf(e) == 2) {
-      setFolderFlag("PENDING");
-    }
-    // setSharedWithMe(!sharedWithMe);
-    setLiEl(totalEle);
-  };
-  const sideBarStyle = {
-    border: "1px solid rgba(0, 0, 0, 0.125)",
-    height: "90vh",
-  };
+
+  const setFolderIdHandler = (id , flag )=>{
+    history.push('/?id=1')
+  }
   const nextHandler = () => {
     let index = allPendingLIst.indexOf(parseInt(imageId));
     if (index == allPendingLIst.length - 1) {
@@ -251,7 +240,6 @@ const DisplayOriginalImage = ({
           toggleLoader={setShowLoader}
         />
       )}
-
       {sharedWithMe == "SHARED" && (
         <SharedHeader
           isHideButton={sharedWithMe == "SHARED" ? true : false}
@@ -262,8 +250,10 @@ const DisplayOriginalImage = ({
       )}
       <div className="row">
         {isShowLoader && <CustomLoader />}
-
-        <div className="col-md-9">
+        <div className="col-md-3">
+          <SideBarBooks setCurrentFolderId ={setFolderIdHandler} searchItem={searchItem} allBooks={allBooks} />
+        </div>
+        <div className="col-md-6">
           {currentLookup && (
             <LoadLookup
               data={currentLookup}

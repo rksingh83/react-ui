@@ -76,11 +76,11 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   });
   // PENDING COMPONENT
   const [allPendingLIst, setPendingList] = useState([]);
- // const [allBooks, setAllBooks] = useState([]);
-  const allBooks = useSelector(state=>state.userBooks.books)
+  // const [allBooks, setAllBooks] = useState([]);
+  const allBooks = useSelector((state) => state.userBooks.books);
   //const [currentFolderId, setCurrentFolderId] = useState(0);
-  const currentFolderId = useSelector(state=>state.userBooks.currentBookId)
-  
+  const currentFolderId = useSelector((state) => state.userBooks.currentBookId);
+
   const [currentImage, setCurrentImage] = useState("");
   const [currentLookup, setCurrentLookup] = useState(false);
   const [pendingFolderId, setPendingFolderId] = useState("");
@@ -102,10 +102,10 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     const requestFile = { filefolderRequest: [] };
     const { data } = await Post("/getMyAndSharedFiles", requestFile);
 
-   // setAllBooks(data.filefolderRequest);
+    // setAllBooks(data.filefolderRequest);
     dispatch(setUserAllBooks(data.filefolderRequest));
     setIsSharedFolder(data.filefolderRequest[0].sharedImageflg);
-   // setCurrentFolderId(data.filefolderRequest[0].id);
+    // setCurrentFolderId(data.filefolderRequest[0].id);
     dispatch(setCurrentBookId(data.filefolderRequest[0].id));
     setShowLoader(false);
   };
@@ -166,10 +166,8 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   };
   useEffect(() => {
     if (!isSharedFolder) {
-      console.log("calling isSharedFolder");
       getOwnImage();
     } else {
-      console.log("calling iamges");
       getSharedWithMeImage();
     }
   }, [currentFolderId]);
@@ -427,7 +425,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   }, []);
   const setcurrentFolderId = (id, flagValue) => {
     setIsSharedFolder(flagValue);
-   // setCurrentFolderId(id);
+    // setCurrentFolderId(id);
 
     dispatch(setCurrentBookId(id));
     if (flagValue) {
@@ -438,8 +436,8 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   };
   const setDefaultFolderId = () => {
     setFolderFlag("PENDING");
-   // setCurrentFolderId(pendingFolderId);
-    dispatch(setCurrentBookId(pendingFolderId))
+    // setCurrentFolderId(pendingFolderId);
+    dispatch(setCurrentBookId(pendingFolderId));
     setIsSharedFolder(false);
   };
 

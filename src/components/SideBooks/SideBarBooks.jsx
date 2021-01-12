@@ -42,8 +42,8 @@ const SideBarBooks = ({
                 >
                   <span className="pl-2">
                     {book.fileName}
-                    {book.owner ? `(${book.owner})` : ""}
-                    <p className="pl-2">{book.fileDescription}</p>
+                  <p className ="m-0">{book.file_tag} {book.owner ? `(${book.owner})` : ""}</p>
+                    <p className="pl-2 m-0">{book.fileDescription}</p>
                   </span>
                 </span>
                 <span>
