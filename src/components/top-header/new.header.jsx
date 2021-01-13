@@ -104,16 +104,18 @@ const TopSingleHeader = ({
     <>
       <div className="row">
         <div
-          className="col-md-2"
+          className="col-md-3"
           style={{ background: "rgba(0, 0, 0, 0.125)", minHeight: "3rem" }}
         ></div>
-        <div className="col-md-10 main-pending-page-header">
+        <div className="col-md-9 main-pending-page-header original-page-header pr-0">
           <span className="badge badge-info p-2">{currentFolder}</span>
-          <Delete className="single-header-svg" onClick={deleteHandler} />{" "}
+
           <Left handler={prev} />
           <Right handler={next} />
-          <UploadForm submitHandler={uploadImageHandler}></UploadForm>
+
           <Save handler={pageSaveHandler} />
+          <UploadForm submitHandler={uploadImageHandler}></UploadForm>
+          <Delete className="single-header-svg" onClick={deleteHandler} />
           <EditBtn handler={editButtonHandler}></EditBtn>
           <BackButton handler={history.goBack} />
         </div>

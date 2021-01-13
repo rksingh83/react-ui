@@ -212,7 +212,7 @@ const TopHeader = ({
                     className="custom-input mt-1"
                   ></input>
                 </Col>
-                <Col className="top-header-icons" md={9}>
+                <Col className="top-header-icons pr-0" md={9}>
                   {totalFolders.length && (
                     <CustomToolTip text="Edit book">
                       <EditBtn handler={editHandler} />

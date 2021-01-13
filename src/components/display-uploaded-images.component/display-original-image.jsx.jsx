@@ -250,7 +250,7 @@ const DisplayOriginalImage = ({
       )}
       <div className="row">
         {isShowLoader && <CustomLoader />}
-        <div className="col-md-3">
+        <div className="col-md-3 pl-0">
           <SideBarBooks
             setCurrentFolderId={setFolderIdHandler}
             searchItem={searchItem}
