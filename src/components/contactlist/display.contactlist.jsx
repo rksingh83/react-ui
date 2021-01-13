@@ -1,10 +1,11 @@
 import React ,{useState ,useEffect} from "react";
-
+import Avatar from "../../assets/avatar.png";
 import { Get, Post } from "../../service/service.setup";
 //import "./user-data.style.scss";
 import { ReactComponent as Close } from "../../assets/close.svg";
 import { ReactComponent as Share } from "../../assets/share.svg";
 import Paginate from "../common/paginate";
+import {Image} from 'react-bootstrap'
 import {
   getStartIndex,
   getPageCount,
@@ -82,7 +83,13 @@ const ContactList = ({ profileList, isShare, selected, hide, images }) => {
         <ul className="list-group">
           {profileList.map((item, index) => (
             <li className="list-group-item li-contact-list" key={index}>
-              <span> {item.fullname}</span>
+              <span>   <Image
+                height="60px"
+                width="60px"
+                className="profile-image rounded-circle"
+                src={getProfileImageUrl(item.profilePicture)}
+                rounded-circle
+              /> {item.fullname}</span>
               <span>
                 {isShare && <Share onClick={() => shareWith(item.id)}></Share>}
 
@@ -108,3 +115,6 @@ const ContactList = ({ profileList, isShare, selected, hide, images }) => {
 };
 
 export default ContactList;
+const getProfileImageUrl = (profilePicture) => {
+  return profilePicture ? profilePicture : Avatar;
+};

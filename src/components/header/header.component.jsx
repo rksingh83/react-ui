@@ -252,7 +252,7 @@ const Header = ({
               </div>
               {currentUser && ROLE != "labeller" && (
                 <NavDropdown.Item>
-                  <LinkContainer className="p-0" to="profile">
+                  <LinkContainer className="p-0" to="/profile">
                     <Nav.Link>Profile</Nav.Link>
                   </LinkContainer>
                 </NavDropdown.Item>

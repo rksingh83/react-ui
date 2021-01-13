@@ -22,11 +22,11 @@ const SideBarBooks = ({
       {books.map((book) => (
         <ListGroup.Item className="p-1" key={book.id}>
           <Row>
-            <Col md={2}>
+            <Col md={2} style = {{display:"flex" ,alignItems:"center" ,justifyContent:"center"}}>
               <Image
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer" ,height:"40px" }}
                 onClick={() => setCurrentFolderId(book.id, book.sharedImageflg)}
-                fluid
+                
                 src={BookSrc}
               />
             </Col>
