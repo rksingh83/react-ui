@@ -140,7 +140,7 @@ const TopHeader = ({
     try {
       let res = await Post("/uploadImage", formData, {
         headers: {
-          fileId: -1,
+          fileId:bookId ,
           "Content-Type": "multipart/form-data",
         },
       });

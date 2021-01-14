@@ -83,7 +83,7 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
   }
   return (
     <>
-      <Row style={{ maxHeight: "30rem", overflowY: "auto" }}>
+      <Row style={{ maxHeight: "30rem", overflowY: "auto" ,overflowX:"hidden" }}>
         <ContactList
           message={`This ${pageId?'page':'book'} is not shared with any one`}
           contactList={shareList}
@@ -99,7 +99,7 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
           setCurrentTab={setCurrentTab}
         ></ListTabs>
       </Row>
-      <Row style={{ maxHeight: "30rem", overflowY: "auto" }}>
+      <Row style={{ maxHeight: "30rem", overflowY: "auto" ,overflowX:"hidden" }}>
         {currentTab === "GROUPS" && (
           <UserGroupList
             shareGroupHandler={shareHandler}

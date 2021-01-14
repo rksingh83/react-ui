@@ -8,6 +8,7 @@ import { setCurrentFile } from "../../redux/file/file.actions";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import { useDispatch } from "react-redux";
 import { setCurrentImageId } from "../../redux/file/pageId.action";
+import { setAllBooks } from "../../redux/all-books/allBooks.actions";
 const createHistory = require("history").createBrowserHistory;
 
 const LouOut = ({ history, setCurrentUser, setFolderFlag, setCurrentFile }) => {
@@ -18,6 +19,8 @@ const LouOut = ({ history, setCurrentUser, setFolderFlag, setCurrentFile }) => {
   setCurrentFile([]);
   setFolderFlag("HOME");
   dispatch(setCurrentImageId(""));
+  dispatch(setCurrentImageId(""));
+  dispatch(setAllBooks([]))
 
   return true;
 };
