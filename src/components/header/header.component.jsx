@@ -222,7 +222,7 @@ const Header = ({
               title={
                 <i
                   style={{ fontSize: "20px", color: "white" }}
-                  class="fas fa-bars"
+                  className="fas fa-bars"
                 ></i>
               }
             >

@@ -33,7 +33,7 @@ import {
   NOTIFICATION_OFF_SET as PAGE_OFF_SET,
 } from "../common/pagination.config";
 
-const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
+const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
   // RESPONSE MESSAGE POP
   // pull current user from  redux
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -98,15 +98,22 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
     );
   };
 
-  const getAllFolders = async () => {
+  const getAllFolders = async (id = false) => {
     const requestFile = { filefolderRequest: [] };
     const { data } = await Post("/getMyAndSharedFiles", requestFile);
 
     // setAllBooks(data.filefolderRequest);
-    dispatch(setUserAllBooks(data.filefolderRequest));
-    setIsSharedFolder(data.filefolderRequest[0].sharedImageflg);
-    // setCurrentFolderId(data.filefolderRequest[0].id);
-    dispatch(setCurrentBookId(data.filefolderRequest[0].id));
+    if (id) {
+      const currentBook = allBooks.find((item) => item.id == id);
+      setIsSharedFolder(currentBook.sharedImageflg);
+      dispatch(setCurrentBookId(id));
+    }else{
+      dispatch(setUserAllBooks(data.filefolderRequest));
+      setIsSharedFolder(data.filefolderRequest[0].sharedImageflg);
+      // setCurrentFolderId(data.filefolderRequest[0].id);
+      dispatch(setCurrentBookId(data.filefolderRequest[0].id));
+    }
+    
     setShowLoader(false);
   };
   const saveFolder = (fileName, fileTag, fileDescription, id) => {
@@ -421,7 +428,10 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag }) => {
   };
 
   useEffect(() => {
-    if (ROLE != "labeller") getAllFolders();
+    const reDirectedId = location.search.split("=")[1];
+    console.log(reDirectedId);
+    if (ROLE != "labeller") getAllFolders(reDirectedId);
+    console.log(location);
   }, []);
   const setcurrentFolderId = (id, flagValue) => {
     setIsSharedFolder(flagValue);

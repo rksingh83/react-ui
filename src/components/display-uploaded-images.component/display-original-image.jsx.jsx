@@ -57,7 +57,7 @@ const DisplayOriginalImage = ({
   const [responseMgs, setResponseMgs] = useState("");
 
   const setFolderIdHandler = (id, flag) => {
-    history.push("/?id=1");
+    history.push(`/?id=${id}`);
   };
   const nextHandler = () => {
     let index = allPendingLIst.indexOf(parseInt(imageId));
