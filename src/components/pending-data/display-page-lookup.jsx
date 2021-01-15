@@ -374,9 +374,9 @@ const PendingPageData = ({
             {isMemberShip == 1 && (
               <div
                 className={col}
-                style={{ display: "flex", alignItems: "center" }}
+                style={{ display: "flex", alignItems: "center"  ,"padding":"0px"}}
               >
-                <Button onClick={sendInvitation} className="btn btn-info">
+                <Button  style = {{fontSize:"12.5px" ,padding:"6px"}} onClick={sendInvitation} className="btn btn-info">
                   Invite and Share
                 </Button>
               </div>
@@ -426,7 +426,7 @@ const PendingPageData = ({
           </div>
           <div className="row">
             <div className="col-md-2 page-lookup-heading">Description</div>
-            <div className="col-md-10">
+            <div className="col-md-9">
               <Input
                 type="text"
                 onChange={pageLookUpHandler}

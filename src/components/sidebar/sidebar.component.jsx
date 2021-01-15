@@ -499,6 +499,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
             searchItem={searchItem}
             allBooks={allBooks}
             filteredBooks={filteredFolder}
+            bookId ={currentFolderId}
           />
           <ListGroup>
             <ListGroup.Item onClick={setDefaultFolderId}>

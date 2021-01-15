@@ -8,6 +8,7 @@ const SideBarBooks = ({
   filteredBooks,
   setCurrentFolderId,
   searchItem,
+  bookId,
 }) => {
   books = searchItem == "" ? allBooks : filteredBooks;
   return (
@@ -20,7 +21,10 @@ const SideBarBooks = ({
       }}
     >
       {books.map((book) => (
-        <ListGroup.Item className="p-1" key={book.id}>
+        <ListGroup.Item
+          className={` p-1 ${bookId == book.id ? "book-border" : ""}`}
+          key={book.id}
+        >
           <Row>
             <Col
               md={2}

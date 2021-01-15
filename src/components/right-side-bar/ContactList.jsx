@@ -19,7 +19,7 @@ const ContactList = ({
     return profilePicture ? profilePicture : Avatar;
   };
   return (
-    <div className ="mt-2">
+    <div className="mt-2">
       {contactList.map((item, index) => (
         <Col key={index} md={12} className="bg-dark">
           <Row>
@@ -36,7 +36,7 @@ const ContactList = ({
               <span>
                 <h6>{item.fullname}</h6>
                 <p className="mb-0">{item.email}</p>
-                <p>Owner</p>
+                <p>{item.isuploadaccess ? "Editor" : "Read Only"}</p>
               </span>
             </Col>
             {!isSharedFolder && (
