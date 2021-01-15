@@ -20,6 +20,8 @@ import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import RightSharedPeopleList from "../right-side-bar/RightSharedPeopleList";
 import { useDispatch, useSelector } from "react-redux";
 import SideBarBooks from "../SideBooks/SideBarBooks";
+import DefaultSideBar from "../sidebar/DefaultSideBar";
+import { setCurrentBookId } from "../../redux/all-books/allBooks.actions";
 const DisplayOriginalImage = ({
   match,
   history,
@@ -35,6 +37,8 @@ const DisplayOriginalImage = ({
   const [currentLookup, setCurrentLookup] = useState(false);
   const [isShowLoader, setShowLoader] = useState(false);
   const [allPendingLIst, setAllPendingList] = useState([]);
+  const [currentPendingFolderId ,setPendingFolderId] = useState('');
+   const dispatch = useDispatch();
   const [lookupPageState, setLookupPageState] = useState({
     fileId: 0,
     shareId: 0,
@@ -132,6 +136,14 @@ const DisplayOriginalImage = ({
       });
     });
   }, []);
+  useEffect(()=>{
+    const pendingBook = allBooks.filter(item=>item.pending===true) 
+    console.log(pendingBook)
+    if(pendingBook[0]){
+      dispatch(setCurrentBookId(pendingBook[0].id))
+      setPendingFolderId(pendingBook[0].id)
+    }
+  },[])
   useEffect(() => {
     getCurrentPage();
   }, [imageId]);
@@ -217,6 +229,10 @@ const DisplayOriginalImage = ({
     currentState.date = e;
     setLookupPageState(currentState);
   };
+  const setDefaultFolderId = () => {
+    setFolderFlag("PENDING");
+    history.push(`/?id=${currentPendingFolderId}`)
+  };
   return (
     <>
       {isShowLoader && <CustomLoader />}
@@ -256,6 +272,7 @@ const DisplayOriginalImage = ({
             searchItem={searchItem}
             allBooks={allBooks}
           />
+          <DefaultSideBar setDefaultFolderId={setDefaultFolderId} />
         </div>
         <div className="col-md-6">
           {currentLookup && (
@@ -285,7 +302,7 @@ const DisplayOriginalImage = ({
             ></ImageSlider>
           )} */}
         </div>
-        <div className="col-md-3 bg-dark">
+        <div className="col-md-3 bg-sideBar">
           <RightSharedPeopleList
             isSharedFolder={sharedWithMe === "SHARED" ? true : false}
             pageId={imageId}

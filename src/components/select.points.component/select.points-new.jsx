@@ -16,6 +16,8 @@ import { BackButton, EditBtn, Save } from "../common/pNGButtons";
 import SideBarBooks from "../SideBooks/SideBarBooks";
 import { useDispatch, useSelector } from "react-redux";
 import RightSharedPeopleList from "../right-side-bar/RightSharedPeopleList";
+import DefaultSideBar from "../sidebar/DefaultSideBar";
+import { setCurrentBookId } from "../../redux/all-books/allBooks.actions";
 const SelectPoints = ({
   match,
   history,
@@ -45,6 +47,8 @@ const SelectPoints = ({
   const [threeStyle, setThreeStyle] = useState({});
   const [fourStyle, setFourStyle] = useState({});
   const [currentFolder, setCurrentFolderName] = useState("");
+  const dispatch = useDispatch('');
+  const [currentPendingFolderId ,setPendingFolderId] = useState('');
   var active = false;
   const EditButton = useRef(null);
   const fourDiv = useRef(null);
@@ -313,8 +317,21 @@ const SelectPoints = ({
     displayPoint(true);
   };
   const setFolderIdHandler = (id, flag) => {
-    history.push("/?id=1");
+    history.push(`/?id=${id}`);
   };
+  useEffect(()=>{
+    const pendingBook = allBooks.filter(item=>item.pending===true) 
+    console.log(pendingBook)
+    if(pendingBook[0]){
+      dispatch(setCurrentBookId(pendingBook[0].id))
+      setPendingFolderId(pendingBook[0].id)
+    }
+  },[])
+
+    const setDefaultFolderId = () => {
+      setFolderFlag("PENDING");
+      history.push(`/?id=${currentPendingFolderId}`)
+    };
   return (
     <>
       <div className="row">
@@ -368,11 +385,12 @@ const SelectPoints = ({
       </div>
       <div className="row">
         <div className=" custom-pad-li d-none d-sm-block col-md-3 p-0">
-        <SideBarBooks
+          <SideBarBooks
             setCurrentFolderId={setFolderIdHandler}
             searchItem={searchItem}
             allBooks={allBooks}
           />
+          <DefaultSideBar setDefaultFolderId={setDefaultFolderId} />
         </div>
         <div className="col-md-6 col-xs-12 col-sm-12">
           <div
@@ -424,7 +442,7 @@ const SelectPoints = ({
             <img id="img" src={src}></img>
           </div>
         </div>
-        <div className="col-md-3 bg-dark">
+        <div className="col-md-3 bg-sideBar">
           <RightSharedPeopleList
             isSharedFolder={sharedWithMe === "SHARED" ? true : false}
             pageId={match.params.id}

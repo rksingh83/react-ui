@@ -4,10 +4,10 @@ import { Col, Row, ListGroup } from "react-bootstrap";
 const UserGroupList = ({ groups, shareGroupHandler, isSharedFolder }) => {
   return (
     <>
-      <Col md={12}>
+      <Col  className ="group-li" md={12}>
         <ListGroup>
           {groups.map((group) => (
-            <ListGroup.Item className="bg-dark">
+            <ListGroup.Item >
               <Row>
                 <Col md={10}>
                   <h6 className="m-0">{group.groupName}</h6>

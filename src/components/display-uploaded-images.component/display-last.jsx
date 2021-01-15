@@ -14,6 +14,8 @@ import { BackButton, EditBtn } from "../common/pNGButtons";
 import RightSharedPeopleList from "../right-side-bar/RightSharedPeopleList";
 import SideBarBooks from "../SideBooks/SideBarBooks";
 import { useDispatch, useSelector } from "react-redux";
+import DefaultSideBar from "../sidebar/DefaultSideBar";
+import { setCurrentBookId } from "../../redux/all-books/allBooks.actions";
 const DisplayLastImage = ({
   match,
   history,
@@ -26,7 +28,8 @@ const DisplayLastImage = ({
   const allBooks = useSelector((state) => state.userBooks.books);
   const currentFolderId = useSelector((state) => state.userBooks.currentBookId);
   const [searchItem, setSearchHandler] = useState("");
-
+  const dispatch = useDispatch("");
+  const [currentPendingFolderId, setPendingFolderId] = useState("");
   const [currentFolderName, setCurrentFolderName] = useState("");
 
   useEffect(() => {
@@ -44,7 +47,19 @@ const DisplayLastImage = ({
       setImageTitle(res.data.imageInput[0].title);
     });
   }, []);
+  useEffect(() => {
+    const pendingBook = allBooks.filter((item) => item.pending === true);
+    console.log(pendingBook);
+    if (pendingBook[0]) {
+      dispatch(setCurrentBookId(pendingBook[0].id));
+      setPendingFolderId(pendingBook[0].id);
+    }
+  }, []);
 
+  const setDefaultFolderId = () => {
+    setFolderFlag("PENDING");
+    history.push(`/?id=${currentPendingFolderId}`);
+  };
   const styleImage = {
     width: "100%",
     height: "100%",
@@ -68,8 +83,9 @@ const DisplayLastImage = ({
     history.push(`/edit/${match.params.id}`);
   };
   const setFolderIdHandler = (id, flag) => {
-    history.push("/?id=1");
+    history.push(`/?id= ${id}`);
   };
+
   return (
     <>
       <div className="row">
@@ -129,12 +145,13 @@ const DisplayLastImage = ({
             searchItem={searchItem}
             allBooks={allBooks}
           />
+          <DefaultSideBar setDefaultFolderId={1} />
         </div>
         <div className="col-md-6 col-xs-12 col-sm-12">
           <p>{imageTitle}</p>
           <img style={styleImage} src={`${imageUrl}`}></img>
         </div>
-        <div className="col-md-3 bg-dark">
+        <div className="col-md-3 bg-sideBar">
           <RightSharedPeopleList
             isSharedFolder={sharedWithMe === "SHARED" ? true : false}
             pageId={match.params.id}

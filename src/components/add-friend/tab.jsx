@@ -14,7 +14,7 @@ const ListTabs = ({ setCurrentTab, currentTab, isHideShare }) => {
         </li>
       )}
       <li
-        className={` text-white border border-success nav-link pl-2 ${
+        className={`  border border-success nav-link pl-2 ${
           currentTab == "CONTACTS" ? "active" : ""
         }`}
         onClick={() => setCurrentTab("CONTACTS")}
@@ -22,7 +22,7 @@ const ListTabs = ({ setCurrentTab, currentTab, isHideShare }) => {
         Contacts
       </li>
       <li
-        className={` text-white border border-success nav-link ml-2 mr-2 pl-2 ${
+        className={`  border border-success nav-link ml-2 mr-2 pl-2 ${
           currentTab == "GROUPS" ? "active" : ""
         }`}
         onClick={() => setCurrentTab("GROUPS")}

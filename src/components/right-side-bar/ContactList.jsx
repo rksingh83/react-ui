@@ -13,7 +13,7 @@ const ContactList = ({
   removeContact,
 }) => {
   if (contactList.length === 0) {
-    return <Col className="text-white mt-2"> {message}</Col>;
+    return <Col className=" mt-2"> {message}</Col>;
   }
   const getProfileImageUrl = (profilePicture) => {
     return profilePicture ? profilePicture : Avatar;
@@ -21,7 +21,7 @@ const ContactList = ({
   return (
     <div className="mt-2">
       {contactList.map((item, index) => (
-        <Col key={index} md={12} className="bg-dark">
+        <Col key={index} md={12}>
           <Row>
             <Col md={2}>
               <Image

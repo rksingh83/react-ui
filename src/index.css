@@ -130,7 +130,6 @@
                                                                                     
                                                                                     .list-group {
                                                                                         font-size: 14px;
-                                                                                        color: #0078d4 !important;
                                                                                         font-weight: 500;
                                                                                     }
                                                                                     
@@ -324,4 +323,17 @@
                                                                                     
                                                                                     .book-border {
                                                                                         border: 1px solid green !important
+                                                                                    }
+                                                                                    
+                                                                                    .bg-header {
+                                                                                        background: #0078d4 !important
+                                                                                    }
+                                                                                    
+                                                                                    .bg-sideBar {
+                                                                                        border: 1px solid rgba(0, 0, 0, 0.125);
+                                                                                    }
+                                                                                    
+                                                                                    .group-li .list-group-item {
+                                                                                        border: none;
+                                                                                        border-bottom: 1px solid rgba(0, 0, 0, 0.125)
                                                                                     }

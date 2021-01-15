@@ -32,6 +32,7 @@ import {
   getNotificationCount as getPageCount,
   NOTIFICATION_OFF_SET as PAGE_OFF_SET,
 } from "../common/pagination.config";
+import DefaultSideBar from "./DefaultSideBar";
 
 const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
   // RESPONSE MESSAGE POP
@@ -105,8 +106,10 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
     // setAllBooks(data.filefolderRequest);
     if (id) {
       const currentBook = allBooks.find((item) => item.id == id);
-      setIsSharedFolder(currentBook.sharedImageflg);
-      dispatch(setCurrentBookId(id));
+      if (currentBook) {
+        setIsSharedFolder(currentBook.sharedImageflg);
+        dispatch(setCurrentBookId(id));
+      }
     } else {
       if (data.filefolderRequest[0]) {
         dispatch(setUserAllBooks(data.filefolderRequest));
@@ -431,9 +434,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
 
   useEffect(() => {
     const reDirectedId = location.search.split("=")[1];
-    console.log(reDirectedId);
     if (ROLE != "labeller") getAllFolders(reDirectedId);
-    console.log(location);
   }, []);
   const setcurrentFolderId = (id, flagValue) => {
     setIsSharedFolder(flagValue);
@@ -499,13 +500,10 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
             searchItem={searchItem}
             allBooks={allBooks}
             filteredBooks={filteredFolder}
-            bookId ={currentFolderId}
+            bookId={currentFolderId}
           />
-          <ListGroup>
-            <ListGroup.Item onClick={setDefaultFolderId}>
-              Default Pages
-            </ListGroup.Item>
-          </ListGroup>
+
+          <DefaultSideBar setDefaultFolderId={setDefaultFolderId} />
         </div>
         <div className={ROLE != "labeller" ? "col-md-6" : "col-md-9"}>
           <div className="row">
@@ -548,7 +546,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
           </div>
         </div>
         {ROLE != "labeller" && (
-          <div className="col-md-3 bg-dark">
+          <div className="col-md-3 bg-sideBar">
             <RightSharedPeopleList
               isSharedFolder={isSharedFolder}
               bookId={currentFolderId}
