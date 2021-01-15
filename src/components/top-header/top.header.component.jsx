@@ -140,7 +140,7 @@ const TopHeader = ({
     const formData = new FormData();
     var d = new Date();
     let imageName = d.getTime();
-    imageName = `jpg_${imageName}.{fileType}`;
+    imageName = `jpg_${imageName}.${fileType}`;
     //e.name = imageName;
     
     formData.append("files", e, imageName);
