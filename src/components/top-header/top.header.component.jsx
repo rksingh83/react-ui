@@ -130,17 +130,24 @@ const TopHeader = ({
   const fileUploadHandler = async (e) => {
     //  e.preventDefault();
     setShowLoader(true);
+    const fileType = e.name.split(".").pop();
+    if (fileType !== "png" && fileType !== "jpg") {
+      alert("Invalid File type");
+      setShowLoader(false);
+      return false;
+    }
+    // console.log(e.name.split('.').pop());
     const formData = new FormData();
     var d = new Date();
     let imageName = d.getTime();
-    imageName = `jpg_${imageName}.jpg`;
+    imageName = `jpg_${imageName}.{fileType}`;
     //e.name = imageName;
-
+    
     formData.append("files", e, imageName);
     try {
       let res = await Post("/uploadImage", formData, {
         headers: {
-          fileId:bookId ,
+          fileId: bookId,
           "Content-Type": "multipart/form-data",
         },
       });
@@ -225,7 +232,10 @@ const TopHeader = ({
                   )}
 
                   <CustomToolTip text="Refresh">
-                    <FolderCreate className ="pl-2 pr-2" onClick={() => window.location.reload()} />
+                    <FolderCreate
+                      className="pl-2 pr-2"
+                      onClick={() => window.location.reload()}
+                    />
                   </CustomToolTip>
 
                   <CustomToolTip text="Upload Image">

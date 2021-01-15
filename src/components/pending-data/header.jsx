@@ -29,10 +29,16 @@ const PendingHeader = ({
   const uploadImageHandler = async (e) => {
     //  e.preventDefault();
     props.toggleLoader(true);
+    const fileType = e.name.split(".").pop();
+    if (fileType !== "png" && fileType !== "jpg") {
+      alert("Invalid File type");
+      props.toggleLoader(false);
+      return false;
+    }
     const formData = new FormData();
     var d = new Date();
     let imageName = d.getTime();
-    imageName = `jpg_${imageName}.jpg`;
+    imageName = `jpg_${imageName}.${fileType}`;
 
     formData.append("files", e, imageName);
     try {
