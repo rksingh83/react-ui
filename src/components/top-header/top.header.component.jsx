@@ -142,7 +142,6 @@ const TopHeader = ({
     let imageName = d.getTime();
     imageName = `jpg_${imageName}.${fileType}`;
     //e.name = imageName;
-    
     formData.append("files", e, imageName);
     try {
       let res = await Post("/uploadImage", formData, {
@@ -220,12 +219,12 @@ const TopHeader = ({
                   ></input>
                 </Col>
                 <Col className="top-header-icons pr-0" md={9}>
-                  {totalFolders.length>0 && (
+                  {totalFolders.length > 0 && (
                     <CustomToolTip text="Edit book">
                       <EditBtn handler={editHandler} />
                     </CustomToolTip>
                   )}
-                  {totalFolders.length>0 && (
+                  {totalFolders.length > 0 && (
                     <CustomToolTip text="Delete Book">
                       <Delete onClick={() => reNameFolder(true)} />
                     </CustomToolTip>

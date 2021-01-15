@@ -22,11 +22,17 @@ const SideBarBooks = ({
       {books.map((book) => (
         <ListGroup.Item className="p-1" key={book.id}>
           <Row>
-            <Col md={2} style = {{display:"flex" ,alignItems:"center" ,justifyContent:"center"}}>
+            <Col
+              md={2}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Image
-                style={{ cursor: "pointer" ,height:"40px" }}
+                style={{ cursor: "pointer", height: "40px" }}
                 onClick={() => setCurrentFolderId(book.id, book.sharedImageflg)}
-                
                 src={BookSrc}
               />
             </Col>
@@ -42,7 +48,9 @@ const SideBarBooks = ({
                 >
                   <span className="pl-2">
                     {book.fileName}
-                  <p className ="m-0">{book.file_tag} {book.owner ? `(${book.owner})` : ""}</p>
+                    <p className="m-0">
+                      {book.file_tag} {book.owner ? `(${book.owner})` : ""}
+                    </p>
                     <p className="pl-2 m-0">{book.fileDescription}</p>
                   </span>
                 </span>
