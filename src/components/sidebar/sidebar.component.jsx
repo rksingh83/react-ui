@@ -107,13 +107,15 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
       const currentBook = allBooks.find((item) => item.id == id);
       setIsSharedFolder(currentBook.sharedImageflg);
       dispatch(setCurrentBookId(id));
-    }else{
-      dispatch(setUserAllBooks(data.filefolderRequest));
-      setIsSharedFolder(data.filefolderRequest[0].sharedImageflg);
-      // setCurrentFolderId(data.filefolderRequest[0].id);
-      dispatch(setCurrentBookId(data.filefolderRequest[0].id));
+    } else {
+      if (data.filefolderRequest[0]) {
+        dispatch(setUserAllBooks(data.filefolderRequest));
+        setIsSharedFolder(data.filefolderRequest[0].sharedImageflg);
+        // setCurrentFolderId(data.filefolderRequest[0].id);
+        dispatch(setCurrentBookId(data.filefolderRequest[0].id));
+      }
     }
-    
+
     setShowLoader(false);
   };
   const saveFolder = (fileName, fileTag, fileDescription, id) => {

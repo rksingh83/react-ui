@@ -220,12 +220,12 @@ const TopHeader = ({
                   ></input>
                 </Col>
                 <Col className="top-header-icons pr-0" md={9}>
-                  {totalFolders.length && (
+                  {totalFolders.length>0 && (
                     <CustomToolTip text="Edit book">
                       <EditBtn handler={editHandler} />
                     </CustomToolTip>
                   )}
-                  {totalFolders.length && (
+                  {totalFolders.length>0 && (
                     <CustomToolTip text="Delete Book">
                       <Delete onClick={() => reNameFolder(true)} />
                     </CustomToolTip>
