@@ -2,6 +2,8 @@ import React from "react";
 
 import { Get, Post } from "../../service/service.setup";
 //import "./user-data.style.scss";
+import { Image } from "react-bootstrap";
+import Avatar from "../../assets/avatar.png";
 import { ReactComponent as Close } from "../../assets/close.svg";
 import { ReactComponent as Share } from "../../assets/share.svg";
 import { ReactComponent as AddUser } from "../../assets/add-user.svg";
@@ -59,14 +61,19 @@ const ContactsCard = ({
       window.location.reload();
     } catch (error) {}
   }
-
+  const getProfileImageUrl = (profilePicture) => {
+    return profilePicture ? profilePicture : Avatar;
+  };
   return (
     <>
-     {profileLists.length > 0 && (
-          <button className="btn btn-danger ml-2 mt-2" onClick={() => clearList([])}>
-            Clear ALL
-          </button>
-        )}
+      {profileLists.length > 0 && (
+        <button
+          className="btn btn-danger ml-2 mt-2"
+          onClick={() => clearList([])}
+        >
+          Clear ALL
+        </button>
+      )}
       <div className="row">
         <>
           {/* {profileLists.length > 0 && (
@@ -91,7 +98,13 @@ const ContactsCard = ({
                 <ul>
                   <li className="contact-card-li">
                     <div className="contact-div">
-                      <span className="label-card">Name</span>{" "}
+                      <Image
+                        height="60px"
+                        width="60px"
+                        className="profile-image rounded-circle m-1"
+                        src={getProfileImageUrl(profileList.profilePicture)}
+                        rounded-circle
+                      />
                       <span>{profileList.fullname}</span>
                     </div>
                     <div>
@@ -127,7 +140,7 @@ const ContactsCard = ({
                       !profileList.alreadyFriend && (
                         <div>
                           <button
-                            onClick={(e) => addFriend(profileList.id ,e.target)}
+                            onClick={(e) => addFriend(profileList.id, e.target)}
                             className="btn btn-success"
                           >
                             Add Friend
