@@ -123,6 +123,8 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
             shareGroupHandler={shareHandler}
             groups={userGroups}
             isSharedFolder={isSharedFolder}
+            giveUploadAccess={giveUploadAccess}
+
           />
         )}
         {currentTab === "CONTACTS" && (

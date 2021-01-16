@@ -23,7 +23,7 @@ const UserContactList = ({
     <>
       {contactList.map((item, index) => (
         <Col key={index} md={12}>
-          <Row>
+          <Row className ="mb-1">
             <Col md={3}>
               <Image
                 height="60px"
@@ -37,7 +37,6 @@ const UserContactList = ({
               <span>
                 <h6>{item.fullname}</h6>
                 <p className="mb-0">{item.email}</p>
-                <p>{item.isuploadaccess ? "Editor" : "Read Only"}</p>
               </span>
             </Col>
           </Row>
@@ -49,7 +48,9 @@ const UserContactList = ({
                   ""
                 ) : (
                   <button
-                    onClick={() => giveUploadAccess({ user_id: item.id , isUpload:true })}
+                    onClick={() =>
+                      giveUploadAccess({ user_id: item.id, isUpload: true })
+                    }
                     className="btn btn-dark"
                   >
                     Upload Access
