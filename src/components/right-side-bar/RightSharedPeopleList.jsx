@@ -96,7 +96,7 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
   return (
     <>
       <Row
-        style={{ maxHeight: "30rem", overflowY: "auto", overflowX: "hidden" }}
+        style={{ maxHeight: "15rem", overflowY: "auto", overflowX: "hidden" }}
       >
         <ContactList
           message={`This ${
@@ -116,7 +116,7 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
         ></ListTabs>
       </Row>
       <Row
-        style={{ maxHeight: "30rem", overflowY: "auto", overflowX: "hidden" }}
+        style={{ maxHeight: "20rem", overflowY: "auto", overflowX: "hidden" }}
       >
         {currentTab === "GROUPS" && (
           <UserGroupList

@@ -87,7 +87,21 @@ const PendingHeader = ({
           style={{ background: "rgba(0, 0, 0, 0.125)", minHeight: "3rem" }}
         ></div>
         <div className="col-md-9 pl-0 main-pending-page-header original-page-header">
-        {props.role != "labeller" && (
+          {props.defaultPageEditMode ? (
+            all.length > 0 && (
+              <CustomToolTip text="Save Image">
+                <SaveBtn handler={saveWithNotification} />
+              </CustomToolTip>
+            )
+          ) : (
+            <button
+              onClick={() => props.setDefaultPageEditMode(true)}
+              className="btn btn-dark"
+            >
+              Open In Edit Mode
+            </button>
+          )}
+          {props.role != "labeller" && (
             <span className="info"> Total Default Page </span>
           )}
           {props.role != "labeller" && (
@@ -109,15 +123,6 @@ const PendingHeader = ({
             </button>
           )}
 
-         
-
-          {all.length > 0 && (
-            <CustomToolTip text="Save Image">
-              <SaveBtn handler={saveWithNotification} />
-            </CustomToolTip>
-          )}
-
-          
           {props.role != "labeller" && (
             <CustomToolTip text="Previous">
               <LeftButton handler={prev} />
@@ -135,7 +140,7 @@ const PendingHeader = ({
               <RightButton handler={next} />
             </CustomToolTip>
           )}
-          
+
           {all.length > 0 && props.role != "labeller" && (
             <CustomToolTip text="Delete Image">
               <DeleteButton
@@ -145,19 +150,17 @@ const PendingHeader = ({
             </CustomToolTip>
           )}
           {all.length > 0 && (
-          
-          <CustomToolTip text="Edit">
-            <EditBtn
-              handler={() =>
-                props.redirectAndSaveId(
-                  `/edit/${currentImageId}`,
-                  currentImageId
-                )
-              }
-            />
-          </CustomToolTip>
-        )}
-
+            <CustomToolTip text="Edit">
+              <EditBtn
+                handler={() =>
+                  props.redirectAndSaveId(
+                    `/edit/${currentImageId}`,
+                    currentImageId
+                  )
+                }
+              />
+            </CustomToolTip>
+          )}
         </div>
       </div>
     </main>
