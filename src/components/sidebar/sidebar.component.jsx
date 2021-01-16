@@ -93,8 +93,19 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
   const searchHandler = (e) => {
     setSearchHandler(e.target.value);
     setFilteredFolder(
-      allBooks.filter((item) =>
-        item.fileName.toLowerCase().includes(e.target.value.toLowerCase())
+      allBooks.filter(
+        (item) =>
+          item.fileName.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          (item.file_tag &&
+            item.file_tag
+              .toLowerCase()
+              .includes(e.target.value.toLowerCase())) ||
+          (item.owner &&
+            item.owner.toLowerCase().includes(e.target.value.toLowerCase())) ||
+          (item.fileDescription &&
+            item.fileDescription
+              .toLowerCase()
+              .includes(e.target.value.toLowerCase()))
       )
     );
   };
