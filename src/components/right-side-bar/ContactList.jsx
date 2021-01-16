@@ -13,7 +13,7 @@ const ContactList = ({
   removeContact,
 }) => {
   if (contactList.length === 0) {
-    return <Col className=" mt-2"> {message}</Col>;
+    return <Col className=" mt-2"> {message}<hr/></Col>;
   }
   const getProfileImageUrl = (profilePicture) => {
     return profilePicture ? profilePicture : Avatar;
