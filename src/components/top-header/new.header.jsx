@@ -112,8 +112,13 @@ const TopSingleHeader = ({
 
           <Left handler={prev} />
           <Right handler={next} />
-
-          <Save handler={pageSaveHandler} />
+          {!props.defaultPageEditMode? <button
+            className="btn btn-dark"
+            onClick={() => props.setDefaultPageEditMode(true)}
+          >
+            Open In Edit Mode
+          </button>: <Save handler={pageSaveHandler} />}
+         
           <UploadForm submitHandler={uploadImageHandler}></UploadForm>
           <Delete className="single-header-svg" onClick={deleteHandler} />
           <EditBtn handler={editButtonHandler}></EditBtn>

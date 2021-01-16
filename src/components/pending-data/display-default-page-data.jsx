@@ -28,17 +28,21 @@ const DefaultPageData = ({
   isDisabled,
   ...props
 }) => {
-  
   const tmnImageStyle = {
     width: "100%",
     border: "1px solid green",
   };
 
   const getDataTime = (timeStamp) => {
-    let date = timeStamp.split("T");
-    return `${date[0]}`;
+    if (timeStamp) {
+      let date = new Date(timeStamp).toLocaleDateString();
+      date = date.split("/");
+      return `${date[1]}/${date[0]}/${date[2]}`;
+    } else {
+      return "---";
+    }
   };
-  
+
   return (
     <div className="container-sm mt-4" style={{ maxWidth: "" }}>
       <div className="row ">
@@ -94,12 +98,14 @@ const DefaultPageData = ({
           <hr />
           <div className="row">
             <div className="font-weight-bold col-md-4">Page Title:</div>
-            <div className= 'col-md-8'>{pageData.title ? pageData.title : "---"}</div>
+            <div className="col-md-8">
+              {pageData.title ? pageData.title : "---"}
+            </div>
           </div>
           <hr />
           <div className="row">
             <div className="col-md-4 font-weight-bold pl-0">Date:</div>
-            <div className="col-md-8">12/12/2121</div>
+            <div className="col-md-8">{getDataTime(pageData.date)}</div>
           </div>
           <hr />
           <div className="row">

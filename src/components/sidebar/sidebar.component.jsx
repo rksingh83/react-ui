@@ -375,17 +375,17 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
           nextHandler();
           //   removeSavedImageId();
           setShowLoader(false);
-          setDefaultPageEditMode(false)
+          setDefaultPageEditMode(false);
           return true;
         }
         if (response.data.isFileMoved) removeSavedImageId();
       }
       setShowLoader(false);
-      setDefaultPageEditMode(false)
+      setDefaultPageEditMode(false);
     } catch (e) {
       setShowLoader(false);
       dispatch(setCurrentImageId(""));
-      setDefaultPageEditMode(false)
+      setDefaultPageEditMode(false);
     }
   };
   const pendingImgDeleteHandler = async () => {
@@ -449,14 +449,14 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
     } else {
       setFolderFlag("HOME");
     }
-    setDefaultPageEditMode(false)
+    setDefaultPageEditMode(false);
   };
   const setDefaultFolderId = () => {
     setFolderFlag("PENDING");
     // setCurrentFolderId(pendingFolderId);
     dispatch(setCurrentBookId(pendingFolderId));
     setIsSharedFolder(false);
-    setDefaultPageEditMode(false)
+    setDefaultPageEditMode(false);
   };
 
   return (
@@ -495,8 +495,8 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
           history={history}
           role={ROLE}
           redirectAndSaveId={redirectAndSaveId}
-          setDefaultPageEditMode ={setDefaultPageEditMode}
-          defaultPageEditMode = {defaultPageEditMode}
+          setDefaultPageEditMode={setDefaultPageEditMode}
+          defaultPageEditMode={defaultPageEditMode}
         />
       )}
 
@@ -512,7 +512,11 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
 
           <DefaultSideBar setDefaultFolderId={setDefaultFolderId} />
         </div>
-        <div className={ROLE != "labeller" && !defaultPageEditMode ? "col-md-6" : "col-md-9"}>
+        <div
+          className={
+            ROLE != "labeller" && !defaultPageEditMode ? "col-md-6" : "col-md-9"
+          }
+        >
           <div className="row">
             {isShowLoader && <CustomLoader />}
             {currentFolderId > 0 && sharedWithMe != "PENDING" && (
@@ -530,28 +534,9 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
               />
             )}
 
-         { sharedWithMe == "PENDING" && (   currentLookup &&  defaultPageEditMode === false  ? (
-              <DefaultPageData
-                data={currentLookup}
-                currentImageId={currentImage}
-                history={history}
-                pendingFolderId={pendingFolderId}
-                removeImageId={removeSavedImageId}
-                pageData={lookupPageState}
-                isMemberShip={isPrimerUser}
-                pageLookUpHandler={pageLookUpHandler}
-                isRedirectLast={true}
-                pageLookUpDateHandler={pageLookUpDateHandler}
-                role={ROLE}
-                redirectAndSaveId={redirectAndSaveId}
-                clearSavedImageId={clearSavedImageId}
-                startLoader={setShowLoader}
-                setResponseMgs={setResponseMgs}
-                setShowPop={setShowPop}
-              ></DefaultPageData>
-            ) : (
-              currentLookup && (
-                <LoadLookup
+            {sharedWithMe == "PENDING" &&
+              (currentLookup && defaultPageEditMode === false ? (
+                <DefaultPageData
                   data={currentLookup}
                   currentImageId={currentImage}
                   history={history}
@@ -568,9 +553,29 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
                   startLoader={setShowLoader}
                   setResponseMgs={setResponseMgs}
                   setShowPop={setShowPop}
-                ></LoadLookup>
-              )
-            ))}
+                ></DefaultPageData>
+              ) : (
+                currentLookup && (
+                  <LoadLookup
+                    data={currentLookup}
+                    currentImageId={currentImage}
+                    history={history}
+                    pendingFolderId={pendingFolderId}
+                    removeImageId={removeSavedImageId}
+                    pageData={lookupPageState}
+                    isMemberShip={isPrimerUser}
+                    pageLookUpHandler={pageLookUpHandler}
+                    isRedirectLast={true}
+                    pageLookUpDateHandler={pageLookUpDateHandler}
+                    role={ROLE}
+                    redirectAndSaveId={redirectAndSaveId}
+                    clearSavedImageId={clearSavedImageId}
+                    startLoader={setShowLoader}
+                    setResponseMgs={setResponseMgs}
+                    setShowPop={setShowPop}
+                  ></LoadLookup>
+                )
+              ))}
           </div>
         </div>
         {ROLE != "labeller" && !defaultPageEditMode && (

@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SideBarBooks from "../SideBooks/SideBarBooks";
 import DefaultSideBar from "../sidebar/DefaultSideBar";
 import { setCurrentBookId } from "../../redux/all-books/allBooks.actions";
+import DefaultPageData from "../pending-data/display-default-page-data";
 const DisplayOriginalImage = ({
   match,
   history,
@@ -37,8 +38,9 @@ const DisplayOriginalImage = ({
   const [currentLookup, setCurrentLookup] = useState(false);
   const [isShowLoader, setShowLoader] = useState(false);
   const [allPendingLIst, setAllPendingList] = useState([]);
-  const [currentPendingFolderId ,setPendingFolderId] = useState('');
-   const dispatch = useDispatch();
+  const [currentPendingFolderId, setPendingFolderId] = useState("");
+  const dispatch = useDispatch();
+  const [defaultPageEditMode, setDefaultPageEditMode] = useState(false);
   const [lookupPageState, setLookupPageState] = useState({
     fileId: 0,
     shareId: 0,
@@ -136,14 +138,14 @@ const DisplayOriginalImage = ({
       });
     });
   }, []);
-  useEffect(()=>{
-    const pendingBook = allBooks.filter(item=>item.pending===true) 
-    console.log(pendingBook)
-    if(pendingBook[0]){
-      dispatch(setCurrentBookId(pendingBook[0].id))
-      setPendingFolderId(pendingBook[0].id)
+  useEffect(() => {
+    const pendingBook = allBooks.filter((item) => item.pending === true);
+    console.log(pendingBook);
+    if (pendingBook[0]) {
+      dispatch(setCurrentBookId(pendingBook[0].id));
+      setPendingFolderId(pendingBook[0].id);
     }
-  },[])
+  }, []);
   useEffect(() => {
     getCurrentPage();
   }, [imageId]);
@@ -220,8 +222,10 @@ const DisplayOriginalImage = ({
         // if (response.data.isFileMoved) removeSavedImageId();
       }
       setShowLoader(false);
+      setDefaultPageEditMode(false)
     } catch (e) {
       setShowLoader(false);
+      setDefaultPageEditMode(false)
     }
   };
   const pageLookUpDateHandler = (e) => {
@@ -231,7 +235,7 @@ const DisplayOriginalImage = ({
   };
   const setDefaultFolderId = () => {
     setFolderFlag("PENDING");
-    history.push(`/?id=${currentPendingFolderId}`)
+    history.push(`/?id=${currentPendingFolderId}`);
   };
   return (
     <>
@@ -254,6 +258,8 @@ const DisplayOriginalImage = ({
           toggleModal={setShowPop}
           setResponseMgs={setResponseMgs}
           toggleLoader={setShowLoader}
+          defaultPageEditMode={defaultPageEditMode}
+          setDefaultPageEditMode={setDefaultPageEditMode}
         />
       )}
       {sharedWithMe == "SHARED" && (
@@ -274,8 +280,8 @@ const DisplayOriginalImage = ({
           />
           <DefaultSideBar setDefaultFolderId={setDefaultFolderId} />
         </div>
-        <div className="col-md-6">
-          {currentLookup && (
+        <div className={defaultPageEditMode?'col-md-9':'col-md-6'}>
+          {currentLookup && defaultPageEditMode ? (
             <LoadLookup
               data={currentLookup}
               currentImageId={imageId}
@@ -291,9 +297,27 @@ const DisplayOriginalImage = ({
               setResponseMgs={setResponseMgs}
               setShowPop={setShowPop}
             ></LoadLookup>
+          ) : (
+            currentLookup && (
+              <DefaultPageData
+                data={currentLookup}
+                currentImageId={imageId}
+                history={history}
+                pendingFolderId={1}
+                pageData={lookupPageState}
+                pageLookUpHandler={pageLookUpHandler}
+                isMemberShip={isPrimerUser}
+                isRedirectLast={true}
+                pageLookUpDateHandler={pageLookUpDateHandler}
+                isDisabled={sharedWithMe == "SHARED" ? true : false}
+                startLoader={setShowLoader}
+                setResponseMgs={setResponseMgs}
+                setShowPop={setShowPop}
+              ></DefaultPageData>
+            )
           )}
 
-          {/* {sharedWithMe == "SHARED" && (
+          {/* {DefaultPageData == "SHARED" && (
             <ImageSlider
               current={match.params.id}
               history={history}
@@ -302,13 +326,15 @@ const DisplayOriginalImage = ({
             ></ImageSlider>
           )} */}
         </div>
-        <div className="col-md-3 bg-sideBar">
-          <RightSharedPeopleList
-            isSharedFolder={sharedWithMe === "SHARED" ? true : false}
-            pageId={imageId}
-            bookId={match.params.folderId}
-          />
-        </div>
+        {!defaultPageEditMode && (
+          <div className="col-md-3 bg-sideBar">
+            <RightSharedPeopleList
+              isSharedFolder={sharedWithMe === "SHARED" ? true : false}
+              pageId={imageId}
+              bookId={match.params.folderId}
+            />
+          </div>
+        )}
       </div>
     </>
   );
