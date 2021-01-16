@@ -147,16 +147,9 @@ const DisplayLastImage = ({
           />
           <DefaultSideBar setDefaultFolderId={1} />
         </div>
-        <div className="col-md-6 col-xs-12 col-sm-12">
+        <div className="col-md-9 col-xs-12 col-sm-12">
           <p>{imageTitle}</p>
           <img style={styleImage} src={`${imageUrl}`}></img>
-        </div>
-        <div className="col-md-3 bg-sideBar">
-          <RightSharedPeopleList
-            isSharedFolder={sharedWithMe === "SHARED" ? true : false}
-            pageId={match.params.id}
-            bookId={currentFolderId}
-          />
         </div>
       </div>
     </>
