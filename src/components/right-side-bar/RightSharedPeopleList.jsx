@@ -6,6 +6,7 @@ import ContactList from "./ContactList";
 
 import UserGroupList from "./UserGroupList";
 import ListTabs from "../add-friend/tab";
+import UserContactList from "./UserContactList";
 const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
   const [shareList, setShareList] = useState([]);
   const [contactList, setContactList] = useState([]);
@@ -13,8 +14,8 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
   const [currentTab, setCurrentTab] = useState("CONTACTS");
 
   useEffect(() => {
-    getFolders(bookId ,pageId);
-  }, [bookId ,pageId]);
+    getFolders(bookId, pageId);
+  }, [bookId, pageId]);
   async function removeContact(id) {
     if (!window.confirm("Are you sure you want to remove ?")) return;
 
@@ -23,14 +24,22 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
       if (contacts.data.code == "200") {
         alert(contacts.data.message);
       }
-      getFolders(bookId ,pageId);
+      getFolders(bookId, pageId);
     } catch (error) {}
   }
   const shareHandler = (id) => {
     shareWith(id);
   };
-  async function shareWith({ id, user_id }) {
+  const giveUploadAccess = (id) => {
+    shareWith(id);
+  };
+  async function shareWith({ id, user_id, isUpload }) {
+
+    if(!isUpload){
     if (!window.confirm("Are you sure you want to Share Folder ?")) return;
+    }else{
+      if (!window.confirm("Are you sure you want to give full upload access ?")) return;
+    }
 
     try {
       const request = {
@@ -39,21 +48,24 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
         active: true,
         user_id,
       };
+      if (isUpload) {
+        request["upload_access"] = true;
+      }
       const URL = "shareFile";
       const { data } = await Post(`/${URL}`, request);
       if (data.code == "200") {
         alert(data.message);
-        if (user_id) getFolders(bookId ,pageId);
+        if (user_id) getFolders(bookId, pageId);
       }
     } catch (error) {}
   }
   useEffect(() => {
     getContactRequest();
-  },  [bookId ,pageId]);
+  }, [bookId, pageId]);
   async function getFolders(fileId, id = false) {
     try {
       const request = { fileId };
-      if (id) request['id'] = id;
+      if (id) request["id"] = id;
       const URI = id ? "getPageSharedList" : "getFileSharedList";
       const user = await Post(`/${URI}`, request);
       if (
@@ -83,15 +95,19 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
   }
   return (
     <>
-      <Row style={{ maxHeight: "30rem", overflowY: "auto" ,overflowX:"hidden" }}>
+      <Row
+        style={{ maxHeight: "30rem", overflowY: "auto", overflowX: "hidden" }}
+      >
         <ContactList
-          message={`This ${pageId?'page':'book'} is not shared with any one`}
+          message={`This ${
+            pageId ? "page" : "book"
+          } is not shared with any one`}
           contactList={shareList}
           cancel={true}
           removeContact={removeContact}
         />
       </Row>
-      <hr />
+
       <Row>
         <ListTabs
           currentTab={currentTab}
@@ -99,7 +115,9 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
           setCurrentTab={setCurrentTab}
         ></ListTabs>
       </Row>
-      <Row style={{ maxHeight: "30rem", overflowY: "auto" ,overflowX:"hidden" }}>
+      <Row
+        style={{ maxHeight: "30rem", overflowY: "auto", overflowX: "hidden" }}
+      >
         {currentTab === "GROUPS" && (
           <UserGroupList
             shareGroupHandler={shareHandler}
@@ -108,11 +126,12 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
           />
         )}
         {currentTab === "CONTACTS" && (
-          <ContactList
+          <UserContactList
             message="Your contact list is empty"
             contactList={contactList}
             shareHandler={shareHandler}
             isSharedFolder={isSharedFolder}
+            giveUploadAccess={giveUploadAccess}
           />
         )}
       </Row>
