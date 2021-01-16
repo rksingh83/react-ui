@@ -25,7 +25,7 @@ const SideBarBooks = ({
           className={` p-1 ${bookId == book.id ? "book-border" : ""}`}
           key={book.id}
         >
-          <Row>
+          <Row onClick={() => setCurrentFolderId(book.id, book.sharedImageflg)}>
             <Col
               md={2}
               style={{
@@ -36,7 +36,6 @@ const SideBarBooks = ({
             >
               <Image
                 style={{ cursor: "pointer", height: "40px" }}
-                onClick={() => setCurrentFolderId(book.id, book.sharedImageflg)}
                 src={BookSrc}
               />
             </Col>
@@ -44,16 +43,11 @@ const SideBarBooks = ({
               <span
                 style={{ display: "flex", justifyContent: "space-between" }}
               >
-                <span
-                  style={{ cursor: "pointer" }}
-                  onClick={() =>
-                    setCurrentFolderId(book.id, book.sharedImageflg)
-                  }
-                >
+                <span style={{ cursor: "pointer" }}>
                   <span className="pl-2">
-                    {book.fileName}
+                    <span style ={{fontSize:'17px' ,fontWeight:"650"}}>{book.fileName}</span>
                     <p className="m-0">
-                      {book.file_tag} {book.owner ? `(${book.owner})` : ""}
+                      {book.file_tag} {book.owner ? `(@${book.owner})` : ""}
                     </p>
                     <p className="pl-2 m-0">{book.fileDescription}</p>
                   </span>
