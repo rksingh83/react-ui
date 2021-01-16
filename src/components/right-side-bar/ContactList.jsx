@@ -32,7 +32,7 @@ const ContactList = ({
                 rounded-circle
               />
             </Col>
-            <Col md={8}>
+            <Col md={8} style ={{wordWrap:'break-all'}}>
               <span>
                 <h6>{item.fullname}</h6>
                 <p className="mb-0">{item.email}</p>

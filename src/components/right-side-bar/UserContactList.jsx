@@ -33,10 +33,10 @@ const UserContactList = ({
                 rounded-circle
               />
             </Col>
-            <Col md={9}>
+            <Col md={9} style ={{wordBreak:'break-all'}} >
               <span>
                 <h6>{item.fullname}</h6>
-                <p className="mb-0">{item.email}</p>
+                <p   className="mb-0">{item.email}</p>
               </span>
             </Col>
           </Row>
