@@ -7,11 +7,10 @@ import { ReactComponent as Pencil } from "../../assets/edit.svg";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import SharedHeader from "../top-header/shared-header";
-
+import { Row, Col } from "react-bootstrap";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
-
 import { BackButton, EditBtn } from "../common/pNGButtons";
-import RightSharedPeopleList from "../right-side-bar/RightSharedPeopleList";
+
 import SideBarBooks from "../SideBooks/SideBarBooks";
 import { useDispatch, useSelector } from "react-redux";
 import DefaultSideBar from "../sidebar/DefaultSideBar";
@@ -21,6 +20,7 @@ const DisplayLastImage = ({
   history,
   sharedWithMe,
   setFolderFlag,
+
   currentUser,
 }) => {
   const [imageUrl, setImageUrl] = useState("");
@@ -28,6 +28,7 @@ const DisplayLastImage = ({
   const allBooks = useSelector((state) => state.userBooks.books);
   const currentFolderId = useSelector((state) => state.userBooks.currentBookId);
   const [searchItem, setSearchHandler] = useState("");
+  const [filteredFolder, setFilteredFolder] = useState("");
   const dispatch = useDispatch("");
   const [currentPendingFolderId, setPendingFolderId] = useState("");
   const [currentFolderName, setCurrentFolderName] = useState("");
@@ -55,7 +56,25 @@ const DisplayLastImage = ({
       setPendingFolderId(pendingBook[0].id);
     }
   }, []);
-
+  const searchHandler = (e) => {
+    setSearchHandler(e.target.value);
+    setFilteredFolder(
+      allBooks.filter(
+        (item) =>
+          item.fileName.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          (item.file_tag &&
+            item.file_tag
+              .toLowerCase()
+              .includes(e.target.value.toLowerCase())) ||
+          (item.owner &&
+            item.owner.toLowerCase().includes(e.target.value.toLowerCase())) ||
+          (item.fileDescription &&
+            item.fileDescription
+              .toLowerCase()
+              .includes(e.target.value.toLowerCase()))
+      )
+    );
+  };
   const setDefaultFolderId = () => {
     setFolderFlag("PENDING");
     history.push(`/?id=${currentPendingFolderId}`);
@@ -93,7 +112,7 @@ const DisplayLastImage = ({
           {sharedWithMe == "SHARED" && <SharedHeader history={history} />}
           {sharedWithMe == "PENDING" && <SharedHeader history={history} />}
           {sharedWithMe == "HOME" && (
-            <nav className="navbar navbar-expand-lg navbar-light sec-header-bg">
+            <nav className="navbar navbar-expand-lg navbar-light sec-header-bg pl-0">
               <button
                 className="navbar-toggler"
                 type="button"
@@ -109,14 +128,32 @@ const DisplayLastImage = ({
                 className="collapse navbar-collapse"
                 id="navbarSupportedContent"
               >
-                <ul className="navbar-nav mr-auto text-white">
+                <div
+                  className="col-md-3 pl-1"
+                  style={{
+                    minHeight: "3rem",
+                  }}
+                >
+                  <Row>
+                    <Col md={10}>
+                      <input
+                        placeholder="Search anything.."
+                        value={searchItem}
+                        onChange={searchHandler}
+                        name="search"
+                        type="input"
+                        className="custom-input mt-1"
+                      ></input>
+                    </Col>
+                  </Row>
+                </div>
+
+                <ul className="navbar-nav ml-auto text-white">
                   <li className="nav-item single-header-li">
                     <span className="badge badge-info p-2">
                       {currentFolderName}
                     </span>
                   </li>
-                </ul>
-                <ul className="navbar-nav ml-auto text-white">
                   <li className="nav-item">
                     <EditBtn
                       onClick={editHandler}
@@ -144,6 +181,8 @@ const DisplayLastImage = ({
             setCurrentFolderId={setFolderIdHandler}
             searchItem={searchItem}
             allBooks={allBooks}
+            filteredBooks={filteredFolder}
+            bookId={currentFolderId}
           />
           <DefaultSideBar setDefaultFolderId={1} />
         </div>

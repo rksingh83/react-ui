@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Post, Get } from "../../service/service.setup";
-import { ListGroup } from "react-bootstrap";
+import { Post } from "../../service/service.setup";
 
 import TopHeader from "../top-header/top.header.component";
 
@@ -50,9 +49,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
 
   const [searchItem, setSearchHandler] = useState("");
   const [filteredFolder, setFilteredFolder] = useState("");
-  const [description, setDescription] = useState("");
 
-  const [date, setDate] = useState("");
   const [defaultPageEditMode, setDefaultPageEditMode] = useState(false);
   // pages
   const [paginateImages, setPaginateImages] = useState([]);
@@ -172,7 +169,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
     setIsLoading(false);
     setSelectedFolder({});
   };
-  const reNameFolderHandler = (name, des, id) => {};
+ 
   const updateName = (file, isDeleted = false) => {
     setShowLoader(false);
     getAllFolders();
@@ -481,10 +478,11 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
         <TopHeader
           totalFolders={allBooks}
           selectedItems={selectedFolder}
-          searchItem={searchItem}
+        
           searchImage={searchImage}
           searchImageHandler={searchImageHandler}
           searchHandler={searchHandler}
+          searchItem={searchItem}
           deleteHandler={deleteHandler}
           saveFolder={saveFolder}
           uploadLimits={userImageUploadLimits}

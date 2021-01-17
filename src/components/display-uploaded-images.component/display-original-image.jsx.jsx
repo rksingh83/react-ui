@@ -23,6 +23,7 @@ import SideBarBooks from "../SideBooks/SideBarBooks";
 import DefaultSideBar from "../sidebar/DefaultSideBar";
 import { setCurrentBookId } from "../../redux/all-books/allBooks.actions";
 import DefaultPageData from "../pending-data/display-default-page-data";
+
 const DisplayOriginalImage = ({
   match,
   history,
@@ -31,8 +32,11 @@ const DisplayOriginalImage = ({
 }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [searchItem, setSearchHandler] = useState("");
+  const [filteredFolder, setFilteredFolder] = useState("");
   const [imageId, setImageId] = useState(match.params.id);
   const allBooks = useSelector((state) => state.userBooks.books);
+
+  const currentFolderId = useSelector((state) => state.userBooks.currentBookId);
   const [allImages, setAllImages] = useState([]);
   const [currentFolderName, setCurrentFolderName] = useState("");
   const [currentLookup, setCurrentLookup] = useState(false);
@@ -54,14 +58,30 @@ const DisplayOriginalImage = ({
     segmentation: "",
   });
   const [isPrimerUser, setIsPrimerUser] = useState("");
-  const totalEle = ["My Books", "Shared Books", "Default Page"];
-
-  const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
-
+  
   // loader and alert box
   const [showPopUp, setShowPop] = useState(false);
   const [responseMgs, setResponseMgs] = useState("");
 
+  const searchHandler = (e) => {
+    setSearchHandler(e.target.value);
+    setFilteredFolder(
+      allBooks.filter(
+        (item) =>
+          item.fileName.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          (item.file_tag &&
+            item.file_tag
+              .toLowerCase()
+              .includes(e.target.value.toLowerCase())) ||
+          (item.owner &&
+            item.owner.toLowerCase().includes(e.target.value.toLowerCase())) ||
+          (item.fileDescription &&
+            item.fileDescription
+              .toLowerCase()
+              .includes(e.target.value.toLowerCase()))
+      )
+    );
+  };
   const setFolderIdHandler = (id, flag) => {
     history.push(`/?id=${id}`);
   };
@@ -222,10 +242,10 @@ const DisplayOriginalImage = ({
         // if (response.data.isFileMoved) removeSavedImageId();
       }
       setShowLoader(false);
-      setDefaultPageEditMode(false)
+      setDefaultPageEditMode(false);
     } catch (e) {
       setShowLoader(false);
-      setDefaultPageEditMode(false)
+      setDefaultPageEditMode(false);
     }
   };
   const pageLookUpDateHandler = (e) => {
@@ -260,6 +280,8 @@ const DisplayOriginalImage = ({
           toggleLoader={setShowLoader}
           defaultPageEditMode={defaultPageEditMode}
           setDefaultPageEditMode={setDefaultPageEditMode}
+          searchHandler={searchHandler}
+          searchItem={searchItem}
         />
       )}
       {sharedWithMe == "SHARED" && (
@@ -277,10 +299,12 @@ const DisplayOriginalImage = ({
             setCurrentFolderId={setFolderIdHandler}
             searchItem={searchItem}
             allBooks={allBooks}
+            filteredBooks={filteredFolder}
+            bookId={currentFolderId}
           />
           <DefaultSideBar setDefaultFolderId={setDefaultFolderId} />
         </div>
-        <div className={defaultPageEditMode?'col-md-9':'col-md-6'}>
+        <div className={defaultPageEditMode ? "col-md-9" : "col-md-6"}>
           {currentLookup && defaultPageEditMode ? (
             <LoadLookup
               data={currentLookup}

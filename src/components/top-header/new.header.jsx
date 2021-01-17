@@ -7,6 +7,7 @@ import { getPendingPageById } from "../../service/pendingData";
 import UploadForm from "../upload-image/upload-images";
 import "./top.header.style.scss";
 import { BackButton, Left, Right, Save, EditBtn } from "../common/pNGButtons";
+import {  Row, Col } from "react-bootstrap";
 const TopSingleHeader = ({
   images,
   imageId,
@@ -16,6 +17,11 @@ const TopSingleHeader = ({
   next,
   prev,
   pageSaveHandler,
+  searchHandler ,
+  searchItem,
+  fillAllDataHandler,
+
+
   ...props
 }) => {
   const [show, setShow] = useState(false);
@@ -104,9 +110,23 @@ const TopSingleHeader = ({
     <>
       <div className="row">
         <div
-          className="col-md-3"
+          className="col-md-3 pl-1"
           style={{ background: "rgba(0, 0, 0, 0.125)", minHeight: "3rem" }}
-        ></div>
+        >
+           <Row>
+              <Col md={10}>
+                          <input
+                  placeholder="Search anything.."
+                  value={searchItem}
+                  onChange={searchHandler}
+                  onBlur={fillAllDataHandler}
+                  name="search"
+                  type="input"
+                  className="custom-input mt-1"
+                ></input>
+                </Col>
+                </Row>
+        </div>
         <div className="col-md-9 main-pending-page-header original-page-header pr-0">
           <span className="badge badge-info p-2">{currentFolder}</span>
 

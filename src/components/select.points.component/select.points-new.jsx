@@ -9,6 +9,7 @@ import { ReactComponent as Refresh } from "../../assets/refresh-point.svg";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import $ from "jquery";
+import { Row, Col } from "react-bootstrap";
 import { setFolderFlag } from "../../redux/shared-folder/folder.actions";
 import LeftSideBar from "../sidebar/left.sidebar.compoent";
 import AllFilesSideBar from "../common/AllFilesSideBar";
@@ -35,13 +36,12 @@ const SelectPoints = ({
   const [src, setSrc] = useState(" ");
   const [data, setData] = useState({});
   const TextMAp = { HOME: 0, SHARED: 1, PENDING: 2 };
-  const currentIndex = TextMAp[sharedWithMe];
-  const [activeIndex, setActiveIndex] = useState(currentIndex);
+
+  const [filteredFolder, setFilteredFolder] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [imagePoints, setImagePoints] = useState({});
   const [cordinates, setCordinates] = useState(null);
-  const totalEle = ["My Books", "Shared Books", "Default Page"];
-  const [LiElement, setLiEl] = useState(totalEle);
+
   const [oneStyle, setOneStyle] = useState({});
   const [twoStyle, setTwoStyle] = useState({});
   const [threeStyle, setThreeStyle] = useState({});
@@ -53,19 +53,25 @@ const SelectPoints = ({
   const EditButton = useRef(null);
   const fourDiv = useRef(null);
   //const oneStyle = {}
-  const handleActive = (e) => {
-    setActiveIndex(LiElement.indexOf(e));
-    if (LiElement.indexOf(e) == 0) {
-      setFolderFlag("HOME");
-    }
-    if (LiElement.indexOf(e) == 1) {
-      setFolderFlag("SHARED");
-    }
-    if (LiElement.indexOf(e) == 2) {
-      setFolderFlag("PENDING");
-    }
-    // setSharedWithMe(!sharedWithMe);
-    setLiEl(totalEle);
+
+  const searchHandler = (e) => {
+    setSearchHandler(e.target.value);
+    setFilteredFolder(
+      allBooks.filter(
+        (item) =>
+          item.fileName.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          (item.file_tag &&
+            item.file_tag
+              .toLowerCase()
+              .includes(e.target.value.toLowerCase())) ||
+          (item.owner &&
+            item.owner.toLowerCase().includes(e.target.value.toLowerCase())) ||
+          (item.fileDescription &&
+            item.fileDescription
+              .toLowerCase()
+              .includes(e.target.value.toLowerCase()))
+      )
+    );
   };
   useEffect(() => {
     var mapSprite = new Image();
@@ -336,7 +342,7 @@ const SelectPoints = ({
     <>
       <div className="row">
         <div className="col-md-12">
-          <nav className="navbar navbar-expand-lg navbar-light sec-header-bg">
+          <nav className="navbar navbar-expand-lg navbar-light sec-header-bg pl-0">
             <button
               className="navbar-toggler"
               type="button"
@@ -352,12 +358,30 @@ const SelectPoints = ({
               className="collapse navbar-collapse"
               id="navbarSupportedContent"
             >
-              <ul className="navbar-nav mr-auto text-white">
+              {" "}
+              <div
+                className="col-md-3 pl-1"
+                style={{
+                  minHeight: "3rem",
+                }}
+              >
+                <Row>
+                  <Col md={10}>
+                    <input
+                      placeholder="Search anything.."
+                      value={searchItem}
+                      onChange={searchHandler}
+                      name="search"
+                      type="input"
+                      className="custom-input mt-1"
+                    ></input>
+                  </Col>
+                </Row>
+              </div>
+              <ul className="navbar-nav ml-auto text-white">
                 <li className="nav-item single-header-li">
                   <span className="badge badge-info p-2">{currentFolder}</span>
                 </li>
-              </ul>
-              <ul className="navbar-nav ml-auto text-white">
                 <li className="nav-item">
                   <Refresh
                     className="mr-2"
@@ -389,6 +413,8 @@ const SelectPoints = ({
             setCurrentFolderId={setFolderIdHandler}
             searchItem={searchItem}
             allBooks={allBooks}
+            filteredBooks={filteredFolder}
+            bookId={currentFolderId}
           />
           <DefaultSideBar setDefaultFolderId={setDefaultFolderId} />
         </div>
