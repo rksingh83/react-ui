@@ -78,8 +78,8 @@ const DisplayImages = ({
               ></img>
             </div>
             {item.title && (
-              <span className="img-title">
-                {item.title}({item.pageNumber})(
+              <span  className="img-title">
+                {item.title}{item.pageNumber?`(${item.pageNumber})`:''}(
                 {grtDate(item.updatedTimeMillisecond)})
               </span>
             )}

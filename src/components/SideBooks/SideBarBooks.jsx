@@ -2,6 +2,7 @@ import React from "react";
 import { ListGroup, Row, Col, Image } from "react-bootstrap";
 
 import BookSrc from "../../assets/download.png";
+import {useSelector} from 'react-redux'
 const SideBarBooks = ({
   books,
   allBooks,
@@ -11,6 +12,8 @@ const SideBarBooks = ({
   bookId,
 }) => {
   books = searchItem == "" ? allBooks : filteredBooks;
+  const currentFolderId = useSelector((state) => state.userBooks.currentBookId);
+  console.log(currentFolderId)
   return (
     <ListGroup
       style={{
@@ -22,7 +25,7 @@ const SideBarBooks = ({
     >
       {books.map((book) => (
         <ListGroup.Item
-          className={` p-1 ${bookId == book.id ? "book-border" : ""}`}
+          className={` p-1 ${currentFolderId == book.id ? "book-border" : ""}`}
           key={book.id}
         >
           <Row onClick={() => setCurrentFolderId(book.id, book.sharedImageflg)}>

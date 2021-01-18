@@ -327,15 +327,15 @@ const SelectPoints = ({
   };
   useEffect(() => {
     const pendingBook = allBooks.filter((item) => item.pending === true);
-    console.log(pendingBook);
+
     if (pendingBook[0]) {
-      dispatch(setCurrentBookId(pendingBook[0].id));
       setPendingFolderId(pendingBook[0].id);
     }
   }, []);
 
   const setDefaultFolderId = () => {
     setFolderFlag("PENDING");
+    dispatch(setCurrentBookId(currentPendingFolderId));
     history.push(`/?id=${currentPendingFolderId}`);
   };
   return (

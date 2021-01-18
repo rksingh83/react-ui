@@ -13,7 +13,7 @@ const UserContactList = ({
   giveUploadAccess,
   removeContact,
 }) => {
-  if (contactList.length === 0) {
+  if ( contactList && contactList.length === 0) {
     return <Col className=" mt-2"> {message}</Col>;
   }
   const getProfileImageUrl = (profilePicture) => {

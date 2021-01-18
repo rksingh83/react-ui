@@ -59,9 +59,7 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
       }
     } catch (error) {}
   }
-  useEffect(() => {
-    getContactRequest();
-  }, [bookId, pageId]);
+  
   async function getFolders(fileId, id = false) {
     try {
       const request = { fileId };
@@ -82,21 +80,24 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
       }
 
       //   setIsShowLoader(false);
-      setShareList([...user.data.data.profile]);
+      setShareList([...user.data.data.sharedProfiles]);
+      setContactList(user.data.data.contacts||[])
+       setUserGroups(user.data.data.userGroup||[]);
+     
       //displaySharedList(user.data.data.profile.splice(0, 4));
     } catch (error) {}
   }
   async function getContactRequest() {
     try {
       const contacts = await Get("showUserContactList");
-      setContactList(contacts.data.data.profileList);
-      setUserGroups(contacts.data.data.userGroup);
+     // setContactList(contacts.data.data.contacts);
+      //setUserGroups(contacts.data.data.userGroup);
     } catch (error) {}
   }
   return (
     <>
       <Row
-        style={{ maxHeight: "15rem", overflowY: "auto", overflowX: "hidden" }}
+        style={{ maxHeight: "15rem",minHeight: "15rem", overflowY: "auto", overflowX: "hidden" }}
       >
         <ContactList
           message={`This ${

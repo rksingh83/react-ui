@@ -29,6 +29,8 @@ const Header = ({
   const imgStyle = { width: "27px" };
   const [flashMessage, setFashMessage] = useState(false);
   const [profileImage, setProfileImage] = useState("");
+  const [userName, seUserName] = useState("");
+  const [email, setEmail] = useState("");
   const ROLE = currentUser && currentUser.authentication.role;
 
   useEffect(() => {
@@ -38,6 +40,8 @@ const Header = ({
     const { data } = await Get("getProfilePicture");
 
     setProfileImage(data.profilePictureImage);
+    seUserName(data.userName);
+    setEmail(data.email);
   };
   useEffect(() => {
     getProfileImage();
@@ -247,8 +251,8 @@ const Header = ({
                   style={{ display: "none" }}
                   onChange={(e) => uploadImageHandler(e.target.files[0])}
                 />
-                <h6 className="m-0">Johan Doe</h6>
-                <p>testemailEmail.com</p>
+                <h6 className="m-0">{userName}</h6>
+                <p>{email}</p>
               </div>
               {currentUser && ROLE != "labeller" && (
                 <NavDropdown.Item>

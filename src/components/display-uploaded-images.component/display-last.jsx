@@ -50,9 +50,7 @@ const DisplayLastImage = ({
   }, []);
   useEffect(() => {
     const pendingBook = allBooks.filter((item) => item.pending === true);
-    console.log(pendingBook);
     if (pendingBook[0]) {
-      dispatch(setCurrentBookId(pendingBook[0].id));
       setPendingFolderId(pendingBook[0].id);
     }
   }, []);
@@ -77,6 +75,7 @@ const DisplayLastImage = ({
   };
   const setDefaultFolderId = () => {
     setFolderFlag("PENDING");
+    dispatch(setCurrentBookId(currentPendingFolderId));
     history.push(`/?id=${currentPendingFolderId}`);
   };
   const styleImage = {
@@ -184,7 +183,7 @@ const DisplayLastImage = ({
             filteredBooks={filteredFolder}
             bookId={currentFolderId}
           />
-          <DefaultSideBar setDefaultFolderId={1} />
+          <DefaultSideBar setDefaultFolderId={setDefaultFolderId} />
         </div>
         <div className="col-md-9 col-xs-12 col-sm-12">
           <p>{imageTitle}</p>

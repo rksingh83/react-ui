@@ -32,11 +32,11 @@ const ContactList = ({
                 rounded-circle
               />
             </Col>
-            <Col md={8} style ={{wordWrap:'break-all'}}>
+            <Col md={8} style ={{wordBreak:'break-all'}} >
               <span>
-                <h6>{item.fullname}</h6>
+              <h5>{item.fullname}</h5>
                 <p className="mb-0">{item.email}</p>
-                <p>{item.isuploadaccess ? "Editor" : "Read Only"}</p>
+               <p>{item.isuploadaccess ? "Editor" : "Read Only"}</p>
               </span>
             </Col>
             {!isSharedFolder && (
