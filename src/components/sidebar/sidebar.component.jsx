@@ -526,7 +526,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
             ROLE != "labeller" && !defaultPageEditMode ? "col-md-6" : "col-md-9"
           }
         >
-          <div className="row">
+          <div className="row" style ={{display:"flex" , flexDirection:"column"}}>
             {isShowLoader && <CustomLoader />}
             {currentFolderId > 0 && sharedWithMe != "PENDING" && (
               <UploadFile

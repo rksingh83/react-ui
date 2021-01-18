@@ -82,7 +82,14 @@ const DisplayOriginalImage = ({
       )
     );
   };
-  const setFolderIdHandler = (id, flag) => {
+  const setFolderIdHandler = (id, flagValue) => {
+    dispatch(setCurrentBookId(id));
+    if (flagValue) {
+      setFolderFlag("SHARED");
+    } else {
+      setFolderFlag("HOME");
+    }
+    setDefaultPageEditMode(false);
     history.push(`/?id=${id}`);
   };
   const nextHandler = () => {

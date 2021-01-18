@@ -101,6 +101,13 @@ const DisplayLastImage = ({
     history.push(`/edit/${match.params.id}`);
   };
   const setFolderIdHandler = (id, flag) => {
+    dispatch(setCurrentBookId(id));
+    if (flag) {
+      setFolderFlag("SHARED");
+    } else {
+      setFolderFlag("HOME");
+    }
+
     history.push(`/?id= ${id}`);
   };
 

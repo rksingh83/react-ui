@@ -322,7 +322,14 @@ const SelectPoints = ({
   const clickHandler = () => {
     displayPoint(true);
   };
-  const setFolderIdHandler = (id, flag) => {
+  const setFolderIdHandler = (id, flagValue) => {
+    dispatch(setCurrentBookId(id));
+    if (flagValue) {
+      setFolderFlag("SHARED");
+    } else {
+      setFolderFlag("HOME");
+    }
+
     history.push(`/?id=${id}`);
   };
   useEffect(() => {

@@ -58,6 +58,16 @@ const UploadFile = ({
 
   return (
     <>
+      {images.length > 0 && (
+        <Paginate
+          cls="x"
+          elStyle={paginationStyle}
+          setCurrentSelected={paginate}
+          active={currentPagination}
+          count={getPageCount(images)}
+          NextPrev={groupNextPrev}
+        />
+      )}
       {isShowLoader && <CustomLoader />}
       <DisplayImages
         history={history}
@@ -71,16 +81,7 @@ const UploadFile = ({
         isShowLoader={isShowLoader}
         isSharedFolder={isSharedFolder}
       />
-      {images.length > 0 && (
-        <Paginate
-          cls="display-image-pagination"
-          elStyle={paginationStyle}
-          setCurrentSelected={paginate}
-          active={currentPagination}
-          count={getPageCount(images)}
-          NextPrev={groupNextPrev}
-        />
-      )}
+    
     </>
   );
 };
