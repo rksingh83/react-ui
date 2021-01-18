@@ -28,7 +28,7 @@ const SideBarBooks = ({
           className={` p-1 ${currentFolderId == book.id ? "book-border" : ""}`}
           key={book.id}
         >
-          <Row onClick={() => setCurrentFolderId(book.id, book.sharedImageflg)}>
+          <Row onClick={() => setCurrentFolderId(book.id, book.sharedImageflg , book.uploadAccess)}>
             <Col
               md={2}
               style={{

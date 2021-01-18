@@ -46,6 +46,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
   const [isPrimerUser, setIsPrimerUser] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSharedFolder, setIsSharedFolder] = useState(false);
+  const [isUploadAccess, setIsUploadAccess] = useState(false);
 
   const [searchItem, setSearchHandler] = useState("");
   const [filteredFolder, setFilteredFolder] = useState("");
@@ -116,12 +117,15 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
       const currentBook = allBooks.find((item) => item.id == id);
       if (currentBook) {
         setIsSharedFolder(currentBook.sharedImageflg);
+
+        setIsUploadAccess(currentBook.uploadAccess);
         dispatch(setCurrentBookId(id));
       }
     } else {
       if (data.filefolderRequest[0]) {
         dispatch(setUserAllBooks(data.filefolderRequest));
         setIsSharedFolder(data.filefolderRequest[0].sharedImageflg);
+        setIsUploadAccess(data.filefolderRequest[0].uploadAccess);
         // setCurrentFolderId(data.filefolderRequest[0].id);
         dispatch(setCurrentBookId(data.filefolderRequest[0].id));
       }
@@ -169,7 +173,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
     setIsLoading(false);
     setSelectedFolder({});
   };
- 
+
   const updateName = (file, isDeleted = false) => {
     setShowLoader(false);
     getAllFolders();
@@ -447,10 +451,10 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
     const reDirectedId = location.search.split("=")[1];
     if (ROLE != "labeller") getAllFolders(reDirectedId);
   }, []);
-  const setcurrentFolderId = (id, flagValue) => {
+  const setcurrentFolderId = (id, flagValue, isUploadAccess) => {
     setIsSharedFolder(flagValue);
     // setCurrentFolderId(id);
-
+    setIsUploadAccess(isUploadAccess);
     dispatch(setCurrentBookId(id));
     if (flagValue) {
       setFolderFlag("SHARED");
@@ -464,6 +468,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
     // setCurrentFolderId(pendingFolderId);
     dispatch(setCurrentBookId(pendingFolderId));
     setIsSharedFolder(false);
+    setIsUploadAccess(false);
     setDefaultPageEditMode(false);
   };
 
@@ -478,7 +483,6 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
         <TopHeader
           totalFolders={allBooks}
           selectedItems={selectedFolder}
-        
           searchImage={searchImage}
           searchImageHandler={searchImageHandler}
           searchHandler={searchHandler}
@@ -487,6 +491,8 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
           saveFolder={saveFolder}
           uploadLimits={userImageUploadLimits}
           bookId={currentFolderId}
+          isUploadAccess ={isUploadAccess}
+          isSharedFolder ={isSharedFolder}
         />
       )}
       {sharedWithMe == "PENDING" && (
@@ -526,7 +532,10 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
             ROLE != "labeller" && !defaultPageEditMode ? "col-md-6" : "col-md-9"
           }
         >
-          <div className="row" style ={{display:"flex" , flexDirection:"column"}}>
+          <div
+            className="row"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
             {isShowLoader && <CustomLoader />}
             {currentFolderId > 0 && sharedWithMe != "PENDING" && (
               <UploadFile

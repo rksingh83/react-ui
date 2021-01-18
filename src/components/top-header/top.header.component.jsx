@@ -219,12 +219,12 @@ const TopHeader = ({
                   ></input>
                 </Col>
                 <Col className="top-header-icons pr-0" md={9}>
-                  {totalFolders.length > 0 && (
+                  {totalFolders.length > 0 && !props.isSharedFolder && (
                     <CustomToolTip text="Edit book">
                       <EditBtn handler={editHandler} />
                     </CustomToolTip>
                   )}
-                  {totalFolders.length > 0 && (
+                  {totalFolders.length > 0 && !props.isSharedFolder && (
                     <CustomToolTip text="Delete Book">
                       <Delete onClick={() => reNameFolder(true)} />
                     </CustomToolTip>
@@ -237,12 +237,23 @@ const TopHeader = ({
                     />
                   </CustomToolTip>
 
-                  <CustomToolTip text="Upload Image">
-                    <UploadForm
-                      isUpload={true}
-                      submitHandler={fileUploadHandler}
-                    />
-                  </CustomToolTip>
+                  {props.isSharedFolder ? (
+                    props.isUploadAccess && (
+                      <CustomToolTip text="Upload Image">
+                        <UploadForm
+                          isUpload={true}
+                          submitHandler={fileUploadHandler}
+                        />
+                      </CustomToolTip>
+                    )
+                  ) : (
+                    <CustomToolTip text="Upload Image">
+                      <UploadForm
+                        isUpload={true}
+                        submitHandler={fileUploadHandler}
+                      />
+                    </CustomToolTip>
+                  )}
                   {totalItem == 0 && props.uploadLimits < 10 && (
                     <div className=" sec-header-item col-text-style item-center">
                       <span>
