@@ -50,6 +50,8 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
       };
       if (isUpload) {
         request["upload_access"] = true;
+      }else{
+        request["upload_access"] = false;
       }
       const URL = "shareFile";
       const { data } = await Post(`/${URL}`, request);

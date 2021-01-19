@@ -13,7 +13,7 @@ const SideBarBooks = ({
 }) => {
   books = searchItem == "" ? allBooks : filteredBooks;
   const currentFolderId = useSelector((state) => state.userBooks.currentBookId);
-  console.log(currentFolderId)
+  
   return (
     <ListGroup
       style={{
@@ -25,7 +25,7 @@ const SideBarBooks = ({
     >
       {books.map((book) => (
         <ListGroup.Item
-          className={` p-1 ${currentFolderId == book.id ? "book-border" : ""}`}
+          className={` p-1 ${currentFolderId == book.id ? "book-border bg-secondary text-white" : ""}`}
           key={book.id}
         >
           <Row onClick={() => setCurrentFolderId(book.id, book.sharedImageflg , book.uploadAccess)}>
