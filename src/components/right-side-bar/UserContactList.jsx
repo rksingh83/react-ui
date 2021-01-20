@@ -41,7 +41,7 @@ const UserContactList = ({
             </Col>
           </Row>
 
-          <Row>
+          <Row className ="mt-2">
             {!isSharedFolder && (
               <Col md={6}>
                 {cancel ? (

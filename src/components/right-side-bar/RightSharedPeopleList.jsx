@@ -16,11 +16,11 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
   useEffect(() => {
     getFolders(bookId, pageId);
   }, [bookId, pageId]);
-  async function removeContact(id) {
+  async function removeContact(id, file_id) {
     if (!window.confirm("Are you sure you want to remove ?")) return;
-
+    const URL = pageId ? "removesharePage" : "removeshareFile";
     try {
-      const contacts = await Post(`/removeContact`, { id });
+      const contacts = await Post(`/${URL}`, { user_id: id, file_id });
       if (contacts.data.code == "200") {
         alert(contacts.data.message);
       }
@@ -34,11 +34,11 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
     shareWith(id);
   };
   async function shareWith({ id, user_id, isUpload }) {
-
-    if(!isUpload){
-    if (!window.confirm("Are you sure you want to Share Folder ?")) return;
-    }else{
-      if (!window.confirm("Are you sure you want to give full upload access ?")) return;
+    if (!isUpload) {
+      if (!window.confirm("Are you sure you want to Share Folder ?")) return;
+    } else {
+      if (!window.confirm("Are you sure you want to give full upload access ?"))
+        return;
     }
 
     try {
@@ -50,7 +50,7 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
       };
       if (isUpload) {
         request["upload_access"] = true;
-      }else{
+      } else {
         request["upload_access"] = false;
       }
       const URL = "shareFile";
@@ -61,7 +61,7 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
       }
     } catch (error) {}
   }
-  
+
   async function getFolders(fileId, id = false) {
     try {
       const request = { fileId };
@@ -73,33 +73,45 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
         user.data.message == "Page is not shared with anyone."
       ) {
         setShareList([]);
+        setContactList([]);
+        setUserGroups([]);
       }
       if (
         user.data.code == "200" &&
         user.data.message == "Book is not shared with anyone."
       ) {
         setShareList([]);
+        setContactList([]);
+        setUserGroups([]);
       }
 
       //   setIsShowLoader(false);
       setShareList([...user.data.data.sharedProfiles]);
-      setContactList(user.data.data.contacts||[])
-       setUserGroups(user.data.data.userGroup||[]);
-     
+      setContactList(user.data.data.contacts || []);
+      setUserGroups(user.data.data.userGroup || []);
+
       //displaySharedList(user.data.data.profile.splice(0, 4));
-    } catch (error) {}
+    } catch (error) {
+      setContactList([]);
+      setUserGroups([]);
+    }
   }
   async function getContactRequest() {
     try {
       const contacts = await Get("showUserContactList");
-     // setContactList(contacts.data.data.contacts);
+      // setContactList(contacts.data.data.contacts);
       //setUserGroups(contacts.data.data.userGroup);
     } catch (error) {}
   }
   return (
     <>
       <Row
-        style={{ maxHeight: "15rem",minHeight: "15rem", overflowY: "auto", overflowX: "hidden" }}
+        style={{
+          maxHeight: "15rem",
+          minHeight: "15rem",
+          overflowY: "auto",
+          overflowX: "hidden",
+        }}
       >
         <ContactList
           message={`This ${
@@ -108,29 +120,31 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
           contactList={shareList}
           cancel={true}
           removeContact={removeContact}
+          fileId={pageId ? pageId : bookId}
         />
       </Row>
 
       <Row>
-        <ListTabs
-          currentTab={currentTab}
-          isHideShare={true}
-          setCurrentTab={setCurrentTab}
-        ></ListTabs>
+        {!isSharedFolder && (
+          <ListTabs
+            currentTab={currentTab}
+            isHideShare={true}
+            setCurrentTab={setCurrentTab}
+          ></ListTabs>
+        )}
       </Row>
       <Row
         style={{ maxHeight: "20rem", overflowY: "auto", overflowX: "hidden" }}
       >
-        {currentTab === "GROUPS" && (
+        {currentTab === "GROUPS" && !isSharedFolder && (
           <UserGroupList
             shareGroupHandler={shareHandler}
             groups={userGroups}
             isSharedFolder={isSharedFolder}
             giveUploadAccess={giveUploadAccess}
-
           />
         )}
-        {currentTab === "CONTACTS" && (
+        {currentTab === "CONTACTS" && !isSharedFolder && (
           <UserContactList
             message="Your contact list is empty"
             contactList={contactList}

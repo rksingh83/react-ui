@@ -11,9 +11,16 @@ const ContactList = ({
   cancel,
   shareHandler,
   removeContact,
+  fileId
 }) => {
   if (contactList.length === 0) {
-    return <Col className=" mt-2"> {message}<hr/></Col>;
+    return (
+      <Col className=" mt-2">
+        {" "}
+        {message}
+        <hr />
+      </Col>
+    );
   }
   const getProfileImageUrl = (profilePicture) => {
     return profilePicture ? profilePicture : Avatar;
@@ -32,17 +39,17 @@ const ContactList = ({
                 rounded-circle
               />
             </Col>
-            <Col md={8} style ={{wordBreak:'break-all'}} >
+            <Col md={8} style={{ wordBreak: "break-all" }}>
               <span>
-              <h5>{item.fullname}</h5>
+                <h5>{item.fullname}</h5>
                 <p className="mb-0">{item.email}</p>
-               <p>{item.isUploadAccess ? "Editor" : "Read Only"}</p>
+                <p>{item.isUploadAccess ? "Editor" : "Viewer"}</p>
               </span>
             </Col>
             {!isSharedFolder && (
               <Col md={1}>
                 {cancel ? (
-                  <Close onClick={() => removeContact(item.id)} />
+                  <Close onClick={() => removeContact(item.id ,fileId)} />
                 ) : (
                   <Share
                     onClick={() => shareHandler({ user_id: item.id })}
@@ -52,7 +59,7 @@ const ContactList = ({
               </Col>
             )}
           </Row>
-          <hr/>
+          <hr />
         </Col>
       ))}
     </div>
