@@ -112,7 +112,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
     const requestFile = { filefolderRequest: [] };
     const { data } = await Post("/getMyAndSharedFiles", requestFile);
 
-    // setAllBooks(data.filefolderRequest);
+    
     if (id) {
       const currentBook = allBooks.find((item) => item.id == id);
       if (currentBook) {

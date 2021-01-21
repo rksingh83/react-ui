@@ -18,6 +18,11 @@ import SockJS from "sockjs-client";
 import { BASE_URL } from "../../service/service.setup";
 import { NavDropdown, Image, Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import {
+  setAllBooks as setUserAllBooks,
+  setCurrentBookId,
+} from "../../redux/all-books/allBooks.actions";
+import { useDispatch, useSelector } from "react-redux";
 const Header = ({
   currentUser,
   hidden,
@@ -32,7 +37,7 @@ const Header = ({
   const [userName, seUserName] = useState("");
   const [email, setEmail] = useState("");
   const ROLE = currentUser && currentUser.authentication.role;
-
+  const dispatch = useDispatch();
   useEffect(() => {
     if (currentUser) connect(userNotificationCount);
   }, []);
@@ -53,6 +58,19 @@ const Header = ({
     }, 20000);
     return () => clearInterval(interval);
   }, []);
+  const getAllFolders = async (id = false) => {
+    const requestFile = { filefolderRequest: [] };
+    const { data } = await Post("/getMyAndSharedFiles", requestFile);
+
+    if (data.filefolderRequest[0]) {
+      dispatch(setUserAllBooks(data.filefolderRequest));
+      //setIsSharedFolder(data.filefolderRequest[0].sharedImageflg);
+      //setIsUploadAccess(data.filefolderRequest[0].uploadAccess);
+      // setCurrentFolderId(data.filefolderRequest[0].id);
+      dispatch(setCurrentBookId(data.filefolderRequest[0].id));
+    }
+  };
+
   function connect(count) {
     var socket = SockJS(`${BASE_URL}/tutorialspoint-websocket`);
     const stompClient = Stomp.over(socket);
@@ -68,6 +86,9 @@ const Header = ({
         if (data.description && data.user_id == currentUser.authentication.id) {
           updateStateCount(data.total_unread_notification);
           setFashMessage(data.description);
+          if (data.alert_type === "Share Book") {
+            getAllFolders();
+          }
           // toast.error(data.description);
         }
         setNotifications(currentNotification);
