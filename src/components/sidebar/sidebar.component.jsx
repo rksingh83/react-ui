@@ -429,7 +429,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
   // get users upload limits
   const getUserImageUploadLimits = async () => {
     const res = await GetPageLimits();
-    setUserImageUploadLimits(res.data.pagesLeft);
+    setUserImageUploadLimits( res && res.data.pagesLeft);
   };
   // handle null values in input
   const removeNull = (data) => {
