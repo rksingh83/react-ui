@@ -264,6 +264,20 @@ const TopHeader = ({
                       </span>
                     </div>
                   )}
+                  <button
+                    className={
+                      props.isShowImageDescription
+                        ? "btn btn-danger"
+                        : "btn btn-dark"
+                    }
+                    onClick={() =>
+                      props.setIsShowImageDescription(
+                        !props.isShowImageDescription
+                      )
+                    }
+                  >
+                    {props.isShowImageDescription ? "Hide" : "Show"} Description
+                  </button>
                 </Col>
               </Row>
             </Col>

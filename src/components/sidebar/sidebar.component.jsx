@@ -59,6 +59,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
   const [currentFolderName, setCurrentFolderName] = useState("");
   const [searchImage, setSearchImage] = useState("");
   const [filteredImages, setFilteredImages] = useState("");
+  const [isShowImageDescription, setIsShowImageDescription] = useState(false);
   const [lookupPageState, setLookupPageState] = useState({
     fileId: 0,
     shareId: 0,
@@ -112,7 +113,6 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
     const requestFile = { filefolderRequest: [] };
     const { data } = await Post("/getMyAndSharedFiles", requestFile);
 
-    
     if (id) {
       const currentBook = allBooks.find((item) => item.id == id);
       if (currentBook) {
@@ -429,7 +429,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
   // get users upload limits
   const getUserImageUploadLimits = async () => {
     const res = await GetPageLimits();
-    setUserImageUploadLimits( res && res.data.pagesLeft);
+    setUserImageUploadLimits(res && res.data.pagesLeft);
   };
   // handle null values in input
   const removeNull = (data) => {
@@ -454,6 +454,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
   const setcurrentFolderId = (id, flagValue, isUploadAccess) => {
     setIsSharedFolder(flagValue);
     // setCurrentFolderId(id);
+    setIsShowImageDescription(false);
     setIsUploadAccess(isUploadAccess);
     dispatch(setCurrentBookId(id));
     if (flagValue) {
@@ -491,8 +492,10 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
           saveFolder={saveFolder}
           uploadLimits={userImageUploadLimits}
           bookId={currentFolderId}
-          isUploadAccess ={isUploadAccess}
-          isSharedFolder ={isSharedFolder}
+          isUploadAccess={isUploadAccess}
+          isSharedFolder={isSharedFolder}
+          setIsShowImageDescription={setIsShowImageDescription}
+          isShowImageDescription={isShowImageDescription}
         />
       )}
       {sharedWithMe == "PENDING" && (
@@ -549,6 +552,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
                 groupNextPrev={groupNextPrev}
                 paginate={paginate}
                 currentPagination={currentPagination}
+                isShowImageDescription={isShowImageDescription}
               />
             )}
 

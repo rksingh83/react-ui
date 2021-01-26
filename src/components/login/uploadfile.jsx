@@ -17,6 +17,7 @@ import {
   getNotificationCount as getPageCount,
   NOTIFICATION_OFF_SET as PAGE_OFF_SET,
 } from "../common/pagination.config";
+import DisplayImagesWithDescription from "../display-uploaded-images.component/DisplayImagesWithDescription";
 
 const UploadFile = ({
   dirId,
@@ -31,15 +32,15 @@ const UploadFile = ({
   groupNextPrev,
   paginate,
   currentPagination,
+  ...props
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [date, setDate] = useState("");
   const [iSDisplayDiv, setIsDisplayDiv] = useState(false);
   const currentIndex = sharedWithMe == "SHARED" ? 1 : 0;
-  const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [imagesUpdate, setImagesUpdate] = useState([]);
-
+  const [fileDescription, setFileDescription] = useState("");
   const [isShowLoader, setShowLoader] = useState(false);
 
   const paginationStyle = {
@@ -55,7 +56,19 @@ const UploadFile = ({
   const updateHandler = (list) => {
     setImagesUpdate(list);
   };
-
+  const addFileDescriptionHandler = async () => {
+    setShowLoader(true);
+    try {
+      const { data } = await Post("/addPageComment", {
+        description: fileDescription,
+        fileId: dirId,
+      });
+      alert(data && data.message);
+      setShowLoader(false);
+    } catch (error) {
+      setShowLoader(false);
+    }
+  };
   return (
     <>
       {images.length > 0 && (
@@ -68,20 +81,55 @@ const UploadFile = ({
           NextPrev={groupNextPrev}
         />
       )}
+
       {isShowLoader && <CustomLoader />}
-      <DisplayImages
-        history={history}
-        onLeave={hideContentHandler}
-        images={paginateImages}
-        folderId={dirId}
-        updateHandler={updateHandler}
-        isLoading={isLoading}
-        filteredImages={filteredImages}
-        searchInput={searchImage}
-        isShowLoader={isShowLoader}
-        isSharedFolder={isSharedFolder}
-      />
-    
+      {!props.isShowImageDescription && (
+        <DisplayImages
+          history={history}
+          onLeave={hideContentHandler}
+          images={paginateImages}
+          folderId={dirId}
+          updateHandler={updateHandler}
+          isLoading={isLoading}
+          filteredImages={filteredImages}
+          searchInput={searchImage}
+          isShowLoader={isShowLoader}
+          isSharedFolder={isSharedFolder}
+        />
+      )}
+      {props.isShowImageDescription && (
+        <DisplayImagesWithDescription
+          history={history}
+          onLeave={hideContentHandler}
+          images={paginateImages}
+          folderId={dirId}
+          updateHandler={updateHandler}
+          isLoading={isLoading}
+          filteredImages={filteredImages}
+          searchInput={searchImage}
+          isShowLoader={isShowLoader}
+          isSharedFolder={isSharedFolder}
+        />
+      )}
+      {images.length > 0 && !props.isShowImageDescription && (
+        <div className="row my-2">
+          <div className="col-md-8">
+            <input
+              className="form-control"
+              value={fileDescription}
+              onChange={(e) => setFileDescription(e.target.value)}
+            ></input>
+          </div>
+          <div className="col-md-4">
+            <button
+              onClick={addFileDescriptionHandler}
+              className="btn btn-dark"
+            >
+              Add Comment
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
