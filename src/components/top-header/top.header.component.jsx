@@ -276,7 +276,7 @@ const TopHeader = ({
                       )
                     }
                   >
-                    {props.isShowImageDescription ? "Hide" : "Show"} Description
+                    {props.isShowImageDescription ? "List" : "Grid"} View
                   </button>
                 </Col>
               </Row>
