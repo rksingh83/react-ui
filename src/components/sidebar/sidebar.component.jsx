@@ -110,6 +110,7 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
   };
 
   const getAllFolders = async (id = false) => {
+    if (!currentUser) return false;
     const requestFile = { filefolderRequest: [] };
     const { data } = await Post("/getMyAndSharedFiles", requestFile);
 

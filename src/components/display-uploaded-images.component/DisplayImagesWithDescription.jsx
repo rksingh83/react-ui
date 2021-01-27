@@ -28,60 +28,76 @@ const DisplayImagesWithDescription = ({
   } else {
     return (
       <>
-        {localRender.map((item) => (
-          <div className="row mb-2 card-body">
-            <div className="col-md-4" style={{ display: "flex" }}>
-              <img
-                style={{ height: "190px" }}
-                src={require("../../assets/spiral.png")}
-              ></img>
-              <img
-                className="image-display"
-                src={item.raw_image_org}
-                style={{ height: "190px" }}
-                onClick={() => history.push(`/original/${item.id}/${folderId}`)}
-              ></img>
-            </div>
-            <div className="col-md-8">
-              <ListGroup>
-                <ListGroup.Item>
-                  <span className="font-weight-bold">Page Title:</span>
-                  <span className="pl-3">
-                    {item.title ? item.title : "---"}
-                  </span>
-                </ListGroup.Item>
-
-                <ListGroup.Item>
-                  <span className="font-weight-bold">Date:</span>
-                  <span className="pl-4">
-                    {grtDate(item.updatedTimeMillisecond)}
-                  </span>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <span className="font-weight-bold">Page No:</span>
-                  <span className="pl-3">
-                    {item.pageNumber ? item.pageNumber : "---"}
-                  </span>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <span className="font-weight-bold">Page ID:</span>
-                  <span className="pl-3">{item.id ? item.id : "---"}</span>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <span className="font-weight-bold">Page No:</span>
-                  <span className="pl-3">
-                    {item.pageNumber ? item.pageNumber : "---"}
-                  </span>
-                </ListGroup.Item>
-              </ListGroup>
-            </div>
-            {item.is_comment && (
-              <div className="col-md-12 mt-2">
-                <strong className="ml-3"> {item.description}</strong>
+        {localRender.map((item) =>
+          !item.is_comment ? (
+            <div
+              key={`description-view-${item.id}`}
+              className="row mb-2 card-body"
+            >
+              <div className="col-md-4" style={{ display: "flex" }}>
+                <img
+                  style={{ height: "190px" }}
+                  src={require("../../assets/spiral.png")}
+                ></img>
+                <img
+                  className="image-display"
+                  src={item.raw_image_org}
+                  style={{ height: "190px" }}
+                  onClick={() =>
+                    history.push(`/original/${item.id}/${folderId}`)
+                  }
+                ></img>
               </div>
-            )}
-          </div>
-        ))}
+              <div className="col-md-8">
+                <ListGroup>
+                  <ListGroup.Item>
+                    <span className="font-weight-bold">Page Title:</span>
+                    <span className="pl-3">
+                      {item.title ? item.title : "---"}
+                    </span>
+                  </ListGroup.Item>
+
+                  <ListGroup.Item>
+                    <span className="font-weight-bold">Date:</span>
+                    <span className="pl-4">
+                      {grtDate(item.updatedTimeMillisecond)}
+                    </span>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <span className="font-weight-bold">Page No:</span>
+                    <span className="pl-3">
+                      {item.pageNumber ? item.pageNumber : "---"}
+                    </span>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <span className="font-weight-bold">Page ID:</span>
+                    <span className="pl-3">{item.id ? item.id : "---"}</span>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <span className="font-weight-bold">Page No:</span>
+                    <span className="pl-3">
+                      {item.pageNumber ? item.pageNumber : "---"}
+                    </span>
+                  </ListGroup.Item>
+                </ListGroup>
+              </div>
+              {item.is_comment && (
+                <div className="col-md-12 mt-2">
+                  <strong className="ml-3"> {item.description}</strong>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="row card-body">
+              <div className="col-md-12 mt-2">
+                <strong className="ml-3">
+                  {item.owner ? item.owner : "Unknown"}:
+                </strong>{" "}
+                {item.description}
+              </div>
+            </div>
+          )
+        )}
       </>
     );
   }

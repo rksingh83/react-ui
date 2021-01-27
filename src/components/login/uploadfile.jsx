@@ -111,7 +111,7 @@ const UploadFile = ({
           isSharedFolder={isSharedFolder}
         />
       )}
-      {images.length > 0 && !props.isShowImageDescription && (
+      {images.length > 0 && (
         <div className="row my-2">
           <div className="col-md-8">
             <input

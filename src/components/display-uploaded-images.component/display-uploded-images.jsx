@@ -58,39 +58,44 @@ const DisplayImages = ({
         onMouseLeave={() => setIsEditShow(false)}
         style={{ display: "flex", flexWrap: "wrap" }}
       >
-        {localRender.map((item, index) => (
-          <div className="image-top-container" key={item.id}>
-            <div
-              className="image-container"
-              onMouseLeave={() => onLeave(false)}
-              key={index}
-            >
-              <Tick className="tick" onClick={(e) => toggleEl(item.id, e)} />
-              <div className="editIcon"></div>
-              <img
-                style={{ height: "96%" }}
-                src={require("../../assets/spiral.png")}
-              ></img>
-              <img
-                className="image-display"
-                src={item.raw_image_org}
-                onClick={() => history.push(`/original/${item.id}/${folderId}`)}
-              ></img>
-            </div>
-            {item.title && (
-              <span  className="img-title">
-                {item.title}{item.pageNumber?`(${item.pageNumber})`:''}(
-                {grtDate(item.updatedTimeMillisecond)})
-              </span>
-            )}
-          </div>
-        ))}
+        {localRender.map(
+          (item, index) =>
+            !item.is_comment && (
+              <div className="image-top-container" key={item.id}>
+                <div
+                  className="image-container"
+                  onMouseLeave={() => onLeave(false)}
+                  key={index}
+                >
+                  <div className="editIcon"></div>
+                  <img
+                    style={{ height: "96%" }}
+                    src={require("../../assets/spiral.png")}
+                  ></img>
+                  <img
+                    className="image-display"
+                    src={item.raw_image_org}
+                    onClick={() =>
+                      history.push(`/original/${item.id}/${folderId}`)
+                    }
+                  ></img>
+                </div>
+                {item.title && (
+                  <span className="img-title">
+                    {item.title}
+                    {item.pageNumber ? `(${item.pageNumber})` : ""}(
+                    {grtDate(item.updatedTimeMillisecond)})
+                  </span>
+                )}
+              </div>
+            )
+        )}
       </div>
     );
   }
 };
 function grtDate(time) {
   var date = new Date(time);
-  return date.toLocaleDateString();;
+  return date.toLocaleDateString();
 }
 export default DisplayImages;
