@@ -2,7 +2,7 @@ import React from "react";
 import { ListGroup, Row, Col, Image } from "react-bootstrap";
 
 import BookSrc from "../../assets/download.png";
-import {useSelector} from 'react-redux'
+import { useSelector } from "react-redux";
 const SideBarBooks = ({
   books,
   allBooks,
@@ -13,22 +13,34 @@ const SideBarBooks = ({
 }) => {
   books = searchItem == "" ? allBooks : filteredBooks;
   const currentFolderId = useSelector((state) => state.userBooks.currentBookId);
-  
+
   return (
     <ListGroup
       style={{
-        maxHeight: "36rem",
-        minHeight: "36rem",
+        maxHeight: "34rem",
+        minHeight: "34rem",
         overflowY: "auto",
         border: "1px solid rgba(0, 0, 0, 0.125)",
       }}
     >
       {books.map((book) => (
         <ListGroup.Item
-          className={` p-1 ${currentFolderId == book.id ? "book-border bg-secondary text-white" : ""}`}
+          className={` p-1 ${
+            currentFolderId == book.id
+              ? "book-border bg-secondary text-white"
+              : ""
+          }`}
           key={book.id}
         >
-          <Row onClick={() => setCurrentFolderId(book.id, book.sharedImageflg , book.uploadAccess)}>
+          <Row
+            onClick={() =>
+              setCurrentFolderId(
+                book.id,
+                book.sharedImageflg,
+                book.uploadAccess
+              )
+            }
+          >
             <Col
               md={2}
               style={{
@@ -48,7 +60,9 @@ const SideBarBooks = ({
               >
                 <span style={{ cursor: "pointer" }}>
                   <span className="pl-2">
-                    <span style ={{fontSize:'17px' ,fontWeight:"650"}}>{book.fileName}</span>
+                    <span style={{ fontSize: "17px", fontWeight: "650" }}>
+                      {book.fileName}
+                    </span>
                     <p className="m-0">
                       {book.file_tag} {book.owner ? `(@${book.owner})` : ""}
                     </p>

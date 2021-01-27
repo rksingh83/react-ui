@@ -134,7 +134,7 @@ const RightSharedPeopleList = ({ bookId, isSharedFolder, pageId }) => {
         )}
       </Row>
       <Row
-        style={{ maxHeight: "20rem", overflowY: "auto", overflowX: "hidden" }}
+        style={{ maxHeight: "18rem", overflowY: "auto", overflowX: "hidden" }}
       >
         {currentTab === "GROUPS" && !isSharedFolder && (
           <UserGroupList

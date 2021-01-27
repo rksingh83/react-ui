@@ -113,7 +113,7 @@ const UploadFile = ({
       )}
       {images.length > 0 && (
         <div className="row my-2">
-          <div className="col-md-8">
+          <div className="col-md-8 pl-0">
             <input
               className="form-control"
               value={fileDescription}

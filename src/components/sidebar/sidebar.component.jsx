@@ -535,6 +535,11 @@ const SideBar = ({ match, history, sharedWithMe, setFolderFlag, location }) => {
           className={
             ROLE != "labeller" && !defaultPageEditMode ? "col-md-6" : "col-md-9"
           }
+          style={
+            isShowImageDescription
+              ? { maxHeight: "36rem", overflowX: "none", overflowY: "auto" }
+              : {}
+          }
         >
           <div
             className="row"
